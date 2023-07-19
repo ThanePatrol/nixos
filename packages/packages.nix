@@ -1,0 +1,76 @@
+{ pkgs }:
+
+{
+
+  alacritty = pkgs.alacritty; # superior terminal
+  anki = pkgs.anki; # flashcards
+  ansible-lint = pkgs.ansible-lint; 
+  ansible = pkgs.ansible; # declarative config
+  authty = pkgs.authy; # MFA
+  bat = pkgs.bat; # cat alternative
+  biber = pkgs.biber;   # biblatex backend
+  bitwarden = pkgs.bitwarden; # password manager
+  bluez = pkgs.bluez; # bluetooth support
+  brave = pkgs.brave; # ad block browser
+  btop = pkgs.btop; # system monitor
+  chafa = pkgs.chafa; # better terminal graphics
+  calibre = pkgs.calibre; # ebook reader
+  chromedriver = pkgs.chromedriver; # browser automation
+  colord = pkgs.colord; # color profile manager
+  cups = pkgs.cups; # printing
+  discord = pkgs.discord; # chat client
+  docker = pkgs.docker; # container memes
+  docker-compose = pkgs.docker-compose; # memes
+  dua = pkgs.dua; # replacement for du
+  ethtool = pkgs.ethtool; # ethernet powertools
+  exa = pkgs.exa; # replacement for ls
+  firefox = pkgs.firefox; # browser - mb change to wrapped for codecs
+  ffmpeg = pkgs.ffmpeg; # multimedia tool
+  flatpak = pkgs.flatpak; # sandbox apps
+  gcc = pkgs.gcc; # for linking
+  git = pkgs.git; 
+  google-chrome = pkgs.google-chrome; # browse
+  graphviz = pkgs.graphviz; # graph visualization 
+  gzip = pkgs.gzip; # file compression
+  idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
+  libinput = pkgs.libinput; # Handle input devices in Wayland
+  jetbrains-toolbox = pkgs.jetbrains-toolbox; # ide installation
+  jetbrains-jdk-jcef = pkgs.jetbrains.jdk; # for better font rendering
+  kmod = pkgs.kmod; # kernel module loading
+  mullvad-vpn = pkgs.mullvad-vpn;
+  neofetch = pkgs.neofetch; # unix shit
+  nettools = pkgs.nettools; # network utilities
+  nfs-utils = pkgs.nfs-utils; 
+  obsidian = pkgs.obsidian; # markdown note taker
+  oh-my-zsh = pkgs.oh-my-zsh; # zsh customizer
+  openrgb = pkgs.openrgb-with-all-plugins; # rgb controller 
+  pandoc = pkgs.pandoc; # markdown to other
+  parted = pkgs.parted; # disk partitioning
+  pciutils = pkgs.pciutils; # pcie memes
+  prismlauncher = pkgs.prismlauncher; # MC launcher
+  qalculate-qt = pkgs.qalculate-qt; # graphics calculator
+  qemu = pkgs.qemu; # virtulization tools
+  rclone = pkgs.rclone; # backup tool
+  ripgrep = pkgs.ripgrep; # faster grep
+  rmlint = pkgs.rmlint; # file deduplication
+  rofi = pkgs.rofi-wayland; # run dialog for Wayland
+  rsync = pkgs.rsync; # remote file copying
+  signal-desktop = pkgs.signal-desktop; # messaging app
+  sqlite = pkgs.sqlite; 
+  spice-vdagent = pkgs.spice-vdagent; # for copy and pasting from vms
+  spotify = pkgs.spotify; # music streaming
+  tectonic = pkgs.tectonic; # self-contained latex
+  tmux = pkgs.tmux; # terminal multiplexer
+  tor = pkgs.tor; # secure browser
+  transmission = pkgs.transmission; # torrent client
+  vlc = pkgs.vlc; # media player
+  vscode = pkgs.vscode; # ide
+  vim = pkgs.vim; # text editor
+  virt-manager = pkgs.virt-manager; # virtualization gui
+  wl-clipboard = pkgs.wl-clipboard; # wayland terminal clipboard
+  zathura-with-plugins = pkgs.zathura; # pdf viewer
+  zotero = pkgs.zotero; # reference manager
+  zoom-us = pkgs.zoom-us; # video conferencing
+  zsh = pkgs.zsh; # best shell
+
+}
