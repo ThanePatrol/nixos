@@ -30,6 +30,13 @@ in
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
 
+
+  # Configure NFS share
+  fileSystems."/nfs/samsung4tb" = {
+    device = "10.0.0.15:/mnt/samsung4tb/nas";
+    fsType = "nfs";
+    options = [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];  
+};
   
   # Set your time zone.
   time.timeZone = "Australia/Sydney";
