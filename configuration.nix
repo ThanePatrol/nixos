@@ -8,7 +8,7 @@ let
     syspackages = import ./packages/packages.nix { inherit pkgs; };
     pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
     languages = import ./packages/languages.nix { inherit pkgs; };
-    homeConfig = import ./home/shell.nix { inherit pkgs; };
+    homeConfig = import ./home/home.nix { inherit pkgs; };
 in 
 {
   imports =
