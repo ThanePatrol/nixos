@@ -1,7 +1,18 @@
 #!/bin/sh
 
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
 
-nix-channel --update
+sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 
-echo "added home-manager channel"
+sudo nix-channel --update
+
+echo "changed nixos channel to unstable"
+
+sudo nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+
+echo "changed nixos packages channel to unstable"
+
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+
+sudo nix-channel --update
+
+echo "added home-manager unstable channel"
