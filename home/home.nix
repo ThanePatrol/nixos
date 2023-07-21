@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let 
   alacritty = import ./alacritty.nix { inherit pkgs; };
@@ -6,7 +6,7 @@ let
   rclone = import ./rclone.nix { inherit pkgs; };
   theme = import ./gtk_themes.nix { inherit pkgs; };
   fonts = import ./fonts.nix { inherit pkgs; };
-  ssh = import ./ssh.nix { inherit pkgs; };
+  ssh = import ./ssh.nix { inherit pkgs config; };
   shell = import ./shell.nix { inherit pkgs; };
   git = import ./git.nix { inherit pkgs; };
 in
