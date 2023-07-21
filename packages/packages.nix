@@ -28,7 +28,7 @@
   ffmpeg = pkgs.ffmpeg; # multimedia tool
   flatpak = pkgs.flatpak; # sandbox apps
   gcc = pkgs.gcc; # for linking
-  git = pkgs.git; 
+  git = pkgs.git;
   google-chrome = pkgs.google-chrome; # browse
   graphviz = pkgs.graphviz; # graph visualization 
   gzip = pkgs.gzip; # file compression
@@ -43,7 +43,7 @@
   nfs-utils = pkgs.nfs-utils; 
   obsidian = pkgs.obsidian; # markdown note taker
   oh-my-zsh = pkgs.oh-my-zsh; # zsh customizer
-  openrgb = pkgs.openrgb-with-all-plugins; # rgb controller 
+  openrgb = pkgs.openrgb-with-all-plugins; # rgb controller
   pandoc = pkgs.pandoc; # markdown to other
   parted = pkgs.parted; # disk partitioning
   pciutils = pkgs.pciutils; # pcie memes
@@ -55,6 +55,7 @@
   rmlint = pkgs.rmlint; # file deduplication
   rofi = pkgs.rofi-wayland; # run dialog for Wayland
   rsync = pkgs.rsync; # remote file copying
+  rustup = pkgs.rustup; # rust toolchain
   signal-desktop = pkgs.signal-desktop; # messaging app
   sqlite = pkgs.sqlite; 
   spice-vdagent = pkgs.spice-vdagent; # for copy and pasting from vms
