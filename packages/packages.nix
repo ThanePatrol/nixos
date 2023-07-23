@@ -63,7 +63,7 @@
   tectonic = pkgs.tectonic; # self-contained latex
   tmux = pkgs.tmux; # terminal multiplexer
   tor = pkgs.tor; # secure browser
-  transmission = pkgs.transmission; # torrent client
+  transmission-gtk = pkgs.transmission-gtk; # torrent client
   vlc = pkgs.vlc; # media player
   vscode = pkgs.vscode; # ide
   vim = pkgs.vim; # text editor

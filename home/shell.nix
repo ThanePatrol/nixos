@@ -12,6 +12,7 @@
 
      source $ZSH/oh-my-zsh.sh
 
+     alias open="xdg-open"
      alias cat="bat"
      alias ls="exa"
 
