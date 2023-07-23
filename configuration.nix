@@ -2,19 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 let 
     syspackages = import ./packages/packages.nix { inherit pkgs; };
     pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
     languages = import ./packages/languages.nix { inherit pkgs; };
     homeConfig = import ./home/home.nix { inherit pkgs config; };
-in 
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       <home-manager/nixos>
+      ./modules/udev-rules.nix
     ];
 
   # Bootloader.
@@ -91,7 +92,7 @@ in
   users.users.hugh = {
     isNormalUser = true;
     description = "hugh";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "plugdev"];
     shell = pkgs.zsh;
   };
  
@@ -107,6 +108,7 @@ in
   ] 
     ++ (builtins.attrValues syspackages)
     ++ languages.environment.systemPackages;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
