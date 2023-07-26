@@ -40,6 +40,11 @@
         hostname = "10.0.0.30";
         user = "pi";
       };
+      "mq" = {
+        host = "mq";
+        hostname = "iceberg.science.mq.edu.au";
+        user = "47268034";
+      };
     };
   }; 
  

@@ -7,7 +7,9 @@
    home.file.".zshrc".text = ''
      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
 
-     ZSH_THEME="robbyrussell"
+     export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/hugh/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+
+     ZSH_THEME="agnoster"
      plugins=(git cargo ansible colored-man-pages pip rust rustup sudo)
 
      source $ZSH/oh-my-zsh.sh

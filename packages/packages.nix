@@ -29,10 +29,11 @@
   flatpak = pkgs.flatpak; # sandbox apps
   gcc = pkgs.gcc; # for linking
   git = pkgs.git;
+  go = pkgs.go;
   google-chrome = pkgs.google-chrome; # browse
   graphviz = pkgs.graphviz; # graph visualization 
   gzip = pkgs.gzip; # file compression
-  idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
+  #idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
   libinput = pkgs.libinput; # Handle input devices in Wayland
   jetbrains-toolbox = pkgs.jetbrains-toolbox; # ide installation
   jetbrains-jdk-jcef = pkgs.jetbrains.jdk; # for better font rendering
@@ -73,5 +74,4 @@
   zotero = pkgs.zotero; # reference manager
   zoom-us = pkgs.zoom-us; # video conferencing
   zsh = pkgs.zsh; # best shell
-
 }

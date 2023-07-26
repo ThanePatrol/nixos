@@ -66,6 +66,8 @@ in
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
 
+  services.flatpak.enable = true;
+
   # Configure keymap in X11
   services.xserver = {
     layout = "au";
