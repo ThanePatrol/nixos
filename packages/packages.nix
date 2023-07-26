@@ -33,6 +33,7 @@
   google-chrome = pkgs.google-chrome; # browse
   graphviz = pkgs.graphviz; # graph visualization 
   gzip = pkgs.gzip; # file compression
+  home-manager = pkgs.home-manager;
   #idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
   libinput = pkgs.libinput; # Handle input devices in Wayland
   jetbrains-toolbox = pkgs.jetbrains-toolbox; # ide installation
@@ -62,7 +63,7 @@
   spice-vdagent = pkgs.spice-vdagent; # for copy and pasting from vms
   spotify = pkgs.spotify; # music streaming
   tectonic = pkgs.tectonic; # self-contained latex
-  tmux = pkgs.tmux; # terminal multiplexer
+  #tmux = pkgs.tmux; # terminal multiplexer
   tor = pkgs.tor; # secure browser
   transmission-gtk = pkgs.transmission-gtk; # torrent client
   vlc = pkgs.vlc; # media player
