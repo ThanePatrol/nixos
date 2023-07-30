@@ -36,9 +36,11 @@
   home-manager = pkgs.home-manager;
   #idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
   libinput = pkgs.libinput; # Handle input devices in Wayland
+  imhex = pkgs.imhex;
   jetbrains-toolbox = pkgs.jetbrains-toolbox; # ide installation
   jetbrains-jdk-jcef = pkgs.jetbrains.jdk; # for better font rendering
   kmod = pkgs.kmod; # kernel module loading
+  mailspring = pkgs.mailspring;
   mullvad-vpn = pkgs.mullvad-vpn;
   neofetch = pkgs.neofetch; # unix shit
   nettools = pkgs.nettools; # network utilities
