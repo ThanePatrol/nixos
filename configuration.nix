@@ -18,7 +18,12 @@ in
       ./modules/udev-rules.nix
     ];
 
-  # Bootloader.
+  # enable flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  nixpkgs.config.allowUnfree = true;
+
+ # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -87,7 +92,8 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
+  
+  home-manager.useGlobalPkgs = true;
   home-manager.users.hugh = homeConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # also defings a bunch of packages to use
@@ -98,8 +104,11 @@ in
     shell = pkgs.zsh;
   };
  
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  
+  # weird bug fix, kept getting unfree issue
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "google-chrome"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

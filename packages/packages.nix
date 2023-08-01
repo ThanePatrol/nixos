@@ -41,7 +41,8 @@
   jetbrains-jdk-jcef = pkgs.jetbrains.jdk; # for better font rendering
   kmod = pkgs.kmod; # kernel module loading
   mailspring = pkgs.mailspring;
-  mullvad-vpn = pkgs.mullvad-vpn;
+  mullvad-vpn = pkgs.mullvad-vpn; 
+  neovim = pkgs.neovim; # ide
   neofetch = pkgs.neofetch; # unix shit
   nettools = pkgs.nettools; # network utilities
   nfs-utils = pkgs.nfs-utils; 

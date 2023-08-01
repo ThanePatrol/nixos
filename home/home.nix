@@ -12,7 +12,6 @@ let
   tmux = import ./tmux.nix;
 in
 {
-
   home.stateVersion = "23.05";
   home.packages = [ pkgs.httpie ];
 

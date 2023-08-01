@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 with builtins;
 let
@@ -22,12 +22,8 @@ in
     userEmail = "mandalidis.hugh@gmail.com";
 
     includes = [{ path = "~/.config/git/localconf"; }];
-    /*
-    signing = {
-      key = "7E48DB4B7AADB252";
-      signByDefault = true;
-    };
-*/
+
+    
 
     extraConfig = {
       init.defaultBranch = DEFAULT_BRANCH;
@@ -36,6 +32,13 @@ in
       pull.ff = "only";
       tag.gpgSign = true;
     };
+
+    # global ignore
+    ignores = [
+      "**/target/*"
+      "*~"
+      "*.swp"
+    ];
 
     # git-delta
     # https://github.com/dandavison/delta

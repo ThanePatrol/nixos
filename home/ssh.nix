@@ -45,6 +45,13 @@
         hostname = "iceberg.science.mq.edu.au";
         user = "47268034";
       };
+
+      "azure" = {
+	host = "azure";
+	hostname = "74.249.58.10";
+	user = "azureuser";
+        identityFile = "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
+      };
     };
   }; 
  

@@ -10,6 +10,7 @@
      export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/hugh/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
      
      export IMHEX=${pkgs.imhex}/bin
+     export CHROME_BIN=${pkgs.google-chrome}/bin
      
      ZSH_THEME="agnoster"
      plugins=(git cargo ansible colored-man-pages pip rust rustup sudo)
@@ -19,7 +20,7 @@
      alias open="xdg-open"
      alias cat="bat"
      alias ls="exa"
-     alias update="sudo cp -r ~/nixos /etc/nixos && sudo nixos-rebuild switch"
+     alias update="sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch"
 
    '';
 
