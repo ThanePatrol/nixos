@@ -27,6 +27,7 @@
      alias ls="exa"
      alias update="sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch"
      alias nv="nvim"
+     alias vim="nvim"
    '';
 
 } 

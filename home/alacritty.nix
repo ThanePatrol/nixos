@@ -88,22 +88,18 @@ env:
     TERM: xterm-256color
 
 font:
-  normal:
-    family: JetBrains Mono
-    style: Regular
+    normal:
+        family: JetBrainsMonoNL Nerd Font Mono
+        style: Regular
+    bold:
+        family: JetBrainsMonoNL Nerd Font Mono
+        style: Bold
+    italic:
+        family: JetBrainsMonoNL Nerd Font Mono
+        style: Italic
 
-  bold:
-    family: JetBrains Mono
-    style: Bold
+    # Point size of the font
+    size: 15
 
-  italic:
-    family: JetBrains Mono
-    style: Italic
-
-  bold_italic:
-    family: JetBrains Mono
-    style: Bold Italic
-
-  size: 13
   '';
 }

@@ -9,7 +9,11 @@
       "FiraCode"
       "DroidSansMono"
       "Noto"
-    ]; 
-    })
+    ]; })
+    source-han-code-jp
+    source-han-sans
+    source-han-mono
+    source-han-serif
+    roboto-mono
   ];
 }

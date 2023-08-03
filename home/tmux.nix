@@ -20,8 +20,8 @@
     
     extraConfig = ''
       set -g @catppuccin_no_patched_fonts_theme_enabled on
-      
-      
+      set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      
+            
     '';
   };
 
