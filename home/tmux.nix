@@ -4,7 +4,7 @@
   home.packages = [ pkgs.tmux ];
 
   programs.tmux = {
-    terminal = "screen-256color";
+    terminal = "tmux-256color";
     enable = true;
     mouse = true;
     shortcut = "a";
@@ -17,6 +17,12 @@
       pkgs.tmuxPlugins.yank
 
     ];
+    
+    extraConfig = ''
+      set -g @catppuccin_no_patched_fonts_theme_enabled on
+      
+      
+    '';
   };
 
 
