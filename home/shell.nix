@@ -11,17 +11,22 @@
      
      export IMHEX=${pkgs.imhex}/bin
      export CHROME_BIN=${pkgs.google-chrome}/bin
-     
-     ZSH_THEME="agnoster"
+     export CHROMEDRIVER=${pkgs.chromedriver}/bin
+
+     #ZSH_THEME="frontcube"
+     #ZSH_THEME="intheloop"
+     ZSH_THEME="refined"
      plugins=(git cargo ansible colored-man-pages pip rust rustup sudo)
 
      source $ZSH/oh-my-zsh.sh
+
+     eval "$(direnv hook zsh)"
 
      alias open="xdg-open"
      alias cat="bat"
      alias ls="exa"
      alias update="sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch"
-
+     alias nv="nvim"
    '';
 
 } 

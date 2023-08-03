@@ -17,7 +17,6 @@ in
       <home-manager/nixos>
       ./modules/udev-rules.nix
     ];
-
   # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   

@@ -9,6 +9,7 @@ let
   ssh = import ./ssh.nix;
   shell = import ./shell.nix;
   git = import ./git.nix;
+  neovim = import ./nvim.nix;
   tmux = import ./tmux.nix;
 in
 {
@@ -24,6 +25,7 @@ in
     ssh
     shell
     git
+    neovim
     tmux
   ];
 }

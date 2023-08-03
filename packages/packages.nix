@@ -18,6 +18,7 @@
   chromedriver = pkgs.chromedriver; # browser automation
   colord = pkgs.colord; # color profile manager
   cups = pkgs.cups; # printing
+  direnv = pkgs.direnv;
   discord = pkgs.discord; # chat client
   docker = pkgs.docker; # container memes
   docker-compose = pkgs.docker-compose; # memes
