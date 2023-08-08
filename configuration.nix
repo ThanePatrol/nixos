@@ -78,6 +78,9 @@ in
     xkbVariant = "";
   };
 
+  # Enable ssh
+  services.openssh.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 

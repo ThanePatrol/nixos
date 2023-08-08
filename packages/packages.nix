@@ -50,6 +50,7 @@
   obsidian = pkgs.obsidian; # markdown note taker
   oh-my-zsh = pkgs.oh-my-zsh; # zsh customizer
   openrgb = pkgs.openrgb-with-all-plugins; # rgb controller
+  p7zip = pkgs.p7zip;
   pandoc = pkgs.pandoc; # markdown to other
   parted = pkgs.parted; # disk partitioning
   pciutils = pkgs.pciutils; # pcie memes
@@ -70,6 +71,7 @@
   #tmux = pkgs.tmux; # terminal multiplexer
   tor = pkgs.tor; # secure browser
   transmission-gtk = pkgs.transmission-gtk; # torrent client
+  unzip = pkgs.unzip;
   vlc = pkgs.vlc; # media player
   vscode = pkgs.vscode; # ide
   vim = pkgs.vim; # text editor
