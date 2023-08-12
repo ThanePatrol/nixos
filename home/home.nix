@@ -9,7 +9,7 @@ let
   ssh = import ./ssh.nix;
   shell = import ./shell.nix;
   git = import ./git.nix;
-  neovim = import ./nvim.nix;
+  neovim = import ./nvim/nvim.nix;
   tmux = import ./tmux.nix;
 in
 {
