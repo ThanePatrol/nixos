@@ -43,7 +43,6 @@
   kmod = pkgs.kmod; # kernel module loading
   mailspring = pkgs.mailspring;
   mullvad-vpn = pkgs.mullvad-vpn; 
-  neovim = pkgs.neovim; # ide
   neofetch = pkgs.neofetch; # unix shit
   nettools = pkgs.nettools; # network utilities
   nfs-utils = pkgs.nfs-utils; 
@@ -80,5 +79,6 @@
   zathura-with-plugins = pkgs.zathura; # pdf viewer
   zotero = pkgs.zotero; # reference manager
   zoom-us = pkgs.zoom-us; # video conferencing
+  zip = pkgs.zip;
   zsh = pkgs.zsh; # best shell
 }
