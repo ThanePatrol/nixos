@@ -26,7 +26,7 @@
   ethtool = pkgs.ethtool; # ethernet powertools
   exa = pkgs.exa; # replacement for ls
   firefox = pkgs.firefox; # browser - mb change to wrapped for codecs
-  ffmpeg = pkgs.ffmpeg; # multimedia tool
+  ffmpeg-full = pkgs.ffmpeg-full; # multimedia tool
   flatpak = pkgs.flatpak; # sandbox apps
   gcc = pkgs.gcc; # for linking
   git = pkgs.git;
@@ -37,6 +37,7 @@
   home-manager = pkgs.home-manager;
   #idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
   libinput = pkgs.libinput; # Handle input devices in Wayland
+  libvirt = pkgs.libvirt; # for virtualization
   imhex = pkgs.imhex;
   jetbrains-toolbox = pkgs.jetbrains-toolbox; # ide installation
   jetbrains-jdk-jcef = pkgs.jetbrains.jdk; # for better font rendering

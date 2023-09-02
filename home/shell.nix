@@ -2,7 +2,11 @@
 
 {
    home.packages = [ pkgs.atool pkgs.httpie pkgs.oh-my-zsh pkgs.imhex ];
+  
 
+   home.sessionPath = [ 
+     "${pkgs.tectonic}/bin"
+   ];
 
    home.file.".zshrc".text = ''
      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
@@ -25,7 +29,7 @@
      alias open="xdg-open"
      alias cat="bat"
      alias ls="exa"
-     alias update="sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch"
+     alias update="sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d"
      alias nv="nvim"
      alias vim="nvim"
    '';

@@ -33,7 +33,9 @@ in
 
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
-
+ 
+  # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
+  programs.dconf.enable = true;
 
   # Configure NFS share
   fileSystems."/nfs/samsung4tb" = {
