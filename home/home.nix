@@ -11,6 +11,8 @@ let
   git = import ./git.nix;
   neovim = import ./nvim/nvim.nix;
   tmux = import ./tmux.nix;
+  hyprland = import ./hyprland/hyprland.nix;
+  dunst = import ./dunst/dunst.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -27,5 +29,7 @@ in
     git
     neovim
     tmux
+    hyprland
+    dunst
   ];
 }

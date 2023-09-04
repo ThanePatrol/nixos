@@ -7,6 +7,18 @@
    home.sessionPath = [ 
      "${pkgs.tectonic}/bin"
    ];
+  
+  programs.zsh.oh-my-zsh = {
+    plugins = [
+      "git"
+      "cargo"
+      "colored-man-pages"
+      "pip"
+      "rust"
+      "rustup"
+      "sudo"
+    ];
+  };
 
    home.file.".zshrc".text = ''
      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
@@ -20,7 +32,7 @@
      #ZSH_THEME="frontcube"
      #ZSH_THEME="intheloop"
      ZSH_THEME="refined"
-     plugins=(git cargo ansible colored-man-pages pip rust rustup sudo)
+     #plugins=(git cargo ansible colored-man-pages pip rust rustup sudo)
 
      source $ZSH/oh-my-zsh.sh
 
