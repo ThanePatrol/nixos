@@ -10,15 +10,12 @@ in {
         systemdIntegration = true;
         xwayland.enable = true;
 
-#        plugins = [
-
-#        ];
-
         settings = {
             "$mod" = "SUPER";
             
             exec-once = [
-               
+                "dunst"
+                "waybar"
                 #"run-as-service waybar"
             ];
 
@@ -69,7 +66,7 @@ in {
                 "$mod, C, killactive"
                 "$mod, M, exit"
                 "$mod, V, togglefloating"
-
+                "$mod, R, exec, wofi --show drun"
 
                 #vim keybindings for motion
                 "$mod,H,movefocus,l"

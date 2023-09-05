@@ -14,6 +14,7 @@ let
   hyprland = import ./hyprland/hyprland.nix;
   dunst = import ./dunst/dunst.nix;
   waybar = import ./waybar/waybar.nix;
+  wofi = import ./wofi/wofi.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -33,5 +34,6 @@ in
     hyprland
     dunst
     waybar
+    wofi
   ];
 }
