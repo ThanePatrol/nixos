@@ -13,6 +13,7 @@ let
   tmux = import ./tmux.nix;
   hyprland = import ./hyprland/hyprland.nix;
   dunst = import ./dunst/dunst.nix;
+  waybar = import ./waybar/waybar.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -31,5 +32,6 @@ in
     tmux
     hyprland
     dunst
+    waybar
   ];
 }

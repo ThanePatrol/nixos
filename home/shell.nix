@@ -9,6 +9,7 @@
    ];
   
   programs.zsh.oh-my-zsh = {
+    enable = true;
     plugins = [
       "git"
       "cargo"
@@ -18,7 +19,9 @@
       "rustup"
       "sudo"
     ];
+
   };
+  
 
    home.file.".zshrc".text = ''
      export ZSH=${pkgs.oh-my-zsh}/share/oh-my-zsh/
@@ -29,10 +32,7 @@
      export CHROME_BIN=${pkgs.google-chrome}/bin
      export CHROMEDRIVER=${pkgs.chromedriver}/bin
 
-     #ZSH_THEME="frontcube"
-     #ZSH_THEME="intheloop"
-     ZSH_THEME="refined"
-     #plugins=(git cargo ansible colored-man-pages pip rust rustup sudo)
+     ZSH_THEME="refined" #could not be defined by home-manager
 
      source $ZSH/oh-my-zsh.sh
 
