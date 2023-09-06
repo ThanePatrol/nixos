@@ -2,7 +2,22 @@
 
 let 
     pointer = config.home.pointerCursor;
+    mkService = lib.recursiveUpdate {
+        Unit.PartOf = ["graphical-session.target"];
+        Unit.After = ["graphical-session.target"];
+        Install.WantedBy = ["graphical-session.target"];
+    };
 in {
+
+    #home.packages = with pkgs;
+
+    #with inputs.xdg-portal-hyprland.packages.${pkgs.system};
+    #[
+    #    xdg-desktop-portal-hyprland
+    #    wl-clip-persist
+    #    wl-clipboard
+    #    cliphist
+    #];
     
     
     wayland.windowManager.hyprland = {
@@ -14,8 +29,10 @@ in {
             "$mod" = "SUPER";
             
             exec-once = [
-                "dunst"
-                "waybar"
+                "dunst" # notifications
+                "waybar" # status bar
+                "wl-paste --type text --watch cliphist store"
+
                 #"run-as-service waybar"
             ];
 
@@ -65,7 +82,6 @@ in {
                 "$mod, Q, exec, alacritty"
                 "$mod, C, killactive"
                 "$mod, M, exit"
-                "$mod, V, togglefloating"
                 "$mod, R, exec, wofi --show drun"
 
                 #vim keybindings for motion
@@ -74,14 +90,21 @@ in {
                 "$mod,K,movefocus,u"
                 "$mod,J,movefocus,d"
 
-
-
+                #clipboard history
+#                "$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
 
             ];
         };
 
 
     };
-
-
+    systemd.user.services = {
+        cliphist = mkService {
+            Unit.Description = "Clipboard history";
+            Service = {
+                ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${lib.getBin pkgs.cliphist}/cliphist store";
+                Restart = "always";
+            };
+        };
+    };
 }
