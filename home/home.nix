@@ -15,6 +15,9 @@ let
   dunst = import ./dunst/dunst.nix;
   waybar = import ./waybar/waybar.nix;
   wofi = import ./wofi/wofi.nix;
+  wayland = import ./wayland/wayland.nix;
+  desktop = import ./xdg/xdg.nix;
+#  wrappers = import ./xdg/wrappers.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -35,5 +38,8 @@ in
     dunst
     waybar
     wofi
+    wayland
+    desktop
+#    wrappers
   ];
 }
