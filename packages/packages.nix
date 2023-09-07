@@ -1,85 +1,102 @@
-{ pkgs }:
+{ pkgs, ... }:
 
+let
+  wrappedBitwarden = pkgs.writeShellScriptBin "bitwarden" ''
+    exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+
+  wrappedAuthy = pkgs.writeShellScriptBin "authy" ''
+    exec ${pkgs.authy}/bin/authy --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+  wrappedBrave = pkgs.writeShellScriptBin "brave" ''
+    exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+
+  wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
+    exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+in
 {
-
-  alacritty = pkgs.alacritty; # superior terminal
-  anki = pkgs.anki; # flashcards
-  ansible-lint = pkgs.ansible-lint; 
-  ansible = pkgs.ansible; # declarative config
-  authty = pkgs.authy; # MFA
-  bat = pkgs.bat; # cat alternative
-  biber = pkgs.biber;   # biblatex backend
-  bitwarden = pkgs.bitwarden; # password manager
-  bluez = pkgs.bluez; # bluetooth support
-  brave = pkgs.brave; # ad block browser
-  btop = pkgs.btop; # system monitor
-  chafa = pkgs.chafa; # better terminal graphics
-  calibre = pkgs.calibre; # ebook reader
-  chromedriver = pkgs.chromedriver; # browser automation
-  colord = pkgs.colord; # color profile manager
-  cups = pkgs.cups; # printing
-  direnv = pkgs.direnv;
-  discord = pkgs.discord; # chat client
-  docker = pkgs.docker; # container memes
-  docker-compose = pkgs.docker-compose; # memes
-  dua = pkgs.dua; # replacement for du
-  ethtool = pkgs.ethtool; # ethernet powertools
-  exa = pkgs.exa; # replacement for ls
-  firefox = pkgs.firefox; # browser - mb change to wrapped for codecs
-  ffmpeg-full = pkgs.ffmpeg-full; # multimedia tool
-  flatpak = pkgs.flatpak; # sandbox apps
-  gcc = pkgs.gcc; # for linking
-  git = pkgs.git;
-  go = pkgs.go;
-  google-chrome = pkgs.google-chrome; # browse
-  graphviz = pkgs.graphviz; # graph visualization 
-  gzip = pkgs.gzip; # file compression
-  home-manager = pkgs.home-manager;
-  #idea-ultimate = pkgs.jetbrains.idea-ultimate; # ide
-  libinput = pkgs.libinput; # Handle input devices in Wayland
-  libvirt = pkgs.libvirt; # for virtualization
-  imhex = pkgs.imhex;
-  jetbrains-toolbox = pkgs.jetbrains-toolbox; # ide installation
-  jetbrains-jdk-jcef = pkgs.jetbrains.jdk; # for better font rendering
-  kmod = pkgs.kmod; # kernel module loading
-  mailspring = pkgs.mailspring;
-  mullvad-vpn = pkgs.mullvad-vpn; 
-  neofetch = pkgs.neofetch; # unix shit
-  nettools = pkgs.nettools; # network utilities
-  nfs-utils = pkgs.nfs-utils; 
-  obsidian = pkgs.obsidian; # markdown note taker
-  oh-my-zsh = pkgs.oh-my-zsh; # zsh customizer
-  openrgb = pkgs.openrgb-with-all-plugins; # rgb controller
-  p7zip = pkgs.p7zip;
-  pandoc = pkgs.pandoc; # markdown to other
-  parted = pkgs.parted; # disk partitioning
-  pciutils = pkgs.pciutils; # pcie memes
-  prismlauncher = pkgs.prismlauncher; # MC launcher
-  qalculate-qt = pkgs.qalculate-qt; # graphics calculator
-  qemu = pkgs.qemu; # virtulization tools
-  rclone = pkgs.rclone; # backup tool
-  ripgrep = pkgs.ripgrep; # faster grep
-  rmlint = pkgs.rmlint; # file deduplication
-  rofi = pkgs.rofi-wayland; # run dialog for Wayland
-  rsync = pkgs.rsync; # remote file copying
-  rustup = pkgs.rustup; # rust toolchain
-  signal-desktop = pkgs.signal-desktop; # messaging app
-  sqlite = pkgs.sqlite; 
-  spice-vdagent = pkgs.spice-vdagent; # for copy and pasting from vms
-  spotify = pkgs.spotify; # music streaming
-  tectonic = pkgs.tectonic; # self-contained latex
-  #tmux = pkgs.tmux; # terminal multiplexer
-  tor = pkgs.tor; # secure browser
-  transmission-gtk = pkgs.transmission-gtk; # torrent client
-  unzip = pkgs.unzip;
-  vlc = pkgs.vlc; # media player
-  vscode = pkgs.vscode; # ide
-  vim = pkgs.vim; # text editor
-  virt-manager = pkgs.virt-manager; # virtualization gui
-  wl-clipboard = pkgs.wl-clipboard; # wayland terminal clipboard
-  zathura-with-plugins = pkgs.zathura; # pdf viewer
-  zotero = pkgs.zotero; # reference manager
-  zoom-us = pkgs.zoom-us; # video conferencing
-  zip = pkgs.zip;
-  zsh = pkgs.zsh; # best shell
+  # a less boilerplate heavy way of specifying pkgs
+  environment.systemPackages = with pkgs; [
+    wrappedAuthy
+    wrappedBitwarden
+    wrappedBrave
+    wrappedSpotify
+    alacritty
+    authy 
+    bat
+    biber
+    bitwarden 
+    bluez
+    brave #todo-chromium wrap
+    btop
+    chafa
+    calibre
+    chromedriver
+    cliphist
+    colord
+    cups
+    direnv
+    discord # chromium wrap
+    docker
+    docker-compose
+    dua
+    ethtool
+    exa
+    firefox
+    ffmpeg-full
+    flatpak
+    gcc
+    git
+    go
+    google-chrome #wrap
+    graphviz
+    gzip
+    home-manager
+    libinput
+    libvirt
+    imhex
+    kmod
+    mailspring #wrap
+    mullvad-vpn #wrap
+    neofetch
+    nettools
+    nfs-utils
+    obsidian #wrap
+    oh-my-zsh
+    openrgb
+    p7zip
+    pandoc
+    parted
+    pciutils
+    prismlauncher
+    qalculate-qt
+    qemu
+#    qtwayland
+    rclone
+    ripgrep
+    rmlint
+    rofi
+    rsync
+    rustup
+    signal-desktop #wrap
+    sqlite
+    spice-vdagent
+    spotify #wrap
+    tectonic
+    tor
+    transmission-gtk
+    unzip
+    vlc
+    vim
+    virt-manager
+    wl-clipboard
+    xdg-desktop-portal-hyprland
+    zathura
+    zotero
+    zoom-us #wrap
+    zip
+    zsh
+  ];
 }

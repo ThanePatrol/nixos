@@ -124,7 +124,7 @@ in
     kitty
     pythonPackages
   ] 
-    ++ (builtins.attrValues syspackages)
+    ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
 
