@@ -90,9 +90,24 @@ in {
                 "$mod,K,movefocus,u"
                 "$mod,J,movefocus,d"
 
+                "SUPER_SHIFT, H, movetoworkspace,+1"
+                "SUPER_SHIFT, L, movetoworkspace,-1"
+                #todo - figure out why screenshot isn't working
+                '',Print,exec,grim -g "$(slurp)"''
                 #clipboard history
 #                "$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
 
+            ];
+            # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms
+            # playerctl options https://github.com/altdesktop/playerctl
+            bindl = [
+                ",XF86AudioPlay,exec,playerctl play-pause"
+                ",XF86AudioPrev,exec,playerctl previous"
+                ",XF86AudioNext,exec,playerctl next"
+            ];
+            binde = [
+                ",XF86AudioLowerVolume,exec,playerctl volume 0.1-"
+                ",XF86AudioRaiseVolume,exec,playerctl volume 0.1+"
             ];
         };
 

@@ -9,11 +9,22 @@ let
     exec ${pkgs.authy}/bin/authy --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
   wrappedBrave = pkgs.writeShellScriptBin "brave" ''
-    exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland
+    exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland -use-gl=egl
   '';
 
   wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
     exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+  
+  wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
+    exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+
+  wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
+    exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
+  '';
+  wrappedSignal = pkgs.writeShellScriptBin "signal-desktop" ''
+    exec ${pkgs.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 in
 {
@@ -21,15 +32,24 @@ in
   environment.systemPackages = with pkgs; [
     wrappedAuthy
     wrappedBitwarden
-    wrappedBrave
+    (symlinkJoin {
+      inherit (brave) name;
+      paths = [ brave ];
+      buildInputs = [makeWrapper];
+      postBuild = ''wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland"'';
+    })
     wrappedSpotify
+    wrappedChrome
+    wrappedMailspring
+    wrappedSignal
     alacritty
     authy 
+    anki
     bat
     biber
     bitwarden 
     bluez
-    brave #todo-chromium wrap
+#    brave #todo-chromium wrap
     btop
     chafa
     calibre
@@ -52,6 +72,7 @@ in
     go
     google-chrome #wrap
     graphviz
+    grim
     gzip
     home-manager
     libinput
@@ -70,6 +91,7 @@ in
     pandoc
     parted
     pciutils
+    playerctl
     prismlauncher
     qalculate-qt
     qemu
@@ -84,6 +106,7 @@ in
     sqlite
     spice-vdagent
     spotify #wrap
+    slurp
     tectonic
     tor
     transmission-gtk
