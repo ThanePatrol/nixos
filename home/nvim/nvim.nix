@@ -4,8 +4,6 @@ let
   python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
 in
 {
-  config = mkIf config.my-home.useNeovim {
-
    programs.neovim = {
      #package = pkgs.neovim-nightly;
      enable = true;
@@ -35,6 +33,15 @@ in
        nvim-lspconfig
        nvim-lsp-ts-utils
 
+       #keybinds
+       legendary-nvim
+
+       #status bar
+       lualine-nvim
+
+       #syntax highlighting
+       nvim-treesitter.withAllGrammars
+
        #Completions
        cmp-nvim-lsp
        cmp-buffer
@@ -43,6 +50,10 @@ in
        cmp-nvim-lsp-signature-help
        nvim-cmp
        lspkind-nvim
+      
+       #snippets
+       luasnip
+       cmp_luasnip
 
        catppuccin-nvim
      ];
@@ -50,7 +61,6 @@ in
      extraPackages = with pkgs; [
        tree-sitter
        #Language servers
-       node-js
        nodePackages.bash-language-server
        lua-language-server
        #nix
@@ -62,7 +72,8 @@ in
        black
        #typescript
        nodePackages.typescript-language-server
-
+       #rust
+       rust-analyzer
      ];
    };
    xdg.configFile.nvim = {
@@ -70,7 +81,6 @@ in
      recursive = true;
    };
 
-   };
   # todo - make this more like https://github.com/fmoda3/nix-configs/tree/master/home/nvim/config/lua
   # less reliant on hard paths: also: <Right>https://www.reddit.com/r/NixOS/comments/xa30jq/homemanager_nvim_lua_config_for_plugins/
 #  xdg.configFile.nvim = {

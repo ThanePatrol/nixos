@@ -23,7 +23,7 @@ in {
     wayland.windowManager.hyprland = {
         enable = true;
         systemdIntegration = true;
-        xwayland.enable = false;
+        xwayland.enable = true;
 
         settings = {
             "$mod" = "SUPER";
