@@ -15,12 +15,25 @@
 #            categories = ["Social"];
 #        };
 
-        bitwarden = {
-            name = "Bitwarden";
-            exec = "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland";
+       # bitwarden = {
+       #     name = "Bitwarden";
+       #     exec = "bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland";
+       #     terminal = false;
+       #     categories = ["Applications"];
+       # };
+        
+#        signal-desktop = {
+#            name = "Signal";
+#            genericName = "Messaging App";
+#            exec = "${pkgs.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland";
+#            terminal = false;
+#            categories = ["Applications"];
+#        };
+        brave = {
+            name = "Brave";
+            exec = "${pkgs.brave}/bin/brave";
             terminal = false;
-            categories = ["Applications"];
+            categories = ["Network" "WebBrowser"];
         };
-
     };
 }

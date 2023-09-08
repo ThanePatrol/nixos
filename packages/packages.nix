@@ -9,7 +9,7 @@ let
     exec ${pkgs.authy}/bin/authy --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
   wrappedBrave = pkgs.writeShellScriptBin "brave" ''
-    exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland -use-gl=egl
+    exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
   wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
@@ -24,7 +24,10 @@ let
     exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
   wrappedSignal = pkgs.writeShellScriptBin "signal-desktop" ''
-    exec ${pkgs.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
+    exec ${pkgs.signal-desktop}/bin/signal-desktop --ozone-platform-hint=auto
+  '';
+  wrappedZoom= pkgs.writeShellScriptBin "zoom-us" ''
+    exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 in
 {
@@ -32,16 +35,18 @@ in
   environment.systemPackages = with pkgs; [
     wrappedAuthy
     wrappedBitwarden
+  #  wrappedBrave
     (symlinkJoin {
       inherit (brave) name;
       paths = [ brave ];
       buildInputs = [makeWrapper];
-      postBuild = ''wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland"'';
+      postBuild = ''wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
     })
     wrappedSpotify
     wrappedChrome
     wrappedMailspring
     wrappedSignal
+    wrappedZoom
     alacritty
     authy 
     anki
@@ -49,7 +54,7 @@ in
     biber
     bitwarden 
     bluez
-#    brave #todo-chromium wrap
+  #  brave #todo-chromium wrap
     btop
     chafa
     calibre
@@ -64,6 +69,7 @@ in
     dua
     ethtool
     exa
+    dunst
     firefox
     ffmpeg-full
     flatpak
@@ -95,7 +101,7 @@ in
     prismlauncher
     qalculate-qt
     qemu
-#    qtwayland
+    qt6.qtwayland
     rclone
     ripgrep
     rmlint
