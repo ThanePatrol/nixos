@@ -108,6 +108,7 @@ in
     rofi
     rsync
     rustup
+    rust-analyzer
 #    signal-desktop #wrap
     sqlite
     spice-vdagent

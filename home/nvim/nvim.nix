@@ -4,6 +4,7 @@ let
   python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
 in
   {
+    # taken from https://github.com/fmoda3/nix-configs/tree/master/home/nvim
   programs.neovim = {
      #package = pkgs.neovim-nightly;
      enable = true;
@@ -50,6 +51,9 @@ in
        cmp-nvim-lsp-signature-help
        nvim-cmp
        lspkind-nvim
+
+       #formatting
+       rust-vim
       
        #snippets
        luasnip
@@ -70,10 +74,12 @@ in
        pyright
        python-debug
        black
-       #typescript
+       #typescript/web
        nodePackages.typescript-language-server
+       nodePackages.vscode-langservers-extracted
        #rust
        rust-analyzer
+       rustfmt
      ];
    };
    xdg.configFile.nvim = {

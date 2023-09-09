@@ -36,11 +36,23 @@ local function default_lsp_setup(module)
 end
 
 default_lsp_setup("bashls")
-default_lsp_setup("rust_analyzer")
+--default_lsp_setup("rust_analyzer")
 default_lsp_setup("nil_ls")
 default_lsp_setup("pyright")
 default_lsp_setup("lua_ls")
---default_lsp_setup("cssls") todo - double check implementation
---default_lsp_setup("html")
---default_lsp_setup("jsonls")
+default_lsp_setup("cssls")
+default_lsp_setup("html")
+default_lsp_setup("jsonls")
+
+nvim_lsp.rust_analyzer.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    ['rust_analyzer'] = {
+        cargo = {
+          allFeatures = true,
+        },
+    },
+  },
+})
 
