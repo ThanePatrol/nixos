@@ -1,4 +1,4 @@
-require('nvim-lualine').setup({
+require('lualine').setup({
   opts = {
     options = {
       icons_enabled = false,

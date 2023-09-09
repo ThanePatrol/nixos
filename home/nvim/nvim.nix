@@ -1,10 +1,10 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, lib, ... }:
 with lib;
 let
   python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
 in
-{
-   programs.neovim = {
+  {
+  programs.neovim = {
      #package = pkgs.neovim-nightly;
      enable = true;
      defaultEditor = true;

@@ -24,7 +24,7 @@ let
     exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
   wrappedSignal = pkgs.writeShellScriptBin "signal-desktop" ''
-    exec ${pkgs.signal-desktop}/bin/signal-desktop --ozone-platform-hint=auto
+    exec ${pkgs.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
   wrappedZoom= pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
@@ -108,7 +108,7 @@ in
     rofi
     rsync
     rustup
-    signal-desktop #wrap
+#    signal-desktop #wrap
     sqlite
     spice-vdagent
     spotify #wrap

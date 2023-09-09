@@ -27,6 +27,8 @@ vim.o.completeopt = 'menuone,noselect'
 
 vim.o.termguicolors = true
 
+vim.keymap.set('ca', 'TT', 'NvimTreeToggle')
+
 require('catppuccin-config')
 require('nvim-tree-config')
 require('autopairs-config')

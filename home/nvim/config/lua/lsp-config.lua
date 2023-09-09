@@ -11,13 +11,10 @@ local on_attach = function(client, bufnr)
     if desc then
       desc = 'LSP: ' .. desc
     end
-    
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
-  
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
@@ -39,10 +36,10 @@ local function default_lsp_setup(module)
 end
 
 default_lsp_setup("bashls")
-default_lsp_setup("rust-analyzer")
-default_lsp_setup("nil")
+default_lsp_setup("rust_analyzer")
+default_lsp_setup("nil_ls")
 default_lsp_setup("pyright")
---default_lsp_setup("lua
+default_lsp_setup("lua_ls")
 --default_lsp_setup("cssls") todo - double check implementation
 --default_lsp_setup("html")
 --default_lsp_setup("jsonls")
