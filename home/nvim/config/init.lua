@@ -35,6 +35,19 @@ vim.api.nvim_set_keymap('n', 'tf', ':NvimTreeFocus<CR>', { noremap = true, silen
 --	pattern = "*.py",
 --	callback = vim.cmd(':!black %')
 --})
+
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+	desc = 'format python on write using black',
+
+	group = vim.api.nvim_create_augroup('black_on_save', { clear = true }),
+	callback = function (opts)
+		if vim.bo[opts.buf].filetype == 'python' then
+			vim.cmd '!black %'
+		end
+	end,
+})
+
 -- todo - figure out why autosave is not working
 vim.g.rustfmt_autosave = 1,
 

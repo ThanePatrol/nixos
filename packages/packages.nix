@@ -51,8 +51,11 @@ in
     authy 
     anki
     bat
+    bear # compilation database for clang tooling
     bfg-repo-cleaner
     biber
+    binutils
+    binutils_nogold
     bitwarden 
     bluez
   #  brave #todo-chromium wrap
@@ -60,8 +63,13 @@ in
     chafa
     calibre
     chromedriver
+    llvmPackages_16.clangUseLLVM
+    llvmPackages_rocm.clang
+    llvmPackages_rocm.llvm
     cliphist
     colord
+    cmake
+    clang
     cups
     direnv
     discord # chromium wrap
@@ -80,10 +88,13 @@ in
     google-chrome #wrap
     graphviz
     grim
+    gnumake
     gzip
     home-manager
+    libclang
     libinput
     libvirt
+    llvm_16
     imhex
     kmod
     mailspring #wrap
