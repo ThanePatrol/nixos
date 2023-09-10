@@ -83,12 +83,14 @@ in {
                 "$mod, C, killactive"
                 "$mod, M, exit"
                 "$mod, R, exec, wofi --show drun"
-
+                "$mod, S, togglesplit, " # split workspace
                 #vim keybindings for motion
                 "$mod,H,movefocus,l"
                 "$mod,L,movefocus,r"
                 "$mod,K,movefocus,u"
                 "$mod,J,movefocus,d"
+                
+
                 
                 #workspace memes
                 "SUPER_SHIFT, H, movetoworkspace,+1"
@@ -102,7 +104,12 @@ in {
                 "$mod, 7, workspace, 7"
                 "$mod, 8, workspace, 8"
                 "$mod, 9, workspace, 9"
-                #todo - figure out why screenshot isn't working
+                # move workspaces around
+                "$mod, left, movewindow, l"
+                "$mod, right, movewindow, r"
+                "$mod, up, movewindow, u"
+                "$mod, down, movewindow, d"
+
                 '',Print,exec,grim -g "$(slurp)"''
                 #clipboard history
 #                "$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
@@ -118,7 +125,15 @@ in {
             binde = [
                 ",XF86AudioLowerVolume,exec,playerctl volume 0.1-"
                 ",XF86AudioRaiseVolume,exec,playerctl volume 0.1+"
+
+
             ];
+            bindm = [
+                #move and resize windows
+                #"$mod, up, movewindow"
+                #"$mod, down, resizewindow"
+            ];
+
         };
 
 
