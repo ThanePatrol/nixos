@@ -117,6 +117,8 @@ in
     "google-chrome"
   ];
 
+  nix.settings.auto-optimise-store = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

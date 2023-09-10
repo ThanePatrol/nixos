@@ -51,6 +51,7 @@ in
     authy 
     anki
     bat
+    bfg-repo-cleaner
     biber
     bitwarden 
     bluez
@@ -68,7 +69,7 @@ in
     docker-compose
     dua
     ethtool
-    exa
+    eza
     dunst
     firefox
     ffmpeg-full
