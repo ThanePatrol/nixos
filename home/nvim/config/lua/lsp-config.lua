@@ -37,12 +37,14 @@ end
 
 default_lsp_setup("bashls")
 --default_lsp_setup("rust_analyzer")
-default_lsp_setup("nil_ls")
+default_lsp_setup("nil_ls") --nix
 default_lsp_setup("pyright")
 default_lsp_setup("lua_ls")
 default_lsp_setup("cssls")
 default_lsp_setup("html")
 default_lsp_setup("jsonls")
+default_lsp_setup("ccls") --c/c++
+default_lsp_setup('metals') -- scala
 
 nvim_lsp.rust_analyzer.setup({
   on_attach = on_attach,
@@ -55,4 +57,12 @@ nvim_lsp.rust_analyzer.setup({
     },
   },
 })
+
+--nvim_lsp.clangd.setup({
+--	on_attach = function(client, buf)
+--		client.server_capabilities.signatureHelpProvider = false
+--		on_attach(client, buf)
+--	end,
+--	capabilities = capabilities
+--})
 

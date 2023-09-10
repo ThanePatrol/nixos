@@ -55,6 +55,12 @@ in
        #formatting
        rust-vim
       
+       #c/c++
+       #clangd_extensions-nvim      
+       vim-ccls
+
+       #scala
+       nvim-metals
        #snippets
        luasnip
        cmp_luasnip
@@ -67,6 +73,21 @@ in
        #Language servers
        nodePackages.bash-language-server
        lua-language-server
+       
+       # todo - figure out why clangd isn't working
+       #c/c++
+       llvmPackages_11.clang-unwrapped
+       libclang
+       libcxx
+       cmake
+       glibc
+       gcc
+       libstdcxx5
+       llvmPackages_rocm.llvm
+       binutils_nogold
+       binutils
+       llvmPackages_rocm.clang
+       ccls
        #nix
        nil
        nixpkgs-fmt
@@ -80,6 +101,8 @@ in
        #rust
        rust-analyzer
        rustfmt
+       #scala
+       metals
      ];
    };
    xdg.configFile.nvim = {
