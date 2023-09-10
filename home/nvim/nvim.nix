@@ -98,6 +98,8 @@ in
        #typescript/web
        nodePackages.typescript-language-server
        nodePackages.vscode-langservers-extracted
+       nodejs_20
+       typescript
        #rust
        rust-analyzer
        rustfmt

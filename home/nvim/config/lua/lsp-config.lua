@@ -58,11 +58,21 @@ nvim_lsp.rust_analyzer.setup({
   },
 })
 
---nvim_lsp.clangd.setup({
---	on_attach = function(client, buf)
---		client.server_capabilities.signatureHelpProvider = false
---		on_attach(client, buf)
---	end,
---	capabilities = capabilities
---})
+nvim_lsp.tsserver.setup({
+	init_options = require('nvim-lsp-ts-utils').init_options,
+	on_attach = function (client, bufnr)
+		on_attach(client, bufnr)
+
+		-- todo, let ESlint handle formatting
+		local ts_utils = require('nvim-lsp-ts-utils')
+		ts_utils.setup({
+			enable_import_on_completion = true,
+		})
+		ts_utils.setup_client(client)
+
+		-- todo, add mappings
+	end,
+	capabilities = capabilities
+})
+
 

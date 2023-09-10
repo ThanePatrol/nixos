@@ -1,4 +1,6 @@
 a = input()
-a.split(" ")
+b = a.split(" ")
+c = sorted(b)
+c.sort()
 print(a)
 print(a)
