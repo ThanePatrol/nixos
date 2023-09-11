@@ -22,7 +22,7 @@ in {
                     "clock" # todo - add weather
                 ];
                 modules-right = [
-                    "pulseaudio" "network" "cpu" "memory"
+                    "pulseaudio" "network" "cpu"
                 ];
 
             };

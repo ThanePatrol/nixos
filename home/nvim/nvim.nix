@@ -52,8 +52,9 @@ in
        nvim-cmp
        lspkind-nvim
 
-       #formatting
+       #rust
        rust-vim
+       rust-tools-nvim
       
        #c/c++
        #clangd_extensions-nvim      

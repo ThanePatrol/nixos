@@ -96,6 +96,8 @@ in
     libvirt
     llvm_16
     imhex
+    jdk
+    jetbrains.idea-ultimate
     kmod
     mailspring #wrap
     mullvad-vpn #wrap
@@ -121,7 +123,7 @@ in
     rsync
     rustup
     rust-analyzer
-#    signal-desktop #wrap
+    signal-desktop #wrap
     sqlite
     spice-vdagent
     spotify #wrap

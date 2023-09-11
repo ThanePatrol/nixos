@@ -133,8 +133,17 @@ in {
                 #"$mod, up, movewindow"
                 #"$mod, down, resizewindow"
             ];
+            misc = {
+              disable_hyprland_logo = true;
+              disable_splash_rendering = true;
 
-        };
+            };
+
+
+          };
+            extraConfig = ''
+              monitor=DP-2,3840x2160@60,0x0,1
+            '';
 
 
     };

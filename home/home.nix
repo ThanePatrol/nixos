@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs,... }:
 
 let 
   alacritty = import ./alacritty.nix;
@@ -17,6 +17,7 @@ let
   wofi = import ./wofi/wofi.nix;
   wayland = import ./wayland/wayland.nix;
   desktop = import ./xdg/xdg.nix;
+#  intellij = import ./idea.nix;
 #  wrappers = import ./xdg/wrappers.nix;
 in
 {
@@ -40,6 +41,16 @@ in
     wofi
     wayland
     desktop
+#    intellij
 #    wrappers
   ];
+
+  #config = lib.mkIf config.custom.base.desktop.enable {
+   # custom = {
+   #   programs = {
+   #     idea-ultimate.enable = true;
+   #   };
+   # };
+
+ # };
 }

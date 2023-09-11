@@ -8,7 +8,8 @@ let
     syspackages = import ./packages/packages.nix { inherit pkgs; };
     pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
     languages = import ./packages/languages.nix { inherit pkgs; };
-    homeConfig = import ./home/home.nix { inherit pkgs config; };
+    homeConfig = import ./home/home.nix { inherit pkgs config lib; };
+    intellijConfig = import ./home/idea.nix { inherit pkgs config lib; };
 in
 {
   imports =
@@ -102,12 +103,13 @@ in
   
   home-manager.useGlobalPkgs = true;
   home-manager.users.hugh = homeConfig;
+  #home-manager.config = intellijConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # also defings a bunch of packages to use
   users.users.hugh = {
     isNormalUser = true;
     description = "hugh";
-    extraGroups = [ "networkmanager" "wheel" "plugdev"];
+    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" ];
     shell = pkgs.zsh;
   };
  
@@ -128,6 +130,16 @@ in
   ] 
     ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
+
+  #docker stuff
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+  systemd.services.docker.wantedBy = [ "multi-user.target" ];
 
 
   # Some programs need SUID wrappers, can be configured further or are

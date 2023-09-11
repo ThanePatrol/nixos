@@ -30,6 +30,10 @@ vim.o.termguicolors = true
 vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeToggle<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'tf', ':NvimTreeFocus<CR>', { noremap = true, silent = true})
 
+vim.api.nvim_set_keymap('n', 'g?', '<cmd>lua vim.diagnostic.open_float()<CR>', { 
+	noremap = true,
+	silent = true
+}) -- expand error messages
 --autoformat python, use callback for a vim function, command for a shell function
 --vim.api.nvim_create_autocmd('BufWritePost', {
 --	pattern = "*.py",
@@ -59,3 +63,4 @@ require('lsp-config')
 require('treesitter-config')
 require('status-line-config')
 require('formatting')
+require('rust')
