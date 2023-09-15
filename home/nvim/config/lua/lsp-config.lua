@@ -43,7 +43,7 @@ default_lsp_setup("nil_ls") --nix
 default_lsp_setup("pyright")
 default_lsp_setup("lua_ls")
 default_lsp_setup("cssls")
-default_lsp_setup("html")
+-- default_lsp_setup("html")
 default_lsp_setup("jsonls")
 default_lsp_setup("ccls") --c/c++
 default_lsp_setup('metals') -- scala
@@ -78,4 +78,10 @@ nvim_lsp.tsserver.setup({
 	capabilities = capabilities
 })
 
-
+nvim_lsp.html.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	filetypes = {
+		"html", "rust"
+	}
+})

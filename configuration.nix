@@ -9,7 +9,6 @@ let
     pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
     languages = import ./packages/languages.nix { inherit pkgs; };
     homeConfig = import ./home/home.nix { inherit pkgs config lib; };
-    intellijConfig = import ./home/idea.nix { inherit pkgs config lib; };
 in
 {
   imports =

@@ -5,9 +5,9 @@ let
     exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
-  wrappedAuthy = pkgs.writeShellScriptBin "authy" ''
-    exec ${pkgs.authy}/bin/authy --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
+  #wrappedAuthy = pkgs.writeShellScriptBin "authy" ''
+  #  exec ${pkgs.authy}/bin/authy --enable-features=UseOzonePlatform --ozone-platform=wayland
+  #'';
   wrappedBrave = pkgs.writeShellScriptBin "brave" ''
     exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -33,7 +33,6 @@ in
 {
   # a less boilerplate heavy way of specifying pkgs
   environment.systemPackages = with pkgs; [
-    wrappedAuthy
     wrappedBitwarden
   #  wrappedBrave
     (symlinkJoin {
@@ -62,6 +61,7 @@ in
     btop
     chafa
     calibre
+    cargo-watch
     chromedriver
     llvmPackages_16.clangUseLLVM
     llvmPackages_rocm.clang
@@ -77,8 +77,8 @@ in
     docker-compose
     dua
     ethtool
-    eza
-    dunst
+    eza # modern ls
+    dunst # notification daemon
     firefox
     ffmpeg-full
     flatpak
@@ -87,10 +87,14 @@ in
     go
     google-chrome #wrap
     graphviz
-    grim
+    grim #screenshot
     gnumake
+    gnome.gnome-calendar 
+    gnome.nautilus #file viewer
+    gnome.sushi #file preview
     gzip
     home-manager
+    lazygit 
     libclang
     libinput
     libvirt
@@ -100,6 +104,7 @@ in
     jetbrains.idea-ultimate
     kmod
     mailspring #wrap
+    mold
     mullvad-vpn #wrap
     neofetch
     nettools

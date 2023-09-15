@@ -52,7 +52,8 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 	end,
 })
 
--- todo - figure out why autosave is not working
+vim.opt.relativenumber = true
+
 vim.g.rustfmt_autosave = 1,
 
 require('catppuccin-config')
@@ -64,3 +65,4 @@ require('treesitter-config')
 require('status-line-config')
 require('formatting')
 require('rust')
+require('indent-blankline-config')

@@ -93,8 +93,8 @@ in {
 
                 
                 #workspace memes
-                "SUPER_SHIFT, H, movetoworkspace,+1"
-                "SUPER_SHIFT, L, movetoworkspace,-1"
+                "SUPER_SHIFT, K, movetoworkspace,+1"
+                "SUPER_SHIFT, J, movetoworkspace,-1"
                 "$mod, 1, workspace, 1"
                 "$mod, 2, workspace, 2"
                 "$mod, 3, workspace, 3"
@@ -121,12 +121,15 @@ in {
                 ",XF86AudioPlay,exec,playerctl play-pause"
                 ",XF86AudioPrev,exec,playerctl previous"
                 ",XF86AudioNext,exec,playerctl next"
-            ];
+
+
+              ];
+            # binde allows for repeat button presses
             binde = [
-                ",XF86AudioLowerVolume,exec,playerctl volume 0.1-"
-                ",XF86AudioRaiseVolume,exec,playerctl volume 0.1+"
-
-
+                ",XF86AudioLowerVolume,exec,playerctl volume 0.1-" # application level volume controls
+                ",XF86AudioRaiseVolume,exec,playerctl volume 0.1+" # ^^
+                "$mod, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" # system level volume control
+                "$mod, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+" # system level volume control
             ];
             bindm = [
                 #move and resize windows

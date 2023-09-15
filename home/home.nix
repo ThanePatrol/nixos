@@ -17,8 +17,7 @@ let
   wofi = import ./wofi/wofi.nix;
   wayland = import ./wayland/wayland.nix;
   desktop = import ./xdg/xdg.nix;
-#  intellij = import ./idea.nix;
-#  wrappers = import ./xdg/wrappers.nix;
+  rust = import ./rust.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -41,16 +40,7 @@ in
     wofi
     wayland
     desktop
-#    intellij
-#    wrappers
+    rust
   ];
 
-  #config = lib.mkIf config.custom.base.desktop.enable {
-   # custom = {
-   #   programs = {
-   #     idea-ultimate.enable = true;
-   #   };
-   # };
-
- # };
 }
