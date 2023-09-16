@@ -1,0 +1,54 @@
+
+* {
+	border: none;
+	border-radius: 10;
+	font-family: "JetbrainsMono Nerd Font";
+	font-size: 20px;
+	min-height: 15px;
+}
+
+window#waybar {
+    background-color: #181825;
+    border-radius: 20px;
+    margin: 32px 16px;
+    color: #cdd6f4;
+    box-shadow: 2px 3px 2px 2px #151515;
+    font-size: 16px;
+    /* transition-property: background-color; */
+    transition-property: background-color;
+    transition-duration: 0.5s;
+  }
+
+window#waybar.hidden {
+    opacity: 0.2;
+  }
+
+#clock {
+    font-weight: 700;
+    font-size: 20px;
+    font-family: "Iosevka Term";
+    padding: 5px 0px 5px 0px;
+  }
+
+  #workspaces button {
+    background-color: transparent;
+    /* Use box-shadow instead of border so the text isn't offset */
+    color: #89b4fa;
+    padding-left: 6px;
+    box-shadow: inset 0 -3px transparent;
+    transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.68);
+  }
+
+  #workspaces button:hover {
+    color: #b4befe;
+    box-shadow: inherit;
+    text-shadow: inherit;
+  }
+
+#workspaces button.active {
+    color: #f9e2af;
+    transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
+  }
+  #workspaces button.urgent {
+    background-color: #eba0ac;
+  }

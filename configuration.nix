@@ -69,8 +69,8 @@ in
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
 
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
@@ -102,7 +102,6 @@ in
   
   home-manager.useGlobalPkgs = true;
   home-manager.users.hugh = homeConfig;
-  #home-manager.config = intellijConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # also defings a bunch of packages to use
   users.users.hugh = {
@@ -118,7 +117,7 @@ in
     "google-chrome"
   ];
 
-  nix.settings.auto-optimise-store = true;
+  nix.settings.auto-optimise-store = true; #reduce garbage
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

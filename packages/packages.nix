@@ -117,6 +117,7 @@ in
     parted
     pciutils
     playerctl
+    pkg-config
     prismlauncher
     qalculate-qt
     qemu

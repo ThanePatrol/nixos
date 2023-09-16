@@ -4,8 +4,7 @@
   home.packages = [ pkgs.rclone ];
   
   #todo - configure local backups and remote backups
-  # secret management with https://github.com/Mic92/sops-nix
-
+  # get prompting for local
   home.file."./.config/rclone/rclone.conf".text = ''
     [seafile_to_NAS]
     type = local
