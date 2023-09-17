@@ -85,7 +85,7 @@ colors:
         - { index: 17, color: "#F5E0DC" }
 
 env:
-    TERM: xterm-256color
+    TERM: tmux-256color
 
 font:
     normal:

@@ -44,7 +44,6 @@ in
     wrappedSpotify
     wrappedChrome
     wrappedMailspring
-    wrappedSignal
     wrappedZoom
     alacritty
     authy 
@@ -92,34 +91,40 @@ in
     gnome.gnome-calendar 
     gnome.nautilus #file viewer
     gnome.sushi #file preview
+    gnome.libgnome-keyring #secret manager
+    gnome.gnome-keyring
     gzip
     home-manager
     lazygit 
     libclang
     libinput
     libvirt
+    libsecret # for storing password
     llvm_16
     imhex
     jdk
     jetbrains.idea-ultimate
     kmod
     mailspring #wrap
-    mold
+    mold # fast linker for llvm
+#    minicom # for serial connections
     mullvad-vpn #wrap
     neofetch
-    nettools
+    nettools #cmd line utils like ethtool
     nfs-utils
     obsidian #wrap
     oh-my-zsh
     openrgb
-    p7zip
-    pandoc
-    parted
-    pciutils
+    p7zip #7zip terminal
+    pandoc # document conversion
+    parted # disk partition tool
+    pass-secret-service #dbus api for libsecret
+    pciutils # useful pci utils
     playerctl
-    pkg-config
-    prismlauncher
-    qalculate-qt
+    picocom
+    pkg-config # build tools 
+    prismlauncher #minecraft!
+    qalculate-gtk # good graphical calculator
     qemu
     qt6.qtwayland
     rclone
@@ -129,6 +134,7 @@ in
     rsync
     rustup
     rust-analyzer
+    screen # for serial communication
     signal-desktop #wrap
     sqlite
     spice-vdagent

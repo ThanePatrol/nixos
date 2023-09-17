@@ -29,6 +29,9 @@ in
        # File stuff
        nvim-tree-lua
 
+       #emment syntax
+       emmet-vim
+
        #autoclose
        nvim-autopairs
 

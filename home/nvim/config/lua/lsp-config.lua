@@ -75,7 +75,15 @@ nvim_lsp.tsserver.setup({
 
 		-- todo, add mappings
 	end,
-	capabilities = capabilities
+	capabilities = capabilities,
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"javascript.jsx",
+		"typescript",
+		"typescriptreact",
+		"typescript.tsx",
+	}
 })
 
 nvim_lsp.html.setup({
@@ -83,5 +91,12 @@ nvim_lsp.html.setup({
 	capabilities = capabilities,
 	filetypes = {
 		"html", "rust"
-	}
+	},
+	configurationSection = { "html", "css", "javascript"},
+	embeddedLanguages = {
+		css = true,
+		javascript = true,
+	},
+	provideFormatter = true,
 })
+

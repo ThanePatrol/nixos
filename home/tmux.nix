@@ -4,7 +4,7 @@
   home.packages = [ pkgs.tmux ];
 
   programs.tmux = {
-    terminal = "xterm-256color";
+    terminal = "tmux-256color";
     enable = true;
     mouse = true;
     shortcut = "a";
@@ -27,7 +27,6 @@
 
       set -g @catppuccin_no_patched_fonts_theme_enabled on
       set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      
-            
     '';
   };
 

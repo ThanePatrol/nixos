@@ -69,8 +69,8 @@ in
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
@@ -138,6 +138,8 @@ in
     };
   };
   systemd.services.docker.wantedBy = [ "multi-user.target" ];
+  #lib secret provider2
+  services.passSecretService.enable = true;
 
 
   # Some programs need SUID wrappers, can be configured further or are
