@@ -24,6 +24,8 @@
       bind j select-pane -D 
       bind k select-pane -U
       bind l select-pane -R
+      bind-key & kill-window
+      bind-key x kill-pane
 
       set -g @catppuccin_no_patched_fonts_theme_enabled on
       set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      
