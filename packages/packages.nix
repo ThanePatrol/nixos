@@ -129,8 +129,9 @@ in
     qt6.qtwayland
     rclone
     ripgrep
-    rmlint
+    rmlint # remove duplicates
     rofi
+    rpi-imager # to add ssid and information into the bootable image
     rsync
     rustup
     rust-analyzer
