@@ -107,7 +107,7 @@ in
     kmod
     mailspring #wrap
     mold # fast linker for llvm
-#    minicom # for serial connections
+    minicom # for serial connections
     mullvad-vpn #wrap
     neofetch
     nettools #cmd line utils like ethtool
