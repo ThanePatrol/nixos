@@ -110,7 +110,7 @@ in {
                 "$mod, up, movewindow, u"
                 "$mod, down, movewindow, d"
 
-                '',Print,exec,grim -g "$(slurp)"''
+                '',Print,exec,grim -g "$(slurp)" - | wl-copy ''
                 #clipboard history
 #                "$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
 
