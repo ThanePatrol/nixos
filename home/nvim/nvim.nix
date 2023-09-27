@@ -105,6 +105,7 @@ in
        nixpkgs-fmt
        #python
        pyright
+       #python310Packages.debugpy
 #       python-debug
        black
        #typescript/web
