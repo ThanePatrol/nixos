@@ -1,7 +1,8 @@
 { pkgs, lib, ... }:
 with lib;
 let
-  python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
+  #python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
+  t = pkgs.python3.withPackages(p: with p; [numpy]);
 in
   {
 
@@ -11,7 +12,6 @@ in
 
     # taken from https://github.com/fmoda3/nix-configs/tree/master/home/nvim
   programs.neovim = {
-     #package = pkgs.neovim-nightly;
      enable = true;
      defaultEditor = true;
      viAlias = true;
@@ -105,7 +105,7 @@ in
        nixpkgs-fmt
        #python
        pyright
-       python-debug
+#       python-debug
        black
        #typescript/web
        nodePackages.typescript-language-server

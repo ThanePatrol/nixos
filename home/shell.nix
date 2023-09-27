@@ -42,6 +42,7 @@
      alias cat="bat"
      alias ls="eza"
      alias update="sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d"
+     alias clean="nix-collect-garbage && nix-store --optimise"
      alias nv="nvim"
      alias vim="nvim"
    '';

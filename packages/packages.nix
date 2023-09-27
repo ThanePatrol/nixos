@@ -5,13 +5,6 @@ let
     exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
-  #wrappedAuthy = pkgs.writeShellScriptBin "authy" ''
-  #  exec ${pkgs.authy}/bin/authy --enable-features=UseOzonePlatform --ozone-platform=wayland
-  #'';
-  wrappedBrave = pkgs.writeShellScriptBin "brave" ''
-    exec ${pkgs.brave}/bin/brave --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
-
   wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
     exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -23,9 +16,6 @@ let
   wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
     exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
-  wrappedSignal = pkgs.writeShellScriptBin "signal-desktop" ''
-    exec ${pkgs.signal-desktop}/bin/signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
   wrappedZoom= pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -34,7 +24,6 @@ in
   # a less boilerplate heavy way of specifying pkgs
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
-  #  wrappedBrave
     (symlinkJoin {
       inherit (brave) name;
       paths = [ brave ];
@@ -55,8 +44,7 @@ in
     binutils
     binutils_nogold
     bitwarden 
-    bluez
-  #  brave #todo-chromium wrap
+    bluez # bluetooth memes
     btop
     chafa
     calibre
@@ -142,6 +130,8 @@ in
     spotify #wrap
     slurp
     tectonic
+    texlive.combined.scheme-full # full latex stuff
+    thunderbird
     tor
     transmission-gtk
     typescript
