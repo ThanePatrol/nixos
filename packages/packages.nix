@@ -43,6 +43,7 @@ in
     biber
     binutils
     binutils_nogold
+    bitwarden-cli
     bitwarden 
     bluez # bluetooth memes
     btop
