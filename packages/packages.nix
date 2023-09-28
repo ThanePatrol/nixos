@@ -140,6 +140,7 @@ in
     vim
     virt-manager
     wl-clipboard
+    wpaperd
     xdg-desktop-portal-hyprland
     zathura
     zotero

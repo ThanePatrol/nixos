@@ -101,5 +101,8 @@ font:
     # Point size of the font
     size: 15
 
+window:
+    opacity: 0.7
+
   '';
 }

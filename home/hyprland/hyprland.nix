@@ -32,6 +32,7 @@ in {
                 "dunst" # notifications
                 "waybar" # status bar
                 "wl-paste --type text --watch cliphist store"
+                "wpaperd"
 
                 #"run-as-service waybar"
             ];

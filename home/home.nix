@@ -16,6 +16,7 @@ let
   waybar = import ./waybar/waybar.nix;
   wofi = import ./wofi/wofi.nix;
   wayland = import ./wayland/wayland.nix;
+  walls = import ./walls/wpapred.nix;
   desktop = import ./xdg/xdg.nix;
   rust = import ./rust.nix;
 in
@@ -39,6 +40,7 @@ in
     waybar
     wofi
     wayland
+    walls
     desktop
     rust
   ];
