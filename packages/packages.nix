@@ -77,6 +77,7 @@ in
     graphviz
     grim #screenshot
     gnumake
+    ghidra-bin
     gnome.gnome-calendar 
     gnome.nautilus #file viewer
     gnome.sushi #file preview
