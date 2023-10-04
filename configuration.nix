@@ -107,7 +107,7 @@ in
   users.users.hugh = {
     isNormalUser = true;
     description = "hugh";
-    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" ];
     shell = pkgs.zsh;
   };
  
