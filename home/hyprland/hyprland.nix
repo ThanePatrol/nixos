@@ -33,7 +33,7 @@ in {
                 "waybar" # status bar
                 "wl-paste --type text --watch cliphist store"
                 "wpaperd"
-
+                "~/nixos/home/hyprland/tmux_init.sh" 
                 #"run-as-service waybar"
             ];
 

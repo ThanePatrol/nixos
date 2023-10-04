@@ -10,4 +10,5 @@ python.withPackages (ps: with ps; [
   pandas
   matplotlib
   requests
+  selenium
 ])

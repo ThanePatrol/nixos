@@ -12,10 +12,10 @@ let
   wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
     exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
-
-  wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
-    exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
+#
+#  wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
+#    exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
+#  '';
   wrappedZoom= pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -32,7 +32,7 @@ in
     })
     wrappedSpotify
     wrappedChrome
-    wrappedMailspring
+#    wrappedMailspring
     wrappedZoom
     alacritty
     authy 
@@ -71,6 +71,7 @@ in
     ffmpeg-full
     flatpak
     gcc
+    geckodriver # webdriver automation
     git
     go
     google-chrome #wrap
@@ -95,7 +96,7 @@ in
     jdk
     jetbrains.idea-ultimate
     kmod
-    mailspring #wrap
+#    mailspring #wrap
     mold # fast linker for llvm
     minicom # for serial connections
     mullvad-vpn #wrap
