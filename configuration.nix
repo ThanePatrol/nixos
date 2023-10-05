@@ -137,6 +137,12 @@ in
       setSocketVariable = true;
     };
   };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.package = pkgs.qemu;
+  };
+
   systemd.services.docker.wantedBy = [ "multi-user.target" ];
   #lib secret provider2
   services.passSecretService.enable = true;

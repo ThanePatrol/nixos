@@ -41,6 +41,7 @@ in
     bear # compilation database for clang tooling
     bfg-repo-cleaner
     biber
+    bison
     binutils
     binutils_nogold
     bitwarden-cli
@@ -59,6 +60,7 @@ in
     cmake
     clang
     cups
+    dnsmasq
     direnv
     discord # chromium wrap
     docker
@@ -67,6 +69,7 @@ in
     ethtool
     eza # modern ls
     dunst # notification daemon
+    flex # lexical analysis
     firefox
     ffmpeg-full
     flatpak
@@ -88,6 +91,7 @@ in
     home-manager
     lazygit 
     libclang
+    libguestfs
     libinput
     libvirt
     libsecret # for storing password
@@ -106,6 +110,7 @@ in
     obsidian #wrap
     oh-my-zsh
     openrgb
+    OVMFFull # UEFI firmware for QEMU
     p7zip #7zip terminal
     pandoc # document conversion
     parted # disk partition tool
@@ -116,7 +121,7 @@ in
     pkg-config # build tools 
     prismlauncher #minecraft!
     qalculate-gtk # good graphical calculator
-    qemu
+    qemu_full
     qt6.qtwayland
     rclone
     ripgrep
