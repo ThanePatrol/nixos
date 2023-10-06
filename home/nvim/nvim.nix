@@ -39,6 +39,9 @@ in
        #indent lines
        indent-blankline-nvim
 
+       # allow movement between tmux panes
+       vim-tmux-navigator
+
        #rainbow brackets
        nvim-ts-rainbow
 

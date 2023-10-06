@@ -4,7 +4,7 @@
   home.packages = [ pkgs.tmux ];
 
   programs.tmux = {
-    terminal = "tmux-256color";
+    #terminal = "tmux-256color";
     enable = true;
     mouse = true;
     shortcut = "a";
@@ -16,18 +16,17 @@
       pkgs.tmuxPlugins.sensible
       pkgs.tmuxPlugins.catppuccin
       pkgs.tmuxPlugins.yank
-
+      pkgs.tmuxPlugins.vim-tmux-navigator
     ];
     
     extraConfig = ''
-      bind h select-pane -L
-      bind j select-pane -D 
-      bind k select-pane -U
-      bind l select-pane -R
       bind-key & kill-window
       bind-key x kill-pane
 
       set-option -g renumber-windows on
+
+      # fixes colors
+      set-option -sa terminal-overrides ",xterm*:Tc"
 
       set -g @catppuccin_no_patched_fonts_theme_enabled on
       set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      

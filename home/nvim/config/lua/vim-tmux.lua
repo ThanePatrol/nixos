@@ -1,0 +1,3 @@
+--require('vim-tmux-navigator').setup({
+--	lazy=false,
+--})
