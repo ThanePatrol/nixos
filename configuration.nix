@@ -143,6 +143,11 @@ in
     qemu.package = pkgs.qemu;
   };
 
+  systemd.services = {
+    libvirtd.enable = true;
+    virtlogd.enable = true;
+  };
+
   systemd.services.docker.wantedBy = [ "multi-user.target" ];
   #lib secret provider2
   services.passSecretService.enable = true;

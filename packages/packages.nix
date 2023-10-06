@@ -18,7 +18,13 @@ let
 #  '';
   wrappedZoom= pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
+    '';
+  
+  #wrappedGhidra = pkgs.writeShellScriptBin "ghidra" ''
+  #    export _JAVA_AWT_WM_NONREPARENTING=1
+  #    exec ${pkgs.ghidra-bin}/bin/ghidra
+  #'';
+      
 in
 {
   # a less boilerplate heavy way of specifying pkgs
@@ -34,6 +40,8 @@ in
     wrappedChrome
 #    wrappedMailspring
     wrappedZoom
+    
+    #wrappedGhidra
     alacritty
     authy 
     anki

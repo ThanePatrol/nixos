@@ -113,7 +113,7 @@ in {
 
                 '',Print,exec,grim -g "$(slurp)" - | wl-copy ''
                 #clipboard history
-#                "$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
+                #"$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
 
             ];
             # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms
@@ -136,6 +136,10 @@ in {
                 #move and resize windows
                 #"$mod, up, movewindow"
                 #"$mod, down, resizewindow"
+              ];
+
+            windowrulev2 = [
+              "tile, class:(ghidra-Ghidra)"
             ];
             misc = {
               disable_hyprland_logo = true;

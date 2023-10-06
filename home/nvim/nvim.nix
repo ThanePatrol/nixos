@@ -3,6 +3,7 @@ with lib;
 let
   #python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
   t = pkgs.python3.withPackages(p: with p; [numpy]);
+
 in
   {
 
