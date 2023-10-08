@@ -1,6 +1,10 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Fix colorscheme.
+vim.opt.termguicolors = true
+--vim.cmd([[ set t_8f=^[[38;2;%lu;%lu;%lum ]])
+--vim.cmd([[ set t_8b=^[[48;2;%lu;%lu;%lum ]])
 vim.cmd.colorscheme "catppuccin"
 
 -- highlight on search
@@ -24,8 +28,6 @@ vim.wo.signcolumn = 'yes'
 
 -- for better completion
 vim.o.completeopt = 'menuone,noselect'
-
-vim.o.termguicolors = true
 
 vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeToggle<CR>', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'tf', ':NvimTreeFocus<CR>', { noremap = true, silent = true})

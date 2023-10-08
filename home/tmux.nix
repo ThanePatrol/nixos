@@ -4,7 +4,7 @@
   home.packages = [ pkgs.tmux ];
 
   programs.tmux = {
-    #terminal = "tmux-256color";
+    terminal = "tmux-256color";
     enable = true;
     mouse = true;
     shortcut = "a";
@@ -25,11 +25,17 @@
 
       set-option -g renumber-windows on
 
-      # fixes colors
-      set-option -sa terminal-overrides ",xterm*:Tc"
-
+      # fixes colors inside neovim
+      set-option -sa terminal-overrides ",*265col*:Tc"
+      set -g default-terminal "tmux-256color"
+      
+      # theming and font fixing
       set -g @catppuccin_no_patched_fonts_theme_enabled on
       set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      
+
+      # launch new window in current dir
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
     '';
   };
 
