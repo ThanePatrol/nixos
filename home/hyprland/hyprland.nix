@@ -139,7 +139,9 @@ in {
               ];
 
             windowrulev2 = [
-              "tile, class:(ghidra-Ghidra)"
+              #"tile, class:(ghidra-Ghidra)"
+              "tile, title:CodeBrowser"
+              "tile, title:Ghidra:*"
             ];
             misc = {
               disable_hyprland_logo = true;
