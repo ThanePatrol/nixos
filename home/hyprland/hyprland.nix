@@ -80,10 +80,10 @@ in {
             };
 
             bind = [
-                "$mod, Q, exec, alacritty"
+                #"$mod, Q, exec, alacritty" - taking this out for now, too contrary to mac os
                 "$mod, C, killactive"
                 "$mod, M, exit"
-                "$mod, R, exec, wofi --show drun"
+                "$mod, SPACE, exec, wofi --show drun" # make it more similar to mac os - shock horror
                 "$mod, S, togglesplit, " # split workspace
                 #vim keybindings for motion
                 "$mod,H,movefocus,l"
