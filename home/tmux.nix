@@ -26,8 +26,7 @@
       set-option -g renumber-windows on
 
       # fixes colors inside neovim
-      set-option -sa terminal-overrides ",*265col*:Tc"
-      set -g default-terminal "tmux-256color"
+      set -ga terminal-overrides ",*256col*:Tc"
       
       # theming and font fixing
       set -g @catppuccin_no_patched_fonts_theme_enabled on

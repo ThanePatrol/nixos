@@ -103,6 +103,7 @@ in
     libinput
     libvirt
     libsecret # for storing password
+    linuxHeaders
     llvm_16
     imhex
     jdk
@@ -145,12 +146,14 @@ in
     spice-vdagent
     spotify #wrap
     slurp
+    sshfs
     tectonic
     texlive.combined.scheme-full # full latex stuff
     thunderbird
     tor
     transmission-gtk
     typescript
+    uefi-run
     unzip
     vlc
     vim
