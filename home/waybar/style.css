@@ -28,27 +28,27 @@ window#waybar.hidden {
     font-size: 20px;
     font-family: "Iosevka Term";
     padding: 5px 0px 5px 0px;
-  }
+}
 
-  #workspaces button {
+#workspaces button {
     background-color: transparent;
     /* Use box-shadow instead of border so the text isn't offset */
     color: #89b4fa;
     padding-left: 6px;
     box-shadow: inset 0 -3px transparent;
     transition: all 0.5s cubic-bezier(.55,-0.68,.48,1.68);
-  }
+}
 
-  #workspaces button:hover {
-    color: #b4befe;
+#workspaces button:hover {
+    color: #F5C2E7;
     box-shadow: inherit;
     text-shadow: inherit;
-  }
+}
 
 #workspaces button.active {
     color: #f9e2af;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
-  }
-  #workspaces button.urgent {
+}
+#workspaces button.urgent {
     background-color: #eba0ac;
-  }
+}

@@ -97,6 +97,7 @@ in
     gnome.gnome-keyring
     gzip
     home-manager
+    hyprpicker
     lazygit 
     libclang
     libguestfs

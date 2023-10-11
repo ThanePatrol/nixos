@@ -91,6 +91,8 @@ in {
                 "$mod,K,movefocus,u"
                 "$mod,J,movefocus,d"
                 
+                # Copy color and send to clipboard
+                "$mod, p, exec, hyprpicker -a"
 
                 
                 #workspace memes

@@ -24,7 +24,6 @@ in {
                 modules-right = [
                     "pulseaudio" "network" "cpu"
                 ];
-
             };
           };
         style = builtins.readFile ./style.css;
