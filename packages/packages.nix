@@ -24,6 +24,11 @@ let
   #    export _JAVA_AWT_WM_NONREPARENTING=1
   #    exec ${pkgs.ghidra-bin}/bin/ghidra
   #'';
+
+  overlay = import ./overlays.nix;
+  #myPkgs = import <nixpkgs> {
+  #  overlays = [ overlay ];
+  #};
       
 in
 {
@@ -43,7 +48,7 @@ in
     
     #wrappedGhidra
     alacritty
-    authy 
+    #authy 
     anki
     bat
     bear # compilation database for clang tooling
@@ -118,6 +123,7 @@ in
     nettools #cmd line utils like ethtool
     nfs-utils
     obsidian #wrap
+    opendrop
     oh-my-zsh
     openrgb
     OVMFFull # UEFI firmware for QEMU
