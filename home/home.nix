@@ -19,6 +19,7 @@ let
   walls = import ./walls/wpapred.nix;
   desktop = import ./xdg/xdg.nix;
   rust = import ./rust.nix;
+  xdg = import ./xdg/xdg.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -43,6 +44,7 @@ in
     walls
     desktop
     rust
+    xdg
   ];
 
 }

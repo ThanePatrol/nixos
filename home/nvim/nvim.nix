@@ -124,6 +124,9 @@ in
        rustfmt
        #scala
        metals
+
+       #latex
+      texlab
      ];
    };
    xdg.configFile.nvim = {
