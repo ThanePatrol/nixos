@@ -46,6 +46,10 @@ in
        #LSP
        nvim-lspconfig
        nvim-lsp-ts-utils
+        
+       #Co pilot
+       copilot-lua
+       copilot-cmp
 
        #keybinds
        legendary-nvim

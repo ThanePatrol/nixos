@@ -16,3 +16,4 @@ sudo nix-channel --add https://github.com/nix-community/home-manager/archive/mas
 sudo nix-channel --update
 
 echo "added home-manager unstable channel"
+
