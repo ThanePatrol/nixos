@@ -94,17 +94,14 @@ in
        
        # todo - figure out why clangd isn't working
        #c/c++
-       llvmPackages_11.clang-unwrapped
        libclang
        libcxx
        cmake
        glibc
        gcc
        libstdcxx5
-       llvmPackages_rocm.llvm
        binutils_nogold
        binutils
-       llvmPackages_rocm.clang
        ccls
        #nix
        nil

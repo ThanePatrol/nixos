@@ -65,9 +65,6 @@ in
     calibre
     cargo-watch
     chromedriver
-    llvmPackages_16.clangUseLLVM
-    llvmPackages_rocm.clang
-    llvmPackages_rocm.llvm
     cliphist
     colord
     cmake

@@ -20,6 +20,7 @@ let
   desktop = import ./xdg/xdg.nix;
   rust = import ./rust.nix;
   xdg = import ./xdg/xdg.nix;
+  zathura = import ./zathura.nix;
 in
 {
   home.stateVersion = "23.05";
@@ -45,6 +46,7 @@ in
     desktop
     rust
     xdg
+    zathura
   ];
 
 }
