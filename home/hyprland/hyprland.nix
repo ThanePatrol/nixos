@@ -58,7 +58,8 @@ in {
             };
 
             input = {
-                follow_mouse = 1;
+              follow_mouse = 1;
+              kb_options = "caps:escape";
             };
 
             general = {
