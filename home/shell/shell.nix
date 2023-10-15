@@ -57,7 +57,7 @@
         lua = {
           symbol = "🌙 ";
         };
-        nix-shell = {
+        nix_shell = {
           symbol = "❄️ ";
         };
         nodejs = {
