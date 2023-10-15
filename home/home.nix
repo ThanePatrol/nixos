@@ -7,7 +7,7 @@ let
   theme = import ./gtk_themes.nix;
   fonts = import ./fonts.nix;
   ssh = import ./ssh.nix;
-  shell = import ./shell.nix;
+  shell = import ./shell/shell.nix;
   git = import ./git.nix;
   neovim = import ./nvim/nvim.nix;
   tmux = import ./tmux.nix;

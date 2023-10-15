@@ -129,6 +129,10 @@ in
     ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
+    environment.pathsToLink = [
+      "/share/zsh"
+    ];
+
   #docker stuff
   virtualisation.docker = {
     enable = true;
