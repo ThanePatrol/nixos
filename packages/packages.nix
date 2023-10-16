@@ -108,6 +108,7 @@ in {
     libsecret # for storing password
     linuxHeaders
     llvm_16
+    luaformatter
     imhex
     jdk
     jetbrains.idea-ultimate
