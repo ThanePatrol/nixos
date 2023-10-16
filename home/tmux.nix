@@ -32,9 +32,10 @@
       set -g @catppuccin_no_patched_fonts_theme_enabled on
       set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      
 
-      # launch new window in current dir
+      # launch new pane in current dir
       bind '"' split-window -v -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
     '';
   };
 

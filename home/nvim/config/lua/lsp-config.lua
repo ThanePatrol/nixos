@@ -57,8 +57,16 @@ nvim_lsp.rust_analyzer.setup({
 	cmd = { "rustup", "run", "stable", "rust-analyzer"},
         cargo = {
           allFeatures = true,
-        },
-    },
+  },
+	procMacro = {
+		enable = true,
+	},
+	diagnostics = {
+		experimental = {
+			enable = true
+		},
+	},
+    					},
   },
 })
 
