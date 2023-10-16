@@ -31,13 +31,14 @@
         };
 
         git_status = {
-          format = "[[[*]($conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
-          conflicted = "";
+          format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)";
+          conflicted = "≠"; 
           untracked = ""; 
-          modified = "";
+          modified = "*";
           staged = "";
           renamed = "";
           deleted = "";
+
           #stashed = "≡ ";
           ahead = "⇡ ";
         };
@@ -75,7 +76,7 @@
         terraform = {
           symbol = "💠 ";
         };
-        right_format = "$all";
+        right_format = " $all";
         palette = "catppuccin_mocha";
         palettes.catppuccin_mocha = {
           rosewater = "#f5e0dc";

@@ -57,6 +57,9 @@ in
        #status bar
        lualine-nvim
 
+       #show git changes in gutter
+       vim-gitgutter
+
        #syntax highlighting
        nvim-treesitter.withAllGrammars
 
