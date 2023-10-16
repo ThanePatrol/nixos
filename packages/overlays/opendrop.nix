@@ -1,15 +1,6 @@
-
-{ lib
-, buildPythonApplication
-, fetchPypi
-, fleep
-, libarchive-c
-, pillow
-, requests-toolbelt
-, setuptools
-, zeroconf
-, openssl  # Adding openssl
-, makeWrapper  # Adding makeWrapper
+{ lib, buildPythonApplication, fetchPypi, fleep, libarchive-c, pillow
+, requests-toolbelt, setuptools, zeroconf, openssl # Adding openssl
+, makeWrapper # Adding makeWrapper
 }:
 
 buildPythonApplication rec {
@@ -28,11 +19,11 @@ buildPythonApplication rec {
     requests-toolbelt
     setuptools
     zeroconf
-    openssl  # Adding openssl to build inputs
+    openssl # Adding openssl to build inputs
   ];
 
   nativeBuildInputs = [
-    makeWrapper  # Adding makeWrapper to native build inputs
+    makeWrapper # Adding makeWrapper to native build inputs
   ];
 
   # Wrapping the binary to ensure openssl is in its PATH at runtime

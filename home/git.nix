@@ -7,8 +7,7 @@ let
   DEVELOP_BRANCH = "develop";
   DEVELOP_BRANCH_ABBREV = "dev";
 
-in
-{
+in {
   # https://github.com/cli/cli/issues/4955
   programs.gh = {
     enable = true;
@@ -23,8 +22,6 @@ in
 
     includes = [{ path = "~/.config/git/localconf"; }];
 
-    
-
     extraConfig = {
       init.defaultBranch = DEFAULT_BRANCH;
       branch.sort = "-committerdate";
@@ -34,11 +31,7 @@ in
     };
 
     # global ignore
-    ignores = [
-      "**/target/*"
-      "*~"
-      "*.swp"
-    ];
+    ignores = [ "**/target/*" "*~" "*.swp" ];
 
     # git-delta
     # https://github.com/dandavison/delta

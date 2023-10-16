@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ...}:
+{ config, lib, pkgs, ... }:
 
 let
   pico-pi-rules = pkgs.writeTextFile {
@@ -144,8 +144,6 @@ let
   };
 
 in {
-  services.udev.packages = [
-    pico-pi-rules
-  ];
+  services.udev.packages = [ pico-pi-rules ];
 
 }

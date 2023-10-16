@@ -3,8 +3,8 @@
 {
   home.packages = with pkgs; [
 
-     materia-kde-theme
-     libsForQt5.qtstyleplugin-kvantum
+    materia-kde-theme
+    libsForQt5.qtstyleplugin-kvantum
   ];
 
   gtk.enable = true;
@@ -14,7 +14,6 @@
 
   gtk.theme.package = pkgs.materia-theme;
   gtk.theme.name = "Materia-dark-compact";
-  
 
 }
 

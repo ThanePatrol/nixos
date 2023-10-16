@@ -8,18 +8,18 @@ let
   wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
     exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
-  
+
   wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
     exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
-#
-#  wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
-#    exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
-#  '';
-  wrappedZoom= pkgs.writeShellScriptBin "zoom-us" ''
+  #
+  #  wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
+  #    exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
+  #  '';
+  wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
-    '';
-  
+  '';
+
   #wrappedGhidra = pkgs.writeShellScriptBin "ghidra" ''
   #    export _JAVA_AWT_WM_NONREPARENTING=1
   #    exec ${pkgs.ghidra-bin}/bin/ghidra
@@ -29,23 +29,23 @@ let
   #myPkgs = import <nixpkgs> {
   #  overlays = [ overlay ];
   #};
-      
-in
-{
+
+in {
   # a less boilerplate heavy way of specifying pkgs
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
     (symlinkJoin {
       inherit (brave) name;
       paths = [ brave ];
-      buildInputs = [makeWrapper];
-      postBuild = ''wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
+      buildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
     })
     wrappedSpotify
     wrappedChrome
-#    wrappedMailspring
+    #    wrappedMailspring
     wrappedZoom
-    
+
     #wrappedGhidra
     alacritty
     #authy 
@@ -58,7 +58,7 @@ in
     binutils
     binutils_nogold
     bitwarden-cli
-    bitwarden 
+    bitwarden
     bluez # bluetooth memes
     btop
     chafa
@@ -87,20 +87,20 @@ in
     geckodriver # webdriver automation
     git
     go
-    google-chrome #wrap
+    google-chrome # wrap
     graphviz
-    grim #screenshot
+    grim # screenshot
     gnumake
     ghidra-bin
-    gnome.gnome-calendar 
-    gnome.nautilus #file viewer
-    gnome.sushi #file preview
-    gnome.libgnome-keyring #secret manager
+    gnome.gnome-calendar
+    gnome.nautilus # file viewer
+    gnome.sushi # file preview
+    gnome.libgnome-keyring # secret manager
     gnome.gnome-keyring
     gzip
     home-manager
     hyprpicker
-    lazygit 
+    lazygit
     libclang
     libguestfs
     libinput
@@ -112,27 +112,28 @@ in
     jdk
     jetbrains.idea-ultimate
     kmod
-#    mailspring #wrap
+    #    mailspring #wrap
     mold # fast linker for llvm
     minicom # for serial connections
-    mullvad-vpn #wrap
+    mullvad-vpn # wrap
     neofetch
-    nettools #cmd line utils like ethtool
+    nettools # cmd line utils like ethtool
     nfs-utils
-    obsidian #wrap
+    nixfmt
+    obsidian # wrap
     opendrop
     oh-my-zsh
     openrgb
     OVMFFull # UEFI firmware for QEMU
-    p7zip #7zip terminal
+    p7zip # 7zip terminal
     pandoc # document conversion
     parted # disk partition tool
-    pass-secret-service #dbus api for libsecret
+    pass-secret-service # dbus api for libsecret
     pciutils # useful pci utils
     playerctl
     picocom
-    pkg-config # build tools 
-    prismlauncher #minecraft!
+    pkg-config # build tools
+    prismlauncher # minecraft!
     qalculate-gtk # good graphical calculator
     qemu_full
     qt6.qtwayland
@@ -145,10 +146,10 @@ in
     rustup
     rust-analyzer
     screen # for serial communication
-    signal-desktop #wrap
+    signal-desktop # wrap
     sqlite
     spice-vdagent
-    spotify #wrap
+    spotify # wrap
     slurp
     sshfs
     tectonic
@@ -167,7 +168,7 @@ in
     xdg-desktop-portal-hyprland
     zathura
     zotero
-    zoom-us #wrap
+    zoom-us # wrap
     zip
     zsh
   ];

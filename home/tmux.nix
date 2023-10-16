@@ -18,7 +18,7 @@
       pkgs.tmuxPlugins.yank
       pkgs.tmuxPlugins.vim-tmux-navigator
     ];
-    
+
     extraConfig = ''
       bind-key & kill-window
       bind-key x kill-pane
@@ -27,7 +27,7 @@
 
       # fixes colors inside neovim
       set -ga terminal-overrides ",*256col*:Tc"
-      
+
       # theming and font fixing
       set -g @catppuccin_no_patched_fonts_theme_enabled on
       set -g @catppuccin_date_time "%Y-%m-%d %H:%M"      
@@ -37,6 +37,5 @@
       bind % split-window -h -c "#{pane_current_path}"
     '';
   };
-
 
 }

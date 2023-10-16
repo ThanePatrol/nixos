@@ -1,18 +1,11 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    mkMerge
-    mkOption
-    types
-    ;
+  inherit (lib) mkEnableOption mkIf mkMerge mkOption types;
 
   cfg = config.programs.idea-ultimate;
-in
 
-{
+in {
 
   ###### interface
 
@@ -24,12 +17,12 @@ in
       packages = mkOption {
         type = types.listOf types.package;
         default = [ ];
-        description = "List of packages that should be put on PATH for idea-ultimate.";
+        description =
+          "List of packages that should be put on PATH for idea-ultimate.";
       };
     };
 
   };
-
 
   ###### implementation
 
@@ -38,13 +31,14 @@ in
     custom = {
       misc.sdks = {
         enable = true;
-        links = mkMerge [
-          { inherit (pkgs) jdk17 python3; }
+        links = mkMerge [{
+          inherit (pkgs) jdk17 python3;
+        }
 
-#          (mkIf config.custom.programs.go.enable {
-#            go-1-15 = pkgs.go;
-#          })
-        ];
+        #          (mkIf config.custom.programs.go.enable {
+        #            go-1-15 = pkgs.go;
+        #          })
+          ];
       };
 
       programs.idea-ultimate.packages = with pkgs; [

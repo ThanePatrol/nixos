@@ -4,28 +4,26 @@
 
 { lib, config, pkgs, ... }:
 
-let 
-    syspackages = import ./packages/packages.nix { inherit pkgs; };
-    pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
-    languages = import ./packages/languages.nix { inherit pkgs; };
-    homeConfig = import ./home/home.nix { inherit pkgs config lib; };
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      <home-manager/nixos>
-      ./modules/udev-rules.nix
-    ];
+let
+  syspackages = import ./packages/packages.nix { inherit pkgs; };
+  pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
+  languages = import ./packages/languages.nix { inherit pkgs; };
+  homeConfig = import ./home/home.nix { inherit pkgs config lib; };
+in {
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    <home-manager/nixos>
+    ./modules/udev-rules.nix
+  ];
   # enable flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+          nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   nixpkgs.config.allowUnfree = true;
 
- # Bootloader.
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -36,7 +34,7 @@ in
 
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
- 
+
   # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
   programs.dconf.enable = true;
 
@@ -44,9 +42,10 @@ in
   fileSystems."/nfs/samsung4tb" = {
     device = "10.0.0.15:/mnt/samsung4tb/nas";
     fsType = "nfs";
-    options = [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];  
-};
-  
+    options =
+      [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];
+  };
+
   # Set your time zone.
   time.timeZone = "Australia/Sydney";
 
@@ -99,7 +98,7 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  
+
   home-manager.useGlobalPkgs = true;
   home-manager.users.hugh = homeConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -110,28 +109,20 @@ in
     extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" ];
     shell = pkgs.zsh;
   };
- 
-  
-  # weird bug fix, kept getting unfree issue
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "google-chrome"
-  ];
 
-  nix.settings.auto-optimise-store = true; #reduce garbage
+  # weird bug fix, kept getting unfree issue
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "google-chrome" ];
+
+  nix.settings.auto-optimise-store = true; # reduce garbage
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    wget
-    kitty
-    pythonPackages
-  ] 
-    ++ syspackages.environment.systemPackages
+  environment.systemPackages = with pkgs;
+    [ wget kitty pythonPackages ] ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
-    environment.pathsToLink = [
-      "/share/zsh"
-    ];
+  environment.pathsToLink = [ "/share/zsh" ];
 
   #docker stuff
   virtualisation.docker = {
@@ -155,7 +146,6 @@ in
   systemd.services.docker.wantedBy = [ "multi-user.target" ];
   #lib secret provider2
   services.passSecretService.enable = true;
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

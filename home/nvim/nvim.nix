@@ -2,135 +2,134 @@
 with lib;
 let
   #python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
-in
-  {
+in {
 
-    # todo:
-    # consider moving file tree to https://github.com/nvim-neo-tree/neo-tree.nvim
-    # to take advantage of https://github.com/miversen33/netman.nvim
+  # todo:
+  # consider moving file tree to https://github.com/nvim-neo-tree/neo-tree.nvim
+  # to take advantage of https://github.com/miversen33/netman.nvim
 
-    # taken from https://github.com/fmoda3/nix-configs/tree/master/home/nvim
+  # taken from https://github.com/fmoda3/nix-configs/tree/master/home/nvim
   programs.neovim = {
-     enable = true;
-     defaultEditor = true;
-     viAlias = true;
-     vimAlias = true;
-     vimdiffAlias = true;
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
 
-     plugins = with pkgs.vimPlugins; [
-       #General
-       vim-sensible
+    plugins = with pkgs.vimPlugins; [
+      #General
+      vim-sensible
 
-       # Language specifics
-       vim-nix
-       kotlin-vim
-       
-       # File stuff
-       nvim-tree-lua
+      # Language specifics
+      vim-nix
+      kotlin-vim
 
-       #emment syntax
-       emmet-vim
+      # File stuff
+      nvim-tree-lua
 
-       #autoclose
-       nvim-autopairs
+      #emment syntax
+      emmet-vim
 
-       #indent lines
-       indent-blankline-nvim
+      #autoclose
+      nvim-autopairs
 
-       # allow movement between tmux panes
-       vim-tmux-navigator
+      #indent lines
+      indent-blankline-nvim
 
-       #rainbow brackets
-       nvim-ts-rainbow
+      # allow movement between tmux panes
+      vim-tmux-navigator
 
-       #LSP
-       nvim-lspconfig
-       nvim-lsp-ts-utils
-        
-       #Co pilot
-       copilot-lua
-       copilot-cmp
+      #rainbow brackets
+      nvim-ts-rainbow
 
-       #keybinds
-       legendary-nvim
+      #LSP
+      nvim-lspconfig
+      nvim-lsp-ts-utils
 
-       #status bar
-       lualine-nvim
+      #Co pilot
+      copilot-lua
+      copilot-cmp
 
-       #show git changes in gutter
-       vim-gitgutter
+      #keybinds
+      legendary-nvim
 
-       #syntax highlighting
-       nvim-treesitter.withAllGrammars
+      #status bar
+      lualine-nvim
 
-       #Completions
-       cmp-nvim-lsp
-       cmp-buffer
-       cmp-path
-       cmp-cmdline
-       cmp-nvim-lsp-signature-help
-       nvim-cmp
-       lspkind-nvim
+      #show git changes in gutter
+      vim-gitgutter
 
-       #rust
-       rust-vim
-       rust-tools-nvim
-      
-       #c/c++
-       #clangd_extensions-nvim      
-       vim-ccls
+      #syntax highlighting
+      nvim-treesitter.withAllGrammars
 
-       #scala
-       nvim-metals
-       #snippets
-       luasnip
-       cmp_luasnip
+      #Completions
+      cmp-nvim-lsp
+      cmp-buffer
+      cmp-path
+      cmp-cmdline
+      cmp-nvim-lsp-signature-help
+      nvim-cmp
+      lspkind-nvim
 
-       catppuccin-nvim
-     ];
+      #rust
+      rust-vim
+      rust-tools-nvim
 
-     extraPackages = with pkgs; [
-       tree-sitter
-       #Language servers
-       nodePackages.bash-language-server
-       lua-language-server
-       
-       # todo - figure out why clangd isn't working
-       #c/c++
-       libclang
-       libcxx
-       cmake
-       glibc
-       gcc
-       libstdcxx5
-       binutils_nogold
-       binutils
-       ccls
-       #nix
-       nil
-       nixpkgs-fmt
-       #python
-       pyright
-       #python310Packages.debugpy
-#       python-debug
-       black
-       #typescript/web
-       nodePackages.typescript-language-server
-       nodePackages.vscode-langservers-extracted
-       nodejs_20
-       typescript
-       #rust
-       rust-analyzer
-       rustfmt
-       #scala
-       metals
+      #c/c++
+      #clangd_extensions-nvim      
+      vim-ccls
 
-       #latex
+      #scala
+      nvim-metals
+      #snippets
+      luasnip
+      cmp_luasnip
+
+      catppuccin-nvim
+    ];
+
+    extraPackages = with pkgs; [
+      tree-sitter
+      #Language servers
+      nodePackages.bash-language-server
+      lua-language-server
+
+      # todo - figure out why clangd isn't working
+      #c/c++
+      libclang
+      libcxx
+      cmake
+      glibc
+      gcc
+      libstdcxx5
+      binutils_nogold
+      binutils
+      ccls
+      #nix
+      nil
+      nixpkgs-fmt
+      #python
+      pyright
+      #python310Packages.debugpy
+      #       python-debug
+      black
+      #typescript/web
+      nodePackages.typescript-language-server
+      nodePackages.vscode-langservers-extracted
+      nodejs_20
+      typescript
+      #rust
+      rust-analyzer
+      rustfmt
+      #scala
+      metals
+
+      #latex
       texlab
-     ];
-   };
-   xdg.configFile.nvim = {
-     source = ./config;
-     recursive = true;
-   };
+    ];
+  };
+  xdg.configFile.nvim = {
+    source = ./config;
+    recursive = true;
+  };
 }

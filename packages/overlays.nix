@@ -1,7 +1,7 @@
 final: prev: {
   opendrop = prev.opendrop.overrideAttrs (old: {
     propagatedBuildInputs = old.propagatedBuildInputs ++ [
-      final.openssl      
+      final.openssl
       final.fleep
       final.libarchive-c
       final.pillow

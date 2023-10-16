@@ -6,8 +6,7 @@ let
 
   nixpkgs = import <nixpkgs> { overlays = [ mozillaOverlay ]; };
 
-in 
-{
+in {
   environment.systemPackages = with pkgs; [
     nixpkgs.rustChannels.stable.rust
     nixpkgs.rustChannels.nightly.rust

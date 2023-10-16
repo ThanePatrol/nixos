@@ -1,17 +1,15 @@
+{ pkgs, lib, ... }:
 
-{ pkgs, lib, ...}:
-
-let 
+let
   wallsDir = ./pics;
   saveDir = "./.config/wpaperd/walls";
-in
-{
+in {
   home.file = lib.mkMerge [
-    { 
-    "./.config/wpaperd/wallpaper.toml".text = ''
-      [default]
-      path = "~/.config/wpaperd/walls"
-      duration = "1m"
+    {
+      "./.config/wpaperd/wallpaper.toml".text = ''
+        [default]
+        path = "~/.config/wpaperd/walls"
+        duration = "1m"
       '';
     }
     (lib.mapAttrs' (name: _: {
@@ -19,6 +17,6 @@ in
       value = { source = "${wallsDir}/${name}"; };
     }) (builtins.readDir "${wallsDir}"))
 
-  ]; 
+  ];
 
 }

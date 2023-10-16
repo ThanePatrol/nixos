@@ -1,6 +1,6 @@
-{ config, lib, pkgs,... }:
+{ config, lib, pkgs, ... }:
 
-let 
+let
   alacritty = import ./alacritty.nix;
   btop = import ./btop.nix;
   rclone = import ./rclone.nix;
@@ -21,8 +21,7 @@ let
   rust = import ./rust.nix;
   xdg = import ./xdg/xdg.nix;
   zathura = import ./zathura.nix;
-in
-{
+in {
   home.stateVersion = "23.05";
   home.packages = [ pkgs.httpie ];
 
