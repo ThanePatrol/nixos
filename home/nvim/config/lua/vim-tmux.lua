@@ -1,3 +1,3 @@
---require('vim-tmux-navigator').setup({
+-- require('vim-tmux-navigator').setup({
 --	lazy=false,
---})
+-- })
