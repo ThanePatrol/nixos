@@ -103,13 +103,13 @@ in {
     libguestfs
     libinput
     libvirt
-    libsecret # for storing password
-    linuxHeaders
+    libsecret # for storing passwords
+    linuxHeaders # for kernel dev
     llvm_16
-    luaformatter
-    imhex
+    luaformatter # format lua
+    imhex # rly good hex editor
     jdk
-    jetbrains.idea-ultimate
+    #jetbrains.idea-ultimate
     kmod
     mold # fast linker for llvm
     minicom # for serial connections
@@ -119,6 +119,7 @@ in {
     nettools # cmd line utils like ethtool
     nfs-utils # for nfs drives
     nixfmt # autoformat nix files
+    nomacs # image viewer
     obsidian # wrap
     opendrop # linux airdorp
     openrgb # manage rgb devices
@@ -151,7 +152,6 @@ in {
     spotify # wrap
     slurp
     sshfs
-    swayimg # image viewer
     tectonic
     texlive.combined.scheme-full # full latex stuff
     thunderbird
