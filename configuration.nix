@@ -32,7 +32,7 @@ in {
   # Enable networking
   networking.networkmanager.enable = true;
 
-  #  programs.hyprland.enable = true;
+  programs.hyprland.enable = true;
   programs.zsh.enable = true;
 
   # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
@@ -68,8 +68,8 @@ in {
   #  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  #  services.xserver.displayManager.gdm.enable = true;
-  #  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;

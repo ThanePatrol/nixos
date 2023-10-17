@@ -89,11 +89,6 @@ in {
     grim # screenshot
     gnumake
     ghidra-bin
-    gnome.gnome-calendar
-    gnome.nautilus # file viewer
-    gnome.sushi # file preview
-    gnome.libgnome-keyring # secret manager
-    gnome.gnome-keyring
     gzip
     home-manager
     hyprpicker # color picker
@@ -165,6 +160,7 @@ in {
     vim
     virt-manager # gui for VMs
     wl-clipboard
+    wlroots # wayland compositor library
     wpaperd # wallpaper daemon
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     zathura # document viewer
