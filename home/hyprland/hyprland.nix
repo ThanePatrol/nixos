@@ -28,6 +28,8 @@ in {
       "$mod" = "SUPER";
 
       exec-once = [
+        #"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP" # fix to GTK apps taking a long time to launch
+        #TODO - this doesn't work to diag
         "dunst" # notifications
         "waybar" # status bar
         "wl-paste --type text --watch cliphist store"
@@ -38,8 +40,7 @@ in {
       ];
 
       animations = {
-        enabled =
-          true; # we want animations, half the reason why we're on Hyprland innit
+        enabled = true;
 
         bezier = [
           "smoothOut, 0.36, 0, 0.66, -0.56"
