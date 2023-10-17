@@ -33,6 +33,7 @@ in {
         "wl-paste --type text --watch cliphist store"
         "wpaperd"
         "~/nixos/home/hyprland/tmux_init.sh"
+        "udiskie &" # mount usbs in the background
         #"run-as-service waybar"
       ];
 

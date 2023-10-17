@@ -45,12 +45,9 @@ in {
     wrappedChrome
     #    wrappedMailspring
     wrappedZoom
-
-    #wrappedGhidra
-    alacritty
-    #authy 
-    anki
-    bat
+    alacritty # terminal
+    anki # flashcards
+    bat # better cat
     bear # compilation database for clang tooling
     bfg-repo-cleaner
     biber
@@ -99,9 +96,10 @@ in {
     gnome.gnome-keyring
     gzip
     home-manager
-    hyprpicker
-    lazygit
+    hyprpicker # color picker
+    lazygit # git tui
     libclang
+    libsForQt5.polkit-kde-agent # for apps that want elevated permission
     libguestfs
     libinput
     libvirt
@@ -113,18 +111,17 @@ in {
     jdk
     jetbrains.idea-ultimate
     kmod
-    #    mailspring #wrap
     mold # fast linker for llvm
     minicom # for serial connections
     mullvad-vpn # wrap
     neofetch
+    cinnamon.nemo # gui file manager
     nettools # cmd line utils like ethtool
-    nfs-utils
-    nixfmt
+    nfs-utils # for nfs drives
+    nixfmt # autoformat nix files
     obsidian # wrap
-    opendrop
-    oh-my-zsh
-    openrgb
+    opendrop # linux airdorp
+    openrgb # manage rgb devices
     OVMFFull # UEFI firmware for QEMU
     p7zip # 7zip terminal
     pandoc # document conversion
@@ -137,6 +134,7 @@ in {
     prismlauncher # minecraft!
     qalculate-gtk # good graphical calculator
     qemu_full
+    qt5.qtwayland
     qt6.qtwayland
     rclone
     ripgrep
@@ -153,6 +151,7 @@ in {
     spotify # wrap
     slurp
     sshfs
+    swayimg # image viewer
     tectonic
     texlive.combined.scheme-full # full latex stuff
     thunderbird
@@ -161,14 +160,15 @@ in {
     typescript
     uefi-run
     unzip
+    udiskie # to allow automatic mounting of USB drives
     vlc
     vim
-    virt-manager
+    virt-manager # gui for VMs
     wl-clipboard
-    wpaperd
-    xdg-desktop-portal-hyprland
-    zathura
-    zotero
+    wpaperd # wallpaper daemon
+    xdg-desktop-portal-hyprland # allows for sharing of screen + audio
+    zathura # document viewer
+    zotero # bibliography manager
     zoom-us # wrap
     zip
     zsh
