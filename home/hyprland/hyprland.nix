@@ -28,15 +28,15 @@ in {
       "$mod" = "SUPER";
 
       exec-once = [
+        # TODO - this doesn't work to diag
         #"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP" # fix to GTK apps taking a long time to launch
-        #TODO - this doesn't work to diag
         "dunst" # notifications
         "waybar" # status bar
         "wl-paste --type text --watch cliphist store"
         "wpaperd"
         "~/nixos/home/hyprland/tmux_init.sh"
         "udiskie &" # mount usbs in the background
-        #"run-as-service waybar"
+        "kdeconnect-app"
       ];
 
       animations = {
@@ -142,9 +142,9 @@ in {
       ];
 
       windowrulev2 = [
-        #"tile, class:(ghidra-Ghidra)"
         "tile, title:CodeBrowser"
         "tile, title:Ghidra:*"
+        "workspace 9, class:org.kde.kdeconnect.app" # want it available but not somewhere i use all the time
       ];
       misc = {
         disable_hyprland_logo = true;
