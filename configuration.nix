@@ -28,6 +28,19 @@ in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos"; # Define your hostname.
+  networking.firewall = {
+    enable = true;
+    allowedTCPPortRanges = [{
+      from = 1714;
+      to = 1764;
+    } # KDE Connect
+      ];
+    allowedUDPPortRanges = [{
+      from = 1714;
+      to = 1764;
+    } # KDE Connect
+      ];
+  };
 
   # Enable networking
   networking.networkmanager.enable = true;

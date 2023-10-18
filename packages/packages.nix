@@ -46,6 +46,7 @@ in {
     #    wrappedMailspring
     wrappedZoom
     alacritty # terminal
+    act # github actions locally
     anki # flashcards
     bat # better cat
     bear # compilation database for clang tooling
@@ -95,6 +96,7 @@ in {
     lazygit # git tui
     libclang
     libsForQt5.polkit-kde-agent # for apps that want elevated permission
+    libsForQt5.kdeconnect-kde # for sharing files with phone
     libguestfs
     libinput
     libvirt
@@ -160,7 +162,6 @@ in {
     vim
     virt-manager # gui for VMs
     wl-clipboard
-    wlroots # wayland compositor library
     wpaperd # wallpaper daemon
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     zathura # document viewer
