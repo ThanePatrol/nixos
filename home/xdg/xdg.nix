@@ -17,6 +17,8 @@
         "application/x-extension-xht" = "firefox.desktop";
         "x-content/audio-player" = "vlc.desktop";
         "x-scheme-handler/magnet" = "transmission-gtk.desktop";
+        "x-scheme-handler/mailto" = "thunderbird.desktop";
+        "inode/directory" = "nemo.desktop";
         "application/pdf" = "zathura.desktop";
       };
     };
