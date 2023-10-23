@@ -27,6 +27,9 @@ in {
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # transpartent huge pages for faster rust compilation
+  boot.kernelParams = [ "transparent_hugepage=madvise" ];
+
   networking.hostName = "nixos"; # Define your hostname.
   networking.firewall = {
     enable = true;
