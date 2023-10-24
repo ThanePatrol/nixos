@@ -4,9 +4,10 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    (nerdfonts.override {
-      fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" "Noto" ];
-    })
+    nerdfonts
+    #(nerdfonts.override {
+    #  fonts = [ "JetBrainsMono" "FiraCode" "DroidSansMono" "Noto" ];
+    #})
     source-han-code-jp
     source-han-sans
     source-han-mono

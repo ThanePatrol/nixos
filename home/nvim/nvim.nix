@@ -46,6 +46,9 @@ in {
       nvim-lspconfig
       nvim-lsp-ts-utils
 
+      #Note taking
+      neorg
+
       #Co pilot
       copilot-lua
       copilot-cmp
