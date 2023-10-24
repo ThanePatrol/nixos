@@ -14,5 +14,6 @@ in {
     nodejs
     openjdk
     scala
+    go
   ];
 }
