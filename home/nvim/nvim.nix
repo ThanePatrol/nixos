@@ -127,6 +127,9 @@ in {
       #scala
       metals
 
+      # go
+      gopls
+
       #latex
       texlab
     ];
