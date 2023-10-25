@@ -1,10 +1,10 @@
 { pkgs, lib, ... }:
-
-{
-  home.packages = [ pkgs.atool pkgs.httpie pkgs.oh-my-zsh pkgs.imhex ];
-
-  home.sessionPath = [ "${pkgs.tectonic}/bin" ];
-
+let
+      isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+      isLinux = pkgs.stdenv.hostPlatform.isLinux;
+      linuxUpdate = "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
+      macUpdate = "sudo nix-channel --update && cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch";
+in {
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -99,11 +99,11 @@
 
     shellAliases = {
       ".." = "cd ..";
+      "..." = "cd ...";
       ll = "ls -l";
-      open = "xdg-open";
+      open = (if isDarwin then "open" else "xdg-open");
       cat = "bat";
-      update =
-        "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
+      update = (if isDarwin then macUpdate else linuxUpdate);
       clean = "nix-collect-garbage && nix-store --optimise";
       nv = "nvim";
     };
@@ -123,11 +123,5 @@
 
     '';
   };
-
-  #home.file.".zshrc".text = ''
-  #   eval "$(starship init zsh)"
-  #   eval "$(direnv hook zsh)"
-  # '';
-
 }
 
