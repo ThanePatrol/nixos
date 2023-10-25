@@ -3,7 +3,7 @@ let
       isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
       isLinux = pkgs.stdenv.hostPlatform.isLinux;
       linuxUpdate = "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
-      macUpdate = "sudo nix-channel --update && cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch";
+      macUpdate = "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch && sudo nix-channel --update";
 in {
   programs.starship = {
     enable = true;
@@ -89,12 +89,6 @@ in {
 
       export EDITOR="nvim"
       export STARSHP_CONFIG="$HOME/.config/starship.toml"
-
-      export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/hugh/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
-       
-      export IMHEX=${pkgs.imhex}/bin
-      export CHROME_BIN=${pkgs.google-chrome}/bin
-      export CHROMEDRIVER=${pkgs.chromedriver}/bin
     '';
 
     shellAliases = {

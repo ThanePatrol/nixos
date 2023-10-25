@@ -102,11 +102,6 @@ in {
       libclang
       libcxx
       cmake
-      glibc
-      gcc
-      libstdcxx5
-      binutils_nogold
-      binutils
       ccls
       #nix
       nil
