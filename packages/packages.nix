@@ -4,34 +4,17 @@ let
   wrappedBitwarden = pkgs.writeShellScriptBin "bitwarden" ''
     exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
-
   wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
     exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
-
   wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
-    exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
+    exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-webrtc-pipewire-capturer 
   '';
-  #
-  #  wrappedMailspring = pkgs.writeShellScriptBin "mailspring" ''
-  #    exec ${pkgs.mailspring}/bin/mailspring --enable-features=UseOzonePlatform --ozone-platform=wayland
-  #  '';
   wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
-    exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
+    exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-webrtc-pipewire-capturer 
   '';
-
-  #wrappedGhidra = pkgs.writeShellScriptBin "ghidra" ''
-  #    export _JAVA_AWT_WM_NONREPARENTING=1
-  #    exec ${pkgs.ghidra-bin}/bin/ghidra
-  #'';
-
-  overlay = import ./overlays.nix;
-  #myPkgs = import <nixpkgs> {
-  #  overlays = [ overlay ];
-  #};
 
 in {
-  # a less boilerplate heavy way of specifying pkgs
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
     (symlinkJoin {
@@ -43,10 +26,8 @@ in {
     })
     wrappedSpotify
     wrappedChrome
-    #    wrappedMailspring
     wrappedZoom
     alacritty # terminal
-    act # github actions locally
     anki # flashcards
     bat # better cat
     bear # compilation database for clang tooling
@@ -85,7 +66,6 @@ in {
     geckodriver # webdriver automation
     git
     go
-    google-chrome # wrap
     graphviz
     grim # screenshot
     gnumake
@@ -96,7 +76,6 @@ in {
     lazygit # git tui
     libclang
     libsForQt5.polkit-kde-agent # for apps that want elevated permission
-    libsForQt5.kdeconnect-kde # for sharing files with phone
     libguestfs
     libinput
     libvirt
