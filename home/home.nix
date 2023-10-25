@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 
 let
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+
+  isDarwin = builtins.currentSystem == "aarch64-darwin";
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
 
   universal = [
@@ -38,9 +39,8 @@ let
       universal ++ linuxSpecific
     else
       universal;
-  }.fin;
+    }.fin;
 
-  #finalImports = universal; #(if isDarwin then universal ++ macSpecific else universal ++ linuxSpecific); #(if isDarwin then macSpecific else linuxSpecific);
 in {
 
   home.username = "hugh";

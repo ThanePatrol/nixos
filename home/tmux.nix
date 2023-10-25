@@ -1,6 +1,16 @@
 { pkgs, ... }:
 
-{
+let 
+  isDarwin = builtins.currentSystem == "aarch64-darwin";
+  isLinux = pkgs.lib.platform.isLinux;
+
+  copyToClipboard = {
+    fin = if isDarwin then
+    ''bind-key -t vi-copy MouseDragEnd1Pane copy-pipe "pbcopy"''
+    else "";
+  }.fin;
+
+in {
   home.packages = [ pkgs.tmux ];
 
   programs.tmux = {
@@ -27,6 +37,9 @@
 
       # fixes colors inside neovim
       set -ga terminal-overrides ",*256col*:Tc"
+
+      # copy to clipboard
+      ${copyToClipboard}
 
       # theming and font fixing
       set -g @catppuccin_no_patched_fonts_theme_enabled on
