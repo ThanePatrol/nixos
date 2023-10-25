@@ -1,9 +1,11 @@
 { pkgs, lib, ... }:
 let
-      isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-      isLinux = pkgs.stdenv.hostPlatform.isLinux;
-      linuxUpdate = "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
-      macUpdate = "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch && sudo nix-channel --update";
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  linuxUpdate =
+    "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
+  macUpdate =
+    "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch && sudo nix-channel --update";
 in {
   programs.starship = {
     enable = true;
