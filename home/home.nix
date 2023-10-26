@@ -39,7 +39,7 @@ let
       universal ++ linuxSpecific
     else
       universal;
-    }.fin;
+  }.fin;
 
 in {
 

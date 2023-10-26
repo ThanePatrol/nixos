@@ -6,6 +6,9 @@ let
     "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
   macUpdate =
     "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch";
+  linuxClean =
+    "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
+  macClean = "nix-collect-garbage && nix-store --optimise";
 in {
   programs.starship = {
     enable = true;
@@ -100,7 +103,7 @@ in {
       open = (if isDarwin then "open" else "xdg-open");
       cat = "bat";
       update = (if isDarwin then macUpdate else linuxUpdate);
-      clean = "nix-collect-garbage && nix-store --optimise";
+      clean = (if isDarwin then macClean else linuxClean);
       nv = "nvim";
     };
     plugins = [

@@ -1,13 +1,14 @@
 { pkgs, ... }:
 
-let 
+let
   isDarwin = builtins.currentSystem == "aarch64-darwin";
   isLinux = pkgs.lib.platform.isLinux;
 
   copyToClipboard = {
     fin = if isDarwin then
-    ''bind-key -t vi-copy MouseDragEnd1Pane copy-pipe "pbcopy"''
-    else "";
+      ''bind-key -t vi-copy MouseDragEnd1Pane copy-pipe "pbcopy"''
+    else
+      "";
   }.fin;
 
 in {

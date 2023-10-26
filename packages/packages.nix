@@ -4,17 +4,20 @@ let
   wrappedBitwarden = pkgs.writeShellScriptBin "bitwarden" ''
     exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
+
   wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
     exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
+
   wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
-    exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-webrtc-pipewire-capturer 
+    exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
   wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
-    exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-webrtc-pipewire-capturer 
+    exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
 in {
+  # a less boilerplate heavy way of specifying pkgs
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
     (symlinkJoin {
@@ -27,6 +30,7 @@ in {
     wrappedSpotify
     wrappedChrome
     wrappedZoom
+    act # github actions locally
     alacritty # terminal
     anki # flashcards
     bat # better cat
@@ -66,6 +70,7 @@ in {
     geckodriver # webdriver automation
     git
     go
+    google-chrome # wrap
     graphviz
     grim # screenshot
     gnumake
@@ -76,6 +81,7 @@ in {
     lazygit # git tui
     libclang
     libsForQt5.polkit-kde-agent # for apps that want elevated permission
+    libsForQt5.kdeconnect-kde # for sharing files with phone
     libguestfs
     libinput
     libvirt
@@ -144,7 +150,7 @@ in {
     wpaperd # wallpaper daemon
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     zathura # document viewer
-    zotero # bibliography manager
+    #zotero # bibliography manager
     zoom-us # wrap
     zip
     zsh
