@@ -13,7 +13,7 @@
       yabai -m config bottom_padding 12
       yabai -m config left_padding 12
       yabai -m config right_padding 12
-      yabai -m config window_gap 12
+      yabai -m config window_gap 6
 
 
       # mouse memes

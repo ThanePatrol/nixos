@@ -21,6 +21,7 @@ let
 
   macSpecific = [
     (import ./yabai/yabai.nix)
+    (import ./skhd/skhd.nix)
 
   ];
   linuxSpecific = [
