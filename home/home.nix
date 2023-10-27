@@ -20,6 +20,7 @@ let
   ];
 
   macSpecific = [
+    (import ./yabai/yabai.nix)
 
   ];
   linuxSpecific = [
