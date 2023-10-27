@@ -130,7 +130,7 @@ in {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [ "google-chrome" ];
 
-  nix.settings.auto-optimise-store = true; # reduce garbage
+  #nix.settings.auto-optimise-store = true; # reduce garbage
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
