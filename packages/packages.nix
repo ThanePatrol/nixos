@@ -116,7 +116,7 @@ in {
     pkg-config # build tools
     prismlauncher # minecraft!
     qalculate-gtk # good graphical calculator
-    qemu_full
+    #qemu_full
     qt5.qtwayland
     qt6.qtwayland
     rclone
@@ -142,7 +142,7 @@ in {
     typescript
     uefi-run
     unzip
-    udiskie # to allow automatic mounting of USB drives
+    #udiskie # to allow automatic mounting of USB drives
     vlc
     vim
     virt-manager # gui for VMs
