@@ -23,7 +23,6 @@
       yabai -m config mouse_action2 resize # right click + drag
       yabai -m mouse_drop_action swap
 
-      # don't allow yabai to tile
       yabai -m rule --add app="^System Settings$" manage=off
       yabai -m rule --add app="^Calculator$" manage=off
       '';
