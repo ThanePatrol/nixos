@@ -23,6 +23,10 @@ vim.o.breakindent = true
 -- save undo history
 vim.o.undofile = true
 
+-- set tab spaces
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+
 -- sign column
 vim.wo.signcolumn = 'yes'
 

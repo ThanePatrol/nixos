@@ -31,7 +31,7 @@ in {
     wrappedChrome
     wrappedZoom
     act # github actions locally
-    alacritty # terminal
+    #    alacritty # terminal
     anki # flashcards
     bat # better cat
     bear # compilation database for clang tooling
@@ -70,6 +70,7 @@ in {
     geckodriver # webdriver automation
     git
     go
+    gofumpt # formatter
     google-chrome # wrap
     graphviz
     grim # screenshot
@@ -91,7 +92,6 @@ in {
     luaformatter # format lua
     imhex # rly good hex editor
     jdk
-    #jetbrains.idea-ultimate
     kmod
     mold # fast linker for llvm
     minicom # for serial connections
@@ -102,7 +102,6 @@ in {
     nfs-utils # for nfs drives
     nixfmt # autoformat nix files
     nomacs # image viewer
-    obsidian # wrap
     opendrop # linux airdorp
     openrgb # manage rgb devices
     OVMFFull # UEFI firmware for QEMU

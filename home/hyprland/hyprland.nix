@@ -25,7 +25,7 @@ in {
     xwayland.enable = true;
 
     settings = {
-      "$mod" = "SUPER";
+      "$mod" = "alt";
 
       exec-once = [
         # TODO - this doesn't work to diag
@@ -98,8 +98,8 @@ in {
         "$mod, p, exec, hyprpicker -a"
 
         #workspace memes
-        "SUPER_SHIFT, K, movetoworkspace,+1"
-        "SUPER_SHIFT, J, movetoworkspace,-1"
+        "SUPER_ALT, K, movetoworkspace,+1"
+        "SUPER_ALT, J, movetoworkspace,-1"
         "$mod, 1, workspace, 1"
         "$mod, 2, workspace, 2"
         "$mod, 3, workspace, 3"

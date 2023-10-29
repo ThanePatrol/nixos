@@ -1,10 +1,10 @@
-{pkg, ...}:
+{ pkg, ... }:
 
 {
   home.file.".config/yabai/yabairc" = {
     executable = true;
     text = ''
-  
+
       yabai -m config layout bsp # binary space partitioning
       yabai -m config window_placement second_child 
 
@@ -25,7 +25,7 @@
 
       yabai -m rule --add app="^System Settings$" manage=off
       yabai -m rule --add app="^Calculator$" manage=off
-      '';
-};
-  
+    '';
+  };
+
 }
