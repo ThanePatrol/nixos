@@ -9,11 +9,11 @@ let
     sudo nix-env --delete-generations 7d
   '';
   macUpdate = ''
-    sudo nix-channel --update darwin
     cp -r ~/nixos/home/* ~/.config/home-manager &&
     home-manager switch &&
     cp -r ~/nixos/system/* ~/.nixpkgs &&
     cp ~/nixos/darwin-configuration.nix ~/.nixpkgs &&
+    sudo nix-channel --update darwin &&
     sudo darwin-rebuild switch &&
     yabai --stop-service &&
     yabai --start-service &&
