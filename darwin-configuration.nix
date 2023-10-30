@@ -10,8 +10,25 @@
   homebrew = {
     enable = true;
     onActivation.upgrade = true;
+    # mainly used for cmd line tools not packaged by nix
     brews = [ "docker-completion" "yabai" ];
-    casks = [ "docker" ];
+    # mainly used for gui things
+    casks = [
+      "mas" # mac app store cli
+      "docker"
+      "firefox"
+      "signal"
+      "bitwarden"
+      "google-chrome"
+      "intellij-idea"
+      "spotify"
+      "vlc"
+      "zotero"
+    ];
+    # mac store apps when there is no cask
+    masApps = {
+      Xcode = 497799835;
+    };
 
   };
 

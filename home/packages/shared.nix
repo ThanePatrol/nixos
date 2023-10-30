@@ -16,8 +16,6 @@ in {
       cmake
       cups
       direnv
-      docker
-      docker-compose
       du-dust # better du
       flex # lexical analysis
       ffmpeg-full

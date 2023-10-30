@@ -13,8 +13,8 @@ let
     home-manager switch &&
     cp -r ~/nixos/system/* ~/.nixpkgs &&
     cp ~/nixos/darwin-configuration.nix ~/.nixpkgs &&
-    sudo nix-channel --update darwin &&
-    sudo darwin-rebuild switch &&
+    nix-channel --update darwin &&
+    darwin-rebuild switch &&
     yabai --stop-service &&
     yabai --start-service &&
     skhd -reload
@@ -23,6 +23,8 @@ let
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
   macClean =
     "nix-collect-garbage && nix-collect-garbage --delete-old && nix-store --optimise";
+
+  macExports = "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
 
 in {
   programs.starship = {
@@ -106,10 +108,9 @@ in {
     enableCompletion = true;
     enableAutosuggestions = true;
     envExtra = ''
-
       export EDITOR="nvim"
       export STARSHP_CONFIG="$HOME/.config/starship.toml"
-    '';
+    '' + (if isDarwin then macExports else "");
 
     shellAliases = {
       ".." = "cd ..";

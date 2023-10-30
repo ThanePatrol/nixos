@@ -43,6 +43,8 @@ in {
     cmake
     clang
     cups
+    docker
+    docker-compose
     dnsmasq
     discord # chromium wrap
     ethtool
