@@ -20,7 +20,7 @@ in {
     userName = "ThanePatrol";
     userEmail = "mandalidis.hugh@gmail.com";
 
-    includes = [{ path = "~/.config/git/localconf"; }];
+    includes = [{ path = "~/.config/git/gitconfig"; }];
 
     extraConfig = {
       init.defaultBranch = DEFAULT_BRANCH;

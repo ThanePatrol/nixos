@@ -49,7 +49,6 @@ in {
     dunst # notification daemon
     flex # lexical analysis
     firefox
-    ffmpeg-full
     google-chrome # wrap
     graphviz
     grim # screenshot

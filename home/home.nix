@@ -9,34 +9,34 @@ let
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
 
   universal = [
-    (import ./bat.nix)
-    (import ./alacritty.nix)
-    (import ./btop.nix)
-    (import ./rclone.nix)
-    (import ./fonts.nix)
-    (import ./ssh.nix)
-    (import ./shell/shell.nix)
-    (import ./git.nix)
-    (import ./nvim/nvim.nix)
-    (import ./tmux.nix)
-    (import ./rust.nix)
-    (import ./zathura.nix)
+    (import ./common/bat.nix)
+    (import ./common/alacritty.nix)
+    (import ./common/btop.nix)
+    (import ./common/rclone.nix)
+    (import ./common/fonts.nix)
+    (import ./common/ssh.nix)
+    (import ./common/shell/shell.nix)
+    (import ./common/git.nix)
+    (import ./common/nvim/nvim.nix)
+    (import ./common/tmux.nix)
+    (import ./common/rust.nix)
+    (import ./common/zathura.nix)
   ];
 
   macSpecific = [
-    (import ./yabai/yabai.nix)
-    (import ./skhd/skhd.nix)
+    (import ./macos/yabai/yabai.nix)
+    (import ./macos/skhd/skhd.nix)
 
   ];
   linuxSpecific = [
-    (import ./gtk_themes.nix)
-    (import ./hyprland/hyprland.nix)
-    (import ./dunst/dunst.nix)
-    (import ./waybar/waybar.nix)
-    (import ./wofi/wofi.nix)
-    (import ./wayland/wayland.nix)
-    (import ./walls/wpapred.nix)
-    (import ./xdg/xdg.nix)
+    (import ./linux/gtk_themes.nix)
+    (import ./linux/hyprland/hyprland.nix)
+    (import ./linux/dunst/dunst.nix)
+    (import ./linux/waybar/waybar.nix)
+    (import ./linux/wofi/wofi.nix)
+    (import ./linux/wayland/wayland.nix)
+    (import ./linux/walls/wpapred.nix)
+    (import ./linux/xdg/xdg.nix)
   ];
   finalImports = {
     fin = if isDarwin then
