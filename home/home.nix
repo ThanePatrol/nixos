@@ -1,11 +1,12 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
 let
 
   isDarwin = builtins.currentSystem == "aarch64-darwin";
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
 
-  commonPkgs = import ./packages/shared.nix { inherit pkgs; };
+  commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
+  macPkgs = import ./packages/mac.nix { inherit pkgs; };
 
   universal = [
     (import ./bat.nix)
@@ -48,11 +49,11 @@ let
 
     finalPackages = {
       fin = if isDarwin then
-        commonPkgs.packages 
+        commonPkgs.packages ++ macPkgs.packages
       else if isLinux then
-        commonPkgs 
+        commonPkgs.packages 
       else
-        commonPkgs;
+        commonPkgs.packages;
     }.fin;
 
 in {

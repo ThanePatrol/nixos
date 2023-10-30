@@ -1,10 +1,10 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 # For packages in home-manager that are common across macos and linux
 let
-  wrappedBitwarden = pkgs.writeShellScriptBin "bitwarden" ''
-    exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
+    unfreePackages = with pkgs; [
+      terraform
+    ];
 
 in {
   packages = with pkgs; [
@@ -45,13 +45,10 @@ in {
     rclone
     ripgrep
     rsync
-    #spotify # wrap
     typescript
     unzip
     vim
-    #zoom-us # wrap
     zip
     zsh
-    
-  ];
+  ] ++ unfreePackages;
 }
