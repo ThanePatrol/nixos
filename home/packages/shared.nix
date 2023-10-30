@@ -7,20 +7,19 @@ let
   '';
 
 in {
-  home.packages = with pkgs; [
+  packages = with pkgs; [
     act # github actions locally
-    anki # flashcards
-    bear # compilation database for clang tooling
+    #anki # flashcards
+    #bear # compilation database for clang tooling
     biber
     bison
-    binutils
     chafa
-    calibre
+    #calibre
     cargo-watch
     cmake
     cups
     direnv
-    discord # chromium wrap
+    #discord # chromium wrap
     docker
     docker-compose
     du-dust # better du
@@ -28,16 +27,13 @@ in {
     ffmpeg-full
     gcc
     geckodriver # webdriver automation
-    git
     go
     gofumpt # formatter
     gnumake
     gzip
-    home-manager
     lazygit # git tui
-    libclang
-    libvirt
-    libsecret # for storing passwords
+    #libvirt
+    #libsecret # for storing passwords
     luaformatter # format lua
     jdk
     mold # fast linker for llvm
@@ -45,22 +41,20 @@ in {
     nixfmt # autoformat nix files
     nomacs # image viewer
     pandoc # document conversion
-    pass-secret-service # dbus api for libsecret
     pciutils # useful pci utils
-    playerctl # media control - check if needed
+    #playerctl # media control - check if needed
     pkg-config # build tools
     rclone
     ripgrep
     rsync
     rustup
-    rust-analyzer
-    spotify # wrap
+    #spotify # wrap
     typescript
     unzip
     vim
-    zathura # document viewer
-    zoom-us # wrap
+    #zoom-us # wrap
     zip
     zsh
+    
   ];
 }

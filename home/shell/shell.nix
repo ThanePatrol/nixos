@@ -5,7 +5,7 @@ let
   linuxUpdate =
     "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
   macUpdate =
-    "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch";
+    "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch && yabai --stop-service && yabai --start-service && skhd -reload";
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
   macClean = "nix-collect-garbage && nix-store --optimise";

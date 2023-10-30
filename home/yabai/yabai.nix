@@ -9,10 +9,10 @@
       yabai -m config window_placement second_child 
 
       # padding
-      yabai -m config top_padding 12
-      yabai -m config bottom_padding 12
-      yabai -m config left_padding 12
-      yabai -m config right_padding 12
+      yabai -m config top_padding 6
+      yabai -m config bottom_padding 6
+      yabai -m config left_padding 6
+      yabai -m config right_padding 6
       yabai -m config window_gap 6
 
 

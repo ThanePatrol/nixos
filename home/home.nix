@@ -5,7 +5,10 @@ let
   isDarwin = builtins.currentSystem == "aarch64-darwin";
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
 
+  commonPkgs = import ./packages/shared.nix { inherit pkgs; };
+
   universal = [
+    (import ./bat.nix)
     (import ./alacritty.nix)
     (import ./btop.nix)
     (import ./rclone.nix)
@@ -41,7 +44,16 @@ let
       universal ++ linuxSpecific
     else
       universal;
-  }.fin;
+    }.fin;
+
+    finalPackages = {
+      fin = if isDarwin then
+        commonPkgs.packages 
+      else if isLinux then
+        commonPkgs 
+      else
+        commonPkgs;
+    }.fin;
 
 in {
 
@@ -49,10 +61,10 @@ in {
 
   home.homeDirectory = (if isDarwin then "/Users/hugh" else "/home/hugh");
   home.stateVersion = "23.05"; # Please read the comment before changing.
-
-  home.packages = [ ];
-
   programs.home-manager.enable = true;
+  
+  home.packages = finalPackages;
+
 
   imports = finalImports;
 }
