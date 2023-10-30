@@ -33,6 +33,9 @@ in {
       #autoclose
       nvim-autopairs
 
+      #awesome file search
+      telescope-nvim
+
       #indent lines
       indent-blankline-nvim
 
