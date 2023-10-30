@@ -15,11 +15,9 @@ in {
     bison
     chafa
     #calibre
-    cargo-watch
     cmake
     cups
     direnv
-    #discord # chromium wrap
     docker
     docker-compose
     du-dust # better du
@@ -32,7 +30,7 @@ in {
     gnumake
     gzip
     lazygit # git tui
-    #libvirt
+    libvirt
     #libsecret # for storing passwords
     luaformatter # format lua
     jdk
@@ -47,7 +45,6 @@ in {
     rclone
     ripgrep
     rsync
-    rustup
     #spotify # wrap
     typescript
     unzip
@@ -56,5 +53,11 @@ in {
     zip
     zsh
     
-  ];
+  ] ++ 
+
+  [{ nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "spotify"
+    "zoom-us"
+           ].packages;
+        }.nixpkgs];
 }
