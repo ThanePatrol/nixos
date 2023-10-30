@@ -3,9 +3,24 @@ let
   isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
   linuxUpdate =
-    "sudo nix-channel --update && sudo cp -r ~/nixos/* /etc/nixos && sudo nixos-rebuild switch && sudo nix-env --delete-generations 7d";
-  macUpdate =
-    "cp -r ~/nixos/home/* ~/.config/home-manager && home-manager switch && yabai --stop-service && yabai --start-service && skhd -reload";
+    ''
+    sudo nix-channel --update && 
+    sudo cp -r ~/nixos/* /etc/nixos &&
+    sudo nixos-rebuild switch &&
+    sudo nix-env --delete-generations 7d
+    ''
+    macUpdate =
+      ''
+        sudo nix-channel --update darwin
+        cp -r ~/nixos/home/* ~/.config/home-manager &&
+        home-manager switch &&
+        cp -r ~/nixos/system/* ~/.nixpkgs &&
+        cp ~/nixos/darwin-configuration.nix ~/.nixpkgs &&
+        sudo darwin-rebuild switch &&
+        yabai --stop-service &&
+        yabai --start-service &&
+        skhd -reload
+      '';
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
   macClean =

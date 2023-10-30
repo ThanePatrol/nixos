@@ -5,15 +5,16 @@
 { lib, config, pkgs, ... }:
 
 let
-  syspackages = import ./packages/packages.nix { inherit pkgs; };
-  pythonPackages = import ./packages/python_packages.nix { inherit pkgs; };
+  syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
+  pythonPackages =
+    import ./system/linux/packages/python_packages.nix { inherit pkgs; };
   languages = import ./packages/languages.nix { inherit pkgs; };
   homeConfig = import ./home/home.nix { inherit pkgs config lib; };
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     <home-manager/nixos>
-    ./modules/udev-rules.nix
+    ./system/linux/modules/udev-rules.nix
   ];
   # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
