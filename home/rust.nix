@@ -1,10 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = [
-    pkgs.rustup
-    pkgs.cargo-watch
-  ];
+  home.packages = [ pkgs.rustup pkgs.cargo-watch ];
 
   # use mold by default for all projects
   home.file.".cargo/config.toml".text = ''

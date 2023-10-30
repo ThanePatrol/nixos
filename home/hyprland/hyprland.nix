@@ -71,7 +71,6 @@ in {
 
       decoration = {
         rounding = 7;
-        multisample_edges = true;
 
         blur = {
           enabled = true;

@@ -45,16 +45,16 @@ let
       universal ++ linuxSpecific
     else
       universal;
-    }.fin;
+  }.fin;
 
-    finalPackages = {
-      fin = if isDarwin then
-        commonPkgs.packages ++ macPkgs.packages
-      else if isLinux then
-        commonPkgs.packages 
-      else
-        commonPkgs.packages;
-    }.fin;
+  finalPackages = {
+    fin = if isDarwin then
+      commonPkgs.packages ++ macPkgs.packages
+    else if isLinux then
+      commonPkgs.packages
+    else
+      commonPkgs.packages;
+  }.fin;
 
 in {
 
@@ -63,9 +63,8 @@ in {
   home.homeDirectory = (if isDarwin then "/Users/hugh" else "/home/hugh");
   home.stateVersion = "23.05"; # Please read the comment before changing.
   programs.home-manager.enable = true;
-  
-  home.packages = finalPackages;
 
+  home.packages = finalPackages;
 
   imports = finalImports;
 }
