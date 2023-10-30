@@ -102,6 +102,7 @@ in {
       ll = "ls -l";
       open = (if isDarwin then "open" else "xdg-open");
       cat = "bat";
+      du = "dust";
       update = (if isDarwin then macUpdate else linuxUpdate);
       clean = (if isDarwin then macClean else linuxClean);
       nv = "nvim";

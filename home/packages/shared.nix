@@ -53,11 +53,5 @@ in {
     zip
     zsh
     
-  ] ++ 
-
-  [{ nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "spotify"
-    "zoom-us"
-           ].packages;
-        }.nixpkgs];
+  ];
 }

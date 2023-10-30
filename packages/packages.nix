@@ -31,7 +31,6 @@ in {
     wrappedChrome
     wrappedZoom
     act # github actions locally
-    #    alacritty # terminal
     anki # flashcards
     bat # better cat
     bear # compilation database for clang tooling
