@@ -125,6 +125,8 @@ in {
       #scala
       metals
 
+      terraform-ls
+
       # go
       gopls
 

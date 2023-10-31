@@ -24,7 +24,8 @@ let
   macClean =
     "nix-collect-garbage && nix-collect-garbage --delete-old && nix-store --optimise";
 
-  macExports = "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
+  macExports =
+    "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
 
 in {
   programs.starship = {
@@ -136,8 +137,8 @@ in {
     initExtra = ''
       eval "$(direnv hook zsh)"
       eval "$(starship init zsh)"
-      #export PATH="${pkgs.skhd}/bin/skhd:$PATH"
     '';
+    #export PATH="${pkgs.skhd}/bin/skhd:$PATH"
   };
 }
 
