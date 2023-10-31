@@ -1,24 +1,31 @@
 { config, pkgs, ... }:
+let 
+  user_name = "hugh";
 
-{
+in {
 
   imports = [ <home-manager/nix-darwin> ];
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = [ pkgs.vim ];
+  environment.systemPackages = [ 
+  ];
 
   homebrew = {
     enable = true;
     onActivation.upgrade = true;
     # mainly used for cmd line tools not packaged by nix
-    brews = [ "docker-completion" "yabai" ];
+    brews = [ 
+      "docker-completion"
+      "yabai"
+      "skhd"
+      "mas" # mac app store cli - needs xcode installed
+    ];
     # mainly used for gui things
     casks = [
-      "mas" # mac app store cli
       "docker"
       "firefox"
       "signal"
-      "bitwarden"
+#      "bitwarden"
       "google-chrome"
       "intellij-idea"
       "spotify"
@@ -26,11 +33,15 @@
       "zotero"
     ];
     # mac store apps when there is no cask
-    masApps = {
-      Xcode = 497799835;
-    };
-
+#     masApps = {
+#       Xcode = 497799835;
+#     };
   };
+
+  users.users.${user_name} = {
+    home = "/Users/${user_name}";
+  };
+
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix

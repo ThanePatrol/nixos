@@ -136,7 +136,7 @@ in {
     initExtra = ''
       eval "$(direnv hook zsh)"
       eval "$(starship init zsh)"
-
+      #export PATH="${pkgs.skhd}/bin/skhd:$PATH"
     '';
   };
 }
