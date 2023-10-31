@@ -27,6 +27,8 @@ let
   macExports =
     "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
 
+  startSkhd = "~/nixos/home/macos/skhd/start_service.sh";
+
 in {
   programs.starship = {
     enable = true;
@@ -123,6 +125,7 @@ in {
       update = (if isDarwin then macUpdate else linuxUpdate);
       clean = (if isDarwin then macClean else linuxClean);
       nv = "nvim";
+      startskhd = (if isDarwin then startSkhd else "");
     };
     plugins = [
       {
@@ -138,7 +141,6 @@ in {
       eval "$(direnv hook zsh)"
       eval "$(starship init zsh)"
     '';
-    #export PATH="${pkgs.skhd}/bin/skhd:$PATH"
   };
 }
 
