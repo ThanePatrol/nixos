@@ -13,11 +13,7 @@ let
     home-manager switch &&
     cp -r ~/nixos/system/* ~/.nixpkgs &&
     cp ~/nixos/darwin-configuration.nix ~/.nixpkgs &&
-    nix-channel --update darwin &&
-    darwin-rebuild switch &&
-    yabai --stop-service &&
-    yabai --start-service &&
-    skhd -reload
+    nix-channel --update darwin
   '';
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";

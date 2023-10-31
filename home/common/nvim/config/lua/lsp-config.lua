@@ -49,7 +49,6 @@ default_lsp_setup('ccls') -- c/c++
 default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
 default_lsp_setup('gopls') -- go
-default_lsp_setup('terraformls') -- vimscript
 
 nvim_lsp.rust_analyzer.setup({
     on_attach = on_attach,
@@ -90,5 +89,9 @@ nvim_lsp.html.setup({
     configurationSection = { 'html', 'css', 'javascript' },
     embeddedLanguages = { css = true, javascript = true },
     provideFormatter = true,
+})
+
+nvim_lsp.terraformls.setup({
+	filetypes = { "terraform", "tf" , "hcl"},
 })
 
