@@ -9,11 +9,12 @@ let
     sudo nix-env --delete-generations 7d
   '';
   macUpdate = ''
-    cp -r ~/nixos/home/* ~/.config/home-manager &&
-    home-manager switch &&
     cp -r ~/nixos/system/* ~/.nixpkgs &&
     cp ~/nixos/darwin-configuration.nix ~/.nixpkgs &&
-    nix-channel --update darwin
+    nix-channel --update darwin &&
+    darwin-rebuild switch &&
+    cp -r ~/nixos/home/* ~/.config/home-manager &&
+    home-manager switch
   '';
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";

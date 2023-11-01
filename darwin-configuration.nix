@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
-let user_name = "hugh";
-
+let 
+  user_name = "hugh";
 in {
 
   imports = [ <home-manager/nix-darwin> ];
@@ -10,7 +10,11 @@ in {
 
   homebrew = {
     enable = true;
-    onActivation.upgrade = true;
+    onActivation = {
+      upgrade = true;
+      autoUpdate = true;
+    };
+  
     # mainly used for cmd line tools not packaged by nix
     brews = [
       "docker-completion"
@@ -31,16 +35,31 @@ in {
       "zotero"
     ];
     # mac store apps when there is no cask
-    #     masApps = {
-    #       Xcode = 497799835;
-    #     };
+    masApps = {
+      Xcode = 497799835;
+    };
+  };
+
+  system.defaults.NSGlobalDomain = {
+    AppleInterfaceStyle = "Dark";
+  };
+
+  system.defaults.dock = {
+    autohide = true;
+    show-recents = false;
+  };
+
+  system.defaults.finder = {
+    AppleShowAllExtensions = true;
+    CreateDesktop = false;
+    FXPreferredViewStyle = "clmv";
+    ShowPathbar = true;
+    QuitMenuItem = true;
+    _FXShowPosixPathInTitle = true;
+
   };
 
   users.users.${user_name} = { home = "/Users/${user_name}"; };
-
-  # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
-  # environment.darwinConfig = "$HOME/.config/nixpkgs/darwin/configuration.nix";
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
