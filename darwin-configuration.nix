@@ -40,8 +40,21 @@ in {
     };
   };
 
+  launchd.user.agents = {
+    "docker-desktop" = {
+      script = "open -a Docker";
+      serviceConfig = {
+        Label = "com.docker.desktop.launch";
+        RunAtLoad = true;
+        StandardErrorPath = "/tmp/docker.err";
+        StandardOutPath = "/tmp/docker.out";
+      };
+    };
+  };
+
   system.defaults.NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
+    "com.apple.swipescrolldirection" = false;
   };
 
   system.defaults.dock = {
@@ -56,8 +69,8 @@ in {
     ShowPathbar = true;
     QuitMenuItem = true;
     _FXShowPosixPathInTitle = true;
-
   };
+
 
   users.users.${user_name} = { home = "/Users/${user_name}"; };
 
