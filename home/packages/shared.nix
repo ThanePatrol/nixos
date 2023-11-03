@@ -12,6 +12,7 @@ in {
       biber
       bison
       chafa
+      cargo-cross # cross compilation
       #calibre
       cmake
       cups

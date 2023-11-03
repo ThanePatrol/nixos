@@ -91,7 +91,5 @@ nvim_lsp.html.setup({
     provideFormatter = true,
 })
 
-nvim_lsp.terraformls.setup({
-	filetypes = { "terraform", "tf" , "hcl"},
-})
+nvim_lsp.terraformls.setup({ filetypes = { 'terraform', 'tf', 'hcl' } })
 

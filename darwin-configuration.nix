@@ -1,6 +1,5 @@
 { config, pkgs, ... }:
-let 
-  user_name = "hugh";
+let user_name = "hugh";
 in {
 
   imports = [ <home-manager/nix-darwin> ];
@@ -14,7 +13,7 @@ in {
       upgrade = true;
       autoUpdate = true;
     };
-  
+
     # mainly used for cmd line tools not packaged by nix
     brews = [
       "docker-completion"
@@ -35,9 +34,7 @@ in {
       "zotero"
     ];
     # mac store apps when there is no cask
-    masApps = {
-      Xcode = 497799835;
-    };
+    masApps = { Xcode = 497799835; };
   };
 
   launchd.user.agents = {
@@ -70,7 +67,6 @@ in {
     QuitMenuItem = true;
     _FXShowPosixPathInTitle = true;
   };
-
 
   users.users.${user_name} = { home = "/Users/${user_name}"; };
 
