@@ -7,6 +7,7 @@ in {
   packages = with pkgs;
     [
       act # github actions locally
+      awscli2
       #anki # flashcards
       #bear # compilation database for clang tooling
       biber
@@ -36,6 +37,7 @@ in {
       nixfmt # autoformat nix files
       nomacs # image viewer
       pandoc # document conversion
+      prismlauncher # minecraft!
       pciutils # useful pci utils
       #playerctl # media control - check if needed
       pkg-config # build tools
