@@ -8,7 +8,7 @@ let
   syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
   pythonPackages =
     import ./system/linux/packages/python_packages.nix { inherit pkgs; };
-  languages = import ./packages/languages.nix { inherit pkgs; };
+  languages = import ./system/linux/packages/languages.nix { inherit pkgs; };
   homeConfig = import ./home/home.nix { inherit pkgs config lib; };
 in {
   imports = [ # Include the results of the hardware scan.
@@ -61,7 +61,7 @@ in {
   # Configure NFS share
   fileSystems."/nfs/samsung4tb" = {
     device = "10.0.0.15:/mnt/samsung4tb/nas";
-    fsType = "nfs4";
+    fsType = "nfs";
     options =
       [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];
   };
