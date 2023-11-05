@@ -26,8 +26,8 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   #support 32bit opengl for steam
-  hardware.opengl.driSupport32Bit = true;
-  hardware.cpu.amd.updateMicrocode = true;
+#  hardware.opengl.driSupport32Bit = true;
+#  hardware.cpu.amd.updateMicrocode = true;
 
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
