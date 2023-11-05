@@ -27,13 +27,13 @@ in {
 
   #support 32bit opengl for steam
   hardware.opengl.driSupport32Bit = true;
+  hardware.cpu.amd.updateMicrocode = true;
 
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # transpartent huge pages for faster rust compilation
   boot.kernelParams = [ "transparent_hugepage=madvise" ];
 
+  # transpartent huge pages for faster rust compilation
   networking.hostName = "nixos"; # Define your hostname.
   networking.firewall = {
     enable = true;
@@ -61,7 +61,7 @@ in {
   # Configure NFS share
   fileSystems."/nfs/samsung4tb" = {
     device = "10.0.0.15:/mnt/samsung4tb/nas";
-    fsType = "nfs";
+    fsType = "nfs4";
     options =
       [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];
   };

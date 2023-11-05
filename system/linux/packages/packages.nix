@@ -91,7 +91,7 @@ in {
         # List package dependencies here
         wineWowPackages.waylandFull
         glxinfo # OpenGL libraries for steam
-        mesa
+        #mesa
         libGLU
         vulkan-tools
         vulkan-validation-layers
