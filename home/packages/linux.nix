@@ -4,9 +4,6 @@
 let
 
 in {
-  packages = with pkgs;
-    [
-
-    ];
+  packages = with pkgs; [ ];
 
 }

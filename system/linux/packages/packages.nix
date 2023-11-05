@@ -86,6 +86,19 @@ in {
     rpi-imager # to add ssid and information into the bootable image
     signal-desktop # wrap
     spice-vdagent
+    (lutris.override {
+      extraPkgs = pkgs: [
+        # List package dependencies here
+        wineWowPackages.waylandFull
+        glxinfo # OpenGL libraries for steam
+        mesa
+        libGLU
+        vulkan-tools
+        vulkan-validation-layers
+        vulkan-loader
+        vulkan-headers
+      ];
+    })
     spotify # wrap
     slurp
     sshfs

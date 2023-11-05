@@ -7,6 +7,7 @@ let
 
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
+  linuxPkgs = import ./packages/linux.nix { inherit pkgs; };
 
   universal = [
     (import ./common/bat.nix)
@@ -51,7 +52,7 @@ let
     fin = if isDarwin then
       commonPkgs.packages ++ macPkgs.packages
     else if isLinux then
-      commonPkgs.packages
+      commonPkgs.packages ++ linuxPkgs.packages
     else
       commonPkgs.packages;
   }.fin;

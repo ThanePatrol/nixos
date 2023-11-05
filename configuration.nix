@@ -25,6 +25,9 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  #support 32bit opengl for steam
+  hardware.opengl.driSupport32Bit = true;
+
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
