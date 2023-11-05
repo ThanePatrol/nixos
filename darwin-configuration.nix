@@ -59,6 +59,14 @@ in {
     show-recents = false;
   };
 
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+
+    "AppleKeyboardUIMode" = 3;
+    "ApplePressAndHoldEnabled" = false;
+  };
+
   system.defaults.finder = {
     AppleShowAllExtensions = true;
     CreateDesktop = false;
