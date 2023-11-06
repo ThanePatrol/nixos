@@ -29,9 +29,14 @@ in {
 #  hardware.opengl.driSupport32Bit = true;
 #  hardware.cpu.amd.updateMicrocode = true;
 
+
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ "transparent_hugepage=madvise" ];
+  boot.kernelParams = [ 
+    "transparent_hugepage=madvise"
+    "video=DP-2:3840x2160"
+  ];
+  boot.initrd.kernelModules = [ "dm_mod" ];
 
   # transpartent huge pages for faster rust compilation
   networking.hostName = "nixos"; # Define your hostname.
@@ -139,7 +144,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs;
-    [ wget kitty pythonPackages ] ++ syspackages.environment.systemPackages
+    [ wget kitty pythonPackages ]
+ ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
   environment.pathsToLink = [ "/share/zsh" ];
