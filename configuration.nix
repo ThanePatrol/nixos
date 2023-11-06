@@ -26,9 +26,10 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   #support 32bit opengl for steam
-#  hardware.opengl.driSupport32Bit = true;
-#  hardware.cpu.amd.updateMicrocode = true;
-
+  hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.driSupport = true;
+  hardware.cpu.amd.updateMicrocode = true;
+  
 
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -36,6 +37,8 @@ in {
     "transparent_hugepage=madvise"
     "video=DP-2:3840x2160"
   ];
+
+  # required for issue with no graphical display after booting
   boot.initrd.kernelModules = [ "dm_mod" ];
 
   # transpartent huge pages for faster rust compilation
