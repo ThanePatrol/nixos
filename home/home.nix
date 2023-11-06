@@ -10,7 +10,7 @@ let
   linuxPkgs = import ./packages/linux.nix { inherit pkgs; };
 
   universal = [
-    (import ./common/bat.nix)
+    (import ./common/bat/bat.nix)
     (import ./common/alacritty.nix)
     (import ./common/btop.nix)
     (import ./common/rclone.nix)
@@ -27,7 +27,6 @@ let
   macSpecific = [
     (import ./macos/yabai/yabai.nix)
     (import ./macos/skhd/skhd.nix)
-
   ];
   linuxSpecific = [
     (import ./linux/gtk_themes.nix)

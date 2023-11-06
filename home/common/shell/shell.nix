@@ -59,7 +59,16 @@ in {
         ahead = "⇡ ";
       };
 
-      docker_context = { symbol = "🐋"; };
+      aws = {
+        symbol = "☁️ ";
+        format = "[$symbol$profile]($style) ";
+      };
+
+      docker_context = { 
+        symbol = "🐋"; 
+        format = "[$symbol $context]($style) ";
+      };
+
       c = { symbol = "🔧"; };
       helm = { symbol = "⎈ "; };
       java = { symbol = "☕ "; };

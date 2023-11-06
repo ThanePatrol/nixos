@@ -63,8 +63,8 @@ in {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
 
-    "AppleKeyboardUIMode" = 3;
-    "ApplePressAndHoldEnabled" = false;
+    #"AppleKeyboardUIMode" = 3;
+    #"ApplePressAndHoldEnabled" = false;
   };
 
   system.defaults.finder = {

@@ -122,6 +122,7 @@ in {
       #rust
       rust-analyzer
       rustfmt
+      rustc
       #scala
       metals
 
