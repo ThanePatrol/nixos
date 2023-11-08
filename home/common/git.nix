@@ -9,7 +9,9 @@ in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login
   programs.gh = {
     enable = true;
-    git_protocol = "https";
+    settings = {
+      git_protocol = "https";
+    };
     gitCredentialHelper = {
       enable = true;
       hosts = [
