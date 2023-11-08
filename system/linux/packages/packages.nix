@@ -104,7 +104,6 @@ in {
     spotify # wrap
     slurp
     sshfs
-    texlive.combined.scheme-full # full latex stuff
     thunderbird
     tor
     transmission-gtk

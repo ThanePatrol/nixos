@@ -45,6 +45,7 @@ in {
       ripgrep
       rsync
       typescript
+      texlive.combined.scheme-tetex
       unzip
       vim
       zip
