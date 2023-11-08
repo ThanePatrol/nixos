@@ -11,7 +11,12 @@ in {
   # https://github.com/cli/cli/issues/4955
   programs.gh = {
     enable = true;
-    gitCredentialHelper.enable = true;
+    gitCredentialHelper = {
+      enable = true;
+      hosts = [
+        "https://github.com"
+      ];
+    };
   };
 
   programs.git = {
@@ -31,7 +36,15 @@ in {
     };
 
     # global ignore
-    ignores = [ "**/target/*" "*~" "*.swp" ];
+    ignores = [ 
+      "**/target/*"
+      "*~"
+      "*.swp"
+      ".DS_Store"
+      "node_modules"
+      ".env"
+      ".envrc"
+    ];
 
     # git-delta
     # https://github.com/dandavison/delta
