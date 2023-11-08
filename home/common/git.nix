@@ -1,16 +1,15 @@
 { pkgs, ... }:
 
-with builtins;
 let
   DEFAULT_BRANCH = "main";
   DEFAULT_BRANCH_OLD = "master";
   DEVELOP_BRANCH = "develop";
   DEVELOP_BRANCH_ABBREV = "dev";
-
 in {
-  # https://github.com/cli/cli/issues/4955
+  # set up auth here: https://cli.github.com/manual/gh_auth_login
   programs.gh = {
     enable = true;
+    git_protocol = "https";
     gitCredentialHelper = {
       enable = true;
       hosts = [
