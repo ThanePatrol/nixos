@@ -88,9 +88,11 @@ in {
     spice-vdagent
     (lutris.override {
       extraPkgs = pkgs: [
-        # List package dependencies here
+        wineWowPackages.unstableFull
         wineWowPackages.waylandFull
-        glxinfo # OpenGL libraries for steam
+        protontricks
+        glxinfo # OpenGL libraries for steamp
+        gamescope # steamOS session window manager
         #mesa
         libGLU
         vulkan-tools

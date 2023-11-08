@@ -14,7 +14,7 @@ in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     <home-manager/nixos>
-    ./system/linux/modules/udev-rules.nix
+#    ./system/linux/modules/udev-rules.nix
   ];
   # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
