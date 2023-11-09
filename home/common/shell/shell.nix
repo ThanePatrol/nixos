@@ -125,6 +125,7 @@ in {
       ".." = "cd ..";
       "..." = "cd ...";
       ll = "ls -l";
+      ls = "ls --color=auto";
       open = (if isDarwin then "open" else "xdg-open");
       cat = "bat";
       du = "dust";
