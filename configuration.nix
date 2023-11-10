@@ -102,6 +102,21 @@ in {
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
 
+  # start bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+  systemd.services.auto-bluetooth-connection = {
+    description = "Auto Bluetooth Keyboard Connection";
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.bluez ];
+    script = ''
+      #!/usr/bin/env bash
+      ${pkgs.bluez}/bin/bluetoothctl connect 6C:93:08:61:A1:CA  
+    '';
+};
+  #services.blueman.enable = true;
+
   # services.flatpak.enable = true;
 
   # Configure keymap in X11

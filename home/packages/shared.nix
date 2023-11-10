@@ -17,6 +17,7 @@ in {
       #calibre
       cmake
       cups
+      dosbox-staging
       direnv
       du-dust # better du
       flex # lexical analysis
@@ -33,6 +34,7 @@ in {
       luaformatter # format lua
       jdk
       mold # fast linker for llvm
+      nasm
       neofetch
       nixfmt # autoformat nix files
       nomacs # image viewer
