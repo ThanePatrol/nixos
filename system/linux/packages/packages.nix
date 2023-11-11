@@ -114,6 +114,7 @@ in {
     wl-clipboard
     wpaperd # wallpaper daemon
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
+    xdg-user-dirs
     #zotero # bibliography manager
     zoom-us # wrap
   ];

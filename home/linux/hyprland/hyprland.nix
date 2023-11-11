@@ -28,13 +28,12 @@ in {
       "$mod" = "alt";
 
       exec-once = [
-        # TODO - this doesn't work to diag
-        #"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP" # fix to GTK apps taking a long time to launch
         "dunst" # notifications
         "waybar" # status bar
         "wl-paste --type text --watch cliphist store"
         "wpaperd"
         "~/nixos/home/hyprland/tmux_init.sh"
+        # TODO make this work properly
         "udiskie &" # mount usbs in the background
         "kdeconnect-app"
       ];
@@ -122,8 +121,7 @@ in {
         "$mod, right, movewindow, r"
         "$mod, up, movewindow, u"
         "$mod, down, movewindow, d"
-
-        '',Print,exec,grim -g "$(slurp)" - | wl-copy ''
+        '',Print,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
         #clipboard history
         #"$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
 
