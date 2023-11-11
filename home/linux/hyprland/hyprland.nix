@@ -136,8 +136,8 @@ in {
       ];
       # binde allows for repeat button presses
       binde = [
-        ",XF86AudioLowerVolume,exec,playerctl volume 0.1-" # application level volume controls
-        ",XF86AudioRaiseVolume,exec,playerctl volume 0.1+" # ^^
+        "$mod,XF86AudioLowerVolume,exec,playerctl volume 0.1-" # application level volume controls
+        "$mod,XF86AudioRaiseVolume,exec,playerctl volume 0.1+" # ^^
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" # system level volume control
         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+" # system level volume control
       ];

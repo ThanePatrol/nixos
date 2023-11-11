@@ -3,6 +3,9 @@
     
     userDirs = {
       enable = true;
+      # note that because we don't actually create the directories we need to create Doenloads and Pictures directory
+      # ourselves
+      # TODO make this automatic
       createDirectories = false;
     };
 
