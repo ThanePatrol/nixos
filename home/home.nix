@@ -11,7 +11,6 @@ let
 
   universal = [
     (import ./common/bat/bat.nix)
-    (import ./common/alacritty.nix)
     (import ./common/btop.nix)
     (import ./common/rclone.nix)
     (import ./common/fonts.nix)
@@ -21,6 +20,7 @@ let
     (import ./common/nvim/nvim.nix)
     (import ./common/tmux.nix)
     (import ./common/rust.nix)
+    (import ./common/wezterm/wezterm.nix)
     (import ./common/zathura.nix)
   ];
 
