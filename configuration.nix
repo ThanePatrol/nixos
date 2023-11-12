@@ -36,6 +36,7 @@ in {
   boot.kernelParams = [ 
     "transparent_hugepage=madvise"
     "video=DP-2:3840x2160"
+    "systemd.unified_cgroup_hierarchy=0"
   ];
 
   # required for issue with no graphical display after booting

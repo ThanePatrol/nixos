@@ -94,6 +94,8 @@ in {
       "com.apple.commerce".AutoUpdate = true;
     };
 
+    # https://github.com/LnL7/nix-darwin/issues/214
+    # hack for getting nix apps to launch with spotlight
   system.activationScripts.applications.text = lib.mkForce ''
     echo "setting up ~/Applications..." >&2
     applications="$HOME/Applications"
