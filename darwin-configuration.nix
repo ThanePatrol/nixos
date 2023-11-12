@@ -56,13 +56,15 @@ in {
 
   system.defaults.dock = {
     autohide = true;
+    autohide-delay = 0.0;
+    launchanim = false;
+
     show-recents = false;
   };
 
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
-
     #"AppleKeyboardUIMode" = 3;
     #"ApplePressAndHoldEnabled" = false;
   };
@@ -75,6 +77,24 @@ in {
     QuitMenuItem = true;
     _FXShowPosixPathInTitle = true;
   };
+
+  system.activationScripts.postUserActivation.text = ''
+    # Following line should allow us to avoid a logout/login cycle
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
+
+  system.defaults.CustomUserPreferences = {
+    "com.apple.desktopservices" = {
+              # Avoid creating .DS_Store files on network or USB volumes
+              DSDontWriteNetworkStores = true;
+              DSDontWriteUSBStores = true;
+            };
+      # Prevent Photos from opening automatically when devices are plugged in
+      "com.apple.ImageCapture".disableHotPlug = true;
+      # Turn on app auto-update
+      "com.apple.commerce".AutoUpdate = true;
+    };
+
 
   users.users.${user_name} = { home = "/Users/${user_name}"; };
 

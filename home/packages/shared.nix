@@ -38,6 +38,7 @@ in {
       neofetch
       nixfmt # autoformat nix files
       nomacs # image viewer
+      notcurses # terminal bling
       pandoc # document conversion
       prismlauncher # minecraft!
       pciutils # useful pci utils
