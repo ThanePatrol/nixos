@@ -38,23 +38,23 @@ let
     (import ./linux/walls/wpapred.nix)
     (import ./linux/xdg/xdg.nix)
   ];
-  finalImports = {
-    fin = if isDarwin then
-      universal ++ macSpecific
-    else if isLinux then
-      universal ++ linuxSpecific
-    else
-      universal;
-  }.fin;
+  finalImports = universal ++ macSpecific; #{
+ #   fin = if isDarwin then
+ #     universal ++ macSpecific
+ #   else if isLinux then
+ #     universal ++ linuxSpecific
+ #   else
+ #     universal;
+ # }.fin;
 
-  finalPackages = {
-    fin = if isDarwin then
-      commonPkgs.packages #++ macPkgs.packages
-    else if isLinux then
-      commonPkgs.packages ++ linuxPkgs.packages
-    else
-      commonPkgs.packages;
-  }.fin;
+  finalPackages = commonPkgs.packages; #{
+ #   fin = if isDarwin then
+ #     commonPkgs.packages #++ macPkgs.packages
+ #   else if isLinux then
+ #     commonPkgs.packages ++ linuxPkgs.packages
+ #   else
+ #     commonPkgs.packages;
+ # }.fin;
 
 in {
 
