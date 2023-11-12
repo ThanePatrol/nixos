@@ -17,7 +17,6 @@ in {
       #calibre
       cmake
       cups
-      dosbox-staging
       direnv
       du-dust # better du
       flex # lexical analysis

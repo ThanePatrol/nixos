@@ -2,7 +2,7 @@
 
 let
 
-  isDarwin = builtins.currentSystem == "aarch64-darwin";
+  isDarwin = builtins.currentSystem == "aarch64-apple-darwin";
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
 
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
