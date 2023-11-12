@@ -16,7 +16,6 @@ in {
 
     # mainly used for cmd line tools not packaged by nix
     brews = [
-      "docker-completion"
       "yabai"
       "skhd"
       "mas" # mac app store cli - needs xcode installed
