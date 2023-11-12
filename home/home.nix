@@ -49,7 +49,7 @@ let
 
   finalPackages = {
     fin = if isDarwin then
-      commonPkgs.packages ++ macPkgs.packages
+      commonPkgs.packages #++ macPkgs.packages
     else if isLinux then
       commonPkgs.packages ++ linuxPkgs.packages
     else
