@@ -16,9 +16,9 @@ in {
 
     # mainly used for cmd line tools not packaged by nix
     brews = [
-      "yabai"
-      "skhd"
-      "mas" # mac app store cli - needs xcode installed
+      "koekeishiya/formulae/yabai"
+      "koekeishiya/formulae/skhd"
+      "mas" # mac app store cli
     ];
     # mainly used for gui things
     casks = [
