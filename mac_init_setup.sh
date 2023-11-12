@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # homebrew is required for nix darwin
+# at least for the packages i use
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo "installed homebrew"
 
