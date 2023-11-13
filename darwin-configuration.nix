@@ -16,8 +16,8 @@ in {
 
     # mainly used for cmd line tools not packaged by nix
     brews = [
-      "koekeishiya/formulae/yabai"
-      "koekeishiya/formulae/skhd"
+      #"koekeishiya/formulae/yabai"
+      #"koekeishiya/formulae/skhd"
       "mas" # mac app store cli
     ];
     # mainly used for gui things
@@ -35,6 +35,11 @@ in {
     # mac store apps when there is no cask
     masApps = { Xcode = 497799835; };
   };
+
+  # tiling window manager
+  # enable service here, configure with home-manager
+  services.yabai.enable = true;
+  services.skhd.enable = true;
 
   launchd.user.agents = {
     "docker-desktop" = {
@@ -93,73 +98,18 @@ in {
     # Turn on app auto-update
     "com.apple.commerce".AutoUpdate = true;
 
-    "com.apple.symbolichotkeys" = {
-      AppleSymbolicHotKeys = {
-        "118" = {
-          enabled = 1;
-          value = {
-            parameters = [ 49 18 524288 ];
-            type = "standard";
-          };
-        };
-        "119" = {
-          enabled = 1;
-          value = {
-            parameters = [ 50 19 524288 ];
-            type = "standard";
-          };
-        };
-        "120" = {
-          enabled = 1;
-          value = {
-            parameters = [ 51 20 524288 ];
-            type = "standard";
-          };
-        };
-        "121" = {
-          enabled = 1;
-          value = {
-            parameters = [ 52 21 524288 ];
-            type = "standard";
-          };
-        };
-        "122" = {
-          enabled = 1;
-          value = {
-            parameters = [ 53 23 524288 ];
-            type = "standard";
-          };
-        };
-        "123" = {
-          enabled = 1;
-          value = {
-            parameters = [ 54 22 524288 ];
-            type = "standard";
-          };
-        };
-        "124" = {
-          enabled = 1;
-          value = {
-            parameters = [ 55 26 524288 ];
-            type = "standard";
-          };
-        };
-        "125" = {
-          enabled = 1;
-          value = {
-            parameters = [ 56 28 524288 ];
-            type = "standard";
-          };
-        };
-        "126" = {
-          enabled = 1;
-          value = {
-            parameters = [ 57 25 524288 ];
-            type = "standard";
-          };
-        };
-      };
-    };
+  # TODO when this is fixed, enable it
+   # can't configure shortcuts yet
+   # waiting on https://github.com/LnL7/nix-darwin/issues/185
+   # "com.apple.symbolichotkeys".AppleSymbolicHotKeys = {
+   #   "118" = {
+   #     enabled = true;
+   #       value = {
+   #         parameters = [ 49 18 524288 ];
+   #         type = "standard";
+   #     };
+   #   };
+   # };
   };
 
   # https://github.com/LnL7/nix-darwin/issues/214
