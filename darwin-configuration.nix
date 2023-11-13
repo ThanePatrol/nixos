@@ -16,8 +16,6 @@ in {
 
     # mainly used for cmd line tools not packaged by nix
     brews = [
-      #"koekeishiya/formulae/yabai"
-      #"koekeishiya/formulae/skhd"
       "mas" # mac app store cli
     ];
     # mainly used for gui things
@@ -90,12 +88,11 @@ in {
   system.defaults.CustomUserPreferences = {
     "com.apple.desktopservices" = {
       # Avoid creating .DS_Store files on network or USB volumes
+      # bane of my existence
       DSDontWriteNetworkStores = true;
       DSDontWriteUSBStores = true;
     };
-    # Prevent Photos from opening automatically when devices are plugged in
     "com.apple.ImageCapture".disableHotPlug = true;
-    # Turn on app auto-update
     "com.apple.commerce".AutoUpdate = true;
 
   # TODO when this is fixed, enable it
