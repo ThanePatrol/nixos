@@ -84,112 +84,86 @@ in {
 
   system.defaults.CustomUserPreferences = {
     "com.apple.desktopservices" = {
-              # Avoid creating .DS_Store files on network or USB volumes
-              DSDontWriteNetworkStores = true;
-              DSDontWriteUSBStores = true;
-            };
-      # Prevent Photos from opening automatically when devices are plugged in
-      "com.apple.ImageCapture".disableHotPlug = true;
-      # Turn on app auto-update
-      "com.apple.commerce".AutoUpdate = true;
-
-      "com.apple.symbolichotkeys" = {
-        AppleSymbolicHotKeys = {
-          "118" = {
-            enabled = 1;
-            value = {
-              parameters = [49 18 524288];
-              type = "standard";
-            };
-          };
-          "119" = {
-            enabled = 1;
-            value = {
-              parameters = [50 19 524288];
-              type = "standard";
-            };
-          };
-            "120" =             {
-                enabled = 1;
-                value = {
-                    parameters = [
-                        51
-                        20
-                        524288
-                      ];
-                    type = "standard";
-                };
-            };
-            "121" =             {
-                enabled = 1;
-                value =                 {
-                    parameters =                     [
-                        52
-                        21
-                        524288
-                      ];
-                    type = "standard";
-                };
-            };
-            122 =             {
-                enabled = 1;
-                value =                 {
-                    parameters =                     (
-                        53,
-                        23,
-                        524288
-                    );
-                    type = standard;
-                };
-            };
-            123 =             {
-                enabled = 1;
-                value =                 {
-                    parameters =                     (
-                        54,
-                        22,
-                        524288
-                    );
-                    type = standard;
-                };
-            };
-            124 =             {
-                enabled = 1;
-                value =                 {
-                    parameters =                     (
-                        55,
-                        26,
-                        524288
-                    );
-                    type = standard;
-                };
-            };
-            125 =             {
-                enabled = 1;
-                value =                 {
-                    parameters =                     (
-                        56,
-                        28,
-                        524288
-                    );
-                    type = standard;
-                };
-            };
-            126 =             {
-                enabled = 1;
-                value =                 {
-                    parameters =                     (
-                        57,
-                        25,
-                        524288
-                    );
-                    type = standard;
-                };
-            };
+      # Avoid creating .DS_Store files on network or USB volumes
+      DSDontWriteNetworkStores = true;
+      DSDontWriteUSBStores = true;
     };
+    # Prevent Photos from opening automatically when devices are plugged in
+    "com.apple.ImageCapture".disableHotPlug = true;
+    # Turn on app auto-update
+    "com.apple.commerce".AutoUpdate = true;
 
-    # https://github.com/LnL7/nix-darwin/issues/214
-    # hack for getting nix apps to launch with spotlight
+    "com.apple.symbolichotkeys" = {
+      AppleSymbolicHotKeys = {
+        "118" = {
+          enabled = 1;
+          value = {
+            parameters = [ 49 18 524288 ];
+            type = "standard";
+          };
+        };
+        "119" = {
+          enabled = 1;
+          value = {
+            parameters = [ 50 19 524288 ];
+            type = "standard";
+          };
+        };
+        "120" = {
+          enabled = 1;
+          value = {
+            parameters = [ 51 20 524288 ];
+            type = "standard";
+          };
+        };
+        "121" = {
+          enabled = 1;
+          value = {
+            parameters = [ 52 21 524288 ];
+            type = "standard";
+          };
+        };
+        "122" = {
+          enabled = 1;
+          value = {
+            parameters = [ 53 23 524288 ];
+            type = "standard";
+          };
+        };
+        "123" = {
+          enabled = 1;
+          value = {
+            parameters = [ 54 22 524288 ];
+            type = "standard";
+          };
+        };
+        "124" = {
+          enabled = 1;
+          value = {
+            parameters = [ 55 26 524288 ];
+            type = "standard";
+          };
+        };
+        "125" = {
+          enabled = 1;
+          value = {
+            parameters = [ 56 28 524288 ];
+            type = "standard";
+          };
+        };
+        "126" = {
+          enabled = 1;
+          value = {
+            parameters = [ 57 25 524288 ];
+            type = "standard";
+          };
+        };
+      };
+    };
+  };
+
+  # https://github.com/LnL7/nix-darwin/issues/214
+  # hack for getting nix apps to launch with spotlight
   system.activationScripts.applications.text = lib.mkForce ''
     echo "setting up ~/Applications..." >&2
     applications="$HOME/Applications"
@@ -221,7 +195,6 @@ in {
             " 1>/dev/null
         done
   '';
-
 
   users.users.${user_name} = { home = "/Users/${user_name}"; };
 
