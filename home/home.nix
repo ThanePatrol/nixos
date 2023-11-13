@@ -20,6 +20,7 @@ let
     (import ./common/nvim/nvim.nix)
     (import ./common/tmux.nix)
     (import ./common/rust.nix)
+    (import ./common/spotify/spotify.nix)
     (import ./common/wezterm/wezterm.nix)
     (import ./common/zathura.nix)
   ];
