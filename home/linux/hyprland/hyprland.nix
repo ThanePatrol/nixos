@@ -19,6 +19,8 @@ in {
   #    cliphist
   #];
 
+
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -28,6 +30,8 @@ in {
       "$mod" = "alt";
 
       exec-once = [
+        # set cursor
+        "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
         "dunst" # notifications
         "waybar" # status bar
         "wl-paste --type text --watch cliphist store"
