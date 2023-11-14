@@ -40,6 +40,10 @@ in {
         # TODO make this work properly
         "udiskie &" # mount usbs in the background
         "kdeconnect-app"
+        "[workspace 1 silent] wezterm"
+        "[workspace 2 silent] firefox"
+        "[workspace 3 silent] bitwarden"
+        "[workspace 4 silent] wezterm"
       ];
 
       animations = {
