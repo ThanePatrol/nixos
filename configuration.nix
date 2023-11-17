@@ -131,6 +131,22 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  /*
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Printer"; # hostname of Brother printer
+        location = "Study";
+        deviceUri = "http://10.0.0.117:631";
+        model = ""
+        ppdOptions = {
+          pageSize = "A4";
+        };
+      }
+    ];
+    ensureDefaultPrinter = "Printer";
+  };
+  */
 
   # Enable sound with pipewire.
   sound.enable = true;

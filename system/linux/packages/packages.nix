@@ -30,6 +30,7 @@ in {
     wrappedSpotify
     wrappedChrome
     wrappedZoom
+    alacritty
     anki # flashcards
     bear # compilation database for clang tooling
     binutils
@@ -101,6 +102,7 @@ in {
         vulkan-headers
       ];
     })
+    heroic-unwrapped
     spotify # wrap
     slurp
     sshfs

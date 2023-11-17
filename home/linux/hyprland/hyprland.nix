@@ -43,7 +43,6 @@ in {
         "[workspace 1 silent] wezterm"
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] bitwarden"
-        "[workspace 4 silent] wezterm"
       ];
 
       animations = {
