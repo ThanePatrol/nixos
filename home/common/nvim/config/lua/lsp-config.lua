@@ -41,7 +41,6 @@ default_lsp_setup('bashls')
 -- default_lsp_setup("rust_analyzer")
 default_lsp_setup('nil_ls') -- nix
 default_lsp_setup('pyright')
-default_lsp_setup('lua_ls')
 default_lsp_setup('cssls')
 -- default_lsp_setup("html")
 default_lsp_setup('jsonls')
@@ -63,6 +62,17 @@ default_lsp_setup('texlab') -- latex
 --        },
 --    },
 --})
+nvim_lsp.lua_ls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = {'vim'}
+			}
+		}
+	}
+})
 
 require('rust-tools').setup({
 	server = {

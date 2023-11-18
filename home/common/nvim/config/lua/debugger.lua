@@ -18,7 +18,6 @@ dap.configurations.rust = {
 	request = 'launch',
 
 	program = function()
-
 		return vim.fn.input('/run/current-system/sw/bin/gdb', vim.fn.getcwd() .. '/', 'file')
 	end,
 	cwd = "${workspaceFolder}",
