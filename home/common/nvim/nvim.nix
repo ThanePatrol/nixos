@@ -49,6 +49,13 @@ in {
       nvim-lspconfig
       nvim-lsp-ts-utils
 
+      #debugger
+      nvim-dap
+      nvim-dap-virtual-text 
+      nvim-dap-go
+      nvim-dap-ui
+      nvim-dap-python
+
       #Note taking
       neorg
 
@@ -111,7 +118,7 @@ in {
       nixpkgs-fmt
       #python
       pyright
-      #python310Packages.debugpy
+      python311Packages.debugpy
       #       python-debug
       black
       #typescript/web
@@ -130,6 +137,7 @@ in {
 
       # go
       gopls
+      delve
 
       #latex
       texlab

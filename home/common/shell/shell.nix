@@ -124,6 +124,7 @@ in {
     shellAliases = {
       ".." = "cd ..";
       "..." = "cd ...";
+      "...." = "cd ....";
       ll = "ls -l";
       ls = "ls --color=auto";
       open = (if isDarwin then "open" else "xdg-open");

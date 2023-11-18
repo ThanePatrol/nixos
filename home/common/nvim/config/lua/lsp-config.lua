@@ -48,33 +48,65 @@ default_lsp_setup('jsonls')
 default_lsp_setup('ccls') -- c/c++
 default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
-default_lsp_setup('gopls') -- go
+--default_lsp_setup('gopls') -- go
 
-nvim_lsp.rust_analyzer.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        ['rust_analyzer'] = {
-            cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
-            cargo = { allFeatures = true },
-            procMacro = { enable = true },
-            diagnostics = { experimental = { enable = true } },
+-- Replaced with rust-tools
+--nvim_lsp.rust_analyzer.setup({
+--    on_attach = on_attach,
+--    capabilities = capabilities,
+--    settings = {
+--        ['rust_analyzer'] = {
+--            cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
+--            cargo = { allFeatures = true },
+--            procMacro = { enable = true },
+--            diagnostics = { experimental = { enable = true } },
+--        },
+--    },
+--})
+
+require('rust-tools').setup({
+	server = {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	},
+	tools = {
+        runnables = { use_telescope = true },
+        inlay_hints = {
+            auto = true,
+            show_parameter_hints = false,
+            parameter_hints_prefix = '',
+            other_hints_prefix = '',
         },
-    },
+	}
+})
+
+nvim_lsp.gopls.setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+		gopls = {
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+			usePlaceholders = true,
+		},
+	},
 })
 
 nvim_lsp.tsserver.setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
-    on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
+    on_attach = on_attach,
+	--function(client, bufnr)
+    --    on_attach(client, bufnr)
 
-        -- todo, let ESlint handle formatting
-        local ts_utils = require('nvim-lsp-ts-utils')
-        ts_utils.setup({ enable_import_on_completion = true })
-        ts_utils.setup_client(client)
+    --    -- todo, let ESlint handle formatting
+    --    local ts_utils = require('nvim-lsp-ts-utils')
+    --    ts_utils.setup({ enable_import_on_completion = true })
+    --    ts_utils.setup_client(client)
 
-        -- todo, add mappings
-    end,
+    --    -- todo, add mappings
+    --end,
     capabilities = capabilities,
     filetypes = {
         'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',

@@ -180,7 +180,7 @@ in {
   # $ nix search wget
   environment.systemPackages = with pkgs;
     [ wget kitty pythonPackages ]
- ++ syspackages.environment.systemPackages
+    ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
   environment.pathsToLink = [ "/share/zsh" ];

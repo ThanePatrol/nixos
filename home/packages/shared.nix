@@ -18,6 +18,7 @@ in {
       cmake
       cups
       direnv
+      delve # go debugger
       du-dust # better du
       flex # lexical analysis
       ffmpeg-full
@@ -29,6 +30,7 @@ in {
       gzip
       lazygit # git tui
       libvirt
+      lldb # for rust debugging
       #libsecret # for storing passwords
       luaformatter # format lua
       jdk

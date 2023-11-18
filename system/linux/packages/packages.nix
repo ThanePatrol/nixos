@@ -52,6 +52,7 @@ in {
     dunst # notification daemon
     flex # lexical analysis
     firefox
+    gdb
     google-chrome # wrap
     graphviz
     grim # screenshot
@@ -102,7 +103,21 @@ in {
         vulkan-headers
       ];
     })
-    heroic-unwrapped
+    (heroic.override {
+      extraPkgs = pkgs: [
+        wineWowPackages.unstableFull
+        wineWowPackages.waylandFull
+        protontricks
+        glxinfo # OpenGL libraries for steamp
+        gamescope # steamOS session window manager
+        #mesa
+        libGLU
+        vulkan-tools
+        vulkan-validation-layers
+        vulkan-loader
+        vulkan-headers
+      ];
+    })
     spotify # wrap
     slurp
     sshfs
@@ -114,6 +129,8 @@ in {
     vlc
     virt-manager # gui for VMs
     wl-clipboard
+    wireplumber # sound memes
+    qpwgraph
     wpaperd # wallpaper daemon
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     xdg-user-dirs
