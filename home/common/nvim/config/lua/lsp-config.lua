@@ -49,19 +49,6 @@ default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
 --default_lsp_setup('gopls') -- go
 
--- Replaced with rust-tools
---nvim_lsp.rust_analyzer.setup({
---    on_attach = on_attach,
---    capabilities = capabilities,
---    settings = {
---        ['rust_analyzer'] = {
---            cmd = { 'rustup', 'run', 'stable', 'rust-analyzer' },
---            cargo = { allFeatures = true },
---            procMacro = { enable = true },
---            diagnostics = { experimental = { enable = true } },
---        },
---    },
---})
 nvim_lsp.lua_ls.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
@@ -78,6 +65,17 @@ require('rust-tools').setup({
 	server = {
 		on_attach = on_attach,
 		capabilities = capabilities,
+		settings = {
+			cargo = {
+				allFeatures = true,
+			},
+			procMacro = {
+				enable = true,
+			},
+			diagnostics = {
+				experimental = { enable = true }
+			},
+		}
 	},
 	tools = {
         runnables = { use_telescope = true },
@@ -87,6 +85,7 @@ require('rust-tools').setup({
             parameter_hints_prefix = '',
             other_hints_prefix = '',
         },
+		reload_workspace_from_cargo_toml = true,
 	}
 })
 
