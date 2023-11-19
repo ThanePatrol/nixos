@@ -41,7 +41,7 @@ let
     (import ./linux/xdg/xdg.nix)
     (import ./linux/cursor.nix)
   ];
-  finalImports = (if isDarwin then universal ++ macSpecific else universal ++ linuxSpecific);
+  finalImports = universal ++ macSpecific; #(if isDarwin then universal ++ macSpecific else universal ++ linuxSpecific);
  # {
  #   fin = if isDarwin then
  #     universal ++ macSpecific
