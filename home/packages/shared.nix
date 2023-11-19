@@ -7,7 +7,7 @@ in {
   packages = with pkgs;
     [
       act # github actions locally
-      awscli2
+      #awscli2
       #anki # flashcards
       #bear # compilation database for clang tooling
       biber
@@ -30,12 +30,11 @@ in {
       gzip
       lazygit # git tui
       libvirt
-      lldb # for rust debugging
+      #lldb # for rust debugging
       #libsecret # for storing passwords
       luaformatter # format lua
       jdk
       mold # fast linker for llvm
-      nasm
       neofetch
       nixfmt # autoformat nix files
       nomacs # image viewer

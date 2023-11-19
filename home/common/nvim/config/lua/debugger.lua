@@ -12,7 +12,7 @@ dap.adapters.gdb = {
 
 }
 
-dap.configurations.rust = {
+dap.configurations.c= {
 	name = 'Launch',
 	type = 'gdb',
 	request = 'launch',

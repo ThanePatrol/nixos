@@ -54,7 +54,7 @@ in {
       nvim-dap-virtual-text 
       nvim-dap-go
       nvim-dap-ui
-      nvim-dap-python
+      #nvim-dap-python
 
       #Note taking
       neorg
@@ -118,7 +118,7 @@ in {
       nixpkgs-fmt
       #python
       pyright
-      python311Packages.debugpy
+      #python311Packages.debugpy
       #       python-debug
       black
       #typescript/web
@@ -137,7 +137,6 @@ in {
 
       # go
       gopls
-      delve
 
       #latex
       texlab

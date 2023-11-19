@@ -80,6 +80,7 @@ in {
     playerctl
     picocom
     prismlauncher # minecraft!
+    pulseaudioFull # cli audio control
     qalculate-gtk # good graphical calculator
     #qemu_full
     qt5.qtwayland
@@ -88,34 +89,34 @@ in {
     rpi-imager # to add ssid and information into the bootable image
     signal-desktop # wrap
     spice-vdagent
-    (lutris.override {
-      extraPkgs = pkgs: [
-        wineWowPackages.unstableFull
-        wineWowPackages.waylandFull
-        protontricks
-        glxinfo # OpenGL libraries for steamp
-        gamescope # steamOS session window manager
-        #mesa
-        libGLU
-        vulkan-tools
-        vulkan-validation-layers
-        vulkan-loader
-        vulkan-headers
-      ];
-    })
+   # (lutris.override {
+   #   extraPkgs = pkgs: [
+   #     wineWowPackages.unstableFull
+   #     wineWowPackages.waylandFull
+   #     protontricks
+   #     glxinfo # OpenGL libraries for steamp
+   #     gamescope # steamOS session window manager
+   #     #mesa
+   #     libGLU
+   #     vulkan-tools
+   #     vulkan-validation-layers
+   #     vulkan-loader
+   #     vulkan-headers
+   #   ];
+   # })
     (heroic.override {
       extraPkgs = pkgs: [
-        wineWowPackages.unstableFull
-        wineWowPackages.waylandFull
-        protontricks
-        glxinfo # OpenGL libraries for steamp
-        gamescope # steamOS session window manager
-        #mesa
-        libGLU
-        vulkan-tools
-        vulkan-validation-layers
-        vulkan-loader
-        vulkan-headers
+        #wineWowPackages.unstableFull
+        #wineWowPackages.waylandFull
+        #protontricks
+        #glxinfo # OpenGL libraries for steamp
+        #gamescope # steamOS session window manager
+        ##mesa
+        #libGLU
+        #vulkan-tools
+        #vulkan-validation-layers
+        #vulkan-loader
+        #vulkan-headers
       ];
     })
     spotify # wrap
@@ -130,7 +131,6 @@ in {
     virt-manager # gui for VMs
     wl-clipboard
     wireplumber # sound memes
-    qpwgraph
     wpaperd # wallpaper daemon
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     xdg-user-dirs
