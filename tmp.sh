@@ -1,22 +1,9 @@
 #!/usr/bin/env bash
 
-# homebrew is required for nix darwin
-# at least for the packages i use
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# configure home-brew in path
-(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/hmandalidis/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-echo "installed homebrew"
-
-# install the nix package manager
-sh <(curl -L https://nixos.org/nix/install)
-echo "installed nix"
-
 # may need to run the rest in a new shell
 # install nix darwin
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer
-rm result
 echo "installed nix darwin"
 
 # follow unstable nix pkgs
