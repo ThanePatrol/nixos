@@ -28,14 +28,15 @@ in {
       "firefox"
       "signal"
       #      "bitwarden"
-      "google-chrome"
+      #"google-chrome"
       "intellij-idea"
       "spotify"
       "vlc"
       "zotero"
     ];
     # mac store apps when there is no cask
-    masApps = { Xcode = 497799835; };
+    #masApps = { Xcode = 497799835; };
+    #mas requires logging in with apple id
   };
 
   # tiling window manager
