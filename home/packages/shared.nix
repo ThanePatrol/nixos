@@ -30,8 +30,8 @@ in {
       gzip
       lazygit # git tui
       libvirt
-      #lldb # for rust debugging
-      #libsecret # for storing passwords
+      lldb # for rust debugging
+      libsecret # for storing passwords
       luaformatter # format lua
       jdk
       mold # fast linker for llvm

@@ -1,4 +1,4 @@
-# Edit this configuration file to define what should be installed on
+ # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
@@ -107,15 +107,15 @@ in {
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
-  systemd.services.auto-bluetooth-connection = {
-    description = "Auto Bluetooth Keyboard Connection";
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.bluez ];
-    script = ''
-      #!/usr/bin/env bash
-      ${pkgs.bluez}/bin/bluetoothctl connect 6C:93:08:61:A1:CA  
-    '';
-};
+ # systemd.services.auto-bluetooth-connection = {
+ #   description = "Auto Bluetooth Keyboard Connection";
+ #   wantedBy = [ "multi-user.target" ];
+ #   path = [ pkgs.bluez ];
+ #   script = ''
+ #     #!/usr/bin/env bash
+ #     ${pkgs.bluez}/bin/bluetoothctl connect 6C:93:08:61:A1:CA  
+ #   '';
+ #};
   #services.blueman.enable = true;
 
   # services.flatpak.enable = true;
@@ -166,7 +166,7 @@ in {
   users.users.hugh = {
     isNormalUser = true;
     description = "hugh";
-    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" "audio" ];
     shell = pkgs.zsh;
   };
 
