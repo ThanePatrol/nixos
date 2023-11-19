@@ -41,14 +41,15 @@ let
     (import ./linux/xdg/xdg.nix)
     (import ./linux/cursor.nix)
   ];
-  finalImports = {
-    fin = if isDarwin then
-      universal ++ macSpecific
-    else if isLinux then
-      universal ++ linuxSpecific
-    else
-      universal;
-  }.fin;
+  finalImports = universal ++ (if isDarwin then macSpecific else linuxSpecific);
+ # {
+ #   fin = if isDarwin then
+ #     universal ++ macSpecific
+ #   else if isLinux then
+ #     universal ++ linuxSpecific
+ #   else
+ #     universal;
+ # }.fin;
 
   finalPackages = commonPkgs.packages; #{
  #   fin = if isDarwin then
