@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }:
-let user_name = "hugh";
+
+let 
+  # TODO - make this a global that you only need to change once
+  # my work is different to my personal device...
+  user_name = "hmandalidis";
 in {
 
   imports = [ <home-manager/nix-darwin> ];

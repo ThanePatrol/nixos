@@ -53,7 +53,7 @@
 
     #  'me of a btop++/bpytop/bashtop formatted ".theme" file, "Default" and "TTY" for builtin themes.
     #* Themes should be placed in "../share/btop/themes" relative to binary or "$HOME/.config/btop/themes"
-    color_theme = "/home/hugh/.config/btop/themes/catppuccin_mocha.theme"
+    color_theme = "$HOME/.config/btop/themes/catppuccin_mocha.theme"
 
     #* If the theme set background should be shown, set to False if you want terminal background transparency.
     theme_background = True

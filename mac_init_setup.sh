@@ -4,7 +4,7 @@
 # at least for the packages i use
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # configure home-brew in path
-(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/hugh/.zprofile
+(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/hmandalidis/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 echo "installed homebrew"
 

@@ -1,9 +1,10 @@
 { lib, config, pkgs, ... }:
 
 let
-
   isDarwin = pkgs.stdenv.hostPlatform.config == "aarch64-apple-darwin";
   isLinux = pkgs.stdenv.hostPlatform.isLinux;
+
+  username = if isDarwin then "hmandalidis" else "hugh";
 
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
@@ -60,9 +61,9 @@ let
 
 in {
 
-  home.username = "hugh";
+  home.username = "${username}";
 
-  home.homeDirectory = (if isDarwin then "/Users/hugh" else "/home/hugh");
+  home.homeDirectory = (if isDarwin then "/Users/${username}" else "/home/${username}");
   home.stateVersion = "23.05"; # Please read the comment before changing.
   programs.home-manager.enable = true;
 
