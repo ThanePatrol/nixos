@@ -23,8 +23,8 @@ in {
   programs.git = {
     enable = true;
 
-    userName = "ThanePatrol";
-    userEmail = "mandalidis.hugh@gmail.com";
+    userName = "Hugh Mandalidis";
+    userEmail = "hmandalidis@atlassian.com";
 
     includes = [{ path = "~/.config/git/gitconfig"; }];
 
@@ -36,7 +36,7 @@ in {
       tag.gpgSign = true;
     };
 
-    # global ignore
+    # global ignores to not include
     ignores = [ 
       "**/target/*"
       "*~"
