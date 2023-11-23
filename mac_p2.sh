@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-
-# may need to run the rest in a new shell
 # install nix darwin
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer
+rm result
 echo "installed nix darwin"
 
 # follow unstable nix pkgs
@@ -19,7 +18,7 @@ nix-shell '<home-manager>' -A install
 echo "added home-manager unstable channel"
 
 # Additional manaual configuration
-#
-# Docker desktop needs to be launched and signed into
+# Docker desktop needs to be launched at least once
 # Missions control needs to spawn desktops 
 # CHange mission control shortcuts to option + number to go to workspace
+

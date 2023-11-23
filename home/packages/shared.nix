@@ -7,14 +7,11 @@ in {
   packages = with pkgs;
     [
       act # github actions locally
-      #awscli2
-      #anki # flashcards
       #bear # compilation database for clang tooling
       biber
       bison
       chafa
       cargo-cross # cross compilation
-      #calibre
       cmake
       cups
       direnv
@@ -24,6 +21,7 @@ in {
       ffmpeg-full
       gcc
       geckodriver # webdriver automation
+      gettext
       go
       gofumpt # formatter
       gnumake
@@ -42,7 +40,6 @@ in {
       pandoc # document conversion
       prismlauncher # minecraft!
       pciutils # useful pci utils
-      #playerctl # media control - check if needed
       pkg-config # build tools
       rclone
       ripgrep

@@ -27,16 +27,13 @@ in {
       "docker"
       "firefox"
       "signal"
-      #      "bitwarden"
-      #"google-chrome"
       "intellij-idea"
       "spotify"
       "vlc"
       "zotero"
     ];
-    # mac store apps when there is no cask
-    #masApps = { Xcode = 497799835; };
-    #mas requires logging in with apple id
+    # mac store apps when there is no cask, requires apple id login
+    masApps = { Xcode = 497799835; };
   };
 
   # tiling window manager

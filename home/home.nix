@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ nixpkgs, lib, config, pkgs, ... }:
 
 let
   isDarwin = pkgs.stdenv.hostPlatform.config == "aarch64-apple-darwin";
@@ -41,7 +41,35 @@ let
     (import ./linux/xdg/xdg.nix)
     (import ./linux/cursor.nix)
   ];
-  finalImports = universal ++ macSpecific; #(if isDarwin then universal ++ macSpecific else universal ++ linuxSpecific);
+
+  #finalImports = [
+  #  (import ./common/bat/bat.nix)
+  #  (import ./common/btop.nix)
+  #  (import ./common/rclone.nix)
+  #  (import ./common/fonts.nix)
+  #  (import ./common/ssh.nix)
+  #  (import ./common/shell/shell.nix)
+  #  (import ./common/git.nix)
+  #  (import ./common/nvim/nvim.nix)
+  #  (import ./common/tmux.nix)
+  #  (import ./common/rust.nix)
+  #  (import ./common/spotify/spotify.nix)
+  #  (import ./common/wezterm/wezterm.nix)
+  #  (import ./common/zathura.nix)
+  #] ++ lib.optionals pkgs.stdenv.isDarwin [
+  #  (import ./macos/yabai/yabai.nix)
+  #  (import ./macos/skhd/skhd.nix)
+  #] ++ lib.optionals pkgs.stdenv.isLinux [
+  #  (import ./linux/gtk_themes.nix)
+  #  (import ./linux/hyprland/hyprland.nix)
+  #  (import ./linux/dunst/dunst.nix)
+  #  (import ./linux/waybar/waybar.nix)
+  #  (import ./linux/wofi/wofi.nix)
+  #  (import ./linux/wayland/wayland.nix)
+  #  (import ./linux/walls/wpapred.nix)
+  #  (import ./linux/xdg/xdg.nix)
+  #  (import ./linux/cursor.nix)
+  #];
  # {
  #   fin = if isDarwin then
  #     universal ++ macSpecific
@@ -70,5 +98,32 @@ in {
 
   home.packages = finalPackages;
 
-  imports = finalImports;
+  imports =  [
+    (import ./common/bat/bat.nix)
+    (import ./common/btop.nix)
+    (import ./common/rclone.nix)
+    (import ./common/fonts.nix)
+    (import ./common/ssh.nix)
+    (import ./common/shell/shell.nix)
+    (import ./common/git.nix)
+    (import ./common/nvim/nvim.nix)
+    (import ./common/tmux.nix)
+    (import ./common/rust.nix)
+    (import ./common/spotify/spotify.nix)
+    (import ./common/wezterm/wezterm.nix)
+    (import ./common/zathura.nix)
+  ] ++ nixpkgs.lib.optionals pkgs.stdenv.isDarwin [
+    (import ./macos/yabai/yabai.nix)
+    (import ./macos/skhd/skhd.nix)
+  ] ++ nixpkgs.lib.optionals pkgs.stdenv.isLinux [
+    (import ./linux/gtk_themes.nix)
+    (import ./linux/hyprland/hyprland.nix)
+    (import ./linux/dunst/dunst.nix)
+    (import ./linux/waybar/waybar.nix)
+    (import ./linux/wofi/wofi.nix)
+    (import ./linux/wayland/wayland.nix)
+    (import ./linux/walls/wpapred.nix)
+    (import ./linux/xdg/xdg.nix)
+    (import ./linux/cursor.nix)
+  ];
 }
