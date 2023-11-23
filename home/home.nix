@@ -2,10 +2,9 @@
 
 let
   isDarwin = pkgs.stdenv.hostPlatform.config == "aarch64-apple-darwin";
-  isLinux = pkgs.stdenv.hostPlatform.isLinux;
+  #isLinux = pkgs.stdenv.hostPlatform.isLinux;
 
   username = if isDarwin then "hugh" else "hugh";
-
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
   linuxPkgs = import ./packages/linux.nix { inherit pkgs; };
@@ -104,10 +103,10 @@ in {
      ./common/rclone.nix
      ./common/fonts.nix
      ./common/ssh.nix
-     ./common/shell/shell.nix
+     (import ./common/shell/shell.nix {inherit isDarwin pkgs lib;})
      ./common/git.nix
      ./common/nvim/nvim.nix
-     ./common/tmux.nix
+     (import ./common/tmux.nix {inherit isDarwin pkgs;})
      ./common/rust.nix
      ./common/spotify/spotify.nix
      ./common/wezterm/wezterm.nix
@@ -115,15 +114,16 @@ in {
   ] ++ lib.lists.optionals isDarwin [
     ./macos/yabai/yabai.nix
     ./macos/skhd/skhd.nix
-  ] ++ lib.lists.optionals isLinux [
-    ./linux/gtk_themes.nix
-    ./linux/hyprland/hyprland.nix
-    ./linux/dunst/dunst.nix
-    ./linux/waybar/waybar.nix
-    ./linux/wofi/wofi.nix
-    ./linux/wayland/wayland.nix
-    ./linux/walls/wpapred.nix
-    ./linux/xdg/xdg.nix
-    ./linux/cursor.nix
   ];
+ # ++ lib.lists.optionals pkgs.stdenv.hostPlatform.isLinux [
+ #   ./linux/gtk_themes.nix
+ #   ./linux/hyprland/hyprland.nix
+ #   ./linux/dunst/dunst.nix
+ #   ./linux/waybar/waybar.nix
+ #   ./linux/wofi/wofi.nix
+ #   ./linux/wayland/wayland.nix
+ #   ./linux/walls/wpapred.nix
+ #   ./linux/xdg/xdg.nix
+ #   ./linux/cursor.nix
+ # ];
 }
