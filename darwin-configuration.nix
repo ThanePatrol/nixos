@@ -1,14 +1,26 @@
-{ config, pkgs, lib, ... }:
+{ nixpkgs, config, pkgs, lib, ... }:
 
 let 
   # TODO - make this a global/param that you only need to change once
   # my work is different to my personal device...
-  user_name = "hmandalidis";
+  username = builtins.getEnv "USER";
+  isDarwin = true;
+  homeConfig = import ./home/home.nix {inherit isDarwin username nixpkgs pkgs config lib; };
 in {
 
   imports = [ <home-manager/nix-darwin> ];
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
+
+  users.users.${username} = { 
+    name = username;
+    home = "/Users/${username}"; 
+  };
+
+  home-manager.users.${username} = homeConfig;
+  #home-manager.useGlobalPackages = true;
+
+
   environment.systemPackages = [ ];
 
   homebrew = {
@@ -111,10 +123,6 @@ in {
    # };
   };
 
-  users.users.${user_name} = { 
-    name = user_name;
-    home = "/Users/${user_name}"; 
-  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
