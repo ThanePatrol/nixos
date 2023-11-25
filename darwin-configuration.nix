@@ -1,16 +1,14 @@
 { nixpkgs, config, pkgs, lib, ... }:
 
 let 
-  # TODO - make this a global/param that you only need to change once
-  # my work is different to my personal device...
   username = builtins.getEnv "USER";
   isDarwin = true;
-  homeConfig = import ./home/home.nix {inherit isDarwin username nixpkgs pkgs config lib; };
+  work = true;
+  email = if work then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
+  homeConfig = import ./home/home.nix {inherit email isDarwin username nixpkgs pkgs config lib; };
 in {
 
   imports = [ <home-manager/nix-darwin> ];
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
 
   users.users.${username} = { 
     name = username;
@@ -18,10 +16,14 @@ in {
   };
 
   home-manager.users.${username} = homeConfig;
-  #home-manager.useGlobalPackages = true;
-
+  home-manager.useGlobalPkgs = true;
 
   environment.systemPackages = [ ];
+
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "terraform"
+  ];
 
   homebrew = {
     enable = true;
@@ -53,6 +55,7 @@ in {
   services.yabai.enable = true;
   services.skhd.enable = true;
 
+  # customer launcher at login
   launchd.user.agents = {
     "docker-desktop" = {
       script = "open -a Docker";
@@ -95,7 +98,7 @@ in {
   };
 
   system.activationScripts.postUserActivation.text = ''
-    # Following line should allow us to avoid a logout/login cycle
+    # Following line should allow us to avoid a logout/login cycle when changing settings
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
 
@@ -122,7 +125,6 @@ in {
    #   };
    # };
   };
-
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
