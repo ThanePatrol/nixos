@@ -1,24 +1,14 @@
-{ isDarwin, username, nixpkgs, lib, config, pkgs, ... }:
+{ email, isDarwin, username, nixpkgs, lib, config, pkgs, ... }:
 
 let
-  #isDarwin = pkgs.stdenv.hostPlatform.config == "aarch64-apple-darwin";
-  #isLinux = pkgs.stdenv.hostPlatform.isLinux;
-  #isDarwin = true; # FIXME inherit isDarwin from caller
-  #isDarwin = (if isDarwinStr == "true" then true else false);
-  #isDarwin = true;
-  #username = "hmandalidis";
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
   linuxPkgs = import ./packages/linux.nix { inherit pkgs; };
 
-  finalPackages = commonPkgs.packages; #{
- #   fin = if isDarwin then
- #     commonPkgs.packages #++ macPkgs.packages
- #   else if isLinux then
- #     commonPkgs.packages ++ linuxPkgs.packages
- #   else
- #     commonPkgs.packages;
- # }.fin;
+  finalPackages = if isDarwin then
+      commonPkgs.packages ++ macPkgs.packages
+    else
+      commonPkgs.packages ++ linuxPkgs.packages;
 
 in {
 
@@ -30,10 +20,6 @@ in {
 
   home.packages = finalPackages;
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "terraform"
-  ];
-
   imports =  [
      ./common/bat/bat.nix
      ./common/btop.nix
@@ -41,7 +27,7 @@ in {
      ./common/fonts.nix
      ./common/ssh.nix
      (import ./common/shell/shell.nix {inherit isDarwin pkgs lib;})
-     ./common/git.nix
+     (import ./common/git.nix {inherit email;})
      ./common/nvim/nvim.nix
      (import ./common/tmux.nix {inherit isDarwin pkgs;})
      ./common/rust.nix

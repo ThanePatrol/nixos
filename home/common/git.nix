@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ email, ... }:
 
 let
   DEFAULT_BRANCH = "main";
@@ -24,7 +24,7 @@ in {
     enable = true;
 
     userName = "Hugh Mandalidis";
-    userEmail = "hmandalidis@atlassian.com";
+    userEmail = email;
 
     includes = [{ path = "~/.config/git/gitconfig"; }];
 
