@@ -5,7 +5,7 @@ let
 
 in {
   # Add more unfree packages if desired
-  allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "terraform"
   ];
   packages = with pkgs;

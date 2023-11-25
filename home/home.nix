@@ -1,11 +1,12 @@
-{ nixpkgs, lib, config, pkgs, ... }:
+{ isDarwin, username, nixpkgs, lib, config, pkgs, ... }:
 
 let
   #isDarwin = pkgs.stdenv.hostPlatform.config == "aarch64-apple-darwin";
   #isLinux = pkgs.stdenv.hostPlatform.isLinux;
-  isDarwin = true; # FIXME inherit isDarwin from caller
-
-  username = if isDarwin then "hmandalidis" else "hugh";
+  #isDarwin = true; # FIXME inherit isDarwin from caller
+  #isDarwin = (if isDarwinStr == "true" then true else false);
+  #isDarwin = true;
+  #username = "hmandalidis";
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
   linuxPkgs = import ./packages/linux.nix { inherit pkgs; };
@@ -28,6 +29,10 @@ in {
   programs.home-manager.enable = true;
 
   home.packages = finalPackages;
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "terraform"
+  ];
 
   imports =  [
      ./common/bat/bat.nix

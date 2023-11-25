@@ -7,12 +7,9 @@ let
     sudo nix-env --delete-generations 7d
   '';
   macUpdate = ''
-    cp -r ~/nixos/system/* ~/.nixpkgs &&
-    cp ~/nixos/darwin-configuration.nix ~/.nixpkgs &&
+    sudo cp -r ~/nixos/* ~/.nixpkgs &&
     nix-channel --update darwin &&
-    darwin-rebuild switch &&
-    cp -r ~/nixos/home/* ~/.config/home-manager &&
-    home-manager switch
+    darwin-rebuild switch
   '';
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
@@ -21,8 +18,6 @@ let
 
   macExports =
     "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
-
-  startSkhd = "~/nixos/home/macos/skhd/start_service.sh";
 
 in {
   programs.starship = {
@@ -131,7 +126,6 @@ in {
       update = (if isDarwin then macUpdate else linuxUpdate);
       clean = (if isDarwin then macClean else linuxClean);
       nv = "nvim";
-      startskhd = (if isDarwin then startSkhd else "");
     };
     plugins = [
       {

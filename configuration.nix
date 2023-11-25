@@ -5,6 +5,9 @@
 { lib, config, pkgs, ... }:
 
 let
+
+
+  username = builtins.getEnv "USER";
   syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
   pythonPackages =
     import ./system/linux/packages/python_packages.nix { inherit pkgs; };
@@ -160,12 +163,12 @@ in {
   };
 
   home-manager.useGlobalPkgs = true;
-  home-manager.users.hugh = homeConfig;
+  home-manager.users.${username} = homeConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # also defings a bunch of packages to use
-  users.users.hugh = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "hugh";
+    description = username;
     extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" "audio" ];
     shell = pkgs.zsh;
   };
