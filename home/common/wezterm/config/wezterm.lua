@@ -5,7 +5,7 @@ local config = {}
 config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font "JetBrains Mono"
 
-config.font_size = 16.0
+config.font_size = 12.0
 
 -- proper color inside tmux
 config.set_environment_variables = {

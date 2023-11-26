@@ -1,9 +1,6 @@
-{ pkgs, ... }:
+{ isDarwin, pkgs, ... }:
 
 let
-  isDarwin = builtins.currentSystem == "aarch64-darwin";
-  isLinux = pkgs.lib.platform.isLinux;
-
   copyToClipboard = {
     fin = if isDarwin then
       ""
