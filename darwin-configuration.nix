@@ -1,15 +1,29 @@
-{ config, pkgs, lib, ... }:
+{ nixpkgs, config, pkgs, lib, ... }:
 
 let 
-  # TODO - make this a global that you only need to change once
-  # my work is different to my personal device...
-  user_name = "hmandalidis";
+  username = builtins.getEnv "USER";
+  isDarwin = true;
+  work = true;
+  email = if work then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
+  homeConfig = import ./home/home.nix {inherit email isDarwin username nixpkgs pkgs config lib; };
 in {
 
   imports = [ <home-manager/nix-darwin> ];
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
+
+  users.users.${username} = { 
+    name = username;
+    home = "/Users/${username}"; 
+  };
+
+  home-manager.users.${username} = homeConfig;
+  home-manager.useGlobalPkgs = true;
+
   environment.systemPackages = [ ];
+
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "terraform"
+  ];
 
   homebrew = {
     enable = true;
@@ -27,16 +41,13 @@ in {
       "docker"
       "firefox"
       "signal"
-      #      "bitwarden"
-      #"google-chrome"
       "intellij-idea"
       "spotify"
       "vlc"
       "zotero"
     ];
-    # mac store apps when there is no cask
-    #masApps = { Xcode = 497799835; };
-    #mas requires logging in with apple id
+    # mac store apps when there is no cask, requires apple id login
+    masApps = { Xcode = 497799835; };
   };
 
   # tiling window manager
@@ -44,6 +55,7 @@ in {
   services.yabai.enable = true;
   services.skhd.enable = true;
 
+  # customer launcher at login
   launchd.user.agents = {
     "docker-desktop" = {
       script = "open -a Docker";
@@ -86,7 +98,7 @@ in {
   };
 
   system.activationScripts.postUserActivation.text = ''
-    # Following line should allow us to avoid a logout/login cycle
+    # Following line should allow us to avoid a logout/login cycle when changing settings
     /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
 
@@ -113,42 +125,6 @@ in {
    #   };
    # };
   };
-
-  # https://github.com/LnL7/nix-darwin/issues/214
-  # hack for getting nix apps to launch with spotlight
-  system.activationScripts.applications.text = lib.mkForce ''
-    echo "setting up ~/Applications..." >&2
-    applications="$HOME/Applications"
-    nix_apps="$applications/Nix Apps"
-
-    # Needs to be writable by the user so that home-manager can symlink into it
-    if ! test -d "$applications"; then
-        mkdir -p "$applications"
-        chown ${user_name}: "$applications"
-        chmod u+w "$applications"
-    fi
-
-    # Delete the directory to remove old links
-    rm -rf "$nix_apps"
-    mkdir -p "$nix_apps"
-    find ${config.system.build.applications}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-        while read src; do
-            # Spotlight does not recognize symlinks, it will ignore directory we link to the applications folder.
-            # It does understand MacOS aliases though, a unique filesystem feature. Sadly they cannot be created
-            # from bash (as far as I know), so we use the oh-so-great Apple Script instead.
-            /usr/bin/osascript -e "
-                set fileToAlias to POSIX file \"$src\" 
-                set applicationsFolder to POSIX file \"$nix_apps\"
-                tell application \"Finder\"
-                    make alias file to fileToAlias at applicationsFolder
-                    # This renames the alias; 'mpv.app alias' -> 'mpv.app'
-                    set name of result to \"$(rev <<< "$src" | cut -d'/' -f1 | rev)\"
-                end tell
-            " 1>/dev/null
-        done
-  '';
-
-  users.users.${user_name} = { home = "/Users/${user_name}"; };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;

@@ -1,29 +1,30 @@
 { lib, pkgs, ... }:
 
 # For packages in home-manager that are common across macos and linux
-let unfreePackages = with pkgs; [ terraform ];
+let 
 
 in {
+  # Add more unfree packages if desired
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "terraform"
+  ];
   packages = with pkgs;
     [
       act # github actions locally
-      #awscli2
-      #anki # flashcards
-      #bear # compilation database for clang tooling
-      biber
+      biber # bibliography stuff for latex
       bison
       chafa
-      cargo-cross # cross compilation
-      #calibre
+      cargo-cross # cross compilation for rust
       cmake
-      cups
-      direnv
+      cups 
+      direnv # https://direnv.net
       delve # go debugger
       du-dust # better du
       flex # lexical analysis
-      ffmpeg-full
+      ffmpeg-full 
       gcc
       geckodriver # webdriver automation
+      gettext # translations 
       go
       gofumpt # formatter
       gnumake
@@ -42,16 +43,17 @@ in {
       pandoc # document conversion
       prismlauncher # minecraft!
       pciutils # useful pci utils
-      #playerctl # media control - check if needed
       pkg-config # build tools
-      rclone
-      ripgrep
+      rclone # nice simple backup cli for cloud backups
+      ripgrep # nice and fast grep alternative for large codebases
       rsync
+      terraform # Infra As Code
+      terraform-providers.signalfx
       typescript
-      texlive.combined.scheme-tetex
+      texlive.combined.scheme-tetex 
       unzip
       vim
-      zip
-      zsh
-    ] ++ unfreePackages;
+      zip # CLI compression
+      zsh 
+    ];
 }
