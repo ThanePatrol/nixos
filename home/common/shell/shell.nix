@@ -5,7 +5,9 @@ let
     sudo cp -r ~/nixos/* /etc/nixos &&
     nixos-rebuild switch &&
     sudo nix-env --delete-generations 7d
-  '';
+    '';
+
+  # TODO - detection of either WAP or serial of device to change from work to personal mac setup with same command
   macUpdate = ''
     sudo cp -r ~/nixos/* ~/.nixpkgs &&
     nix-channel --update darwin &&
