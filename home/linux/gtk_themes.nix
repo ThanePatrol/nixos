@@ -1,19 +1,23 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
+#  home.packages = with pkgs; [
+#
+#    catppuccin-gtk
+#    libsForQt5.qtstyleplugin-kvantum
+#  ];
 
-#    materia-kde-theme
-    libsForQt5.qtstyleplugin-kvantum
-  ];
-
-  gtk.enable = true;
-
-  gtk.iconTheme.package = pkgs.papirus-icon-theme;
-  gtk.iconTheme.name = "Papirus-Dark";
-
-  #gtk.theme.package = pkgs.materia-theme;
-  #gtk.theme.name = "Materia-dark-compact";
-
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Catppuccin-Macchiato-Compact-Pink-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "pink" ];
+        size = "compact";
+        tweaks = [ "rimless" "black" ];
+        variant = "macchiato";
+      };
+    };
+  };
 }
 

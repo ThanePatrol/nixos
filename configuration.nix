@@ -2,17 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, config, pkgs, ... }:
+{ nixpkgs, lib, config, pkgs, ... }:
 
 let
 
+  isDarwin = false;
+  work = false;
+  email = if work then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
+  homeConfig = import ./home/home.nix {inherit email isDarwin username nixpkgs pkgs config lib; };
 
-  username = builtins.getEnv "USER";
+  username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
   syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
   pythonPackages =
     import ./system/linux/packages/python_packages.nix { inherit pkgs; };
   languages = import ./system/linux/packages/languages.nix { inherit pkgs; };
-  homeConfig = import ./home/home.nix { inherit pkgs config lib; };
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
