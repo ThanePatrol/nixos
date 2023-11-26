@@ -40,7 +40,7 @@ in {
         # TODO make this work properly
         "udiskie &" # mount usbs in the background
         "kdeconnect-app"
-        "[workspace 1 silent] wezterm"
+        "[workspace 1 silent] /home/hugh/dev/nixpkgs/result/bin/wezterm" # had to create custom wezterm version
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] bitwarden"
       ];
@@ -68,6 +68,7 @@ in {
       input = {
         follow_mouse = 1;
         kb_options = "caps:escape";
+
       };
 
       general = {
