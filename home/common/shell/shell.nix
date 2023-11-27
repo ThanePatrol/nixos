@@ -3,7 +3,7 @@ let
   linuxUpdate = ''
     sudo nix-channel --update && 
     sudo cp -r ~/nixos/* /etc/nixos &&
-    nixos-rebuild switch &&
+    sudo nixos-rebuild switch &&
     sudo nix-env --delete-generations 7d
     '';
 

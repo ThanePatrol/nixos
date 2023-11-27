@@ -3,9 +3,8 @@
 let 
   username = builtins.getEnv "USER";
   isDarwin = true;
-  work = true;
-  email = if work then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
-  homeConfig = import ./home/home.nix {inherit email isDarwin username nixpkgs pkgs config lib; };
+  isWork = true;
+  homeConfig = import ./home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib; };
 in {
 
   imports = [ <home-manager/nix-darwin> ];
