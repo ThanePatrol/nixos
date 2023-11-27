@@ -7,9 +7,8 @@
 let
 
   isDarwin = false;
-  work = false;
-  email = if work then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
-  homeConfig = import ./home/home.nix {inherit email isDarwin username nixpkgs pkgs config lib; };
+  isWork = true;
+  homeConfig = import ./home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib; };
 
   username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
   syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
