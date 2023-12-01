@@ -47,6 +47,7 @@ default_lsp_setup('jsonls')
 default_lsp_setup('ccls') -- c/c++
 default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
+default_lsp_setup('postgres_lsp')
 --default_lsp_setup('gopls') -- go
 
 nvim_lsp.lua_ls.setup({

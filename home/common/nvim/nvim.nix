@@ -133,6 +133,9 @@ in {
       #scala
       metals
 
+      # generic sql
+      postgres-lsp
+
       terraform-ls
 
       # go
