@@ -21,6 +21,7 @@ let
   macExports =
     "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
 
+
 in {
   programs.starship = {
     enable = true;
@@ -142,6 +143,8 @@ in {
     initExtra = ''
       eval "$(direnv hook zsh)"
       eval "$(starship init zsh)"
+      export NVM_DIR=~/.nvm
+      source $(brew --prefix nvm)/nvm.sh
     '';
   };
 }
