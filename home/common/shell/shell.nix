@@ -21,8 +21,52 @@ let
   macExports =
     "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
 
+  macInit = ''
+    export NVM_DIR=~/.nvm
+    source $(brew --prefix nvm)/nvm.sh
+    '';
+
 
 in {
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    envExtra = ''
+      export EDITOR="nvim"
+      export STARSHP_CONFIG="$HOME/.config/starship.toml"
+    '' + (if isDarwin then macExports else "");
+
+    shellAliases = {
+      ".." = "cd ..";
+      "..." = "cd ...";
+      "...." = "cd ....";
+      ll = "ls -l";
+      ls = "ls --color=auto";
+      open = (if isDarwin then "open" else "xdg-open");
+      cat = "bat";
+      du = "dust";
+      update = (if isDarwin then macUpdate else linuxUpdate);
+      clean = (if isDarwin then macClean else linuxClean);
+      nv = "nvim";
+    };
+    plugins = [
+      {
+        name = "zsh-autosuggestions";
+        src = pkgs.zsh-autosuggestions;
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.zsh-syntax-highlighting;
+      }
+    ];
+    initExtra = ''
+      eval "$(direnv hook zsh)"
+      eval "$(starship init zsh)"
+    '' + (if isDarwin then macInit else "");
+  };
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
@@ -108,44 +152,5 @@ in {
     };
   };
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    envExtra = ''
-      export EDITOR="nvim"
-      export STARSHP_CONFIG="$HOME/.config/starship.toml"
-    '' + (if isDarwin then macExports else "");
-
-    shellAliases = {
-      ".." = "cd ..";
-      "..." = "cd ...";
-      "...." = "cd ....";
-      ll = "ls -l";
-      ls = "ls --color=auto";
-      open = (if isDarwin then "open" else "xdg-open");
-      cat = "bat";
-      du = "dust";
-      update = (if isDarwin then macUpdate else linuxUpdate);
-      clean = (if isDarwin then macClean else linuxClean);
-      nv = "nvim";
-    };
-    plugins = [
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.zsh-autosuggestions;
-      }
-      {
-        name = "zsh-syntax-highlighting";
-        src = pkgs.zsh-syntax-highlighting;
-      }
-    ];
-    initExtra = ''
-      eval "$(direnv hook zsh)"
-      eval "$(starship init zsh)"
-      export NVM_DIR=~/.nvm
-      source $(brew --prefix nvm)/nvm.sh
-    '';
-  };
 }
 
