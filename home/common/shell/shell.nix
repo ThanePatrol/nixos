@@ -1,4 +1,4 @@
-{ isDarwin, pkgs, lib, ... }:
+{ isWork, isDarwin, pkgs, lib, ... }:
 let
   linuxUpdate = ''
     sudo nix-channel --update && 
@@ -26,6 +26,7 @@ let
     source $(brew --prefix nvm)/nvm.sh
     '';
 
+  workExports = "export PATH=$PATH:/opt/atlassian/bin";
 
 in {
 
@@ -36,7 +37,8 @@ in {
     envExtra = ''
       export EDITOR="nvim"
       export STARSHP_CONFIG="$HOME/.config/starship.toml"
-    '' + (if isDarwin then macExports else "");
+      '' 
+      + (if isDarwin then macExports else "");
 
     shellAliases = {
       ".." = "cd ..";
@@ -64,7 +66,10 @@ in {
     initExtra = ''
       eval "$(direnv hook zsh)"
       eval "$(starship init zsh)"
-    '' + (if isDarwin then macInit else "");
+      '' 
+      + (if isDarwin then macInit else "")
+      + (if isWork then workExports else "");
+
   };
 
   programs.starship = {
@@ -106,7 +111,7 @@ in {
 
       docker_context = { 
         symbol = "🐋"; 
-        format = "[$symbol $context]($style) ";
+      #  format = "[$symbol $context]($style) ";
       };
 
       c = { symbol = "🔧"; };

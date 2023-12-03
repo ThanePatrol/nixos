@@ -26,7 +26,7 @@ in {
      ./common/rclone.nix
      ./common/fonts.nix
      ./common/ssh.nix
-     (import ./common/shell/shell.nix {inherit isDarwin pkgs lib;})
+     (import ./common/shell/shell.nix {inherit isWork isDarwin pkgs lib;})
      (import ./common/git.nix {inherit isWork;})
      ./common/nvim/nvim.nix
      (import ./common/tmux.nix {inherit isDarwin pkgs;})
