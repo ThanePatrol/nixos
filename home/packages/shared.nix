@@ -28,12 +28,14 @@ in {
       go
       gofumpt # formatter
       gnumake
+      gnused
       gzip
       lazygit # git tui
       libvirt
       lldb # for rust debugging
       libsecret # for storing passwords
       luaformatter # format lua
+      jq # 
       jdk
       mold # fast linker for llvm
       neofetch

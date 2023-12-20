@@ -18,8 +18,9 @@ let
   macClean =
     "nix-collect-garbage && nix-collect-garbage --delete-old && nix-store --optimise";
 
-  macExports =
-    "export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH";
+  macExports = ''
+  export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH
+    '';
 
   macInit = ''
     export NVM_DIR=~/.nvm
@@ -51,6 +52,7 @@ in {
       du = "dust";
       update = (if isDarwin then macUpdate else linuxUpdate);
       clean = (if isDarwin then macClean else linuxClean);
+      gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";
     };
     plugins = [
