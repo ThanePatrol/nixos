@@ -116,6 +116,10 @@ in {
       #nix
       nil
       nixpkgs-fmt
+
+      # kotlin
+      kotlin-language-server
+
       #python
       pyright
       #python311Packages.debugpy
