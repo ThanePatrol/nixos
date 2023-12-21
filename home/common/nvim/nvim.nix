@@ -43,7 +43,7 @@ in {
       vim-tmux-navigator
 
       #rainbow brackets
-      nvim-ts-rainbow
+      rainbow-delimiters-nvim
 
       #LSP
       nvim-lspconfig

@@ -11,7 +11,6 @@ in {
   packages = with pkgs;
     [
       act # github actions locally
-      biber # bibliography stuff for latex
       bison
       chafa
       cargo-cross # cross compilation for rust
@@ -52,7 +51,7 @@ in {
       terraform # Infra As Code
       terraform-providers.signalfx
       typescript
-      texlive.combined.scheme-tetex 
+      texliveFull
       unzip
       vim
       zip # CLI compression

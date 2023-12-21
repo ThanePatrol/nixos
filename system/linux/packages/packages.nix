@@ -89,28 +89,14 @@ in {
     rpi-imager # to add ssid and information into the bootable image
     signal-desktop # wrap
     spice-vdagent
-   # (lutris.override {
-   #   extraPkgs = pkgs: [
-   #     wineWowPackages.unstableFull
-   #     wineWowPackages.waylandFull
-   #     protontricks
-   #     glxinfo # OpenGL libraries for steamp
-   #     gamescope # steamOS session window manager
-   #     #mesa
-   #     libGLU
-   #     vulkan-tools
-   #     vulkan-validation-layers
-   #     vulkan-loader
-   #     vulkan-headers
-   #   ];
-   # })
     (heroic.override {
       extraPkgs = pkgs: [
-        #wineWowPackages.unstableFull
-        #wineWowPackages.waylandFull
-        #protontricks
+        wineWowPackages.unstableFull
+        wineWowPackages.waylandFull
+        protontricks
         #glxinfo # OpenGL libraries for steamp
-        #gamescope # steamOS session window manager
+        gamescope # steamOS session window manager
+        vkd3d-proton
         ##mesa
         #libGLU
         #vulkan-tools
