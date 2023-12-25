@@ -10,6 +10,16 @@ in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login
   programs.gh = {
     enable = true;
+    settings = {
+      git_protocol = "https";
+      version = 1;
+    };
+    gitCredentialHelper = {
+      enable = true;
+      hosts = [
+        "https://github.com"
+      ];
+    };
   };
 
   programs.git = {
