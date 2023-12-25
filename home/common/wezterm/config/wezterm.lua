@@ -5,7 +5,18 @@ local config = {}
 config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font "JetBrains Mono"
 
-config.font_size = 16.0
+local res = io.popen("uname -a")
+local font_size = 1.0
+local operating_system = 'Linux'
+if res ~= nil then
+	operating_system = res:read('a')
+end
+if string.find(operating_system, 'Darwin') then
+	font_size = 12.0
+else
+	font_size = 16.0
+end
+config.font_size = font_size
 
 -- proper color inside tmux
 config.set_environment_variables = {
