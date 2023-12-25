@@ -12,6 +12,7 @@ in {
     enable = true;
     settings = {
       git_protocol = "https";
+      version = 1;
     };
     gitCredentialHelper = {
       enable = true;
