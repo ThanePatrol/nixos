@@ -54,6 +54,7 @@ in {
       texliveFull
       unzip
       vim
+      zlib
       zip # CLI compression
       zsh 
     ];
