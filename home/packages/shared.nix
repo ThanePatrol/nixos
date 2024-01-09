@@ -36,6 +36,7 @@ in {
       luaformatter # format lua
       jq # 
       jdk
+      jupyter-all
       mold # fast linker for llvm
       neofetch
       nixfmt # autoformat nix files
