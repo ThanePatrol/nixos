@@ -1,32 +1,26 @@
 local dap = require('dap')
 
-local handle = io.popen('which gdb')
--- TODO nil check
-local gdb_path = handle:read('*a')
-handle:close()
+vim.keymap.set('n', '<Leader>dt', dap.toggle_breakpoint, {})
+vim.keymap.set('n', '<Leader>dc', dap.continue, {})
 
-dap.adapters.gdb = {
-  type = 'executable',
-  command = 'gdb',
-  args = {"-i", "dap"}
+local dapui = require('dapui')
 
-}
+dap.listeners.before.attach.dapui_config = function ()
+	dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function ()
+	dapui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function ()
+	dapui.open()
+end
+dap.listeners.before.event_exited.dapui_config = function ()
+	dapui.open()
+end
 
-dap.configurations.c= {
-	name = 'Launch',
-	type = 'gdb',
-	request = 'launch',
-
-	program = function()
-		return vim.fn.input('/run/current-system/sw/bin/gdb', vim.fn.getcwd() .. '/', 'file')
-	end,
-	cwd = "${workspaceFolder}",
-}
-
--- TODO custom setup
-require("dapui").setup()
 require("nvim-dap-virtual-text").setup()
 
 local go_dap = require('dap-go')
 go_dap.setup()
+
 

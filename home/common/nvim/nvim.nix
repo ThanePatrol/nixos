@@ -138,6 +138,7 @@ in {
 
       # go
       gopls
+      delve
 
       #latex
       texlab
