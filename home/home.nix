@@ -1,4 +1,4 @@
-{ isWork, isDarwin, username, nixpkgs, lib, config, pkgs, ... }:
+{ isWork, isDarwin, username, theme, nixpkgs, lib, config, pkgs, ... }:
 
 let
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
@@ -21,14 +21,14 @@ in {
   home.packages = finalPackages;
 
   imports =  [
-     ./common/bat/bat.nix
-     ./common/btop.nix
+     (import ./common/bat/bat.nix {inherit theme;})
+     (import ./common/btop/btop.nix {inherit theme pkgs;})
      ./common/rclone.nix
      ./common/fonts.nix
      ./common/ssh.nix
-     (import ./common/shell/shell.nix {inherit isWork isDarwin pkgs lib;})
+     (import ./common/shell/shell.nix {inherit isWork isDarwin theme pkgs lib;})
      (import ./common/git.nix {inherit isWork;})
-     ./common/nvim/nvim.nix
+     (import ./common/nvim/nvim.nix {inherit pkgs lib theme;})
      (import ./common/tmux.nix {inherit isDarwin pkgs;})
      ./common/rust.nix
      ./common/spotify/spotify.nix

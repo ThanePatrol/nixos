@@ -5,7 +5,7 @@ vim.g.maplocalleader = ' '
 vim.opt.termguicolors = true
 -- vim.cmd([[ set t_8f=^[[38;2;%lu;%lu;%lum ]])
 -- vim.cmd([[ set t_8b=^[[48;2;%lu;%lu;%lum ]])
-vim.cmd.colorscheme 'catppuccin'
+-- vim.cmd.colorscheme 'catppuccin'
 
 -- highlight on search
 vim.o.hlsearch = true
@@ -74,7 +74,9 @@ vim.api.nvim_set_keymap('n',
 
 vim.opt.relativenumber = true
 
-vim.g.rustfmt_autosave = 1, require('catppuccin-config')
+vim.g.rustfmt_autosave = 1
+require('color-theme')
+vim.cmd.colorscheme "catppuccin"
 require('nvim-tree-config')
 require('autopairs-config')
 require('cmp-config')

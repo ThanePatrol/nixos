@@ -1,10 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, theme, ... }:
 
 {
   home.packages = [ pkgs.btop ];
 
-  home.file.".config/btop/themes/catppuccin_mocha.theme".text = ''
+  xdg.configFile.nvim = {
+    source = ./config;
+    recursive = true;
+  };
 
+  home.file.".config/btop/themes/catppuccin_mocha.theme".text = ''
     theme[main_bg]="#1E1E2E"
     theme[main_fg]="#CDD6F4"
     theme[title]="#CDD6F4"

@@ -1,13 +1,13 @@
-{ pkgs, ... }:
+{ theme, ... }:
 
 {
   programs.bat = {
     enable = true;
-
-    config = { theme = "Catppuccin-mocha"; };
+     
+    config = { theme = theme; };
 
   };
 
-  xdg.configFile."bat/themes/Catppuccin-mocha.tmTheme".text = 
-  builtins.readFile ./themes/Catppuccin-mocha.tmTheme;
+  xdg.configFile."bat/themes/${theme}.tmTheme".text = 
+  builtins.readFile ./themes/${theme}.tmTheme;
 }

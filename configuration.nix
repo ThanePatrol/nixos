@@ -8,7 +8,13 @@ let
 
   isDarwin = false;
   isWork = true;
-  homeConfig = import ./home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib; };
+  
+  theme = if builtins.getEnv("THEME") == "" then
+    "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
+  else 
+    builtins.getEnv("THEME");
+
+  homeConfig = import ./home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib theme; };
 
   username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
   syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
@@ -16,14 +22,12 @@ let
     import ./system/linux/packages/python_packages.nix { inherit pkgs; };
   languages = import ./system/linux/packages/languages.nix { inherit pkgs; };
 in {
-  imports = [ # Include the results of the hardware scan.
+  imports = [ 
     ./hardware-configuration.nix
     <home-manager/nixos>
 #    ./system/linux/modules/udev-rules.nix
   ];
-  # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
   nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
@@ -34,7 +38,6 @@ in {
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.driSupport = true;
   hardware.cpu.amd.updateMicrocode = true;
-  
 
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -98,32 +101,12 @@ in {
     LC_TIME = "en_AU.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  #  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
 
   # start bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-
- # systemd.services.auto-bluetooth-connection = {
- #   description = "Auto Bluetooth Keyboard Connection";
- #   wantedBy = [ "multi-user.target" ];
- #   path = [ pkgs.bluez ];
- #   script = ''
- #     #!/usr/bin/env bash
- #     ${pkgs.bluez}/bin/bluetoothctl connect 6C:93:08:61:A1:CA  
- #   '';
- #};
-  #services.blueman.enable = true;
-
-  # services.flatpak.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -210,7 +193,6 @@ in {
   };
 
   systemd.services.docker.wantedBy = [ "multi-user.target" ];
-  #lib secret provider2
   services.passSecretService.enable = true;
 
   # This value determines the NixOS release from which the default
