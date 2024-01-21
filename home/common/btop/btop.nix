@@ -3,10 +3,10 @@
 {
   home.packages = [ pkgs.btop ];
 
-  xdg.configFile.nvim = {
-    source = ./config;
-    recursive = true;
-  };
+ # xdg.configFile.nvim = {
+ #   source = ./config;
+ #   recursive = true;
+ # };
 
   home.file.".config/btop/themes/catppuccin_mocha.theme".text = ''
     theme[main_bg]="#1E1E2E"

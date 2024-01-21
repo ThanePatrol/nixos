@@ -4,7 +4,11 @@ let
   username = builtins.getEnv "USER";
   isDarwin = true;
   isWork = true;
-  homeConfig = import ./home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib; };
+  theme = if builtins.getEnv("THEME") == "" then
+    "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
+  else 
+    builtins.getEnv("THEME");
+  homeConfig = import ./home/home.nix {inherit isWork isDarwin username theme nixpkgs pkgs config lib; };
 in {
 
   imports = [ <home-manager/nix-darwin> ];
