@@ -18,7 +18,7 @@ in {
     mouse = true;
     shortcut = "a";
     baseIndex = 1;
-    historyLimit = 5000;
+    historyLimit = 20000;
     keyMode = "vi";
 
     plugins = [
