@@ -29,11 +29,11 @@ in {
      (import ./common/shell/shell.nix {inherit isWork isDarwin theme pkgs lib;})
      (import ./common/git.nix {inherit isWork;})
      (import ./common/nvim/nvim.nix {inherit pkgs lib theme;})
-     (import ./common/tmux.nix {inherit isDarwin pkgs;})
+     (import ./common/tmux.nix {inherit isDarwin theme pkgs;})
      ./common/rust.nix
      ./common/spotify/spotify.nix
-     ./common/wezterm/wezterm.nix
-     ./common/zathura.nix
+     (import ./common/wezterm/wezterm.nix {inherit pkgs theme;})
+     (import ./common/zathura/zathura.nix {inherit theme;})
    ] ++ 
    (if isDarwin then [
     ./macos/yabai/yabai.nix

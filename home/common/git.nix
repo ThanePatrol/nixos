@@ -2,9 +2,6 @@
 
 let
   DEFAULT_BRANCH = "main";
-  DEFAULT_BRANCH_OLD = "master";
-  DEVELOP_BRANCH = "develop";
-  DEVELOP_BRANCH_ABBREV = "dev";
   email = if isWork then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
 in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login

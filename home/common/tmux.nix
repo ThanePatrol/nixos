@@ -1,4 +1,4 @@
-{ isDarwin, pkgs, ... }:
+{ isDarwin, theme, pkgs, ... }:
 
 let
   copyToClipboard = {
@@ -7,7 +7,9 @@ let
       #''bind-key -t vi-copy MouseDragEnd1Pane copy-pipe "pbcopy"''
     else
       "";
-  }.fin;
+    }.fin;
+
+  themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ]  theme; 
 
 in {
   home.packages = [ pkgs.tmux ];
@@ -33,6 +35,9 @@ in {
       bind-key x kill-pane
 
       set-option -g renumber-windows on
+
+      # set theme
+      set-option -g @catppuccin_flavour '${themeString}'
 
       # fixes colors inside neovim
       set -ga terminal-overrides ",*256col*:Tc"

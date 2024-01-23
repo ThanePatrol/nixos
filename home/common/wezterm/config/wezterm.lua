@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local config = {}
 
 
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "PLACEHOLDER_THEME" -- this is substituted by home-manager
 config.font = wezterm.font "JetBrains Mono"
 
 local res = io.popen("uname -a")
@@ -31,7 +31,7 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.window_background_opacity = 0.7
+--config.window_background_opacity = 0.7
 
 -- prefer tmux for handling this
 config.enable_tab_bar = false

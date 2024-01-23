@@ -1,28 +1,39 @@
 { isWork, isDarwin, theme, pkgs, lib, ... }:
 let
+  #TODO - factory pattern for building aliases
   linuxUpdateDark = ''
     sudo nix-channel --update && 
     sudo cp -r ~/nixos/* /etc/nixos &&
     sudo THEME="Catppuccin-mocha" nixos-rebuild switch &&
-    sudo nix-env --delete-generations 7d
+    sudo nix-env --delete-generations 7d &&
+    sleep 0.2 &&
+    tmux source ~/.config/tmux/tmux.conf && 
+    source ~/.zshrc
     '';
   linuxUpdateLight = ''
     sudo nix-channel --update && 
     sudo cp -r ~/nixos/* /etc/nixos &&
     sudo THEME="Catppuccin-latte" nixos-rebuild switch &&
-    sudo nix-env --delete-generations 7d
+    sudo nix-env --delete-generations 7d &&
+    sleep 0.2 &&
+    tmux source ~/.config/tmux/tmux.conf && 
+    source ~/.zshrc
     '';
 
   # TODO - detection of either WAP or serial of device to change from work to personal mac setup with same command
   macUpdateDark = ''
     sudo cp -r ~/nixos/* ~/.nixpkgs &&
     nix-channel --update darwin &&
-    THEME="Catppuccin-mocha" darwin-rebuild switch
+    THEME="Catppuccin-mocha" darwin-rebuild switch && 
+    tmux source ~/.config/tmux/tmux.conf && 
+    source ~/.zshrc
   '';
   macUpdateLight = ''
     sudo cp -r ~/nixos/* ~/.nixpkgs &&
     nix-channel --update darwin &&
-    THEME="Catppuccin-latte" darwin-rebuild switch
+    THEME="Catppuccin-latte" darwin-rebuild switch && 
+    tmux source ~/.config/tmux/tmux.conf && 
+    source ~/.zshrc
   '';
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
