@@ -31,7 +31,7 @@ config.window_padding = {
   bottom = 0,
 }
 
---config.window_background_opacity = 0.7
+config.window_background_opacity = 0.9
 
 -- prefer tmux for handling this
 config.enable_tab_bar = false

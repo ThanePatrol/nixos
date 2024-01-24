@@ -6,7 +6,7 @@ let
     sudo cp -r ~/nixos/* /etc/nixos &&
     sudo THEME="Catppuccin-mocha" nixos-rebuild switch &&
     sudo nix-env --delete-generations 7d &&
-    sleep 0.2 &&
+    tmux source ~/.config/tmux/tmux.conf && 
     tmux source ~/.config/tmux/tmux.conf && 
     source ~/.zshrc
     '';
@@ -17,6 +17,7 @@ let
     sudo nix-env --delete-generations 7d &&
     sleep 0.2 &&
     tmux source ~/.config/tmux/tmux.conf && 
+    tmux source ~/.config/tmux/tmux.conf && 
     source ~/.zshrc
     '';
 
@@ -26,12 +27,14 @@ let
     nix-channel --update darwin &&
     THEME="Catppuccin-mocha" darwin-rebuild switch && 
     tmux source ~/.config/tmux/tmux.conf && 
+    tmux source ~/.config/tmux/tmux.conf && 
     source ~/.zshrc
   '';
   macUpdateLight = ''
     sudo cp -r ~/nixos/* ~/.nixpkgs &&
     nix-channel --update darwin &&
     THEME="Catppuccin-latte" darwin-rebuild switch && 
+    tmux source ~/.config/tmux/tmux.conf && 
     tmux source ~/.config/tmux/tmux.conf && 
     source ~/.zshrc
   '';
