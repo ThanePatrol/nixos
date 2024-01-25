@@ -45,7 +45,7 @@ let
 
   macExports = ''
   export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH
-    '';
+  '';
 
   macInit = ''
     export NVM_DIR=~/.nvm

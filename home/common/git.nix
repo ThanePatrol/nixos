@@ -32,6 +32,7 @@ in {
       branch.sort = "-committerdate";
       core.editor = "vim";
       pull.ff = "only";
+      push.autoSetupRemote = true;
       tag.gpgSign = true;
     };
 
