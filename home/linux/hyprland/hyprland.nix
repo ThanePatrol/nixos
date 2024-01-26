@@ -127,7 +127,7 @@ in {
         "$mod, right, movewindow, r"
         "$mod, up, movewindow, u"
         "$mod, down, movewindow, d"
-        '',Print,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
+        ''SUPERSHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
         #clipboard history
         #"$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
 

@@ -29,6 +29,7 @@ in {
       gnumake
       gnused
       gzip
+      helix
       lazygit # git tui
       libvirt
       lldb # for rust debugging
