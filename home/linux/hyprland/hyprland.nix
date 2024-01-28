@@ -34,6 +34,7 @@ in {
         "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
         "dunst" # notifications
         "waybar" # status bar
+        "rm $HOME/.cache/cliphist/db"
         "wl-paste --type text --watch cliphist store"
         "wpaperd"
         "~/nixos/home/hyprland/tmux_init.sh"
@@ -97,7 +98,6 @@ in {
         "$mod,L,movefocus,r"
         "$mod,K,movefocus,u"
         "$mod,J,movefocus,d"
-
         # Copy color and send to clipboard
         "$mod, p, exec, hyprpicker -a"
 
