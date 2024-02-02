@@ -12,6 +12,7 @@ in {
     [
       act # github actions locally
       bison
+      bazelisk # frontend for bazel build tools 
       chafa
       cargo-cross # cross compilation for rust
       cmake
