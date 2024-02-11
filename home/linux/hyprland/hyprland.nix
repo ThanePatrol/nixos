@@ -9,18 +9,6 @@ let
   };
 in {
 
-  #home.packages = with pkgs;
-
-  #with inputs.xdg-portal-hyprland.packages.${pkgs.system};
-  #[
-  #    xdg-desktop-portal-hyprland
-  #    wl-clip-persist
-  #    wl-clipboard
-  #    cliphist
-  #];
-
-
-
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -146,6 +134,7 @@ in {
         "$mod,XF86AudioRaiseVolume,exec,playerctl volume 0.1+" # ^^
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" # system level volume control
         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+" # system level volume control
+        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
       bindm = [
         #move and resize windows
@@ -161,7 +150,6 @@ in {
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
-
       };
 
     };

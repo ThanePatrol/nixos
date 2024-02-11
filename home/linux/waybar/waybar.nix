@@ -16,10 +16,10 @@ in {
         height = 24;
         spacing = 7;
         modules-left = [
-          "hyprland/workspaces" # todo - add more modules like battery, etc
+          "hyprland/workspaces" 
         ];
         modules-center = [
-          "clock" # todo - add weather
+          "clock" 
         ];
         modules-right = [ "pulseaudio" "network" "cpu" ];
         clock = {
@@ -27,7 +27,7 @@ in {
           interval = 1;
         };
         network = {
-          format = "{icon}";
+          format = "{ipaddr} {icon}";
           format-alt = "{ipaddr}/{cidr} {icon}";
           format-alt-click = "click-left";
           format-icons = {
@@ -37,11 +37,10 @@ in {
           };
         };
         pulseaudio = {
-          format = "{icon}";
+          format = "{icon} {volume}%";
           format-alt = "{icon} {volume}%";
           format-alt-click = "click-left";
           format-icons = { default = [ "" "" "" ]; };
-          # TODO pipewire volume control
         };
       };
     };
