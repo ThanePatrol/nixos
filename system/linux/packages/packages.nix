@@ -39,6 +39,7 @@ in {
     bluez # bluetooth memes
     chafa
     calibre
+    clipman #clipboard manager
     cliphist
     colord
     cmake
@@ -46,6 +47,7 @@ in {
     cups
     docker
     docker-compose
+    dotool # allows for simulating keyboard input
     dnsmasq
     discord # chromium wrap
     ethtool
@@ -88,6 +90,8 @@ in {
     rofi
     rpi-imager # to add ssid and information into the bootable image
     signal-desktop # wrap
+    swaylock # lock screen for wayland
+    swayidle # idle management for wayland
     spice-vdagent
     (heroic.override {
       extraPkgs = pkgs: [
@@ -118,6 +122,7 @@ in {
     wl-clipboard
     wireplumber # sound memes
     wpaperd # wallpaper daemon
+    wtype # input keyboard events in wayland
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     xdg-user-dirs
     #zotero # bibliography manager

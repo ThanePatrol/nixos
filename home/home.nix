@@ -48,5 +48,7 @@ in {
     ./linux/walls/wpapred.nix
     ./linux/xdg/xdg.nix
     ./linux/cursor.nix
+    ./linux/swaylock.nix
+    ./linux/swayidle.nix
   ]);
 }

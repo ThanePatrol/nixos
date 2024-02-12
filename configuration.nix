@@ -101,6 +101,10 @@ in {
     LC_TIME = "en_AU.UTF-8";
   };
 
+  services.udev.extraRules = ''
+    KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+  '';
+
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
 
@@ -130,6 +134,8 @@ in {
     ensureDefaultPrinter = "Printer";
   };
   */
+  # to allow swaylock to accept a password
+  security.pam.services.swaylock = {};
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -149,7 +155,7 @@ in {
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" "audio" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" "audio" "input" ];
     shell = pkgs.zsh;
   };
 

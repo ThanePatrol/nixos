@@ -32,6 +32,10 @@ in {
         "[workspace 1 silent] /home/hugh/dev/nixpkgs/result/bin/wezterm" # had to create custom wezterm version
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] bitwarden"
+
+        #set up clipman for copy and paste memes
+        "wl-paste -t text --watch clipman store --no-persist"
+
       ];
 
       animations = {
@@ -78,9 +82,9 @@ in {
       };
 
       bind = [
-        "$mod, C, killactive"
+        "$mod, Q, killactive" 
         "$mod, M, exit"
-        "$mod, SPACE, exec, wofi --show drun" # make it more similar to mac os - shock horror
+        "$SUPER, SPACE, exec, wofi --show drun" # make it more similar to mac os - shock horror
         "$mod, S, togglesplit, " # split workspace
         "$mod,H,movefocus,l"
         "$mod,L,movefocus,r"
@@ -115,9 +119,18 @@ in {
         "$mod, right, movewindow, r"
         "$mod, up, movewindow, u"
         "$mod, down, movewindow, d"
-        ''SUPERSHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
-        #clipboard history
-        #"$mod, V, exec cliphist list | wofi --dmenu | cliphist decode | wl-copy" 
+        ''SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
+
+        # locking workspace
+        "CTRL + SUPER, Q, exec, swaylock"
+
+        # clipboard
+        # TODO - figure out why this isn't working
+        # want SUPER + C and SUPER + V for copy and paste globally
+        #"$SUPER, C, exec, wtype -M ctrl -M shift c" # to make this like mac os with CMD + C
+        "$SUPER, H, exec, clipman pick -t wofi | wl-copy" # show clipboard history
+        #"$SUPER, V, exec, clipman pick -t wofi --err-on-no-selection && wtype -M ctrl -M shift v"
+
 
       ];
       # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms
