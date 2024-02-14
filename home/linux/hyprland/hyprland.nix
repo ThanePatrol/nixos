@@ -127,13 +127,15 @@ in {
         # clipboard
         # TODO - figure out why this isn't working
         # want SUPER + C and SUPER + V for copy and paste globally
-        #"$SUPER, C, exec, wtype -M ctrl -M shift c" # to make this like mac os with CMD + C
+        "$SUPER, C, exec, wtype -M ctrl c -m ctrl" # to make this like mac os with CMD + C
         "$SUPER, H, exec, clipman pick -t wofi | wl-copy" # show clipboard history
         #"$SUPER, V, exec, clipman pick -t wofi --err-on-no-selection && wtype -M ctrl -M shift v"
 
-
+        #Move cursor to start or end of line like Mac os
+        "SUPER, left, exec, wtype -P Home"
+        "SUPER, right, exec, wtype -P End"
       ];
-      # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms
+      # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
       # playerctl options https://github.com/altdesktop/playerctl
       bindl = [
         ",XF86AudioPlay,exec,playerctl play-pause"
