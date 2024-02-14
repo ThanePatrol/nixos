@@ -32,6 +32,7 @@ in {
       gzip
       helix
       lazygit # git tui
+      imagemagick_light # for cli screenshots
       libvirt
       lldb # for rust debugging
       libsecret # for storing passwords
