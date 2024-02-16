@@ -16,18 +16,6 @@ let
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
     '';
 
-  mount-usb = pkgs.writeShellScriptBin "mount-usb" ''
-    device="/dev/$1"
-
-    #lsblk to get device label name, remove the other output from the command including newlines
-    disk_label="$(lsblk -o label /dev/sda1 | sed -e 's/LABEL//' | tr -d '\n')"
-
-    mount_point="/home/hugh/removable/$disk_label"
-    mkdir -p "$mount_point"
-    mount "$device" "$mount_point"
-    '';
-
-
 in {
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
@@ -81,7 +69,6 @@ in {
     llvm_16
     luaformatter # format lua
     kmod
-    mount-usb
     minicom # for serial connections
     mullvad-vpn # wrap
     cinnamon.nemo # gui file manager
