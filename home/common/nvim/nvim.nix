@@ -95,6 +95,9 @@ in {
       cmp_luasnip
 
       catppuccin-nvim
+
+      # for eww LSP
+      yuck-vim
     ];
 
     extraPackages = with pkgs; [
