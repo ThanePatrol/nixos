@@ -47,8 +47,9 @@ in {
     "systemd.unified_cgroup_hierarchy=0"
   ];
 
-  # required for issue with no graphical display after booting
-  boot.initrd.kernelModules = [ "dm_mod" ];
+  # dm_mod required for issue with no graphical display after booting
+  #i2c-dev for brightness control https://wiki.archlinux.org/title/backlight#setpci
+  boot.initrd.kernelModules = [ "dm_mod" "i2c-dev"];
 
   # transpartent huge pages for faster rust compilation
   networking.hostName = "nixos"; # Define your hostname.
@@ -139,8 +140,7 @@ in {
   security.pam.services.swaylock = {};
 
   # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  #hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

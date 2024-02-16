@@ -1,16 +1,47 @@
+;; Polling variables
+(defpoll clock_hour :interval "5m" "date +\%H")
+(defpoll clock_minute :interval "5s" "date +\%M")
+(defpoll clock_date :interval "10h" "date '+%d/%m/%y'")
+(defpoll volume_percent :interval "3s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed s/Volume:\ /100\*/ | bc | sed s/\.00/%/")
+(defpoll mic_percent :interval "3s" "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | sed s/Volume:\ /100\*/ | bc | sed s/\.00/%/")
+;; TODO - memory + CPU usage + current song + cover art
+
+
+(defvar vol_reveal false)
+
+;;(defwidget workspaces []
+  ;;(literal :content workspace))
+
+(defwidget clock_module []
+  (box :class "module"
+       :space-evenly "false"
+       :orientation "horizontal"
+       :spacing "3"
+       :halign "center"
+       (label :text clock_hour 
+              :class "clock-hour-class")
+       (label :text ":"
+              :class "clock-separator")
+       (label :text clock_minute 
+              :class "clock-minute-class")
+       (button :class "clock_date_class") ;; TODO calendar popup
+       ))
+
+
+
 ( defwindow example 
   :monitor 0 
   :geometry (geometry :x "0%"
-                      :y "20px"
-                      :width "90%"
-                      :height "30px"
+                      :y "0%"
+                      :width "95%"
+                      :height "10px"
                       :anchor "top center")
   :stacking "fg"
   :reserve (struts :distance "40px" :side "top")
   :windowtype "dock"
   :wm-ignore false
-  (greeter :text "say hello!!👋"
-           :name "Tim")
+  ;;(greeter :text "say hello!!👋" :name "Tim")
+  (clock_module)
 
 )
 
@@ -20,3 +51,10 @@
        text
        (button :onclick "dunstify 'hello' 'hello, ${name}'"
                "Greet")))
+
+
+(defwidget date [?do-i-need-you]
+  (box :orientation "horizontal"
+       :halign "center"
+      )
+  )

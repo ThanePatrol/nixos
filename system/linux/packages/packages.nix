@@ -36,6 +36,7 @@ in {
     bitwarden-cli
     bitwarden
     bluez # bluetooth memes
+    bc # cli multiplication
     chafa
     calibre
     clipman #clipboard manager
