@@ -102,7 +102,8 @@ in {
   };
 
   services.udev.extraRules = ''
-    KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+  KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+  ACTION=="add", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{ID_FS_USAGE}=="filesystem", RUN+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /home/hugh/removable"
   '';
 
   # Enable clipboard sharing to VM

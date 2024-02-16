@@ -29,7 +29,7 @@ in {
         # TODO make this work properly
         "udiskie &" # mount usbs in the background
         "kdeconnect-app"
-        "[workspace 1 silent] /home/hugh/dev/nixpkgs/result/bin/wezterm" # had to create custom wezterm version
+        "[workspace 1 silent] wezterm" 
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] bitwarden"
 
@@ -134,6 +134,8 @@ in {
         #Move cursor to start or end of line like Mac os
         "SUPER, left, exec, wtype -P Home"
         "SUPER, right, exec, wtype -P End"
+        "SUPER + SHIFT, left, exec, wtype -M shift -P Home"
+        "SUPER + SHIFT, right, exec, wtype -M shift -P End"
       ];
       # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
       # playerctl options https://github.com/altdesktop/playerctl
