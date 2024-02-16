@@ -30,6 +30,8 @@ in {
       #awesome file search
       telescope-nvim
 
+      #add emoji!
+      telescope-symbols-nvim
       #indent lines
       indent-blankline-nvim
 
