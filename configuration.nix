@@ -140,7 +140,6 @@ in {
   security.pam.services.swaylock = {};
 
   # Enable sound with pipewire.
-  #hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

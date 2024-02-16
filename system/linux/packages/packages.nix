@@ -82,7 +82,6 @@ in {
     playerctl
     picocom
     prismlauncher # minecraft!
-    pulseaudioFull # cli audio control
     qalculate-gtk # good graphical calculator
     #qemu_full
     qt5.qtwayland

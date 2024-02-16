@@ -6,11 +6,12 @@
 (defpoll mic_percent :interval "3s" "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | sed s/Volume:\ /100\*/ | bc | sed s/\.00/%/")
 ;; TODO - memory + CPU usage + current song + cover art
 
+(deflisten workspaces "./scripts/workspaces.sh")
 
 (defvar vol_reveal false)
 
-;;(defwidget workspaces []
-  ;;(literal :content workspace))
+(defwidget workspace_layout []
+  (literal :content workspaces))
 
 (defwidget clock_module []
   (box :class "module"
@@ -27,7 +28,28 @@
        (button :class "clock_date_class") ;; TODO calendar popup
        ))
 
+(defwidget left_bar []
+  (box :orientation "h" 
+       :space-evenly false
+       :halign "end"
+       :class "left-modules"
+       (workspace_layout)
+       ))
 
+(defwidget middle_bar []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "center"
+       :class "center-modules"
+       (clock_module)
+       ))
+
+(defwidget main_bar []
+  (box :class "main-bar"
+       :orientation "h"
+       (middle_bar)
+       (left_bar)
+       ))
 
 ( defwindow example 
   :monitor 0 
@@ -41,7 +63,7 @@
   :windowtype "dock"
   :wm-ignore false
   ;;(greeter :text "say hello!!👋" :name "Tim")
-  (clock_module)
+  (main_bar)
 
 )
 
