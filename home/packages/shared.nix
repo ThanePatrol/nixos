@@ -30,6 +30,7 @@ in {
       gnumake
       gnused
       gzip
+      halloy # IRC client
       helix
       lazygit # git tui
       imagemagick_light # for cli screenshots
@@ -52,6 +53,7 @@ in {
       rclone # nice simple backup cli for cloud backups
       ripgrep # nice and fast grep alternative for large codebases
       rsync
+      sphinx #python docs generator
       terraform # Infra As Code
       terraform-providers.signalfx
       typescript
