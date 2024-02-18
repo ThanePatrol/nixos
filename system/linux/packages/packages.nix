@@ -16,6 +16,12 @@ let
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
     '';
 
+  # TODO - consider implementing faster blur  https://github.com/johnae/blur
+  take_blurred_screenshot = pkgs.writeShellScriptBin "screenshot-background" ''
+    ${pkgs.grim}/bin/grim /tmp/lockscreen.png
+    ${pkgs.imagemagick}/bin/convert -filter Gaussian -resize 25% -blur 0x2.5 -resize 400% /tmp/lockscreen.png /tmp/lockscreen.png
+    '';
+
 in {
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
@@ -29,6 +35,7 @@ in {
     wrappedSpotify
     wrappedChrome
     wrappedZoom
+    (take_blurred_screenshot)
     alacritty
     anki # flashcards
     bear # compilation database for clang tooling
@@ -60,6 +67,7 @@ in {
     grim # screenshot
     home-manager
     hyprpicker # color picker
+    imagemagick # for cli screenshots
     libclang
     libsForQt5.polkit-kde-agent # for apps that want elevated permission
     libsForQt5.kdeconnect-kde # for sharing files with phone
@@ -97,15 +105,15 @@ in {
         wineWowPackages.unstableFull
         wineWowPackages.waylandFull
         protontricks
-        #glxinfo # OpenGL libraries for steamp
+        glxinfo # OpenGL libraries for steamp
         gamescope # steamOS session window manager
         vkd3d-proton
         ##mesa
         #libGLU
-        #vulkan-tools
-        #vulkan-validation-layers
-        #vulkan-loader
-        #vulkan-headers
+        vulkan-tools
+        vulkan-validation-layers
+        vulkan-loader
+        vulkan-headers
       ];
     })
     spotify # wrap

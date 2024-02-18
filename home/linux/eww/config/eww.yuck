@@ -25,7 +25,7 @@
               :class "clock-separator")
        (label :text clock_minute 
               :class "clock-minute-class")
-       (button :class "clock_date_class") ;; TODO calendar popup
+       (button :class "clock-date-class") ;; TODO calendar popup
        ))
 
 (defwidget left_bar []
@@ -47,21 +47,21 @@
 (defwidget main_bar []
   (box :class "main-bar"
        :orientation "h"
-       (middle_bar)
        (left_bar)
+       (middle_bar)
        ))
 
 ( defwindow example 
   :monitor 0 
   :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "95%"
-                      :height "10px"
+                      :y "20px"
+                      :width "99%"
+                      :height "2%"
                       :anchor "top center")
   :stacking "fg"
-  :reserve (struts :distance "40px" :side "top")
   :windowtype "dock"
   :wm-ignore false
+  :exclusive true
   ;;(greeter :text "say hello!!👋" :name "Tim")
   (main_bar)
 

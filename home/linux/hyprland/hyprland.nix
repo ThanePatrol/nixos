@@ -122,7 +122,7 @@ in {
         ''SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
 
         # locking workspace
-        "CTRL + SUPER, Q, exec, swaylock"
+        "CTRL + SUPER, Q, exec, screenshot-background && swaylock -i /tmp/lockscreen.png"
 
         # clipboard
         # TODO - figure out why this isn't working
