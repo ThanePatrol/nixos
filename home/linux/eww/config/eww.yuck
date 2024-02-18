@@ -9,7 +9,7 @@
 
 ;; TODO - memory + CPU usage + current song + cover art
 
-(deflisten workspace_numbers "./scripts/workspaces.sh get-workspaces")
+(defpoll workspace_numbers :interval "1s" "./scripts/workspaces.sh get-workspaces")
 
 (defvar vol_reveal false)
 
@@ -19,7 +19,10 @@
 
 (defwidget workspaces []
   (box
-
+    :class "workspaces"
+    :space-evenly false
+    :orientation "horizontal"
+    :halign "start"
     (workspace_layout)
     (label :text current_window_name
            :class "current-window-name")
