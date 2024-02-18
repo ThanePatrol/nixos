@@ -26,7 +26,7 @@
     )
   )
 
-
+;;eww close example ; cp -r /home/hugh/nixos/home/linux/eww/config/* ~/.config/eww/  && eww open example
 
 (defwidget clock_module []
   (box :class "module"
@@ -46,8 +46,6 @@
        :orientation "horizontal"
        :halign "center"
        (label :text ip_address_poll 
-              :class "ip-address-text")
-       (label :text "test" 
               :class "ip-address-text")
        (label :text mic_percent )
   ))
