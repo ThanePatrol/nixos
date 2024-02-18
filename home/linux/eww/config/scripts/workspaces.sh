@@ -30,5 +30,15 @@ EOM
 	echo $workspace_config_string
 }
 
+function get_active_window() {
+	echo $(hyprctl activewindow -j | jq '.title' | sed 's/"//g')
+}
 
-get_workspaces
+argument=$1
+
+if [ "$argument" = "get-workspaces" ]; then 
+	get_workspaces
+elif [ "$argument" = "get-active-window" ]; then
+	get_active_window
+fi
+

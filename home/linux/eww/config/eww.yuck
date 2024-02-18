@@ -1,54 +1,87 @@
 ;; Polling variables
 (defpoll clock_hour :interval "5m" "date +\%H")
 (defpoll clock_minute :interval "5s" "date +\%M")
-(defpoll clock_date :interval "10h" "date '+%d/%m/%y'")
-(defpoll volume_percent :interval "3s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | sed s/Volume:\ /100\*/ | bc | sed s/\.00/%/")
-(defpoll mic_percent :interval "3s" "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | sed s/Volume:\ /100\*/ | bc | sed s/\.00/%/")
+(defpoll clock_datetime :interval "5s" "date '+%a %d %b %H:%M'")
+(defpoll volume_percent :interval "3s" "./scripts/sound.sh speaker-volume")
+(defpoll mic_percent :interval "3s" "./scripts/sound.sh mic-volume")
+(defpoll ip_address_poll :interval "1s" "./scripts/get-ip-address.sh")
+(defpoll current_window_name :interval "1s" "./scripts/workspaces.sh get-active-window")
+
 ;; TODO - memory + CPU usage + current song + cover art
 
-(deflisten workspaces "./scripts/workspaces.sh")
+(deflisten workspace_numbers "./scripts/workspaces.sh get-workspaces")
 
 (defvar vol_reveal false)
 
 (defwidget workspace_layout []
-  (literal :content workspaces))
+  (literal :content workspace_numbers)
+  )
+
+(defwidget workspaces []
+  (box
+
+    (workspace_layout)
+    (label :text current_window_name
+           :class "current-window-name")
+    )
+  )
+
+
 
 (defwidget clock_module []
   (box :class "module"
-       :space-evenly "false"
+       :space-evenly false
        :orientation "horizontal"
        :spacing "3"
        :halign "center"
-       (label :text clock_hour 
-              :class "clock-hour-class")
-       (label :text ":"
-              :class "clock-separator")
-       (label :text clock_minute 
-              :class "clock-minute-class")
-       (button :class "clock-date-class") ;; TODO calendar popup
+       (label :text clock_datetime
+              :class "clock-datetime")
+       (button :class "clock-date-class"
+               ) ;; TODO calendar popup
        ))
 
-(defwidget left_bar []
-  (box :orientation "h" 
+(defwidget ip_address_module []
+  (box :class "ip-address-module"
        :space-evenly false
-       :halign "end"
+       :orientation "horizontal"
+       :halign "center"
+       (label :text ip_address_poll 
+              :class "ip-address-text")
+       (label :text "test" 
+              :class "ip-address-text")
+       (label :text mic_percent )
+  ))
+
+(defwidget left_bar []
+  (box :orientation "horizontal" 
+       :space-evenly false
+       :halign "start"
        :class "left-modules"
-       (workspace_layout)
+       (workspaces)
        ))
 
 (defwidget middle_bar []
-  (box :orientation "h"
+  (box :orientation "horizontal"
        :space-evenly false
        :halign "center"
        :class "center-modules"
        (clock_module)
        ))
 
+(defwidget right_bar []
+  (box :orientation "horizontal"
+      :space-evenly false
+      :halign "end"
+      :class "right-modules"
+      (ip_address_module)    
+  ))
+
 (defwidget main_bar []
   (box :class "main-bar"
-       :orientation "h"
+       :orientation "horizontal"
        (left_bar)
        (middle_bar)
+       (right_bar)
        ))
 
 ( defwindow example 
