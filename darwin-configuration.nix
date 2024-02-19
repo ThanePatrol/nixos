@@ -45,7 +45,7 @@ in {
       "docker"
       "firefox"
       "signal"
-      "intellij-idea"
+      "eclipse-java"
       "spotify"
       "vlc"
       "zotero"
