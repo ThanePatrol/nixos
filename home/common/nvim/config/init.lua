@@ -75,6 +75,7 @@ require('vim-tmux')
 require('neorg-cfg')
 require('telescope-cfg')
 require('debugger')
+require('java')
 
 -- taken from here to hot reload init.lua, not working to diag TODO
 -- https://neovim.discourse.group/t/reload-init-lua-and-all-require-d-scripts/971/18

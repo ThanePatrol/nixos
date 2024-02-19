@@ -8,6 +8,10 @@
         command = "${pkgs.libnotify}/bin/notify-send 'locking in 5 seconds' -t 5000 -i ";
       }
       {
+        timeout = 297;
+        command = "rm /tmp/lockscreen.png";
+      }
+      {
         timeout = 298;
         # Can't use {pkgs.screenshot-background} as the attribute is never found :(
         command = "screenshot-background"; 

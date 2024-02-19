@@ -80,6 +80,9 @@ in {
       nvim-cmp
       lspkind-nvim
 
+      #java
+      nvim-jdtls
+
       #rust
       rust-vim
       rust-tools-nvim
@@ -139,7 +142,12 @@ in {
       # generic sql
       postgres-lsp
 
+      #terraform lsp
       terraform-ls
+
+      #java
+      jdt-language-server
+      jdk17
 
       # go
       gopls
@@ -153,6 +161,8 @@ in {
     source = ./config;
     recursive = true;
   };
+  
+
   # set theme using `theme` variable
   xdg.configFile."nvim/lua/color-theme.lua".text = 
   let 
