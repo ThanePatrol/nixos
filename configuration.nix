@@ -139,13 +139,16 @@ in {
   # to allow swaylock to accept a password
   security.pam.services.swaylock = {};
 
-  # Enable sound with pipewire.
   security.rtkit.enable = true;
+
+  # Enable sound with pipewire.
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
+    audio.enable = true; # set as default sound server
     pulse.enable = true;
+    wireplumber.enable = true;
   };
 
   home-manager.useGlobalPkgs = true;

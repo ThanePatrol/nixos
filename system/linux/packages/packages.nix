@@ -96,6 +96,7 @@ in {
     qt6.qtwayland
     rofi
     rpi-imager # to add ssid and information into the bootable image
+    socat # to establish socket connections
     signal-desktop # wrap
     swaylock # lock screen for wayland
     swayidle # idle management for wayland

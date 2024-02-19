@@ -1,17 +1,22 @@
 ;; Polling variables
 (defpoll clock_hour :interval "5m" "date +\%H")
 (defpoll clock_minute :interval "5s" "date +\%M")
-(defpoll clock_datetime :interval "5s" "date '+%a %d %b %H:%M'")
+(defpoll clock_datetime :interval "5s" "date '+%d %b %H:%M'")
 (defpoll volume_percent :interval "3s" "./scripts/sound.sh speaker-volume")
 (defpoll mic_percent :interval "3s" "./scripts/sound.sh mic-volume")
 (defpoll ip_address_poll :interval "1s" "./scripts/get-ip-address.sh")
 (defpoll current_window_name :interval "1s" "./scripts/workspaces.sh get-active-window")
 
+(defvar eww "$HOME/.nix-profile/bin/eww -c $HOME/.config/eww")
+
+;(defpoll workspace_json_polling :interval "1s" "./scripts/workspaces.sh get-workspaces-as-json")
+;(defvar workspace_json workspace_json_polling)
+
 ;; TODO - memory + CPU usage + current song + cover art
 
-(defpoll workspace_numbers :interval "1s" "./scripts/workspaces.sh get-workspaces")
+(deflisten workspace_numbers "./scripts/workspaces.sh get-workspaces")
 
-(defvar vol_reveal false)
+(defvar volume_show false)
 
 (defwidget workspace_layout []
   (literal :content workspace_numbers)
@@ -23,11 +28,9 @@
     :space-evenly false
     :orientation "horizontal"
     :halign "start"
+    :valign "center"
     (workspace_layout)
-    (label :text current_window_name
-           :class "current-window-name")
-    )
-  )
+  ))
 
 ;;eww close example ; cp -r /home/hugh/nixos/home/linux/eww/config/* ~/.config/eww/  && eww open example
 
@@ -53,6 +56,27 @@
        (label :text mic_percent )
   ))
 
+(defwidget volume []
+  (eventbox :onhover "${eww} update volume_show=true"
+            :onhoverlost "${eww} update volume_show=false"
+    (box :class "reveal-modules" :space-evenly false :orientation "horizontal" :spacing "3"
+        (button  "i")
+          (revealer :transition "slideleft"
+                    :reveal volume_show
+                    :duration "350ms"
+            (scale :class "volume-slider"
+                   :value volume_percent
+                   :orientation "horizontal"
+                   :tooltip "${volume_percent}"
+                   :max 100 
+                   :min 0
+                   :onchange "./scripts/sound.sh set-volume {}"
+            )
+          )
+      )
+    )
+  )
+
 (defwidget left_bar []
   (box :orientation "horizontal" 
        :space-evenly false
@@ -75,6 +99,7 @@
       :halign "end"
       :class "right-modules"
       (ip_address_module)    
+      (volume)
   ))
 
 (defwidget main_bar []
