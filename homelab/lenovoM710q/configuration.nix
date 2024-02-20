@@ -10,17 +10,14 @@ in
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    ./hardware-configuration.nix
+    # config to turn the machine into a router
+    ./router.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "lenovo-m710q-nixos";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Enable ssh
   services.openssh.enable = true;
@@ -51,7 +48,7 @@ in
   users.users.${user}= {
     isNormalUser = true;
     description = user;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -74,15 +71,6 @@ in
     vim
     zsh
   ];
-
-  systemd.services.docker.wantedBy = [ "multi-user.target" ];
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
-  };
 
   virtualisation.libvirtd = {
     enable = true;
