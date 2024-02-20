@@ -68,7 +68,7 @@ in
 
   environment.shellAliases = {
     update = ''sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
-    sudo cp -rsudo nixos-rebuild switch && source ~/.zshrc'';
+    sudo nixos-rebuild switch && source ~/.zshrc'';
   };
 
   nixpkgs.config.allowUnfree = true;
