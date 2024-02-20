@@ -56,6 +56,13 @@ in
     shell = pkgs.zsh;
   };
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableLsColors = true;
+    autosuggestions.enable = true;
+  };
+
   environment.shellAliases = {
     update = "sudo cp -r /home/${user}/nixos/homelab/lenovoM710q/* /etc/nixos && sudo nixos-rebuild switch && source ~/.zshrc";
   };
