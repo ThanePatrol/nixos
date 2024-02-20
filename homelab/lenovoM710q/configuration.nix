@@ -12,12 +12,16 @@ in
     [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # config to turn the machine into a router
-    ./router.nix
+    #./router.nix # TODO - figure out why this doesn't work
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.hostName = "lenovo-m710q-nixos";
+  # Enable networking
+  networking.networkmanager.enable = true;
 
   # Enable ssh
   services.openssh.enable = true;

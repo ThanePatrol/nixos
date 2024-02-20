@@ -17,12 +17,12 @@ in
 
   networking = {
     hostName = "lenovo-m710q-nixos";
+    networkmanager.enable = true;
     nameservers = [ 
       "${cloudflareDNS}"
       "${cloudflareBackupDNS}"
     ];
     firewall.enable = false;
-    networkmanager.enable = true;
 
     interfaces = {
       ${upstreamInterface} = {
