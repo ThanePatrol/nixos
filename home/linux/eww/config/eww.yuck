@@ -51,9 +51,11 @@
        :space-evenly false
        :orientation "horizontal"
        :halign "center"
+       :spacing "5"
        (label :text ip_address_poll 
               :class "ip-address-text")
-       (label :text mic_percent )
+       (label :text "${volume_percent}%"
+              :class "volume-percent")
   ))
 
 (defwidget volume []
@@ -99,7 +101,6 @@
       :halign "end"
       :class "right-modules"
       (ip_address_module)    
-      (volume)
   ))
 
 (defwidget main_bar []
@@ -110,10 +111,10 @@
        (right_bar)
        ))
 
-( defwindow example 
+( defwindow top_bar 
   :monitor 0 
   :geometry (geometry :x "0%"
-                      :y "20px"
+                      :y "15px"
                       :width "99%"
                       :height "2%"
                       :anchor "top center")

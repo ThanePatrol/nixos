@@ -21,7 +21,7 @@ in {
         # set cursor
         "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
         "dunst" # notifications
-        "waybar" # status bar
+        "eww open example"
         "rm $HOME/.cache/cliphist/db"
         "wl-paste --type text --watch cliphist store"
         "wpaperd"
@@ -32,6 +32,7 @@ in {
         "[workspace 1 silent] wezterm" 
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] bitwarden"
+        "[workspace 3 silent] thunderbird"
 
         #set up clipman for copy and paste memes
         "wl-paste -t text --watch clipman store --no-persist"
