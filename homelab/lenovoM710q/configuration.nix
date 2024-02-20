@@ -4,6 +4,9 @@
 
 { config, pkgs, ... }:
 
+let
+  user = "hugh";
+in 
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -45,17 +48,24 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.hugh = {
+  users.users.${user}= {
     isNormalUser = true;
-    description = "hugh";
+    description = user;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [];
+    shell = pkgs.zsh;
+  };
+
+  environment.shellAliases = {
+    update = "sudo cp -r /home/${user}/nixos/homelab/lenovoM710q/* /etc/nixos && sudo nixos-rebuild switch && source ~/.zshrc";
   };
 
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
+    btop
     vim
+    zsh
   ];
 
   systemd.services.docker.wantedBy = [ "multi-user.target" ];
