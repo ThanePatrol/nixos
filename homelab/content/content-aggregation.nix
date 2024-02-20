@@ -4,12 +4,10 @@
 
   services.sonarr = {
     enable = true;
-    dataDir = "/home/hugh/.config";
   };
 
   services.radarr = {
     enable = true;
-    dataDir = "/home/hugh/.config";
   };
 
   services.transmission = {
