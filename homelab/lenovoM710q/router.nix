@@ -52,7 +52,7 @@ in
           chain forward {
             type filter hook forward priority 0; policy drop;
             iifname { "${lanInterface}" } oifname { "${upstreamInterface}" } accept comment "Allow trusted LAN to WAN"
-            iifname { "${upstreamInterface}" } oifname { "${lanInterface}" } ct { state established, related } accept comment "Allow established connections from wan to lan"
+            iifname { "${upstreamInterface}" } oifname { "${lanInterface}" } ct  state established, related  accept comment "Allow established connections from wan to lan"
           }
         }
 
