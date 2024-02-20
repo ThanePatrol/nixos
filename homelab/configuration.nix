@@ -67,7 +67,8 @@ in
   };
 
   environment.shellAliases = {
-    update = "sudo cp -r /home/${user}/nixos/homelab/lenovoM710q/* /etc/nixos && sudo nixos-rebuild switch && source ~/.zshrc";
+    update = ''sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
+    sudo cp -rsudo nixos-rebuild switch && source ~/.zshrc'';
   };
 
   nixpkgs.config.allowUnfree = true;
