@@ -64,11 +64,10 @@ in
     enableCompletion = true;
     enableLsColors = true;
     autosuggestions.enable = true;
-  };
-
-  environment.shellAliases = {
-    update = ''sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
-    sudo nixos-rebuild switch && source ~/.zshrc'';
+    shellAliases = {
+      update = ''sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
+      sudo nixos-rebuild switch && source ~/.zshrc'';
+    };
   };
 
   nixpkgs.config.allowUnfree = true;
