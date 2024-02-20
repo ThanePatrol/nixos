@@ -13,6 +13,8 @@ in
     ./hardware-configuration.nix
     # config to turn the machine into a router
     #./router.nix # TODO - figure out why this doesn't work
+
+    ./content/content-aggregation.nix
     ];
 
   # Bootloader.
@@ -85,6 +87,16 @@ in
   systemd.services = {
     libvirtd.enable = true;
     virtlogd.enable = true;
+  };
+
+  # FIXME - copied from main config
+  # should be in separate file and imported
+  # Configure NFS share
+  fileSystems."/nfs/samsung4tb" = {
+    device = "10.0.0.15:/mnt/samsung4tb/nas";
+    fsType = "nfs";
+    options =
+      [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];
   };
 
   # This value determines the NixOS release from which the default
