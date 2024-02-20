@@ -17,7 +17,7 @@
     openFirewall = true;
     settings = {
       download-dir = "/nfs/samsung4tb/Content/Downloads";
-      webHome = pkgs.flood;
     };
+    webHome = pkgs.flood;
   };
 }
