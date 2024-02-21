@@ -78,6 +78,7 @@ in
     vim
     zsh
     git
+    sabnzbd
   ];
 
   virtualisation.libvirtd = {
