@@ -66,6 +66,7 @@ in
     autosuggestions.enable = true;
     shellAliases = {
       update = ''sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
+      sudo nix-channel --update && \
       sudo nixos-rebuild switch && source ~/.zshrc'';
     };
   };
