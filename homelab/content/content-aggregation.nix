@@ -12,6 +12,14 @@
     openFirewall = true;
   };
 
+  #https://github.com/nzbget/nzbget/blob/master/nzbget.conf
+  services.nzbget = {
+    enable = true;
+    settings = {
+      MainDir = "/nfs/samsung4tb/Content/Downloads";
+    };
+  };
+
   services.transmission = {
     enable = true;
     openFirewall = true;
