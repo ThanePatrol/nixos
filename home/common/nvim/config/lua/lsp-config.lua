@@ -136,3 +136,5 @@ nvim_lsp.html.setup({
 
 nvim_lsp.terraformls.setup({ filetypes = { 'terraform', 'tf', 'hcl' } })
 
+nvim_lsp.glslls.setup{}
+

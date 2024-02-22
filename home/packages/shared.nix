@@ -20,7 +20,6 @@ in {
       direnv # https://direnv.net
       delve # go debugger
       du-dust # better du
-      eww-wayland #TODO - remove once happy with config
       flex # lexical analysis
       ffmpeg-full 
       gcc
@@ -38,6 +37,7 @@ in {
       lldb # for rust debugging
       libsecret # for storing passwords
       luaformatter # format lua
+      jdt-language-server
       jq # 
       jdk
       jupyter-all
@@ -62,6 +62,7 @@ in {
       vim
       zlib
       zip # CLI compression
+      zig
       zsh 
     ];
 }

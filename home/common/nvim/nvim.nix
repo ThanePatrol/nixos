@@ -80,9 +80,6 @@ in {
       nvim-cmp
       lspkind-nvim
 
-      #java
-      nvim-jdtls
-
       #rust
       rust-vim
       rust-tools-nvim
@@ -138,6 +135,8 @@ in {
       rustc
       #scala
       metals
+
+      #opengl lsp
 
       # generic sql
       postgres-lsp
