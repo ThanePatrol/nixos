@@ -30,7 +30,7 @@
     openRPCPort = true;
     downloadDirPermissions = "770";
     settings = {
-      download-dir = "/nfs/samsung4tb/Content/Downloads";
+      download-dir = "/nfs/samsung4tb/Content/Transmission";
       rpc-bind-address = "127.0.0.1,10.0.0.*";
       rpc-whitelist = "127.0.0.1,10.0.0.*";
       speed-limit-up-enabled = true;
@@ -39,6 +39,5 @@
       speed-limit-down = 2000;
     };
     webHome = pkgs.flood-for-transmission;
-    user = "hugh";
   };
 }
