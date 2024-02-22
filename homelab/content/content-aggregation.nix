@@ -28,6 +28,7 @@
     enable = true;
     openFirewall = true;
     openRPCPort = true;
+    downloadDirPermissions = "770";
     settings = {
       download-dir = "/nfs/samsung4tb/Content/Downloads";
       rpc-bind-address = "127.0.0.1,10.0.0.*";
