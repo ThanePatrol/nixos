@@ -39,5 +39,6 @@
       speed-limit-down = 2000;
     };
     webHome = pkgs.flood-for-transmission;
+    user = "hugh";
   };
 }
