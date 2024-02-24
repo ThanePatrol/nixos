@@ -1,4 +1,17 @@
 {pkgs, ...}:
+
+let 
+  # return error code if music is playing
+  isMusicPlaying = pkgs.writeShellScriptBin "is-music-playing" ''
+  #!/usr/bin/env bash 
+  is_playing=$(playerctl status)
+  if [ "$is_playing" == "Playing" ]; then
+    exit 1
+  else
+    exit 0
+  fi
+  '';
+in
 {
   services.swayidle = {
     enable = true;
@@ -18,11 +31,13 @@
       }
       {
         timeout = 300;
-        command = "${pkgs.swaylock}/bin/swaylock -f -i /tmp/lockscreen.png";
+        # we don't want to lock screen if music is playing
+        # we use && to short circuit the command 
+        command = "${isMusicPlaying} && ${pkgs.swaylock}/bin/swaylock -f -i /tmp/lockscreen.png";
       }
       {
         timeout = 600;
-        command = "${pkgs.systemd}/bin/systemctl suspend";
+        command = "${isMusicPlaying} && ${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
     events = [
