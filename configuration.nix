@@ -72,6 +72,7 @@ in {
 
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
+  programs.steam.enable = true;
 
   # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
   programs.dconf.enable = true;

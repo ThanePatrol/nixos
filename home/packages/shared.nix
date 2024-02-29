@@ -20,6 +20,7 @@ in {
       direnv # https://direnv.net
       delve # go debugger
       du-dust # better du
+      eww-wayland
       flex # lexical analysis
       ffmpeg-full 
       gcc
@@ -28,7 +29,7 @@ in {
       go
       gofumpt # formatter
       gnumake
-      gnused
+      gnused 
       gzip
       halloy # IRC client
       helix

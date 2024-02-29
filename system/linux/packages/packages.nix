@@ -117,6 +117,22 @@ in {
         vulkan-headers
       ];
     })
+    (steam.override {
+      extraPkgs = pkgs: [
+        wineWowPackages.unstableFull
+        wineWowPackages.waylandFull
+        protontricks
+        glxinfo # OpenGL libraries for steamp
+        gamescope # steamOS session window manager
+        vkd3d-proton
+        ##mesa
+        #libGLU
+        vulkan-tools
+        vulkan-validation-layers
+        vulkan-loader
+        vulkan-headers
+      ];
+    })
     spotify # wrap
     slurp
     sshfs
@@ -133,7 +149,7 @@ in {
     wtype # input keyboard events in wayland
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     xdg-user-dirs
-    #zotero # bibliography manager
+    zotero # bibliography manager
     zoom-us # wrap
   ];
 }
