@@ -31,11 +31,11 @@ in
       }
       {
         timeout = 300;
-        # we don't want to lock screen if music is playing
-        # we use && to short circuit the command 
         command = "${isMusicPlaying} && ${pkgs.swaylock}/bin/swaylock -f -i /tmp/lockscreen.png";
       }
       {
+        # we don't want to suspend if music is playing
+        # we use && to short circuit the command 
         timeout = 600;
         command = "${isMusicPlaying} && ${pkgs.systemd}/bin/systemctl suspend";
       }

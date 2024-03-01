@@ -74,8 +74,6 @@ in {
   programs.zsh.enable = true;
   programs.steam.enable = true;
 
-  # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
-  programs.dconf.enable = true;
 
   # Configure NFS share
   fileSystems."/nfs/samsung4tb" = {
@@ -159,7 +157,7 @@ in {
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirt" "audio" "input" ];
+    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirtd" "audio" "input" ];
     shell = pkgs.zsh;
   };
 
@@ -187,6 +185,10 @@ in {
     };
   };
 
+
+  # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
+  programs.dconf.enable = true;
+  programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
     qemu.package = pkgs.qemu;

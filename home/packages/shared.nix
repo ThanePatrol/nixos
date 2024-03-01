@@ -20,7 +20,7 @@ in {
       direnv # https://direnv.net
       delve # go debugger
       du-dust # better du
-      eww-wayland
+      eww
       flex # lexical analysis
       ffmpeg-full 
       gcc

@@ -50,6 +50,7 @@ in {
     ./linux/cursor.nix
     ./linux/swaylock.nix
     ./linux/swayidle.nix
+    ./linux/dconf.nix
   #  ./linux/eww/eww.nix
   ]);
 }
