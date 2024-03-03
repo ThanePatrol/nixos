@@ -161,9 +161,13 @@ in {
     shell = pkgs.zsh;
   };
 
-  # weird bug fix, kept getting unfree issue
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "google-chrome" ];
+  builtins.elem (lib.getName pkg) [ 
+    "google-chrome" 
+    "steam"
+    "steam-original"
+    "steam-run"
+  ];
 
   #nix.settings.auto-optimise-store = true; # reduce garbage
 
