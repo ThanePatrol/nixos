@@ -149,7 +149,15 @@ in {
     wtype # input keyboard events in wayland
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     xdg-user-dirs
+
     zotero # bibliography manager
     zoom-us # wrap
+
+
+
+    # TODO - remove these once xournalpp allows for launch without issue 
+  gnome.adwaita-icon-theme
+  shared-mime-info
+  xournalpp
   ];
 }

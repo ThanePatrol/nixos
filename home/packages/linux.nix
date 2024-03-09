@@ -6,7 +6,7 @@ let
 in {
   packages = with pkgs; [ 
     eclipses.eclipse-java
-      eww-wayland
+      eww
   ];
 
 }

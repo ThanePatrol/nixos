@@ -178,7 +178,13 @@ in {
     ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
-  environment.pathsToLink = [ "/share/zsh" ];
+    environment.pathsToLink = [ 
+      "/share/zsh" 
+      "/share/icons" # For Xournalpp not finding icons
+      "/share/mime" # https://github.com/NixOS/nixpkgs/issues/163107
+    ];
+
+
 
   #docker stuff
   virtualisation.docker = {
