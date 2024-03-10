@@ -58,7 +58,6 @@ in {
     dnsmasq
     discord # chromium wrap
     ethtool
-    dunst # notification daemon
     flex # lexical analysis
     firefox
     gdb
