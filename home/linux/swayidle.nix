@@ -2,13 +2,13 @@
 
 let 
   # return error code if music is playing
-  isMusicPlaying = pkgs.writeShellScriptBin "is-music-playing" ''
+  ifMusicNotPlayingSuspend = pkgs.writeShellScriptBin "if-music-not-playing-suspend" ''
   #!/usr/bin/env bash 
   is_playing=$(playerctl status)
   if [ "$is_playing" == "Playing" ]; then
     exit 1
   else
-    exit 0
+  ${pkgs.systemd}/bin/systemctl suspend
   fi
   '';
 in
@@ -31,13 +31,13 @@ in
       }
       {
         timeout = 300;
-        command = "${isMusicPlaying} && ${pkgs.swaylock}/bin/swaylock -f -i /tmp/lockscreen.png";
+        command = "${pkgs.swaylock}/bin/swaylock -f -i /tmp/lockscreen.png";
       }
       {
         # we don't want to suspend if music is playing
         # we use && to short circuit the command 
         timeout = 600;
-        command = "${isMusicPlaying} && ${pkgs.systemd}/bin/systemctl suspend";
+        command = "${ifMusicNotPlayingSuspend}";
       }
     ];
     events = [
