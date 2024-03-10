@@ -3,7 +3,6 @@
 let 
   # return error code if music is playing
   ifMusicNotPlayingSuspend = pkgs.writeShellScriptBin "if-music-not-playing-suspend" ''
-  #!/usr/bin/env bash 
   is_playing=$(playerctl status)
   if [ "$is_playing" == "Playing" ]; then
     exit 1
