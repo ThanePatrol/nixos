@@ -3,7 +3,7 @@
 let 
   username = builtins.getEnv "USER";
   isDarwin = true;
-  isWork = true;
+  isWork = false;
   theme = if builtins.getEnv("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
   else 

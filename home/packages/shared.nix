@@ -20,7 +20,7 @@ in {
       direnv # https://direnv.net
       delve # go debugger
       du-dust # better du
-      eww
+      #eww
       flex # lexical analysis
       ffmpeg-full 
       gcc
@@ -33,6 +33,7 @@ in {
       gzip
       halloy # IRC client
       helix
+      hyperledger-fabric
       lazygit # git tui
       libvirt
       lldb # for rust debugging
