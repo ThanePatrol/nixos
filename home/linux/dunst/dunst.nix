@@ -14,7 +14,6 @@
         padding = 12;
         horizontal_padding = 12;
         text_icon_padding = 12;
-        icon_size = 64;
         frame_width = 4;
         separator_color = "frame";
         idle_threshold = 120;
@@ -23,11 +22,10 @@
         format = ''
         %a\n
         <b>%s</b>\n
-
         %b'';
 
-        min_icon_size = "128";
-        max_icon_size = "128";
+        min_icon_size = 96;
+        max_icon_size = 96;
         alignment = "center";
         #icon_position = "off";
         startup_notification = "false";
