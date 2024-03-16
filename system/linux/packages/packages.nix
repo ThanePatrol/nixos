@@ -56,7 +56,6 @@ in {
     docker-compose
     dotool # allows for simulating keyboard input
     dnsmasq
-    discord # chromium wrap
     ethtool
     flex # lexical analysis
     firefox
