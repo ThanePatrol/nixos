@@ -1,17 +1,20 @@
-{ nixpkgs, config, pkgs, lib, isWork, username, ... }:
+{ nixpkgs, config, pkgs, lib, customArgs, ... }:
 
 let
+  isWork = customArgs.isWork;
+  username = customArgs.username;
+  email = customArgs.email;
   isDarwin = true;
   theme = if builtins.getEnv ("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
   else
     builtins.getEnv ("THEME");
   homeConfig = import ./home/home.nix {
-    inherit isWork isDarwin username theme nixpkgs pkgs config lib;
+    inherit email isWork isDarwin username theme nixpkgs pkgs config lib;
   };
 in {
 
-  imports = [ <home-manager/nix-darwin> ];
+  imports = [  ];
 
   users.users.${username} = {
     name = username;
@@ -22,9 +25,6 @@ in {
   home-manager.useGlobalPkgs = true;
 
   environment.systemPackages = [ ];
-
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "terraform" ];
 
   homebrew = {
     enable = true;
@@ -72,7 +72,6 @@ in {
     autohide = true;
     autohide-delay = 0.0;
     launchanim = false;
-
     show-recents = false;
   };
 
