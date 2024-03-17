@@ -55,8 +55,6 @@ let
 
     workExports = "export PATH=$PATH:/opt/atlassian/bin";
 
-  starshipThemeString = builtins.replaceStrings [ "C" "-" ] [ "c" "_" ] theme;
-
 in {
 
   programs.zsh = {

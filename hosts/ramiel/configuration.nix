@@ -2,25 +2,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ nixpkgs, lib, config, pkgs, ... }:
+{ nixpkgs, lib, config, pkgs, username, isWork, ... }:
 
 let
 
   isDarwin = false;
-  isWork = false;
   
   theme = if builtins.getEnv("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
   else 
     builtins.getEnv("THEME");
 
-  homeConfig = import ./home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib theme; };
+  homeConfig = import ../../home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib theme; };
 
-  username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
-  syspackages = import ./system/linux/packages/packages.nix { inherit pkgs; };
+  #username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
+  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
   pythonPackages =
-    import ./system/linux/packages/python_packages.nix { inherit pkgs; };
-  languages = import ./system/linux/packages/languages.nix { inherit pkgs; };
+    import ../../system/linux/packages/python_packages.nix { inherit pkgs; };
+  languages = import ../../system/linux/packages/languages.nix { inherit pkgs; };
 in {
   imports = [ 
     ./hardware-configuration.nix
