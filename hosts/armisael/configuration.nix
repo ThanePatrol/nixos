@@ -13,7 +13,7 @@ in {
 
     ./content/content-aggregation.nix
   ];
-  
+
   ##########=======CONTENT AGGREGATION==========##########
   services.sonarr = {
     enable = true;

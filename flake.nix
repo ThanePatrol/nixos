@@ -45,13 +45,9 @@
         in nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = {
-            customArgs = { inherit system username; };
-          };
+          specialArgs = { customArgs = { inherit system username; }; };
 
-          modules = [
-            ./hosts/armisael/configuration.nix
-          ];
+          modules = [ ./hosts/armisael/configuration.nix ];
         };
 
       darwinSystem = system: username: isWork: email:
@@ -80,8 +76,8 @@
 
       nixosConfigurations = {
         # main desktop
-        ramiel =
-          nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com";
+        ramiel = nixosDesktopSystem "x86_64-linux" "hugh" false
+          "mandalidis.hugh@gmail.com";
 
         # lenovo m710q server
         armisael = nixosServerSystem "x86_64-linux" "hugh";
