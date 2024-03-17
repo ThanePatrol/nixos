@@ -53,7 +53,7 @@ let
     export LIBRARY_PATH=$HOME/.nix-profile/lib:$LIBRARY_PATH
     '';
 
-    workExports = "export PATH=$PATH:/opt/atlassian/bin";
+  workExports = "export PATH=$PATH:/opt/atlassian/bin";
 
 in {
 

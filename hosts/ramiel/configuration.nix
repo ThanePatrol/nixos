@@ -2,18 +2,21 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ nixpkgs, lib, config, pkgs, username, isWork, ... }:
+{ nixpkgs, lib, config, pkgs, customArgs, ... }:
 
 let
 
   isDarwin = false;
+  isWork = customArgs.isWork;
+  username = customArgs.username;
+  email = customArgs.email;
   
   theme = if builtins.getEnv("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
   else 
     builtins.getEnv("THEME");
 
-  homeConfig = import ../../home/home.nix {inherit isWork isDarwin username nixpkgs pkgs config lib theme; };
+  homeConfig = import ../../home/home.nix {inherit email isWork isDarwin username nixpkgs pkgs config lib theme; };
 
   #username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
   syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
@@ -23,11 +26,9 @@ let
 in {
   imports = [ 
     ./hardware-configuration.nix
-    <home-manager/nixos>
 #    ./system/linux/modules/udev-rules.nix
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -50,8 +51,7 @@ in {
   #i2c-dev for brightness control https://wiki.archlinux.org/title/backlight#setpci
   boot.initrd.kernelModules = [ "dm_mod" "i2c-dev"];
 
-  # transpartent huge pages for faster rust compilation
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "ramiel"; # Define your hostname.
   networking.firewall = {
     enable = true;
     allowedTCPPortRanges = [{
@@ -160,18 +160,6 @@ in {
     shell = pkgs.zsh;
   };
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-  builtins.elem (lib.getName pkg) [ 
-    "google-chrome" 
-    "steam"
-    "steam-original"
-    "steam-run"
-  ];
-
-  #nix.settings.auto-optimise-store = true; # reduce garbage
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs;
     [ wget kitty pythonPackages ]
     ++ syspackages.environment.systemPackages

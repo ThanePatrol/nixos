@@ -1,4 +1,4 @@
-{ isWork, isDarwin, username, theme, nixpkgs, lib, config, pkgs, ... }:
+{ email, isWork, isDarwin, username, theme, nixpkgs, lib, config, pkgs, ... }:
 
 let
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
@@ -27,7 +27,7 @@ in {
      ./common/fonts.nix
      ./common/ssh.nix
      (import ./common/shell/shell.nix {inherit isWork isDarwin theme pkgs lib;})
-     (import ./common/git.nix {inherit isWork;})
+     (import ./common/git.nix {inherit email;})
      (import ./common/nvim/nvim.nix {inherit pkgs lib theme;})
      (import ./common/tmux.nix {inherit isDarwin theme pkgs;})
      ./common/rust.nix

@@ -2,14 +2,15 @@
 
 let
   mozillaOverlay = import (builtins.fetchTarball
-    "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz");
+  "https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz");
 
-  nixpkgs = import <nixpkgs> { overlays = [ mozillaOverlay ]; };
+  # removed in flake port
+
+  #nixpkgs = import <nixpkgs> { overlays = [ mozillaOverlay ]; };
 
 in {
   environment.systemPackages = with pkgs; [
-    nixpkgs.rustChannels.stable.rust
-    nixpkgs.rustChannels.nightly.rust
+    rustc
     python3
     nodejs
     openjdk

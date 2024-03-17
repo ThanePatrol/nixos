@@ -1,8 +1,7 @@
-{ isWork, ... }:
+{ email, ... }:
 
 let
   DEFAULT_BRANCH = "main";
-  email = if isWork then "hmandalidis@atlassian.com" else "mandalidis.hugh@gmail.com";
 in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login
   programs.gh = {

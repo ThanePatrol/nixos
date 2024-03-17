@@ -10,17 +10,17 @@
     };
   };
 
-  outputs = inputs@{
+  outputs = {
     self, nixpkgs, darwin, home-manager, darwinpkgs, ...
-  }:
+  } @ inputs :
 
   let
-    inputs = { inherit nixpkgs darwin home-manager darwinpkgs; };
+    #inputs = { inherit nixpkgs darwin home-manager darwinpkgs; };
 
     genPkgs = system: import nixpkgs { inherit system; config.allowUnfree = true; };
     genDarwin = system: import darwinpkgs { inherit system; config.allowUnfree = true; };
 
-    nixosSystem = system: username: isWork:
+    nixosSystem = system: username: isWork: email:
       let 
         pkgs = genPkgs system;
       in
@@ -28,16 +28,17 @@
           inherit system pkgs;
 
           specialArgs = {
-            customArgs = { inherit system username isWork; };
+            customArgs = { inherit system username isWork email; };
           };
 
           modules = [
             ./hosts/ramiel/configuration.nix
+            home-manager.nixosModules.home-manager
           ];
 
         };
 
-    darwinSystem = system: username: isWork:
+    darwinSystem = system: username: isWork: email:
       let 
         pkgs = genDarwin system;
       in
@@ -46,12 +47,11 @@
 
           specialArgs = {
             unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
-
-            customArgs = { inherit system username pkgs isWork; };
+            customArgs = { inherit system username pkgs isWork email; };
           };
 
           modules = [
-            ./darwin-configuration.nix
+            ./hosts/leliel/darwin-configuration.nix
           ];
 
         };
@@ -59,12 +59,12 @@
   in {
     darwinConfigurations = {
       # personal M1
-      stickerbook = darwinSystem "aarch64-darwin" "hugh" "false";
+      leliel = darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com";
     };
 
     nixosConfigurations = {
       # main desktop
-      ramiel = nixosSystem "x86_64-linux" "hugh" "false";
+      ramiel = nixosSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com";
     };
 
   };
