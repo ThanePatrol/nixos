@@ -62,7 +62,7 @@ in {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     envExtra = ''
       export EDITOR="nvim"
       '' 

@@ -1,9 +1,7 @@
-{ nixpkgs, config, pkgs, lib, ... }:
+{ nixpkgs, config, pkgs, lib, isWork, username, ... }:
 
 let 
-  username = builtins.getEnv "USER";
   isDarwin = true;
-  isWork = false;
   theme = if builtins.getEnv("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
   else 
