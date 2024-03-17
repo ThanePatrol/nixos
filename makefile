@@ -1,14 +1,14 @@
 .PHONY: update-ramiel
 update-ramiel:
 	sudo -v # Build can take a while and we need root to apply the flake
-	nix build .#nixosDesktopConfigurations.ramiel.config.system.build.toplevel
+	nix build .#nixosConfigurations.ramiel.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#ramiel	
 
 
 .PHONY: update-armisael
 update-armisael:
 	sudo -v
-	nix build --extra-experimental-features "nix-command flakes" .#nixosServerConfigurations.armisael.config.system.build.toplevel
+	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.armisael.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#armisael
 
 .PHONY: update-leliel
