@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    darwinpkgs.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
+    darwinpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     darwin.url = "github:LnL7/nix-darwin/master";
 
     home-manager = {
@@ -43,14 +43,17 @@
       darwinSystem = system: username: isWork: email:
         let pkgs = genDarwin system;
         in darwin.lib.darwinSystem {
-          inherit system;
+          inherit system pkgs;
 
           specialArgs = {
             unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
             customArgs = { inherit system username pkgs isWork email; };
           };
 
-          modules = [ ./hosts/leliel/darwin-configuration.nix ];
+          modules = [
+            ./hosts/leliel/darwin-configuration.nix
+            home-manager.darwinModules.home-manager
+          ];
 
         };
 

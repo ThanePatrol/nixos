@@ -8,7 +8,7 @@ update-ramiel:
 update-leliel:
 	sudo -v
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel
-	sudo nixos-rebuild switch --flake .#leliel
+	sudo darwin-rebuild switch --flake .#leliel
 
 .PHONY: fmt
 fmt:

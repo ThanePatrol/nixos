@@ -14,7 +14,7 @@ let
   };
 in {
 
-  imports = [  ];
+  imports = [ ];
 
   users.users.${username} = {
     name = username;

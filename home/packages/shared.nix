@@ -44,7 +44,7 @@ in {
     nomacs # image viewer
     notcurses # terminal bling
     pandoc # document conversion
-    prismlauncher # minecraft!
+    #prismlauncher # minecraft!
     pciutils # useful pci utils
     pkg-config # build tools
     rclone # nice simple backup cli for cloud backups
