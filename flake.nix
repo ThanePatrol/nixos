@@ -58,11 +58,13 @@
 
         };
     
-  in 
+  in {
     darwinConfigurations = {
       # personal M1
       stickerbook = darwinSystem "aarch64-darwin" "hugh" "false";
     };
+
+  };
 
 
 }
