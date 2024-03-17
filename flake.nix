@@ -10,21 +10,23 @@
     };
   };
 
-  outputs = {
-    self, nixpkgs, darwin, home-manager, darwinpkgs, ...
-  } @ inputs :
+  outputs = { self, nixpkgs, darwin, home-manager, darwinpkgs, ... }@inputs:
 
-  let
-    #inputs = { inherit nixpkgs darwin home-manager darwinpkgs; };
+    let
+      genPkgs = system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      genDarwin = system:
+        import darwinpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
 
-    genPkgs = system: import nixpkgs { inherit system; config.allowUnfree = true; };
-    genDarwin = system: import darwinpkgs { inherit system; config.allowUnfree = true; };
-
-    nixosSystem = system: username: isWork: email:
-      let 
-        pkgs = genPkgs system;
-      in
-        nixpkgs.lib.nixosSystem {
+      nixosSystem = system: username: isWork: email:
+        let pkgs = genPkgs system;
+        in nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = {
@@ -38,11 +40,9 @@
 
         };
 
-    darwinSystem = system: username: isWork: email:
-      let 
-        pkgs = genDarwin system;
-      in
-        darwin.lib.darwinSystem {
+      darwinSystem = system: username: isWork: email:
+        let pkgs = genDarwin system;
+        in darwin.lib.darwinSystem {
           inherit system;
 
           specialArgs = {
@@ -50,24 +50,21 @@
             customArgs = { inherit system username pkgs isWork email; };
           };
 
-          modules = [
-            ./hosts/leliel/darwin-configuration.nix
-          ];
+          modules = [ ./hosts/leliel/darwin-configuration.nix ];
 
         };
-    
-  in {
-    darwinConfigurations = {
-      # personal M1
-      leliel = darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com";
+
+    in {
+      darwinConfigurations = {
+        # personal M1
+        leliel = darwinSystem "aarch64-darwin" "hugh" false
+          "mandalidis.hugh@gmail.com";
+      };
+
+      nixosConfigurations = {
+        # main desktop
+        ramiel =
+          nixosSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com";
+      };
     };
-
-    nixosConfigurations = {
-      # main desktop
-      ramiel = nixosSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com";
-    };
-
-  };
-
-
 }

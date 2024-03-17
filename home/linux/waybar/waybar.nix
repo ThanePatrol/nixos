@@ -15,12 +15,8 @@ in {
         position = "top";
         height = 24;
         spacing = 7;
-        modules-left = [
-          "hyprland/workspaces" 
-        ];
-        modules-center = [
-          "clock" 
-        ];
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "clock" ];
         modules-right = [ "pulseaudio" "network" "cpu" ];
         clock = {
           format = "{:%a %b %d %H:%M}";

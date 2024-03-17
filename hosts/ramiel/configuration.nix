@@ -1,4 +1,4 @@
- # Edit this configuration file to define what should be installed on
+# Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
@@ -10,23 +10,27 @@ let
   isWork = customArgs.isWork;
   username = customArgs.username;
   email = customArgs.email;
-  
-  theme = if builtins.getEnv("THEME") == "" then
-    "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
-  else 
-    builtins.getEnv("THEME");
 
-  homeConfig = import ../../home/home.nix {inherit email isWork isDarwin username nixpkgs pkgs config lib theme; };
+  theme = if builtins.getEnv ("THEME") == "" then
+    "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
+  else
+    builtins.getEnv ("THEME");
+
+  homeConfig = import ../../home/home.nix {
+    inherit email isWork isDarwin username nixpkgs pkgs config lib theme;
+  };
 
   #username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
-  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
+  syspackages =
+    import ../../system/linux/packages/packages.nix { inherit pkgs; };
   pythonPackages =
     import ../../system/linux/packages/python_packages.nix { inherit pkgs; };
-  languages = import ../../system/linux/packages/languages.nix { inherit pkgs; };
+  languages =
+    import ../../system/linux/packages/languages.nix { inherit pkgs; };
 in {
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
-#    ./system/linux/modules/udev-rules.nix
+    #    ./system/linux/modules/udev-rules.nix
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -41,7 +45,7 @@ in {
 
   #linux kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [ 
+  boot.kernelParams = [
     "transparent_hugepage=madvise"
     "video=DP-2:3840x2160"
     "systemd.unified_cgroup_hierarchy=0"
@@ -49,7 +53,7 @@ in {
 
   # dm_mod required for issue with no graphical display after booting
   #i2c-dev for brightness control https://wiki.archlinux.org/title/backlight#setpci
-  boot.initrd.kernelModules = [ "dm_mod" "i2c-dev"];
+  boot.initrd.kernelModules = [ "dm_mod" "i2c-dev" ];
 
   networking.hostName = "ramiel"; # Define your hostname.
   networking.firewall = {
@@ -72,7 +76,6 @@ in {
   programs.hyprland.enable = true;
   programs.zsh.enable = true;
   programs.steam.enable = true;
-
 
   # Configure NFS share
   fileSystems."/nfs/samsung4tb" = {
@@ -101,8 +104,8 @@ in {
   };
 
   services.udev.extraRules = ''
-  KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
-  ACTION=="add", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{ID_FS_USAGE}=="filesystem", RUN+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /home/hugh/removable"
+    KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+    ACTION=="add", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{ID_FS_USAGE}=="filesystem", RUN+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /home/hugh/removable"
   '';
 
   # Enable clipboard sharing to VM
@@ -112,30 +115,28 @@ in {
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
-
   # Enable ssh
   services.openssh.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  /*
-  hardware.printers = {
-    ensurePrinters = [
-      {
-        name = "Printer"; # hostname of Brother printer
-        location = "Study";
-        deviceUri = "http://10.0.0.117:631";
-        model = ""
-        ppdOptions = {
-          pageSize = "A4";
-        };
-      }
-    ];
-    ensureDefaultPrinter = "Printer";
-  };
+  /* hardware.printers = {
+       ensurePrinters = [
+         {
+           name = "Printer"; # hostname of Brother printer
+           location = "Study";
+           deviceUri = "http://10.0.0.117:631";
+           model = ""
+           ppdOptions = {
+             pageSize = "A4";
+           };
+         }
+       ];
+       ensureDefaultPrinter = "Printer";
+     };
   */
   # to allow swaylock to accept a password
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 
   security.rtkit.enable = true;
 
@@ -156,22 +157,27 @@ in {
   users.users.${username} = {
     isNormalUser = true;
     description = username;
-    extraGroups = [ "docker" "networkmanager" "wheel" "plugdev" "libvirtd" "audio" "input" ];
+    extraGroups = [
+      "docker"
+      "networkmanager"
+      "wheel"
+      "plugdev"
+      "libvirtd"
+      "audio"
+      "input"
+    ];
     shell = pkgs.zsh;
   };
 
   environment.systemPackages = with pkgs;
-    [ wget kitty pythonPackages ]
-    ++ syspackages.environment.systemPackages
+    [ wget kitty pythonPackages ] ++ syspackages.environment.systemPackages
     ++ languages.environment.systemPackages;
 
-    environment.pathsToLink = [ 
-      "/share/zsh" 
-      "/share/icons" # For Xournalpp not finding icons
-      "/share/mime" # https://github.com/NixOS/nixpkgs/issues/163107
-    ];
-
-
+  environment.pathsToLink = [
+    "/share/zsh"
+    "/share/icons" # For Xournalpp not finding icons
+    "/share/mime" # https://github.com/NixOS/nixpkgs/issues/163107
+  ];
 
   #docker stuff
   virtualisation.docker = {
@@ -181,7 +187,6 @@ in {
       setSocketVariable = true;
     };
   };
-
 
   # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
   programs.dconf.enable = true;

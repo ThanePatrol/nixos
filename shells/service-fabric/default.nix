@@ -1,6 +1,6 @@
-with (import <nixpkgs> {});
+with (import <nixpkgs> { });
 
-let 
+let
   jest = pkgs.stdenv.mkDerivation rec {
     name = "jest-${version}";
     version = "git-2023-11-24";
@@ -15,12 +15,10 @@ let
     buildPhase = ''
       nix-build ${src}/release.nix
     '';
-  }
+  };
 
-in
+in mkShell {
 
-mkShell {
-  
   buildInputs = [
     #go
     #gotools
@@ -37,17 +35,17 @@ mkShell {
   ];
 
   shellHook = ''
-  # add random env vars here if needed
-    export GOPATH=$HOME/go
-    export PATH=$PATH:$GOPATH/bin
-    export PATH=$PATH:/opt/atlassian/bin
+    # add random env vars here if needed
+      export GOPATH=$HOME/go
+      export PATH=$PATH:$GOPATH/bin
+      export PATH=$PATH:/opt/atlassian/bin
 
-    # decided not to include this as it's a bit of hack, not declarative so defeats the
-    # point of having it
-   # if [ -e /opt/atlassian/bin/atlas ] then
-   #   echo "atlas not found, installing..."
-   #   $(curl -fsSL https://statlas.prod.atl-paas.net/atlas-cli/install.sh)
-   #   /opt/atlassian/bin/atlas plugin install -n packages
-   # fi 
+      # decided not to include this as it's a bit of hack, not declarative so defeats the
+      # point of having it
+     # if [ -e /opt/atlassian/bin/atlas ] then
+     #   echo "atlas not found, installing..."
+     #   $(curl -fsSL https://statlas.prod.atl-paas.net/atlas-cli/install.sh)
+     #   /opt/atlassian/bin/atlas plugin install -n packages
+     # fi 
   '';
 }

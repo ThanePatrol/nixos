@@ -20,9 +20,9 @@
         font = "DaddyTimeMono NF 16";
         line_height = 0;
         format = ''
-        %a\n
-        <b>%s</b>\n
-        %b'';
+          %a\n
+          <b>%s</b>\n
+          %b'';
 
         min_icon_size = 96;
         max_icon_size = 96;

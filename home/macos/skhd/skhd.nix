@@ -1,10 +1,8 @@
 { pkgs, ... }:
 
-let 
-  mod = "alt";
-in
+let mod = "alt";
 
-{
+in {
   home.file.".config/skhd/skhdrc" = {
     executable = true;
     text = ''

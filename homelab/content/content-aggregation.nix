@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 # FIXME - take inputs to read these
 {
 
@@ -20,9 +20,7 @@
   #  };
   #};
 
-  services.sabnzbd = {
-    enable = true;
-  };
+  services.sabnzbd = { enable = true; };
 
   services.transmission = {
     enable = true;
@@ -35,7 +33,7 @@
       rpc-bind-address = "127.0.0.1,10.0.0.*";
       rpc-whitelist = "127.0.0.1,10.0.0.*";
       speed-limit-up-enabled = true;
-      speed-limit-up = 300; #KBs per second
+      speed-limit-up = 300; # KBs per second
       speed-limit-down-enabled = true;
       speed-limit-down = 2000;
     };

@@ -7,9 +7,9 @@ let
       #''bind-key -t vi-copy MouseDragEnd1Pane copy-pipe "pbcopy"''
     else
       "";
-    }.fin;
+  }.fin;
 
-  themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ]  theme; 
+  themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ] theme;
 
 in {
   home.packages = [ pkgs.tmux ];

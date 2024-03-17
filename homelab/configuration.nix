@@ -4,18 +4,15 @@
 
 { config, pkgs, ... }:
 
-let
-  user = "hugh";
-in 
-{
-  imports =
-    [ # Include the results of the hardware scan.
+let user = "hugh";
+in {
+  imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # config to turn the machine into a router
     #./router.nix # TODO - figure out why this doesn't work
 
     ./content/content-aggregation.nix
-    ];
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -51,11 +48,11 @@ in
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${user}= {
+  users.users.${user} = {
     isNormalUser = true;
     description = user;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
     shell = pkgs.zsh;
   };
 
@@ -65,21 +62,16 @@ in
     enableLsColors = true;
     autosuggestions.enable = true;
     shellAliases = {
-      update = ''sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
-      sudo nix-channel --update && \
-      sudo nixos-rebuild switch && source ~/.zshrc'';
+      update = ''
+        sudo cp -r /home/${user}/nixos/homelab/* /etc/nixos && \
+              sudo nix-channel --update && \
+              sudo nixos-rebuild switch && source ~/.zshrc'';
     };
   };
 
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-    btop
-    vim
-    zsh
-    git
-    sabnzbd
-  ];
+  environment.systemPackages = with pkgs; [ btop vim zsh git sabnzbd ];
 
   virtualisation.libvirtd = {
     enable = true;

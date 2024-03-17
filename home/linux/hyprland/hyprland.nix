@@ -29,7 +29,7 @@ in {
         # TODO make this work properly
         "udiskie &" # mount usbs in the background
         "kdeconnect-app"
-        "[workspace 1 silent] wezterm" 
+        "[workspace 1 silent] wezterm"
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] bitwarden"
         "[workspace 3 silent] thunderbird"
@@ -83,7 +83,7 @@ in {
       };
 
       bind = [
-        "$mod, Q, killactive" 
+        "$mod, Q, killactive"
         "$mod, M, exit"
         "$SUPER, SPACE, exec, wofi --show drun" # make it more similar to mac os - shock horror
         "$mod, S, togglesplit, " # split workspace
@@ -120,7 +120,8 @@ in {
         "$mod, right, movewindow, r"
         "$mod, up, movewindow, u"
         "$mod, down, movewindow, d"
-        ''SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
+        ''
+          SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
 
         # locking workspace
         "CTRL + SUPER, Q, exec, rm /tmp/lockscreen.png && screenshot-background && swaylock -i /tmp/lockscreen.png"

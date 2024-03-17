@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: {
   xdg = {
-    
+
     userDirs = {
       enable = true;
       # note that because we don't actually create the directories we need to create Downloads and Pictures directory
@@ -8,7 +8,6 @@
       # TODO make this automatic
       createDirectories = false;
     };
-
 
     mime.enable = true;
 
@@ -33,7 +32,7 @@
         "message/rfc822" = "userapp-Thunderbird-JM5NJ2.desktop";
         "x-scheme-handler/mid" = "userapp-Thunderbird-JM5NJ2.desktop";
         "x-scheme-handler/webcal" = "userapp-Thunderbird-UKANJ2.desktop";
-        "text/calendar" =" userapp-Thunderbird-UKANJ2.desktop";
+        "text/calendar" = " userapp-Thunderbird-UKANJ2.desktop";
         "application/x-extension-ics" = "userapp-Thunderbird-UKANJ2.desktop";
         "x-scheme-handler/webcals" = "userapp-Thunderbird-UKANJ2.desktop";
         "x-scheme-handler/mailto" = "thunderbird.desktop";

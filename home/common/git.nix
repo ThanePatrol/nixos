@@ -1,7 +1,6 @@
 { email, ... }:
 
-let
-  DEFAULT_BRANCH = "main";
+let DEFAULT_BRANCH = "main";
 in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login
   programs.gh = {
@@ -12,9 +11,7 @@ in {
     };
     gitCredentialHelper = {
       enable = true;
-      hosts = [
-        "https://github.com"
-      ];
+      hosts = [ "https://github.com" ];
     };
   };
 
@@ -36,15 +33,8 @@ in {
     };
 
     # global ignores to not include
-    ignores = [ 
-      "**/target/*"
-      "*~"
-      "*.swp"
-      ".DS_Store"
-      "node_modules"
-      ".env"
-      ".envrc"
-    ];
+    ignores =
+      [ "**/target/*" "*~" "*.swp" ".DS_Store" "node_modules" ".env" ".envrc" ];
 
     # git-delta
     # https://github.com/dandavison/delta

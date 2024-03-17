@@ -1,5 +1,4 @@
-{theme, ...}:
-{
+{ theme, ... }: {
   programs.zathura = {
     enable = true;
     options = {

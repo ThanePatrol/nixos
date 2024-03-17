@@ -1,19 +1,21 @@
 { nixpkgs, config, pkgs, lib, isWork, username, ... }:
 
-let 
+let
   isDarwin = true;
-  theme = if builtins.getEnv("THEME") == "" then
+  theme = if builtins.getEnv ("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
-  else 
-    builtins.getEnv("THEME");
-  homeConfig = import ./home/home.nix {inherit isWork isDarwin username theme nixpkgs pkgs config lib; };
+  else
+    builtins.getEnv ("THEME");
+  homeConfig = import ./home/home.nix {
+    inherit isWork isDarwin username theme nixpkgs pkgs config lib;
+  };
 in {
 
   imports = [ <home-manager/nix-darwin> ];
 
-  users.users.${username} = { 
+  users.users.${username} = {
     name = username;
-    home = "/Users/${username}"; 
+    home = "/Users/${username}";
   };
 
   home-manager.users.${username} = homeConfig;
@@ -21,10 +23,8 @@ in {
 
   environment.systemPackages = [ ];
 
-
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "terraform"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "terraform" ];
 
   homebrew = {
     enable = true;
@@ -39,15 +39,8 @@ in {
       "mas" # mac app store cli
     ];
     # mainly used for gui things
-    casks = [
-      "docker"
-      "firefox"
-      "signal"
-      "eclipse-java"
-      "spotify"
-      "vlc"
-      "zotero"
-    ];
+    casks =
+      [ "docker" "firefox" "signal" "eclipse-java" "spotify" "vlc" "zotero" ];
     # mac store apps when there is no cask, requires apple id login
     masApps = { Xcode = 497799835; };
   };
@@ -114,18 +107,18 @@ in {
     "com.apple.ImageCapture".disableHotPlug = true;
     "com.apple.commerce".AutoUpdate = true;
 
-  # TODO when this is fixed, enable it
-   # can't configure shortcuts yet
-   # waiting on https://github.com/LnL7/nix-darwin/issues/185
-   # "com.apple.symbolichotkeys".AppleSymbolicHotKeys = {
-   #   "118" = {
-   #     enabled = true;
-   #       value = {
-   #         parameters = [ 49 18 524288 ];
-   #         type = "standard";
-   #     };
-   #   };
-   # };
+    # TODO when this is fixed, enable it
+    # can't configure shortcuts yet
+    # waiting on https://github.com/LnL7/nix-darwin/issues/185
+    # "com.apple.symbolichotkeys".AppleSymbolicHotKeys = {
+    #   "118" = {
+    #     enabled = true;
+    #       value = {
+    #         parameters = [ 49 18 524288 ];
+    #         type = "standard";
+    #     };
+    #   };
+    # };
   };
 
   # Auto upgrade nix package and the daemon service.

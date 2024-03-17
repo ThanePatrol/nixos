@@ -14,13 +14,13 @@ let
   '';
   wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
-    '';
+  '';
 
   # TODO - consider implementing faster blur  https://github.com/johnae/blur
   take_blurred_screenshot = pkgs.writeShellScriptBin "screenshot-background" ''
     ${pkgs.grim}/bin/grim /tmp/lockscreen.png
     ${pkgs.imagemagick}/bin/convert -filter Gaussian -resize 25% -blur 0x2.5 -resize 400% /tmp/lockscreen.png /tmp/lockscreen.png
-    '';
+  '';
 
 in {
   environment.systemPackages = with pkgs; [
@@ -46,7 +46,7 @@ in {
     bc # cli multiplication
     chafa
     calibre
-    clipman #clipboard manager
+    clipman # clipboard manager
     cliphist
     colord
     cmake
@@ -151,11 +151,9 @@ in {
     zotero # bibliography manager
     zoom-us # wrap
 
-
-
     # TODO - remove these once xournalpp allows for launch without issue 
-  gnome.adwaita-icon-theme
-  shared-mime-info
-  xournalpp
+    gnome.adwaita-icon-theme
+    shared-mime-info
+    xournalpp
   ];
 }

@@ -4,9 +4,6 @@
 let
 
 in {
-  packages = with pkgs; [ 
-    eclipses.eclipse-java
-      eww
-  ];
+  packages = with pkgs; [ eclipses.eclipse-java eww ];
 
 }

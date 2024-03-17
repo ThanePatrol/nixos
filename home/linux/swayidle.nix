@@ -1,23 +1,24 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
-let 
+let
   # return error code if music is playing
-  ifMusicNotPlayingSuspend = pkgs.writeShellScriptBin "if-music-not-playing-suspend" ''
-  is_playing=$(playerctl status)
-  if [ "$is_playing" == "Playing" ]; then
-    exit 1
-  else
-  ${pkgs.systemd}/bin/systemctl suspend
-  fi
-  '';
-in
-{
+  ifMusicNotPlayingSuspend =
+    pkgs.writeShellScriptBin "if-music-not-playing-suspend" ''
+      is_playing=$(playerctl status)
+      if [ "$is_playing" == "Playing" ]; then
+        exit 1
+      else
+      ${pkgs.systemd}/bin/systemctl suspend
+      fi
+    '';
+in {
   services.swayidle = {
     enable = true;
     timeouts = [
       {
         timeout = 295;
-        command = "${pkgs.libnotify}/bin/notify-send 'locking in 5 seconds' -t 5000 -i ";
+        command =
+          "${pkgs.libnotify}/bin/notify-send 'locking in 5 seconds' -t 5000 -i ";
       }
       {
         timeout = 297;
@@ -26,7 +27,7 @@ in
       {
         timeout = 298;
         # Can't use {pkgs.screenshot-background} as the attribute is never found :(
-        command = "screenshot-background"; 
+        command = "screenshot-background";
       }
       {
         timeout = 300;
@@ -39,11 +40,9 @@ in
         command = "${ifMusicNotPlayingSuspend}";
       }
     ];
-    events = [
-      {
-        event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock";
-      }
-    ];
+    events = [{
+      event = "before-sleep";
+      command = "${pkgs.swaylock}/bin/swaylock";
+    }];
   };
 }
