@@ -24,7 +24,7 @@
           config.allowUnfree = true;
         };
 
-      nixosSystem = system: username: isWork: email:
+      nixosDesktopSystem = system: username: isWork: email:
         let pkgs = genPkgs system;
         in nixpkgs.lib.nixosSystem {
           inherit system pkgs;
@@ -38,6 +38,20 @@
             home-manager.nixosModules.home-manager
           ];
 
+        };
+
+      nixosServerSystem = system: username:
+        let pkgs = genPkgs system;
+        in nixpkgs.lib.nixosSystem {
+          inherit system pkgs;
+
+          specialArgs = {
+            customArgs = { inherit system username; };
+          };
+
+          modules = [
+            ./hosts/armisael/configuration.nix
+          ];
         };
 
       darwinSystem = system: username: isWork: email:
@@ -67,7 +81,10 @@
       nixosConfigurations = {
         # main desktop
         ramiel =
-          nixosSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com";
+          nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com";
+
+        # lenovo m710q server
+        armisael = nixosServerSystem "x86_64-linux" "hugh";
       };
     };
 }
