@@ -22,6 +22,13 @@ update-leliel: ## Updates personal macbook
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel
 	darwin-rebuild switch --flake .#leliel
 
-fmt: ## Formats all .nix files
+
+.PHONY: update-leliel
+update-work:
+	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel
+	darwin-rebuild switch --flake .#work
+
+.PHONY: fmt
+fmt:
 	find . -name "*.nix" | xargs nixfmt
 

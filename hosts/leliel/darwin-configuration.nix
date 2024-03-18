@@ -50,7 +50,7 @@ in {
       "anki"
     ];
     # mac store apps when there is no cask, requires apple id login
-    masApps = { Xcode = 497799835; };
+    #masApps = { Xcode = 497799835; };
   };
 
   # tiling window manager
