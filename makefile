@@ -13,9 +13,8 @@ update-armisael:
 
 .PHONY: update-leliel
 update-leliel:
-	sudo -v
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel
-	sudo darwin-rebuild switch --flake .#leliel
+	darwin-rebuild switch --flake .#leliel
 
 .PHONY: fmt
 fmt:
