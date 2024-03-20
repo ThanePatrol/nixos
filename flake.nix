@@ -72,7 +72,8 @@
         # personal M1
         leliel = darwinSystem "aarch64-darwin" "hugh" false
           "mandalidis.hugh@gmail.com";
-        work = darwinSystem "aarch64-darwin" "bytedance" true "hugh.mandalidis@bytedance.com";
+        work = darwinSystem "aarch64-darwin" "bytedance" true
+          "hugh.mandalidis@bytedance.com";
       };
 
       nixosConfigurations = {
