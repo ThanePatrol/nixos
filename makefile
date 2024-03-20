@@ -18,7 +18,7 @@ update-armisael: ## Updates Lenovo homelab
 	sudo nixos-rebuild switch --flake .#armisael
 
 update-leliel: ## Updates personal macbook
-	sudo -v
+	sudo -v # darwin rebuild requies sudo but it needs to be run as the current user so we elevate permissions here - avoiding a prompt later on
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel
 	darwin-rebuild switch --flake .#leliel
 

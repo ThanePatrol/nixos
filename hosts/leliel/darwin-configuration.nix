@@ -39,8 +39,16 @@ in {
       "mas" # mac app store cli
     ];
     # mainly used for gui things
-    casks =
-      [ "docker" "firefox" "signal" "eclipse-java" "spotify" "vlc" "zotero" ];
+    casks = [
+      "docker"
+      "firefox"
+      "signal"
+      "eclipse-java"
+      "spotify"
+      "vlc"
+      "zotero"
+      "anki"
+    ];
     # mac store apps when there is no cask, requires apple id login
     masApps = { Xcode = 497799835; };
   };
