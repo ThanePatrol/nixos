@@ -1,4 +1,4 @@
-{ email, ... }:
+{ email, gitUserName, ... }:
 
 let DEFAULT_BRANCH = "main";
 in {
@@ -18,7 +18,7 @@ in {
   programs.git = {
     enable = true;
 
-    userName = "Hugh Mandalidis";
+    userName = gitUserName; # TODO pass down config in flake
     userEmail = email;
 
     includes = [{ path = "~/.config/git/gitconfig"; }];
@@ -30,6 +30,16 @@ in {
       pull.ff = "only";
       push.autoSetupRemote = true;
       tag.gpgSign = true;
+
+      url = {
+        "ssh://${gitUserName}@xxx:29418/" = {
+          insteadOf = "https://xxx";
+        };
+        "ssh://${gitUserName}@xxx:29418" = {
+          insteadOf = "https://xxx";
+        };
+        "xxx" = { insteadOf = "xxx"; };
+      };
     };
 
     # global ignores to not include

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ gitUserName, ... }:
 
 {
 
@@ -52,6 +52,33 @@
         user = "azureuser";
         identityFile =
           "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
+      };
+
+      "xxx" = {
+        hostname = "xxx";
+        user = gitUserName;
+        port = 29418;
+      };
+
+      "xxx" = {
+        hostname = "xxx";
+        user = gitUserName;
+        port = 29418;
+      };
+
+      "xxx" = {
+        user = gitUserName;
+        extraOptions = { "GSSAPIAuthentication" = "yes"; };
+      };
+      "*" = {
+        extraOptions = {
+
+          "GSSAPIAuthentication" = "yes";
+          "GSSAPIDelegateCredentials" = "no";
+          "StrictHostKeyChecking" = "no";
+          "HostKeyAlgorithms" = "+ssh-rsa";
+          "PubkeyAcceptedKeyTypes" = "+ssh-rsa";
+        };
       };
     };
   };

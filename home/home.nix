@@ -1,4 +1,4 @@
-{ email, isWork, isDarwin, username, theme, nixpkgs, lib, config, pkgs, ... }:
+{ email, isWork, isDarwin, username, theme, lib, pkgs, ... }:
 
 let
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
@@ -9,6 +9,8 @@ let
     commonPkgs.packages ++ macPkgs.packages
   else
     commonPkgs.packages ++ linuxPkgs.packages;
+
+  gitUserName = "hugh.mandalidis";
 
 in {
 
@@ -26,11 +28,11 @@ in {
     (import ./common/btop/btop.nix { inherit theme pkgs; })
     ./common/rclone.nix
     ./common/fonts.nix
-    ./common/ssh.nix
+    (import ./common/ssh.nix { inherit gitUserName; })
     (import ./common/shell/shell.nix {
       inherit isWork isDarwin theme pkgs lib;
     })
-    (import ./common/git.nix { inherit email; })
+    (import ./common/git.nix { inherit email gitUserName; })
     (import ./common/nvim/nvim.nix { inherit pkgs lib theme; })
     (import ./common/tmux.nix { inherit isDarwin theme pkgs; })
     ./common/rust.nix
