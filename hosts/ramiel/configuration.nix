@@ -20,7 +20,6 @@ let
     inherit email isWork isDarwin username nixpkgs pkgs config lib theme;
   };
 
-  #username = "hugh"; #builtins.getEnv "USER"; # TODO Need to export an alternative environment variable as we need to use sudo hence the env will be "root"
   syspackages =
     import ../../system/linux/packages/packages.nix { inherit pkgs; };
   pythonPackages =

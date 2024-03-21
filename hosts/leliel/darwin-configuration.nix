@@ -4,18 +4,16 @@ let
   isWork = customArgs.isWork;
   username = customArgs.username;
   email = customArgs.email;
+  gitUserName = customArgs.gitUserName;
   isDarwin = true;
   theme = if builtins.getEnv ("THEME") == "" then
-    "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
+    "Catppuccin-mocha" 
   else
     builtins.getEnv ("THEME");
   homeConfig = import ../../home/home.nix {
-    inherit email isWork isDarwin username theme nixpkgs pkgs config lib;
+    inherit email isWork isDarwin gitUserName username theme nixpkgs pkgs config lib;
   };
 in {
-
-  imports = [ ];
-
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
@@ -130,10 +128,8 @@ in {
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
   nix.gc.automatic = true;
 
-  # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
 
   # Used for backwards compatibility, please read the changelog before changing.

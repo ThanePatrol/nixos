@@ -1,5 +1,4 @@
 { pkgs, ... }:
-# FIXME - take inputs to read these
 {
 
   services.sonarr = {

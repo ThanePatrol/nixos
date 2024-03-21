@@ -1,12 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{ ... }: {
   xdg = {
 
     userDirs = {
       enable = true;
-      # note that because we don't actually create the directories we need to create Downloads and Pictures directory
-      # ourselves
-      # TODO make this automatic
-      createDirectories = false;
+      createDirectories = true;
     };
 
     mime.enable = true;

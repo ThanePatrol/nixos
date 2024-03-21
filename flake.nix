@@ -24,13 +24,13 @@
           config.allowUnfree = true;
         };
 
-      nixosDesktopSystem = system: username: isWork: email:
+      nixosDesktopSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
         in nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = {
-            customArgs = { inherit system username isWork email; };
+            customArgs = { inherit system username isWork email gitUserName; };
           };
 
           modules = [
@@ -50,14 +50,14 @@
           modules = [ ./hosts/armisael/configuration.nix ];
         };
 
-      darwinSystem = system: username: isWork: email:
+      darwinSystem = system: username: isWork: email: gitUserName:
         let pkgs = genDarwin system;
         in darwin.lib.darwinSystem {
           inherit system pkgs;
 
           specialArgs = {
             unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
-            customArgs = { inherit system username pkgs isWork email; };
+            customArgs = { inherit system username pkgs isWork email gitUserName; };
           };
 
           modules = [
@@ -71,15 +71,16 @@
       darwinConfigurations = {
         # personal M1
         leliel = darwinSystem "aarch64-darwin" "hugh" false
-          "mandalidis.hugh@gmail.com";
+        "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
+        # TikTok M2
         work = darwinSystem "aarch64-darwin" "bytedance" true
-          "hugh.mandalidis@bytedance.com";
+          "hugh.mandalidis@bytedance.com" "hugh.mandalidis";
       };
 
       nixosConfigurations = {
         # main desktop
         ramiel = nixosDesktopSystem "x86_64-linux" "hugh" false
-          "mandalidis.hugh@gmail.com";
+          "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
 
         # lenovo m710q server
         armisael = nixosServerSystem "x86_64-linux" "hugh";

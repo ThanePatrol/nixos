@@ -1,4 +1,4 @@
-{ email, isWork, isDarwin, username, theme, lib, pkgs, ... }:
+{ email, isWork, isDarwin, username, gitUserName, theme, lib, pkgs, ... }:
 
 let
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
@@ -9,8 +9,6 @@ let
     commonPkgs.packages ++ macPkgs.packages
   else
     commonPkgs.packages ++ linuxPkgs.packages;
-
-  gitUserName = "hugh.mandalidis";
 
 in {
 
