@@ -7,11 +7,12 @@ let
   gitUserName = customArgs.gitUserName;
   isDarwin = true;
   theme = if builtins.getEnv ("THEME") == "" then
-    "Catppuccin-mocha" 
+    "Catppuccin-mocha"
   else
     builtins.getEnv ("THEME");
   homeConfig = import ../../home/home.nix {
-    inherit email isWork isDarwin gitUserName username theme nixpkgs pkgs config lib;
+    inherit email isWork isDarwin gitUserName username theme nixpkgs pkgs config
+      lib;
   };
 in {
   users.users.${username} = {

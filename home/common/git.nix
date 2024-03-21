@@ -19,7 +19,7 @@ in {
   programs.git = {
     enable = true;
 
-    userName = gitUserName; 
+    userName = gitUserName;
     userEmail = email;
 
     includes = [{ path = "~/.config/git/gitconfig"; }];

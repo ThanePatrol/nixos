@@ -57,7 +57,9 @@
 
           specialArgs = {
             unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
-            customArgs = { inherit system username pkgs isWork email gitUserName; };
+            customArgs = {
+              inherit system username pkgs isWork email gitUserName;
+            };
           };
 
           modules = [
@@ -70,8 +72,9 @@
     in {
       darwinConfigurations = {
         # personal M1
-        leliel = darwinSystem "aarch64-darwin" "hugh" false
-        "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
+        leliel =
+          darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com"
+          "Hugh Mandalidis";
         # TikTok M2
         work = darwinSystem "aarch64-darwin" "bytedance" true
           "hugh.mandalidis@bytedance.com" "hugh.mandalidis";
