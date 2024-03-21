@@ -1,8 +1,9 @@
-{ email, gitUserName, ... }:
+{ email, gitUserName, theme, ... }:
 
 let DEFAULT_BRANCH = "main";
 in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login
+  # use --with-token arg
   programs.gh = {
     enable = true;
     settings = {
@@ -18,7 +19,7 @@ in {
   programs.git = {
     enable = true;
 
-    userName = gitUserName; # TODO pass down config in flake
+    userName = gitUserName; 
     userEmail = email;
 
     includes = [{ path = "~/.config/git/gitconfig"; }];
@@ -52,7 +53,7 @@ in {
       enable = true;
       options = {
         features = "side-by-side line-numbers";
-        syntax-theme = "base16";
+        syntax-theme = theme;
         delta.navigate = true;
       };
     };

@@ -76,19 +76,3 @@ require('neorg-cfg')
 require('telescope-cfg')
 require('debugger')
 -- require('java') Currently not working
-
--- taken from here to hot reload init.lua, not working to diag TODO
--- https://neovim.discourse.group/t/reload-init-lua-and-all-require-d-scripts/971/18
-
---function _G.ReloadConfig()
---  for name,_ in pairs(package.loaded) do
---    if name:match('^cnull') then
---      package.loaded[name] = nil
---    end
---  end
---
---  dofile(vim.env.MYVIMRC)
---end
---
---vim.api.nvim_set_keymap('n', '<Leader>vs', '<Cmd>lua ReloadConfig()<CR>', { silent = true, noremap = true })
---vim.cmd('command! ReloadConfig lua ReloadConfig()')

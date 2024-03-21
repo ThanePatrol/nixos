@@ -192,7 +192,6 @@
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
 
   ################################[ prompt_char: prompt symbol ]################################
-  # FIXME - make these colors themeable
   # Green prompt symbol if the last command succeeded.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND="#F5C2E7"
   # Red prompt symbol if the last command failed.
@@ -227,7 +226,6 @@
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
-  # TODO - maybe add .nvmrc or  similar
   local anchor_files=(
     .bzr
     .citc
@@ -245,6 +243,7 @@
     .shorten_folder_marker
     .svn
     .terraform
+	.nvmrc
     CVS
     Cargo.toml
     composer.json

@@ -30,7 +30,7 @@ in {
     (import ./common/shell/shell.nix {
       inherit isWork isDarwin theme pkgs lib;
     })
-    (import ./common/git.nix { inherit email gitUserName; })
+    (import ./common/git.nix { inherit email gitUserName theme; })
     (import ./common/nvim/nvim.nix { inherit pkgs lib theme; })
     (import ./common/tmux.nix { inherit isDarwin theme pkgs; })
     ./common/rust.nix
