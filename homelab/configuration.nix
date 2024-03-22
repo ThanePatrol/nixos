@@ -6,7 +6,7 @@
 
 let user = "hugh";
 in {
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
     #./router.nix # TODO - figure out why this doesn't work
 

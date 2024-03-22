@@ -10,6 +10,7 @@ let
   isWork = customArgs.isWork;
   username = customArgs.username;
   email = customArgs.email;
+  gitUserName = customArgs.gitUserName;
 
   theme = if builtins.getEnv ("THEME") == "" then
     "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
@@ -17,7 +18,7 @@ let
     builtins.getEnv ("THEME");
 
   homeConfig = import ../../home/home.nix {
-    inherit email isWork isDarwin username nixpkgs pkgs config lib theme;
+    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib theme;
   };
 
   syspackages =

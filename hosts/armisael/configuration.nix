@@ -11,7 +11,7 @@ in {
     # config to turn the machine into a router
     #./router.nix # TODO - figure out why this doesn't work
   ];
-  
+
   ##########=======CONTENT AGGREGATION==========##########
   services.sonarr = {
     enable = true;
