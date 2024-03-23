@@ -12,7 +12,7 @@ if res ~= nil then
 	operating_system = res:read('a')
 end
 if string.find(operating_system, 'Darwin') then
-	font_size = 12.0
+	font_size = 16.0
 else
 	font_size = 16.0
 end
