@@ -14,7 +14,6 @@ function get_workspaces(){
 			:space-evenly "false"
 EOM
 )
-# TODO - add numbers to workspace!
 	workspaces=$(hyprctl workspaces -j | jq -r '.[].id' | sort)
 	workspace_array=($workspaces)
 	active_workspace="$(get_active_workspace_id)"

@@ -24,6 +24,9 @@ in {
       #emment syntax
       emmet-vim
 
+      # icons!
+      nvim-web-devicons
+
       #autoclose
       nvim-autopairs
 

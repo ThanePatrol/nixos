@@ -75,4 +75,5 @@ require('vim-tmux')
 require('neorg-cfg')
 require('telescope-cfg')
 require('debugger')
+require('icons')
 -- require('java') Currently not working

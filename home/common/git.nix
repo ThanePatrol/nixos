@@ -47,7 +47,6 @@ in {
     ignores =
       [ "**/target/*" "*~" "*.swp" ".DS_Store" "node_modules" ".env" ".envrc" ];
 
-    # git-delta
     # https://github.com/dandavison/delta
     delta = {
       enable = true;

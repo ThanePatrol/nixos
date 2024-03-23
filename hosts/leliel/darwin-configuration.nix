@@ -47,6 +47,7 @@ in {
       "vlc"
       "zotero"
       "anki"
+      "obs"
     ];
     # mac store apps when there is no cask, requires apple id login
     #masApps = { Xcode = 497799835; };

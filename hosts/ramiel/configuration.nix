@@ -18,7 +18,8 @@ let
     builtins.getEnv ("THEME");
 
   homeConfig = import ../../home/home.nix {
-    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib theme;
+    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib
+      theme;
   };
 
   syspackages =
