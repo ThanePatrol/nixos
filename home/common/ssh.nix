@@ -53,23 +53,6 @@
         identityFile =
           "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
       };
-
-      "xxx" = {
-        hostname = "xxx";
-        user = gitUserName;
-        port = 29418;
-      };
-
-      "xxx" = {
-        hostname = "xxx";
-        user = gitUserName;
-        port = 29418;
-      };
-
-      "xxx" = {
-        user = gitUserName;
-        extraOptions = { "GSSAPIAuthentication" = "yes"; };
-      };
       "*" = {
         extraOptions = {
 

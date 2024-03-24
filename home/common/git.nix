@@ -1,9 +1,8 @@
-{ email, gitUserName, theme, ... }:
+{ email, gitUserName, ... }:
 
 let DEFAULT_BRANCH = "main";
 in {
   # set up auth here: https://cli.github.com/manual/gh_auth_login
-  # use --with-token arg
   programs.gh = {
     enable = true;
     settings = {
@@ -19,7 +18,7 @@ in {
   programs.git = {
     enable = true;
 
-    userName = gitUserName;
+    userName = gitUserName; # TODO pass down config in flake4
     userEmail = email;
 
     includes = [{ path = "~/.config/git/gitconfig"; }];
@@ -31,28 +30,19 @@ in {
       pull.ff = "only";
       push.autoSetupRemote = true;
       tag.gpgSign = true;
-
-      url = {
-        "ssh://${gitUserName}@xxx:29418/" = {
-          insteadOf = "https://xxx";
-        };
-        "ssh://${gitUserName}@xxx:29418" = {
-          insteadOf = "https://xxx";
-        };
-        "xxx" = { insteadOf = "xxx"; };
-      };
     };
 
     # global ignores to not include
     ignores =
       [ "**/target/*" "*~" "*.swp" ".DS_Store" "node_modules" ".env" ".envrc" ];
 
+    # git-delta
     # https://github.com/dandavison/delta
     delta = {
       enable = true;
       options = {
         features = "side-by-side line-numbers";
-        syntax-theme = theme;
+        syntax-theme = "base16";
         delta.navigate = true;
       };
     };
