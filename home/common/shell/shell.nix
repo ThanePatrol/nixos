@@ -3,7 +3,7 @@ let
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
   macClean =
-    "nix-collect-garbage && nix-collect-garbage --delete-old && nix-store --optimise";
+    "nix-collect-garbage && nix-collect-garbage --delete-old && nix-store --optimise && nix-store gc";
 
   macExports = ''
     export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH
