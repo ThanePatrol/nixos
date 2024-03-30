@@ -1,4 +1,4 @@
-.PHONY: update-ramiel update-armisael update-leliel update-work fmt
+.PHONY: update-ramiel update-armisael update-leliel update-work flake-update fmt
 
 help: ## Display this screen
 	@echo "Usage: make [target]"
@@ -26,6 +26,9 @@ update-work: ## Updates work macbook
 	sudo -v
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel
 	darwin-rebuild switch --flake .#work
+
+flake-update:
+	nix --extra-experimental-features "nix-command flakes" flake update
 
 fmt:
 	find . -name "*.nix" | xargs nixfmt
