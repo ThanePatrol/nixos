@@ -5,10 +5,6 @@ let
     exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
-  wrappedSpotify = pkgs.writeShellScriptBin "spotify" ''
-    exec ${pkgs.spotify}/bin/spotify --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
-
   wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
     exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -32,7 +28,6 @@ in {
       postBuild = ''
         wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
     })
-    wrappedSpotify
     wrappedChrome
     wrappedZoom
     (take_blurred_screenshot)
