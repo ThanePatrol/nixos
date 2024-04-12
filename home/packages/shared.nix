@@ -10,6 +10,7 @@ in {
     bazelisk # frontend for bazel build tools
     chafa
     cargo-cross # cross compilation for rust
+    cargo-flamegraph # flamegraph tool for many languages
     cmake
     cups
     direnv # https://direnv.net
@@ -29,6 +30,7 @@ in {
     halloy # IRC client
     helix
     hyperledger-fabric
+    hyperfine # cli benchmarking
     lazygit # git tui
     libvirt
     lldb # for rust debugging
