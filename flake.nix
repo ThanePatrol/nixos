@@ -84,7 +84,7 @@
 
           modules = [
             ./hosts/fold5/nix-on-droid.nix
-            home-manager.nixosModules.home-manager
+            home-manager.nixOnDroid.home-manager
           ];
         };
 
