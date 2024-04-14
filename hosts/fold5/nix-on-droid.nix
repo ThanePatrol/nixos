@@ -18,7 +18,12 @@ let
     };
 
 in {
+  # TODO - font + terimnal theme setup
   environment.packages = with pkgs; [
+    gnumake
+    gawk
+    gsed
+    gnugrep
   ];
 
   home-manager.config = homeConfig;
