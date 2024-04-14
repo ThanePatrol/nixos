@@ -18,7 +18,7 @@ let
     };
 
 in {
-  # TODO - font + terimnal theme setup
+  # TODO - font + terminal theme setup
   environment.packages = with pkgs; [
     gnumake
     gawk
@@ -28,7 +28,7 @@ in {
 
   home-manager.config = homeConfig;
 
-  environment.etcBackupExtenion = ".bak";
+  environment.etcBackupExtension = ".bak";
 
   system.stateVersion = "23.11";
 
