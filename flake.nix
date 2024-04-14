@@ -8,10 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, darwinpkgs, ... }@inputs:
-
+  outputs = { self, nixpkgs, darwin, home-manager, darwinpkgs, nix-on-droid, ... }@inputs:
     let
       genPkgs = system:
         import nixpkgs {
@@ -69,6 +73,21 @@
 
         };
 
+      androidSystem = username: isWork: email: gitUserName: 
+        nix-on-droid.lib.nixOnDroidConfiguration {
+          #inherit system pkgs;
+          specalArgs = {
+            customArgs = {
+              inherit isWork email gitUserName;
+            };
+          };
+
+          modules = [
+            ./hosts/fold5/nix-on-droid.nix
+            home-manager.nixosModules.home-manager
+          ];
+        };
+
     in {
       darwinConfigurations = {
         # personal M1
@@ -87,6 +106,10 @@
 
         # lenovo m710q server
         armisael = nixosServerSystem "x86_64-linux" "hugh";
+      };
+
+      androidConfigurations = {
+        fold5 = androidSystem "nix-on-droid" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
       };
     };
 }

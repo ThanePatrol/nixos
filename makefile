@@ -1,4 +1,4 @@
-.PHONY: update-ramiel update-armisael update-leliel update-work flake-update fmt
+.PHONY: update-ramiel update-armisael update-leliel update-work update-fold flake-update fmt
 
 help: ## Display this screen
 	@echo "Usage: make [target]"
@@ -27,9 +27,15 @@ update-work: ## Updates work macbook
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel
 	darwin-rebuild switch --flake .#work
 
-flake-update:
+update-fold: ## Updates Samsung Galaxy fold 5
+	nix build --no-link --impure .#androidConfigurations.fold5.activationPackage
+	# find where the flake has been built then run the activation script
+	$$(nix path-info --impure .#androidConfigurations.fold5.activationPackage)/activate
+
+
+flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update
 
-fmt:
+fmt: ## Formats *.nix files
 	find . -name "*.nix" | xargs nixfmt
 
