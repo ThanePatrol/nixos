@@ -12,7 +12,7 @@ in {
   environment.packages = with pkgs; [
     gnumake
     gawk
-    gsed
+    gnused
     gnugrep
   ];
 
