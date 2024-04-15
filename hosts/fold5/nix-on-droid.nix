@@ -10,8 +10,6 @@ in {
     gawk
     gnused
     gnugrep
-    rustc
-    cargo
     rustup
     cargo-watch
     python3
