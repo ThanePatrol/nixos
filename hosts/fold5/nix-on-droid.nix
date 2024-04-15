@@ -12,10 +12,10 @@ let
   else
     builtins.getEnv ("THEME");
 
-  homeConfig = import ../../home/android-home.nix {
-    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib
-      theme;
-    };
+#  homeConfig = import ../../home/android-home.nix {
+#    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib
+#      theme;
+#    };
 
 in {
   # TODO - font + terminal theme setup
@@ -26,7 +26,7 @@ in {
     gnugrep
   ];
 
-  home-manager.config = homeConfig;
+  #home-manager.config = homeConfig;
 
   environment.etcBackupExtension = ".bak";
 

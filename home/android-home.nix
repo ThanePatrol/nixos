@@ -1,7 +1,11 @@
-{ email, isWork, isDarwin, username, gitUserName, theme, lib, pkgs, ... }:
+{ email, isWork, username, gitUserName, lib, pkgs, ... }:
 
 let
-
+  isDarwin = false;
+  theme = if builtins.getEnv ("THEME") == "" then
+    "Catppuccin-mocha" 
+  else
+    builtins.getEnv ("THEME");
 
 in {
 

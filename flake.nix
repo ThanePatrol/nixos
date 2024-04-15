@@ -10,7 +10,7 @@
     };
 
     nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.11";
+      url = "github:nix-community/nix-on-droid/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -84,7 +84,16 @@
 
           modules = [
             ./hosts/fold5/nix-on-droid.nix
-            home-manager.nixOnDroid.home-manager
+            {
+              home-manager = {
+                config = ./home/android-home.nix;
+                extraSpecialArgs = {
+                  customArgs = {
+                    inherit isWork email gitUserName;
+                  };
+                };
+              };
+            }
           ];
         };
 
