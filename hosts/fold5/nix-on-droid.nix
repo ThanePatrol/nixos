@@ -13,6 +13,8 @@ in {
     rustup
     cargo-watch
     python3
+    direnv
+    coreutils-full
   ];
 
   user.shell = "${pkgs.zsh}/bin/zsh";
