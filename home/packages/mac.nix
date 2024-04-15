@@ -4,9 +4,9 @@
 let
 
 in {
-  packages = with pkgs; [ 
-    darwin.iproute2mac 
-    darwin.libiconv 
+  packages = with pkgs; [
+    darwin.iproute2mac
+    darwin.libiconv
     coreutils-prefixed
   ];
 

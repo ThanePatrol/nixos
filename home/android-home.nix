@@ -8,7 +8,7 @@ let
   gitUserName = customArgs.gitUserName;
 
   theme = if builtins.getEnv ("THEME") == "" then
-    "Catppuccin-mocha" 
+    "Catppuccin-mocha"
   else
     builtins.getEnv ("THEME");
 

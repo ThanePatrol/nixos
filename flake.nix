@@ -15,7 +15,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, darwinpkgs, nix-on-droid, ... }@inputs:
+  outputs = { self, nixpkgs, darwin, home-manager, darwinpkgs, nix-on-droid, ...
+    }@inputs:
     let
       genPkgs = system:
         import nixpkgs {
@@ -73,13 +74,11 @@
 
         };
 
-      androidSystem = username: isWork: email: gitUserName: 
+      androidSystem = username: isWork: email: gitUserName:
         nix-on-droid.lib.nixOnDroidConfiguration {
           #inherit system pkgs;
           extraSpecialArgs = {
-            customArgs = {
-              inherit isWork email gitUserName;
-            };
+            customArgs = { inherit isWork email gitUserName; };
           };
 
           modules = [
@@ -88,9 +87,7 @@
               home-manager = {
                 config = ./home/android-home.nix;
                 extraSpecialArgs = {
-                  customArgs = {
-                    inherit username isWork email gitUserName;
-                  };
+                  customArgs = { inherit username isWork email gitUserName; };
                 };
               };
             }
@@ -118,7 +115,8 @@
       };
 
       androidConfigurations = {
-        fold5 = androidSystem "nix-on-droid" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
+        fold5 = androidSystem "nix-on-droid" false "mandalidis.hugh@gmail.com"
+          "Hugh Mandalidis";
       };
     };
 }
