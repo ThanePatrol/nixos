@@ -2,10 +2,6 @@
 
 let
 
-#  homeConfig = import ../../home/android-home.nix {
-#    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib
-#      theme;
-#    };
 
 in {
   # TODO - font + terminal theme setup
@@ -14,9 +10,18 @@ in {
     gawk
     gnused
     gnugrep
+    rustc
+    cargo
+    rustup
+    cargo-watch
+    python3
   ];
 
-  #home-manager.config = homeConfig;
+  user.shell = "${pkgs.zsh}/bin/zsh";
+
+  terminal = {
+    font = "${pkgs.nerdfonts}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf";
+  };
 
   environment.etcBackupExtension = ".bak";
 
