@@ -89,7 +89,7 @@
                 config = ./home/android-home.nix;
                 extraSpecialArgs = {
                   customArgs = {
-                    inherit isWork email gitUserName;
+                    inherit username isWork email gitUserName;
                   };
                 };
               };
