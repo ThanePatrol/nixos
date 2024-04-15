@@ -2,6 +2,11 @@
 
 let
 
+#  homeConfig = import ../../home/android-home.nix {
+#    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib
+#      theme;
+#    };
+
 in {
   # TODO - font + terminal theme setup
   environment.packages = with pkgs; [
@@ -10,6 +15,8 @@ in {
     gsed
     gnugrep
   ];
+
+  #home-manager.config = homeConfig;
 
   environment.etcBackupExtension = ".bak";
 
