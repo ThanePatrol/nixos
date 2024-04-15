@@ -14,7 +14,7 @@ in {
     cargo-watch
     python3
     direnv
-    coreutils-full
+    findutils
   ];
 
   user.shell = "${pkgs.zsh}/bin/zsh";
