@@ -111,6 +111,8 @@ in {
       #Language servers
       nodePackages.bash-language-server
       lua-language-server
+      
+      luajitPackages.lua-utils-nvim
 
       # todo - figure out why clangd isn't working
       #c/c++
