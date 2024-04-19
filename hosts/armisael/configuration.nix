@@ -12,6 +12,15 @@ in {
     #./router.nix # TODO - figure out why this doesn't work
   ];
 
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+  users.extraGroups.docker.members = [ "${user}"]; 
+
   ##########=======CONTENT AGGREGATION==========##########
   services.sonarr = {
     enable = true;
