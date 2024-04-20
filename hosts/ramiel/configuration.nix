@@ -71,6 +71,9 @@ in {
       ];
   };
 
+  #networking.bridges = { br0 = { interfaces = [ "enp37s0" ]; }; };
+  #networking.interfaces.enp37s0.useDHCP = true;
+
   # Enable networking
   networking.networkmanager.enable = true;
 

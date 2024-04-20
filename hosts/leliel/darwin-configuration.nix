@@ -23,9 +23,7 @@ in {
   home-manager.users.${username} = homeConfig;
   home-manager.useGlobalPkgs = true;
 
-  environment.systemPackages = [ 
-    pkgs.utm
-  ];
+  environment.systemPackages = [ pkgs.utm ];
 
   homebrew = {
     enable = true;

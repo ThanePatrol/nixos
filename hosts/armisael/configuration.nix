@@ -19,7 +19,7 @@ in {
       setSocketVariable = true;
     };
   };
-  users.extraGroups.docker.members = [ "${user}"]; 
+  users.extraGroups.docker.members = [ "${user}" ];
 
   ##########=======CONTENT AGGREGATION==========##########
   services.sonarr = {
