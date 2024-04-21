@@ -24,6 +24,7 @@ in {
     gettext # translations
     go
     gofumpt # formatter
+    gradle_7 # javabuild tool
     gnumake
     gnused
     gzip
