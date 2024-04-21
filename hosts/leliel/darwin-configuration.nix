@@ -23,7 +23,8 @@ in {
   home-manager.users.${username} = homeConfig;
   home-manager.useGlobalPkgs = true;
 
-  environment.systemPackages = [ pkgs.utm ];
+  environment.systemPackages = [ 
+  ];
 
   homebrew = {
     enable = true;
@@ -48,6 +49,8 @@ in {
       "zotero"
       "anki"
       "obs"
+      "utm"
+      "intellij-idea-ce"
     ];
     # mac store apps when there is no cask, requires apple id login
     #masApps = { Xcode = 497799835; };

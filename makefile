@@ -1,4 +1,4 @@
-.PHONY: update-ramiel update-armisael update-leliel update-work update-fold flake-update fmt
+.PHONY: update-ramiel update-armisael update-leliel update-work update-fold flake-update fmt clean
 
 help: ## Display this screen
 	@echo "Usage: make [target]"
@@ -38,4 +38,13 @@ flake-update: ## Updates flake inputs
 
 fmt: ## Formats *.nix files
 	find . -name "*.nix" | xargs nixfmt
+
+clean: ## Runs nix GC and store optimization
+	nix-store --gc --max-jobs auto --log-format bar 
+	nix-store --optimise --max-jobs auto --quiet --log-format bar
+	nix --extra-experimental-features "nix-command" profile wipe-history --older-than 7d
+
+
+
+    #"nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
 
