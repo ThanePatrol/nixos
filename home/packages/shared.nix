@@ -26,7 +26,6 @@ in {
     gofumpt # formatter
     gradle_7 # javabuild tool
     gnumake
-    gnused
     gzip
     halloy # IRC client
     helix
@@ -50,6 +49,7 @@ in {
     #prismlauncher # minecraft!
     pciutils # useful pci utils
     pkg-config # build tools
+    qalculate-qt
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
     rsync

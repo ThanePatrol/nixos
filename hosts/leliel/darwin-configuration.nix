@@ -24,6 +24,7 @@ in {
   home-manager.useGlobalPkgs = true;
 
   environment.systemPackages = [ 
+    pkgs.python311Packages.numpy
   ];
 
   homebrew = {

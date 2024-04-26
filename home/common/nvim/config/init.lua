@@ -71,8 +71,8 @@ require('formatting')
 require('rust')
 require('indent-blankline-config')
 require('vim-tmux')
--- require('pilot') Don't use copilot at work
+require('pilot')
 require('neorg-cfg')
 require('telescope-cfg')
 require('debugger')
-require('java') --Currently not working
+require('java')
