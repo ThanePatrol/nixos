@@ -34,7 +34,7 @@ in {
 
     # global ignores to not include
     ignores =
-      [ "**/target/*" "*~" "*.swp" ".DS_Store" "node_modules" ".env" ".envrc" ];
+      [ "**/target/*" "*~" "*.swp" ".DS_Store" "node_modules" ".env" ".envrc" "bin"];
 
     # git-delta
     # https://github.com/dandavison/delta
