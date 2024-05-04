@@ -61,12 +61,12 @@ in {
       }
     ];
     initExtra = ''
-      eval "$(direnv hook zsh)"
-      
-      # pipe to tmux buffer
-     # function tmux-capture() {
-     #   tmux set-buffer "$(cat)"
-     # }
+       eval "$(direnv hook zsh)"
+       
+       # pipe to tmux buffer
+      # function tmux-capture() {
+      #   tmux set-buffer "$(cat)"
+      # }
     '' + (if isDarwin then macInit else "")
       + (if isWork then workExports else "");
 
