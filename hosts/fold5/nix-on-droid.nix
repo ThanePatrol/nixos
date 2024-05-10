@@ -9,6 +9,7 @@ in {
     gawk
     gnused
     gnugrep
+    neofetch
     rustup
     cargo-watch
     python3
