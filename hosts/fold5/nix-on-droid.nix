@@ -3,7 +3,6 @@
 let
 
 in {
-  # TODO - font + terminal theme setup
   environment.packages = with pkgs; [
     gnumake
     gawk
