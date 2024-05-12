@@ -37,7 +37,14 @@ local function default_lsp_setup(module)
         { on_attach = on_attach, capabilities = capabilities })
 end
 
-default_lsp_setup('bashls')
+nvim_lsp['bashls'].setup({
+	on_attach = on_attach,
+	bashIde = {
+		globPattern = "*@(.sh|.inc|.bash|.command|.tmux)"
+	}
+})
+
+--default_lsp_setup('bashls')
 -- default_lsp_setup("rust_analyzer")
 default_lsp_setup('nil_ls') -- nix
 default_lsp_setup('pyright')
