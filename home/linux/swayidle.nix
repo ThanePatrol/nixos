@@ -37,7 +37,7 @@ in {
         # we don't want to suspend if music is playing
         # we use && to short circuit the command 
         timeout = 600;
-        command = "${ifMusicNotPlayingSuspend}";
+        command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
     events = [{

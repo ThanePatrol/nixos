@@ -23,6 +23,9 @@ config.set_environment_variables = {
 	TERM = "tmux-256color"
 }
 
+-- FIXME - remove once wezterm fixes this
+config.enable_wayland = false
+
 
 config.window_padding = {
   left = 0,

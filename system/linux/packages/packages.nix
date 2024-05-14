@@ -5,9 +5,6 @@ let
     exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
-  wrappedChrome = pkgs.writeShellScriptBin "google-chrome" ''
-    exec ${pkgs.google-chrome}/bin/google-chrome-stable --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
   wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -28,7 +25,6 @@ in {
       postBuild = ''
         wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
     })
-    wrappedChrome
     wrappedZoom
     (take_blurred_screenshot)
     alacritty
@@ -55,7 +51,12 @@ in {
     flex # lexical analysis
     firefox
     gdb
-    google-chrome # wrap
+    (google-chrome.override {
+      commandLineArgs = [
+        "--enable-features=UseOzonePlatform"
+        "--ozone-platform=wayland"
+      ];
+    })
     graphviz
     grim # screenshot
     home-manager

@@ -58,7 +58,7 @@ in {
 
   networking.hostName = "ramiel"; # Define your hostname.
   networking.firewall = {
-    enable = true;
+    enable = false;
     allowedTCPPortRanges = [{
       from = 1714;
       to = 1764;
@@ -169,6 +169,7 @@ in {
       "libvirtd"
       "audio"
       "input"
+      "lp" # for bluetooth
     ];
     shell = pkgs.zsh;
   };
@@ -191,6 +192,7 @@ in {
       setSocketVariable = true;
     };
   };
+  systemd.services.docker.wantedBy = [ "multi-user.target" ];
 
   # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
   programs.dconf.enable = true;
@@ -205,7 +207,6 @@ in {
     virtlogd.enable = true;
   };
 
-  systemd.services.docker.wantedBy = [ "multi-user.target" ];
   services.passSecretService.enable = true;
 
   # This value determines the NixOS release from which the default
