@@ -25,7 +25,7 @@ local on_attach = function(client, bufnr)
          '[W]orkspace [S]ymbols')
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-    --  nmap('g?', vim.lsp.diagnostic.show_line_diagnostics, 'Show error message in floating window')
+    nmap('<leader>g?', vim.lsp.diagnostic.show_line_diagnostics, 'Show error message in floating window')
     -- todo -rest of kickstart on_attach
 end
 
