@@ -61,6 +61,7 @@ in {
     typescript
     texliveFull
     unzip
+    wget
     vim
     zlib
     zip # CLI compression
