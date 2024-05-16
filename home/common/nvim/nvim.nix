@@ -101,6 +101,9 @@ in {
       cmp_luasnip
 
       catppuccin-nvim
+      
+      # browser render of markdown
+      markdown-preview-nvim
 
       # for eww LSP
       yuck-vim

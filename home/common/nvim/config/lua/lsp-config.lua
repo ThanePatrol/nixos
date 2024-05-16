@@ -26,7 +26,6 @@ local on_attach = function(client, bufnr)
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
     nmap('<leader>g?', vim.lsp.diagnostic.show_line_diagnostics, 'Show error message in floating window')
-    -- todo -rest of kickstart on_attach
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
