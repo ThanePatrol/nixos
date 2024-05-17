@@ -18,6 +18,7 @@ in {
     du-dust # better du
     #eww
     flex # lexical analysis
+    fzf # fuzzy find
     ffmpeg-full
     gcc
     geckodriver # webdriver automation
