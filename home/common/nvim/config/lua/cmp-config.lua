@@ -5,7 +5,7 @@ require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
 cmp.setup {
-    snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+    snippet = {expand = function(args) luasnip.lsp_expand(args.body) end},
     mapping = cmp.mapping.preset.insert {
         ['<C-j>'] = cmp.mapping.select_next_item(),
         ['<C-k>'] = cmp.mapping.select_prev_item(),
@@ -14,7 +14,7 @@ cmp.setup {
         ['<C-Space>'] = cmp.mapping.complete {},
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+            select = true
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -24,7 +24,7 @@ cmp.setup {
             else
                 fallback()
             end
-        end, { 'i', 's' }),
+        end, {'i', 's'}),
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
@@ -33,11 +33,11 @@ cmp.setup {
             else
                 fallback()
             end
-        end, { 'i', 's' }),
+        end, {'i', 's'})
     },
     sources = {
-        { name = 'copilot', group_index = 2 },
-        { name = 'nvim_lsp', group_index = 2 },
-        { name = 'luasnip', group_index = 2 },
-    },
+        {name = 'copilot', group_index = 2},
+        {name = 'nvim_lsp', group_index = 2},
+        {name = 'luasnip', group_index = 2}
+    }
 }

@@ -9,7 +9,7 @@ local on_attach = function(client, bufnr)
 
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
-        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+        vim.keymap.set('n', keys, func, {buffer = bufnr, desc = desc})
     end
     nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
@@ -25,25 +25,23 @@ local on_attach = function(client, bufnr)
          '[W]orkspace [S]ymbols')
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-    nmap('<leader>g?', vim.diagnostic.open_float, 'Show error message in floating window')
+    nmap('<leader>g?', vim.diagnostic.open_float,
+         'Show error message in floating window')
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- enable LSPs
 local function default_lsp_setup(module)
-    nvim_lsp[module].setup(
-        { on_attach = on_attach, capabilities = capabilities })
+    nvim_lsp[module].setup({on_attach = on_attach, capabilities = capabilities})
 end
 
 nvim_lsp['bashls'].setup({
-	on_attach = on_attach,
-	bashIde = {
-		globPattern = "*@(.sh|.inc|.bash|.command|.tmux)"
-	}
+    on_attach = on_attach,
+    bashIde = {globPattern = "*@(.sh|.inc|.bash|.command|.tmux)"}
 })
 
---default_lsp_setup('bashls')
+-- default_lsp_setup('bashls')
 -- default_lsp_setup("rust_analyzer")
 default_lsp_setup('nil_ls') -- nix
 default_lsp_setup('pyright')
@@ -54,67 +52,53 @@ default_lsp_setup('ccls') -- c/c++
 default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
 default_lsp_setup('postgres_lsp')
---default_lsp_setup('gopls') -- go
+-- default_lsp_setup('gopls') -- go
 default_lsp_setup('kotlin_language_server')
 
 nvim_lsp.lua_ls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = {'vim'}
-			}
-		}
-	}
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {Lua = {diagnostics = {globals = {'vim'}}}}
 })
 
 require('rust-tools').setup({
-	server = {
-		on_attach = on_attach,
-		capabilities = capabilities,
-		settings = {
-			cargo = {
-				allFeatures = true,
-			},
-			procMacro = {
-				enable = true,
-			},
-			diagnostics = {
-				experimental = { enable = true }
-			},
-		}
-	},
-	tools = {
-        runnables = { use_telescope = true },
+    server = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+            cargo = {allFeatures = true},
+            procMacro = {enable = true},
+            diagnostics = {experimental = {enable = true}}
+        }
+    },
+    tools = {
+        runnables = {use_telescope = true},
         inlay_hints = {
             auto = true,
             show_parameter_hints = false,
             parameter_hints_prefix = '',
-            other_hints_prefix = '',
+            other_hints_prefix = ''
         },
-		reload_workspace_from_cargo_toml = true,
-	}
+        reload_workspace_from_cargo_toml = true
+    }
 })
 
 nvim_lsp.gopls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-	settings = {
-		gopls = {
-			analyses = {
-				unusedparams = true,
-			},
-			staticcheck = true,
-			usePlaceholders = true,
-		},
-	},
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        gopls = {
+            analyses = {unusedparams = true},
+            staticcheck = true,
+            usePlaceholders = true
+        }
+    }
 })
 
 nvim_lsp.tsserver.setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
     on_attach = on_attach,
-	--function(client, bufnr)
+    -- function(client, bufnr)
     --    on_attach(client, bufnr)
 
     --    -- todo, let ESlint handle formatting
@@ -123,24 +107,24 @@ nvim_lsp.tsserver.setup({
     --    ts_utils.setup_client(client)
 
     --    -- todo, add mappings
-    --end,
+    -- end,
     capabilities = capabilities,
     filetypes = {
         'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',
-        'typescriptreact', 'typescript.tsx',
-    },
+        'typescriptreact', 'typescript.tsx'
+    }
 })
 
 nvim_lsp.html.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { 'html', 'rust' },
-    configurationSection = { 'html', 'css', 'javascript' },
-    embeddedLanguages = { css = true, javascript = true },
-    provideFormatter = true,
+    filetypes = {'html', 'rust'},
+    configurationSection = {'html', 'css', 'javascript'},
+    embeddedLanguages = {css = true, javascript = true},
+    provideFormatter = true
 })
 
-nvim_lsp.terraformls.setup({ filetypes = { 'terraform', 'tf', 'hcl' } })
+nvim_lsp.terraformls.setup({filetypes = {'terraform', 'tf', 'hcl'}})
 
-nvim_lsp.glslls.setup{}
+nvim_lsp.glslls.setup {}
 

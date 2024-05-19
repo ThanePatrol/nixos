@@ -104,7 +104,7 @@ in {
       cmp_luasnip
 
       catppuccin-nvim
-      
+
       # browser render of markdown
       markdown-preview-nvim
 

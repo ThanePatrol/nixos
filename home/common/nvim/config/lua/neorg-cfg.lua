@@ -4,9 +4,9 @@ require('neorg').setup({
         ['core.concealer'] = {},
         ['core.dirman'] = {
             config = {
-                workspaces = { notes = '~/notes' },
-                default_workspace = 'notes',
-            },
-        },
-    },
+                workspaces = {notes = '~/notes'},
+                default_workspace = 'notes'
+            }
+        }
+    }
 })

@@ -38,6 +38,7 @@ flake-update: ## Updates flake inputs
 
 fmt: ## Formats *.nix files
 	find . -name "*.nix" | xargs nixfmt
+	find . -name "*.lua" | xargs lua-format -i
 
 clean: ## Runs nix GC and store optimization
 	nix-store --gc --max-jobs auto --log-format bar 

@@ -61,10 +61,10 @@ in {
       }
     ];
     initExtra = ''
-    eval "$(direnv hook zsh)"
-    source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+      eval "$(direnv hook zsh)"
+      source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-    eval "$(${pkgs.fzf}/bin/fzf --zsh)"
+      eval "$(${pkgs.fzf}/bin/fzf --zsh)"
 
 
     '' + (if isDarwin then macInit else "")

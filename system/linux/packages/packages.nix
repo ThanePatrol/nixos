@@ -52,10 +52,8 @@ in {
     firefox
     gdb
     (google-chrome.override {
-      commandLineArgs = [
-        "--enable-features=UseOzonePlatform"
-        "--ozone-platform=wayland"
-      ];
+      commandLineArgs =
+        [ "--enable-features=UseOzonePlatform" "--ozone-platform=wayland" ];
     })
     graphviz
     grim # screenshot
