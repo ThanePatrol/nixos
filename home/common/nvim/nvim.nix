@@ -62,7 +62,7 @@ in {
       #nvim-dap-python
 
       #Note taking
-      neorg
+      #neorg
 
       #Co pilot
       copilot-lua
