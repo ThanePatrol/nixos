@@ -19,6 +19,5 @@ echo "added home-manager unstable channel"
 
 # Additional manaual configuration
 # Docker desktop needs to be launched at least once
-# Missions control needs to spawn desktops 
+# Missions control needs to spawn desktops
 # CHange mission control shortcuts to option + number to go to workspace
-

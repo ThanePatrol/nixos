@@ -57,6 +57,7 @@ in {
     ripgrep # nice and fast grep alternative for large codebases
     rsync
     sphinx # python docs generator
+    shfmt # shell formatter
     terraform # Infra As Code
     terraform-providers.signalfx
     typescript

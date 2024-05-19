@@ -12,4 +12,3 @@ if [ "$CURRENT_DEV" = "$HEADSET" ]; then
 else
 	pactl set-default-sink "$HEADSET"
 fi
-

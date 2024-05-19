@@ -4,7 +4,10 @@
 # at least for the packages i use
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # configure home-brew in path
-(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/"$USER"/.zprofile
+(
+	echo
+	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+) >>/Users/"$USER"/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 echo "installed homebrew"
 
@@ -34,5 +37,5 @@ echo "added home-manager unstable channel"
 # Additional manaual configuration
 #
 # Docker desktop needs to be launched once and signed into
-# Missions control needs to spawn desktops 
+# Missions control needs to spawn desktops
 # CHange mission control shortcuts to option + number to go to workspace

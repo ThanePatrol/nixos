@@ -36,9 +36,10 @@ update-fold: ## Updates Samsung Galaxy fold 5
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update
 
-fmt: ## Formats *.nix files
+fmt: ## Formats nix, lua and shell files
 	find . -name "*.nix" | xargs nixfmt
 	find . -name "*.lua" | xargs lua-format -i
+	find . -name "*.sh"  | xargs shfmt -w
 
 clean: ## Runs nix GC and store optimization
 	nix-store --gc --max-jobs auto --log-format bar 

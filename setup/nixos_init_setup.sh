@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 
 sudo nix-channel --update
@@ -16,4 +15,3 @@ sudo nix-channel --add https://github.com/nix-community/home-manager/archive/mas
 sudo nix-channel --update
 
 echo "added home-manager unstable channel"
-
