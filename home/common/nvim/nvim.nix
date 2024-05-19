@@ -27,6 +27,9 @@ in {
       # icons!
       nvim-web-devicons
 
+      # colour preview in editor
+      nvim-highlight-colors
+
       #autoclose
       nvim-autopairs
 
