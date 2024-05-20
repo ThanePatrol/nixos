@@ -107,10 +107,15 @@ in {
     LC_TIME = "en_AU.UTF-8";
   };
 
-  services.udev.extraRules = ''
+  services.udev = {
+    packages = with pkgs; [
+      via
+    ];
+    extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
     ACTION=="add", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{ID_FS_USAGE}=="filesystem", RUN+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /home/hugh/removable"
-  '';
+    '';
+  };
 
   # Enable clipboard sharing to VM
   services.spice-vdagentd.enable = true;
@@ -118,6 +123,8 @@ in {
   # start bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+
+  hardware.keyboard.qmk.enable = true;
 
   # Enable ssh
   services.openssh.enable = true;

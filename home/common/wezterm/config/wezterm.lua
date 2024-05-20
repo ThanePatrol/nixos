@@ -11,7 +11,7 @@ if res ~= nil then operating_system = res:read('a') end
 if string.find(operating_system, 'Darwin') then
     font_size = 16.0
 else
-    font_size = 16.0
+	font_size = 30.0
 end
 config.font_size = font_size
 
@@ -19,7 +19,7 @@ config.font_size = font_size
 config.set_environment_variables = {TERM = "tmux-256color"}
 
 -- FIXME - remove once wezterm fixes this
-config.enable_wayland = false
+-- config.enable_wayland = false
 
 config.window_padding = {left = 0, right = 0, top = 0, bottom = 0}
 

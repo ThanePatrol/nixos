@@ -86,6 +86,7 @@ in {
     #qemu_full
     qt5.qtwayland
     qt6.qtwayland
+    qmk # keyboard memes
     rofi
     rpi-imager # to add ssid and information into the bootable image
     socat # to establish socket connections
