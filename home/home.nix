@@ -32,7 +32,7 @@ in {
     })
     (import ./common/git.nix { inherit email gitUserName theme; })
     (import ./common/nvim/nvim.nix { inherit pkgs lib theme; })
-    (import ./common/tmux.nix { inherit isDarwin theme pkgs; })
+    (import ./common/tmux.nix { inherit theme pkgs; })
     ./common/rust.nix
     ./common/spotify/spotify.nix
     (import ./common/wezterm/wezterm.nix { inherit pkgs theme; })

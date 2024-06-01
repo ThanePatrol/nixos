@@ -11,7 +11,7 @@ if res ~= nil then operating_system = res:read('a') end
 if string.find(operating_system, 'Darwin') then
     font_size = 16.0
 else
-	font_size = 30.0
+    font_size = 30.0
 end
 config.font_size = font_size
 
