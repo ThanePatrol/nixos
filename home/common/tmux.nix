@@ -46,8 +46,8 @@ in {
       # fixes colors inside neovim
       set -ga terminal-overrides ",*256col*:Tc"
 
-      # copy to clipboard
-      ${copyToClipboard}
+      # Enter search mode immediately
+	  bind-key / copy-mode \; send-key ?
 
       # theming and font fixing
       set -g @catppuccin_no_patched_fonts_theme_enabled on

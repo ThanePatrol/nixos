@@ -42,11 +42,9 @@ fmt: ## Formats nix, lua and shell files
 	find . -name "*.sh"  | xargs shfmt -w
 
 clean: ## Runs nix GC and store optimization
-	nix-store --gc --max-jobs auto --log-format bar 
+	sudo -v
+	sudo nix-collect-garbage -d --quiet --log-format bar | grep --color 'deleted,' # Clean System profiles
+	nix-collect-garbage -d --quiet --log-format bar | grep --color 'deleted,' # Clean user profiles
+	nix-store --gc --max-jobs auto --log-format bar | grep --color 'deleted,'
 	nix-store --optimise --max-jobs auto --quiet --log-format bar
 	nix --extra-experimental-features "nix-command" profile wipe-history --older-than 7d
-
-
-
-    #"nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
-
