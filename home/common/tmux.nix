@@ -38,7 +38,7 @@ in {
             set -ga terminal-overrides ",*256col*:Tc"
 
             # Enter search mode immediately
-      	  bind-key / copy-mode \; send-key ?
+      	    bind-key / copy-mode \; send-key ?
 
             # theming and font fixing
             set -g @catppuccin_no_patched_fonts_theme_enabled on

@@ -75,7 +75,10 @@ in {
       lualine-nvim
 
       #show git changes in gutter
-      vim-gitgutter
+      #vim-gitgutter
+
+      # ide-like git highlighting
+      gitsigns-nvim
 
       #syntax highlighting
       nvim-treesitter.withAllGrammars
