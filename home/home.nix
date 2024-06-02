@@ -11,7 +11,6 @@ let
     commonPkgs.packages ++ linuxPkgs.packages;
 
 in {
-
   home.username = "${username}";
 
   home.homeDirectory =

@@ -67,6 +67,9 @@ in {
       #Co pilot
       copilot-lua
       copilot-cmp
+      
+      # Another AI LSP
+      codeium-nvim
 
       #keybinds
       legendary-nvim
@@ -133,6 +136,9 @@ in {
       nil
       nixpkgs-fmt
 
+      # AI LSP
+      codeium
+
       # kotlin
       kotlin-language-server
 
@@ -177,6 +183,19 @@ in {
     source = ./config;
     recursive = true;
   };
+
+  xdg.configFile."nvim/lua/codeium.lua".text = ''
+  require("codeium").setup({
+    enable_chat = true,
+    tools = {
+      uname = ${pkgs.coreutils}/bin/uname
+      uuidgen = ${pkgs.util-linux}/bin/uuidgen
+      language_server = ${pkgs.codeium}/bin/codeium
+      curl = ${pkgs.curl}/bin/curl
+      gzip = ${pkgs.gzip}/bin/gzip
+    }
+  })
+  '';
 
   xdg.configFile."nvim/lua/java.lua".text = ''
     vim.api.nvim_create_autocmd("FileType", {
