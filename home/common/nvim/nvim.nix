@@ -1,7 +1,18 @@
 { pkgs, lib, theme, ... }:
 with lib;
 let
-  #python-debug = pkgs.python3.withPackages (p: with p; [debugpy]);
+  # FIXME - too slow - try another plugin
+#  nvim-llama = pkgs.vimUtils.buildVimPlugin {
+#    pname = "nvim-llama";
+#    version = "0.0.1";
+#    src = pkgs.fetchFromGitHub {
+#      owner = "jpmcb";
+#      repo = "nvim-llama";
+#      rev = "a1d3d64af5b8f9419128fba5964b463208b01851";
+#      sha256 = "4Nvq0uxQLRjkQgoPbYsAaIPLp84OOXpV51eitj1Ibxs=";
+#    };
+#    meta.homepage = "https://github.com/jpmcb/nvim-llama";
+#  };
 in {
   programs.neovim = {
     enable = true;
@@ -68,8 +79,8 @@ in {
       copilot-lua
       copilot-cmp
       
-      # Another AI LSP
-      codeium-nvim
+      # Locally hosted AI model
+      #nvim-llama
 
       #keybinds
       legendary-nvim
@@ -136,9 +147,6 @@ in {
       nil
       nixpkgs-fmt
 
-      # AI LSP
-      codeium
-
       # kotlin
       kotlin-language-server
 
@@ -183,19 +191,6 @@ in {
     source = ./config;
     recursive = true;
   };
-
-  xdg.configFile."nvim/lua/codeium.lua".text = ''
-  require("codeium").setup({
-    enable_chat = true,
-    tools = {
-      uname = ${pkgs.coreutils}/bin/uname
-      uuidgen = ${pkgs.util-linux}/bin/uuidgen
-      language_server = ${pkgs.codeium}/bin/codeium
-      curl = ${pkgs.curl}/bin/curl
-      gzip = ${pkgs.gzip}/bin/gzip
-    }
-  })
-  '';
 
   xdg.configFile."nvim/lua/java.lua".text = ''
     vim.api.nvim_create_autocmd("FileType", {
