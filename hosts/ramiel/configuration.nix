@@ -24,10 +24,6 @@ let
 
   syspackages =
     import ../../system/linux/packages/packages.nix { inherit pkgs; };
-  pythonPackages =
-    import ../../system/linux/packages/python_packages.nix { inherit pkgs; };
-  languages =
-    import ../../system/linux/packages/languages.nix { inherit pkgs; };
 in {
   imports = [
     ./hardware-configuration.nix
@@ -70,9 +66,6 @@ in {
     } # KDE Connect
       ];
   };
-
-  #networking.bridges = { br0 = { interfaces = [ "enp37s0" ]; }; };
-  #networking.interfaces.enp37s0.useDHCP = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -129,21 +122,7 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  /* hardware.printers = {
-       ensurePrinters = [
-         {
-           name = "Printer"; # hostname of Brother printer
-           location = "Study";
-           deviceUri = "http://10.0.0.117:631";
-           model = ""
-           ppdOptions = {
-             pageSize = "A4";
-           };
-         }
-       ];
-       ensureDefaultPrinter = "Printer";
-     };
-  */
+
   # to allow swaylock to accept a password
   security.pam.services.swaylock = { };
 
@@ -162,7 +141,7 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.users.${username} = homeConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # also defings a bunch of packages to use
+  # Define user account 
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -180,8 +159,7 @@ in {
   };
 
   environment.systemPackages = with pkgs;
-    [ wget kitty pythonPackages ] ++ syspackages.environment.systemPackages
-    ++ languages.environment.systemPackages;
+    [ wget kitty ] ++ syspackages.environment.systemPackages;
 
   environment.pathsToLink = [
     "/share/zsh"
