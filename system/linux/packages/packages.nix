@@ -75,12 +75,14 @@ in {
     cinnamon.nemo # gui file manager
     nettools # cmd line utils like ethtool
     nfs-utils # for nfs drives
+    nodejs
     openrgb # manage rgb devices
     OVMFFull # UEFI firmware for QEMU
     parted # disk partition tool
     pass-secret-service # dbus api for libsecret
     playerctl
     picocom
+    python3
     prismlauncher # minecraft!
     qalculate-gtk # good graphical calculator
     #qemu_full
