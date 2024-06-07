@@ -1,5 +1,4 @@
 local nvim_lsp = require('lspconfig')
-
 local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
@@ -48,7 +47,8 @@ default_lsp_setup('pyright')
 default_lsp_setup('cssls')
 -- default_lsp_setup("html")
 default_lsp_setup('jsonls')
-default_lsp_setup('ccls') -- c/c++
+-- default_lsp_setup('ccls') -- c/c++
+default_lsp_setup('clangd') -- c/c++
 default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
 default_lsp_setup('postgres_lsp')
@@ -98,16 +98,6 @@ nvim_lsp.gopls.setup({
 nvim_lsp.tsserver.setup({
     init_options = require('nvim-lsp-ts-utils').init_options,
     on_attach = on_attach,
-    -- function(client, bufnr)
-    --    on_attach(client, bufnr)
-
-    --    -- todo, let ESlint handle formatting
-    --    local ts_utils = require('nvim-lsp-ts-utils')
-    --    ts_utils.setup({ enable_import_on_completion = true })
-    --    ts_utils.setup_client(client)
-
-    --    -- todo, add mappings
-    -- end,
     capabilities = capabilities,
     filetypes = {
         'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',

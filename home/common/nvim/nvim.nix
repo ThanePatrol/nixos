@@ -111,11 +111,8 @@ in {
       rust-tools-nvim
 
       #c/c++
-      #clangd_extensions-nvim      
-      vim-ccls
+      clangd_extensions-nvim      
 
-      #scala
-      nvim-metals
       #snippets
       luasnip
       cmp_luasnip
@@ -137,12 +134,9 @@ in {
 
       luajitPackages.lua-utils-nvim
 
-      # todo - figure out why clangd isn't working
       #c/c++
       libclang
-      libcxx
-      cmake
-      ccls
+      
       #nix
       nil
       nixpkgs-fmt
@@ -164,10 +158,6 @@ in {
       rust-analyzer
       rustfmt
       rustc
-      #scala
-      metals
-
-      #opengl lsp
 
       # generic sql
       postgres-lsp
