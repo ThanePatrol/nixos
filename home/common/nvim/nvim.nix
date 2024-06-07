@@ -66,7 +66,6 @@ in {
       nvim-dap-virtual-text
       nvim-dap-go
       nvim-dap-ui
-      #nvim-dap-python
 
       #Co pilot
       copilot-lua
@@ -78,9 +77,6 @@ in {
       #status bar
       lualine-nvim
 
-      #show git changes in gutter
-      #vim-gitgutter
-
       # ide-like git highlighting
       gitsigns-nvim
 
@@ -89,10 +85,6 @@ in {
 
       #Completions
       cmp-nvim-lsp
-      cmp-buffer
-      cmp-path
-      cmp-cmdline
-      cmp-nvim-lsp-signature-help
       nvim-cmp
       lspkind-nvim
 
@@ -130,9 +122,6 @@ in {
       #nix
       nil
       nixpkgs-fmt
-
-      # kotlin
-      kotlin-language-server
 
       #python
       pyright

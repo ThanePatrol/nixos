@@ -39,7 +39,6 @@ in {
     ];
     # mainly used for gui things
     casks = [
-      "kicad"
       "docker"
       "firefox"
       "signal"
