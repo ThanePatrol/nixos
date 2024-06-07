@@ -2,17 +2,17 @@
 with lib;
 let
   # FIXME - too slow - try another plugin
-#  nvim-llama = pkgs.vimUtils.buildVimPlugin {
-#    pname = "nvim-llama";
-#    version = "0.0.1";
-#    src = pkgs.fetchFromGitHub {
-#      owner = "jpmcb";
-#      repo = "nvim-llama";
-#      rev = "a1d3d64af5b8f9419128fba5964b463208b01851";
-#      sha256 = "4Nvq0uxQLRjkQgoPbYsAaIPLp84OOXpV51eitj1Ibxs=";
-#    };
-#    meta.homepage = "https://github.com/jpmcb/nvim-llama";
-#  };
+  #  nvim-llama = pkgs.vimUtils.buildVimPlugin {
+  #    pname = "nvim-llama";
+  #    version = "0.0.1";
+  #    src = pkgs.fetchFromGitHub {
+  #      owner = "jpmcb";
+  #      repo = "nvim-llama";
+  #      rev = "a1d3d64af5b8f9419128fba5964b463208b01851";
+  #      sha256 = "4Nvq0uxQLRjkQgoPbYsAaIPLp84OOXpV51eitj1Ibxs=";
+  #    };
+  #    meta.homepage = "https://github.com/jpmcb/nvim-llama";
+  #  };
 in {
   programs.neovim = {
     enable = true;
@@ -27,13 +27,9 @@ in {
 
       # Language specifics
       vim-nix
-      kotlin-vim
 
       # File stuff
       nvim-tree-lua
-
-      #emment syntax
-      emmet-vim
 
       # icons!
       nvim-web-devicons
@@ -72,18 +68,12 @@ in {
       nvim-dap-ui
       #nvim-dap-python
 
-      #Note taking
-      #neorg
-
       #Co pilot
       copilot-lua
       copilot-cmp
-      
+
       # Locally hosted AI model
       #nvim-llama
-
-      #keybinds
-      legendary-nvim
 
       #status bar
       lualine-nvim
@@ -111,7 +101,7 @@ in {
       rust-tools-nvim
 
       #c/c++
-      clangd_extensions-nvim      
+      clangd_extensions-nvim
 
       #snippets
       luasnip
@@ -136,7 +126,7 @@ in {
 
       #c/c++
       libclang
-      
+
       #nix
       nil
       nixpkgs-fmt

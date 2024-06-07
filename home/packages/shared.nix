@@ -58,7 +58,7 @@ in {
     pciutils # useful pci utils
     pkg-config # build tools
     qalculate-qt
-    
+
     qbittorrent
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
@@ -76,7 +76,6 @@ in {
     zip # CLI compression
     zig
     zsh
-  ]; #++ pythonPkgs;
-
+  ]; # ++ pythonPkgs;
 
 }
