@@ -2,11 +2,18 @@
 
 # For packages in home-manager that are common across macos and linux
 let
-
+  #pythonPkgs = with pkgs.python3Packages; [
+  #  matplotlib
+  #  numpy
+  #  scipy 
+  #  pandas 
+  #  requests
+  #];
 in {
   packages = with pkgs; [
     act # github actions locally
     bison
+    bear # for clangd
     bazelisk # frontend for bazel build tools
     chafa
     cargo-cross # cross compilation for rust
@@ -51,7 +58,7 @@ in {
     pciutils # useful pci utils
     pkg-config # build tools
     qalculate-qt
-
+    
     qbittorrent
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
@@ -69,5 +76,7 @@ in {
     zip # CLI compression
     zig
     zsh
-  ];
+  ]; #++ pythonPkgs;
+
+
 }
