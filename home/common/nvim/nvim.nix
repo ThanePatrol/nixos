@@ -40,9 +40,6 @@ in {
       #autoclose
       nvim-autopairs
 
-      # java
-      nvim-jdtls
-
       #awesome file search
       telescope-nvim
 
@@ -144,10 +141,6 @@ in {
       #terraform lsp
       terraform-ls
 
-      #java
-      jdt-language-server
-      jdk17
-
       # go
       gopls
       delve
@@ -160,21 +153,6 @@ in {
     source = ./config;
     recursive = true;
   };
-
-  xdg.configFile."nvim/lua/java.lua".text = ''
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "java",
-      callback = function()
-        local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-        -- vim.lsp.set_log_level('DEBUG')
-        -- local workspace_dir = "/home/jake/.workspace/" .. project_name 
-        local config = {
-          cmd = {'${pkgs.jdt-language-server}/bin/jdtls'},
-        }
-        require("jdtls").start_or_attach(config)
-      end,
-    })
-  '';
 
   # set theme using `theme` variable
   xdg.configFile."nvim/lua/color-theme.lua".text = let

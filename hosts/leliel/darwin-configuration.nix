@@ -51,8 +51,6 @@ in {
       "utm"
       "qbittorrent"
     ];
-    # mac store apps when there is no cask, requires apple id login
-    #masApps = { Xcode = 497799835; };
   };
 
   # tiling window manager
@@ -109,25 +107,11 @@ in {
   system.defaults.CustomUserPreferences = {
     "com.apple.desktopservices" = {
       # Avoid creating .DS_Store files on network or USB volumes
-      # bane of my existence
       DSDontWriteNetworkStores = true;
       DSDontWriteUSBStores = true;
     };
     "com.apple.ImageCapture".disableHotPlug = true;
     "com.apple.commerce".AutoUpdate = true;
-
-    # TODO when this is fixed, enable it
-    # can't configure shortcuts yet
-    # waiting on https://github.com/LnL7/nix-darwin/issues/185
-    # "com.apple.symbolichotkeys".AppleSymbolicHotKeys = {
-    #   "118" = {
-    #     enabled = true;
-    #       value = {
-    #         parameters = [ 49 18 524288 ];
-    #         type = "standard";
-    #     };
-    #   };
-    # };
   };
 
   services.nix-daemon.enable = true;
