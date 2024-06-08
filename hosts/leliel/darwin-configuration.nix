@@ -42,13 +42,10 @@ in {
       "docker"
       "firefox"
       "signal"
-      "eclipse-java"
       "spotify"
       "vlc"
       "zotero"
       "anki"
-      "obs"
-      "utm"
       "qbittorrent"
     ];
   };
