@@ -147,6 +147,9 @@ in {
 
       #latex
       texlab
+
+      # Markdown
+      marksman
     ];
   };
   xdg.configFile.nvim = {

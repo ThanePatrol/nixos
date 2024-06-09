@@ -40,20 +40,14 @@ nvim_lsp['bashls'].setup({
     bashIde = {globPattern = "*@(.sh|.inc|.bash|.command|.tmux)"}
 })
 
--- default_lsp_setup('bashls')
--- default_lsp_setup("rust_analyzer")
 default_lsp_setup('nil_ls') -- nix
 default_lsp_setup('pyright')
 default_lsp_setup('cssls')
--- default_lsp_setup("html")
 default_lsp_setup('jsonls')
--- default_lsp_setup('ccls') -- c/c++
 default_lsp_setup('clangd') -- c/c++
-default_lsp_setup('metals') -- scala
 default_lsp_setup('texlab') -- latex
 default_lsp_setup('postgres_lsp')
--- default_lsp_setup('gopls') -- go
-default_lsp_setup('kotlin_language_server')
+default_lsp_setup('marksman')
 
 nvim_lsp.lua_ls.setup({
     on_attach = on_attach,
