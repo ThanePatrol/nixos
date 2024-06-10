@@ -68,6 +68,29 @@ in {
     };
   };
 
+  networking.wg-quick.interfaces = {
+    "eno" = {
+      # Don't actually care about privateKeyFile
+      # resolves some nix error
+      privateKeyFile = "";
+      # only mount nfs drive if connected to home router
+      postUp = ''
+        home_mac_addr="34:e8:94:3e:f0:e1"
+        function get_ip() {
+          ping -c 4 10.0.0.1
+          # Extract the mac address of arp
+          echo $(arp -a | head -n 1 | grep -io '[a-f0-9:]\{17\}')
+        }  
+        if [[ "$(get_ip)" == "$home_mac_addr" ]]; then
+        sudo mount_nfs -o rw,resvport,auto,noatime,nolock,intr,tcp,actimeo=1800 -v 10.0.0.15:/mnt/samsung4tb/nas /Users/hugh/nfs/
+        fi
+        '';
+        postDown = ''
+          sudo umount /Users/hugh/nfs 
+        '';
+    };
+  };
+
   system.defaults.NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
     "com.apple.swipescrolldirection" = false;

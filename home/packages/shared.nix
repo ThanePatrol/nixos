@@ -65,6 +65,7 @@ in {
     rsync
     sphinx # python docs generator
     shfmt # shell formatter
+    sshfs # mount remote file systems locally with ssh
     terraform # Infra As Code
     terraform-providers.signalfx
     typescript
