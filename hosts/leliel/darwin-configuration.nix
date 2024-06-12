@@ -39,6 +39,7 @@ in {
     ];
     # mainly used for gui things
     casks = [
+      "calibre"
       "docker"
       "firefox"
       "signal"
@@ -84,10 +85,10 @@ in {
         if [[ "$(get_ip)" == "$home_mac_addr" ]]; then
         sudo mount_nfs -o rw,resvport,auto,noatime,nolock,intr,tcp,actimeo=1800 -v 10.0.0.15:/mnt/samsung4tb/nas /Users/hugh/nfs/
         fi
-        '';
-        postDown = ''
-          sudo umount /Users/hugh/nfs 
-        '';
+      '';
+      postDown = ''
+        sudo umount /Users/hugh/nfs 
+      '';
     };
   };
 
