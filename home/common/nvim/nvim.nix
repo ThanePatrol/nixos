@@ -123,7 +123,7 @@ in {
     extraPackages = with pkgs; [
       tree-sitter
       #Language servers
-      nodePackages.bash-language-server
+      bash-language-server
       lua-language-server
 
       luajitPackages.lua-utils-nvim

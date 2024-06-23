@@ -75,7 +75,6 @@ in {
     vim
     zlib
     zip # CLI compression
-    zig
     zsh
   ]; # ++ pythonPkgs;
 
