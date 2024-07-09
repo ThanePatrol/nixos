@@ -4,6 +4,9 @@ local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
+-- for better completion
+vim.o.completeopt = 'menuone,noselect'
+
 cmp.setup {
     snippet = {expand = function(args) luasnip.lsp_expand(args.body) end},
     mapping = cmp.mapping.preset.insert {

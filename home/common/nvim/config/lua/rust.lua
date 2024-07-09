@@ -11,5 +11,7 @@ local opts = {
     }
 }
 
+vim.g.rustfmt_autosave = 1
+
 require('rust-tools').setup(opts)
 
