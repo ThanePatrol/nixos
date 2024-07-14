@@ -37,7 +37,7 @@ in {
       "nvm"
       "mas" # mac app store cli
     ];
-    # mainly used for gui things
+    # mainly used for gui things not packaged by nix
     casks = [
       "calibre"
       "docker"
@@ -48,6 +48,7 @@ in {
       "zotero"
       "anki"
       "qbittorrent"
+      "mullvadvpn"
     ];
   };
 

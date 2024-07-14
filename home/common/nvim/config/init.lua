@@ -24,7 +24,6 @@ vim.wo.signcolumn = 'yes'
 vim.opt.relativenumber = true
 
 require('mappings')
-
 require('color-theme')
 vim.cmd.colorscheme "catppuccin"
 -- Fix colorscheme.
