@@ -43,6 +43,7 @@ in {
       ".env"
       ".envrc"
       "bin"
+      ".direnv"
     ];
 
     # git-delta
