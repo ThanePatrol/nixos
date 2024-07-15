@@ -20,7 +20,6 @@ in {
     cargo-flamegraph # flamegraph tool for many languages
     cmake
     cups
-    direnv # https://direnv.net
     delve # go debugger
     du-dust # better du
     #eww

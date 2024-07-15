@@ -38,11 +38,11 @@
           config.allowUnfree = true;
         };
 
-       # genGolangDevShell = system: go-version: 
-       # system = 
-       # nixpkgs.system.mkShell {
-       #   buildInputs = [ go-version ];
-       # };
+      # genGolangDevShell = system: go-version: 
+      # system = 
+      # nixpkgs.system.mkShell {
+      #   buildInputs = [ go-version ];
+      # };
 
       nixosDesktopSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
@@ -132,41 +132,27 @@
       androidConfigurations = {
         fold5 = androidSystem "nix-on-droid" false "mandalidis.hugh@gmail.com"
           "Hugh Mandalidis";
-        };
+      };
 
-        devShells.aarch64-darwin = {
-          go_1_19 = 
-          let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
-          in
-          pkgs.mkShell {
-            buildInputs = [ 
-              pkgs.go_1_19
-            ];
-          };
-          go_1_18 = 
-          let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
-          in 
-          pkgs.mkShell {
-            buildInputs = [
-              pkgs.go_1_18
-            ];
-          };
-        };
+      devShells.aarch64-darwin = {
+        go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
+        in pkgs.mkShell { buildInputs = [ pkgs.go_1_19 ]; };
+        go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
+        in pkgs.mkShell { buildInputs = [ pkgs.go_1_18 ]; };
+      };
 
+      # golangDevShell = system:
+      #   let 
+      #     pkgs = genPkgs system;
+      #   in
+      #     pkgs.mkShell = {
+      #     name = "golang 1.19 dev shell";
+      #     buildInputs = [ golang_1_19.go_1_19 ];
+      #   };
 
-     # golangDevShell = system:
-     #   let 
-     #     pkgs = genPkgs system;
-     #   in
-     #     pkgs.mkShell = {
-     #     name = "golang 1.19 dev shell";
-     #     buildInputs = [ golang_1_19.go_1_19 ];
-     #   };
-
-
-     # golangDevShells = {
-     #   go1_19 = devShells  { buildInputs = [ golang_1_19.go_1_19 ]; };
-     #   go1_18 = nixpkgs.mkShell { buildInputs = [ golang_1_18.go_1_18 ]; };
-     # };
+      # golangDevShells = {
+      #   go1_19 = devShells  { buildInputs = [ golang_1_19.go_1_19 ]; };
+      #   go1_18 = nixpkgs.mkShell { buildInputs = [ golang_1_18.go_1_18 ]; };
+      # };
     };
 }
