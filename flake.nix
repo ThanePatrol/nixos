@@ -143,6 +143,14 @@
               pkgs.go_1_19
             ];
           };
+          go_1_18 = 
+          let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
+          in 
+          pkgs.mkShell {
+            buildInputs = [
+              pkgs.go_1_18
+            ];
+          };
         };
 
 
