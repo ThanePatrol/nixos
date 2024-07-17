@@ -67,6 +67,22 @@
         "type": "github"
       }
     },
+    "golang_1_22": {
+      "locked": {
+        "lastModified": 1720494119,
+        "narHash": "sha256-IE7PZn9bSjxI4/MugjAEx49oPoxu0uKXdfC+X7HcRuQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "05bbf675397d5366259409139039af8077d695ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "05bbf675397d5366259409139039af8077d695ce",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -279,6 +295,7 @@
         "darwinpkgs": "darwinpkgs",
         "golang_1_18": "golang_1_18",
         "golang_1_19": "golang_1_19",
+        "golang_1_22": "golang_1_22",
         "home-manager": "home-manager",
         "nix-on-droid": "nix-on-droid",
         "nixpkgs": "nixpkgs_2"
