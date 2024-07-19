@@ -32,6 +32,9 @@ update-fold: ## Updates Samsung Galaxy fold 5
 	# find where the flake has been built then run the activation script
 	$$(nix path-info --impure .#androidConfigurations.fold5.activationPackage)/activate
 
+update-remote-work: ## Updates a remote dev workstation
+	nix run --extra-experimental-features "nix-command flakes" home-manager/master -- init --swtich .#ubuntuConfigurations.work-server.activationPackage
+	home-manager switch --flake .#work-server
 
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update

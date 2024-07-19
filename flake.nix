@@ -52,12 +52,21 @@
 =======
       ubuntuRemoteDevSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
-        in nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
+        in home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
           specialArgs = {
             customArgs = { inherit system username isWork email gitUserName; };
           };
-          modules = [ home-manager.nixosModules.home-manager ];
+          modules = [ 
+            {
+              home-manager = {
+                config = ./home/home.nix;
+                extraSpecialArgs = {
+                  customArgs = { inherit username isWork email gitUserName; };
+                };
+              };
+            }
+          ];
         };
 >>>>>>> 14ea745 (feat: more golang dev shell)
       nixosDesktopSystem = system: username: isWork: email: gitUserName:
@@ -163,11 +172,11 @@
 
       devShells.aarch64-darwin = {
         go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_19 go-tools ]; };
+        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_19 go-tools golangci-lint nilaway]; };
         go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_18 go-tools ]; };
+        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint ]; };
         go_1_22 = let pkgs = golang_1_22.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_22 go-tools ]; };
+        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway]; };
       };
 
       # golangDevShell = system:
