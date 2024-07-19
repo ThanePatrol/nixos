@@ -42,33 +42,19 @@
           config.allowUnfree = true;
         };
 
-      # genGolangDevShell = system: go-version: 
-      # system = 
-      # nixpkgs.system.mkShell {
-      #   buildInputs = [ go-version ];
-      # };
-<<<<<<< HEAD
 
-=======
+
       ubuntuRemoteDevSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
         in home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          specialArgs = {
+          pkgs = pkgs;
+          extraSpecialArgs = {
             customArgs = { inherit system username isWork email gitUserName; };
           };
           modules = [ 
-            {
-              home-manager = {
-                config = ./home/home.nix;
-                extraSpecialArgs = {
-                  customArgs = { inherit username isWork email gitUserName; };
-                };
-              };
-            }
+            ./home/home.nix
           ];
         };
->>>>>>> 14ea745 (feat: more golang dev shell)
       nixosDesktopSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
         in nixpkgs.lib.nixosSystem {
@@ -134,6 +120,21 @@
           ];
         };
 
+        makeGolangShell = goVersionPkgs: nixpkgsVersion:
+        
+        let 
+          pkgs = nixpkgsVersion.legacyPackages.aarch64-darwin;
+          commonPkgs = with pkgs; [
+            go-tools
+            golangci-lint
+          ];
+        in 
+        pkgs.mkShell { 
+          buildInputs = with pkgs; [
+            goVersionPkgs 
+          ] ++ commonPkgs; 
+        };
+
     in {
       darwinConfigurations = {
         # personal M1
@@ -152,17 +153,13 @@
 
         # lenovo m710q server
         armisael = nixosServerSystem "x86_64-linux" "hugh";
-<<<<<<< HEAD
-=======
 
       };
 
-      ubuntuConfigurations = {
-
+      homeConfigurations = {
         work-server =
           ubuntuRemoteDevSystem "x86_64-linux" "hugh.mandalidis" true
           "hugh.mandalidis@bytedance.com" "hugh.mandalidis";
->>>>>>> 14ea745 (feat: more golang dev shell)
       };
 
       androidConfigurations = {
@@ -171,26 +168,15 @@
       };
 
       devShells.aarch64-darwin = {
-        go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_19 go-tools golangci-lint nilaway]; };
         go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
         in pkgs.mkShell { buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint ]; };
+        go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
+        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_19 go-tools golangci-lint nilaway]; };
         go_1_22 = let pkgs = golang_1_22.legacyPackages.aarch64-darwin;
         in pkgs.mkShell { buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway]; };
+#        go_1_18 = makeGolangShell [ golang_1_18.go_1_18 ] golang_1_18;
+#        go_1_19 = makeGolangShell [ golang_1_19.go_1_19 ] golang_1_19;
+#        go_1_22 = makeGolangShell [ golang_1_22.go_1_22 golang_1_22.nilaway ] golang_1_22;
       };
-
-      # golangDevShell = system:
-      #   let 
-      #     pkgs = genPkgs system;
-      #   in
-      #     pkgs.mkShell = {
-      #     name = "golang 1.19 dev shell";
-      #     buildInputs = [ golang_1_19.go_1_19 ];
-      #   };
-
-      # golangDevShells = {
-      #   go1_19 = devShells  { buildInputs = [ golang_1_19.go_1_19 ]; };
-      #   go1_18 = nixpkgs.mkShell { buildInputs = [ golang_1_18.go_1_18 ]; };
-      # };
     };
 }
