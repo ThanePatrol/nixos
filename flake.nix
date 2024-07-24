@@ -42,8 +42,6 @@
           config.allowUnfree = true;
         };
 
-
-
       ubuntuRemoteDevSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
         in home-manager.lib.homeManagerConfiguration {
@@ -51,9 +49,7 @@
           extraSpecialArgs = {
             customArgs = { inherit system username isWork email gitUserName; };
           };
-          modules = [ 
-            ./home/home.nix
-          ];
+          modules = [ ./home/home.nix ];
         };
       nixosDesktopSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
@@ -100,10 +96,9 @@
 
         };
 
-        androidSystem = system: username: isWork: email: gitUserName:
+      androidSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
-        in
-        nix-on-droid.lib.nixOnDroidConfiguration {
+        in nix-on-droid.lib.nixOnDroidConfiguration {
           inherit system pkgs;
           extraSpecialArgs = {
             customArgs = { inherit isWork email gitUserName; };
@@ -122,19 +117,13 @@
           ];
         };
 
-        makeGolangShell = goVersionPkgs: nixpkgsVersion:
-        
-        let 
+      makeGolangShell = goVersionPkgs: nixpkgsVersion:
+
+        let
           pkgs = nixpkgsVersion.legacyPackages.aarch64-darwin;
-          commonPkgs = with pkgs; [
-            go-tools
-            golangci-lint
-          ];
-        in 
-        pkgs.mkShell { 
-          buildInputs = with pkgs; [
-            goVersionPkgs 
-          ] ++ commonPkgs; 
+          commonPkgs = with pkgs; [ go-tools golangci-lint ];
+        in pkgs.mkShell {
+          buildInputs = with pkgs; [ goVersionPkgs ] ++ commonPkgs;
         };
 
     in {
@@ -159,26 +148,32 @@
       };
 
       homeConfigurations = {
-        work-server =
-          ubuntuRemoteDevSystem "x86_64-linux" "hugh.mandalidis" true
+        workServer = ubuntuRemoteDevSystem "x86_64-linux" "hugh.mandalidis" true
           "hugh.mandalidis@bytedance.com" "hugh.mandalidis";
       };
 
       androidConfigurations = {
-        fold5 = androidSystem "aarch64-linux" "nix-on-droid" false "mandalidis.hugh@gmail.com"
-          "Hugh Mandalidis";
+        fold5 = androidSystem "aarch64-linux" "nix-on-droid" false
+          "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
       };
 
       devShells.aarch64-darwin = {
         go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint ]; };
+        in pkgs.mkShell {
+          buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint ];
+        };
         go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_19 go-tools golangci-lint nilaway]; };
+        in pkgs.mkShell {
+          buildInputs = with pkgs; [ go_1_19 go-tools golangci-lint nilaway ];
+        };
         go_1_22 = let pkgs = golang_1_22.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell { buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway]; };
-#        go_1_18 = makeGolangShell [ golang_1_18.go_1_18 ] golang_1_18;
-#        go_1_19 = makeGolangShell [ golang_1_19.go_1_19 ] golang_1_19;
-#        go_1_22 = makeGolangShell [ golang_1_22.go_1_22 golang_1_22.nilaway ] golang_1_22;
+        in pkgs.mkShell {
+          buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway ];
+        };
+
+        #        go_1_18 = makeGolangShell [ golang_1_18.go_1_18 ] golang_1_18;
+        #        go_1_19 = makeGolangShell [ golang_1_19.go_1_19 ] golang_1_19;
+        #        go_1_22 = makeGolangShell [ golang_1_22.go_1_22 golang_1_22.nilaway ] golang_1_22;
       };
     };
 }

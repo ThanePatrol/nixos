@@ -84,9 +84,9 @@ nvim_lsp.gopls.setup({
         gopls = {
             analyses = {unusedparams = true},
             staticcheck = true,
-			usePlaceholders = true,
-			-- To use gopls in files with exclusive buildFlags
-			buildFlags = {"-tags=integration,unit"},
+            usePlaceholders = true,
+            -- To use gopls in files with exclusive buildFlags
+            buildFlags = {"-tags=integration,unit"}
         }
     }
 })

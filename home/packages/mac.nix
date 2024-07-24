@@ -8,6 +8,7 @@ in {
     darwin.iproute2mac
     darwin.libiconv
     coreutils-prefixed
+    utm
   ];
 
 }

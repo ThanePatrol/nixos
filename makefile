@@ -34,7 +34,8 @@ update-fold: ## Updates Samsung Galaxy fold 5
 
 update-remote-work: ## Updates a remote dev workstation
 	nix run --extra-experimental-features "nix-command flakes" home-manager/master -- init --swtich .#ubuntuConfigurations.work-server.activationPackage
-	home-manager switch --flake .#work-server
+	home-manager switch --flake .#workServer
+# nix --experimental-features 'flakes nix-command' build .#homeManagerConfigurations.workServer.activationPackage
 
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update
