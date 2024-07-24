@@ -100,9 +100,11 @@
 
         };
 
-      androidSystem = username: isWork: email: gitUserName:
+        androidSystem = system: username: isWork: email: gitUserName:
+        let pkgs = genPkgs system;
+        in
         nix-on-droid.lib.nixOnDroidConfiguration {
-          #inherit system pkgs;
+          inherit system pkgs;
           extraSpecialArgs = {
             customArgs = { inherit isWork email gitUserName; };
           };
@@ -163,7 +165,7 @@
       };
 
       androidConfigurations = {
-        fold5 = androidSystem "nix-on-droid" false "mandalidis.hugh@gmail.com"
+        fold5 = androidSystem "aarch64-linux" "nix-on-droid" false "mandalidis.hugh@gmail.com"
           "Hugh Mandalidis";
       };
 

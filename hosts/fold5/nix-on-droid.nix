@@ -18,6 +18,8 @@ in {
 
   user.shell = "${pkgs.zsh}/bin/zsh";
 
+  android-integration.termux-open.enable = true;
+
   terminal = {
     font =
       "${pkgs.nerdfonts}/share/fonts/truetype/JetBrainsMonoNerdFont-Regular.ttf";
