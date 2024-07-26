@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     darwinpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    darwin.url = "github:LnL7/nix-darwin/master";
+    nix-darwin.url = "github:LnL7/nix-darwin/master";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -26,10 +26,17 @@
       url = "github:nixos/nixpkgs?rev=05bbf675397d5366259409139039af8077d695ce";
     };
 
+    flake-utils.url = "github:numtide/flake-utils";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
+
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager, darwinpkgs, nix-on-droid
-    , golang_1_18, golang_1_19, golang_1_22, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, darwinpkgs, nix-on-droid
+    , golang_1_18, golang_1_19, golang_1_22, rust-overlay, flake-utils, ...
+    }@inputs:
     let
       genPkgs = system:
         import nixpkgs {
@@ -79,7 +86,7 @@
 
       darwinSystem = system: username: isWork: email: gitUserName:
         let pkgs = genDarwin system;
-        in darwin.lib.darwinSystem {
+        in nix-darwin.lib.darwinSystem {
           inherit system pkgs;
 
           specialArgs = {
@@ -126,6 +133,25 @@
           buildInputs = with pkgs; [ goVersionPkgs ] ++ commonPkgs;
         };
 
+      makeRustDevShell = system:
+        let
+          overlays = [ (import rust-overlay) ];
+          pkgs = import nixpkgs { inherit system overlays; };
+          rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile
+            ./shells/rust-toolchain.toml;
+          nativeBuildInputs = with pkgs; [ rustToolchain pkg-config ];
+          buildInputs = with pkgs;
+            [
+              openssl
+            ]
+
+            # needed for linker errors, add others as needed
+            ++ (with darwin.apple_sdk.frameworks; [
+              System
+              SystemConfiguration
+            ]);
+        in pkgs.mkShell { inherit buildInputs nativeBuildInputs; };
+
     in {
       darwinConfigurations = {
         # personal M1
@@ -157,6 +183,8 @@
           "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
       };
 
+      rustStableDevShell = makeRustDevShell "aarch64-darwin";
+
       devShells.aarch64-darwin = {
         go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
         in pkgs.mkShell {
@@ -170,6 +198,16 @@
         in pkgs.mkShell {
           buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway ];
         };
+
+        #   rust-stable = 
+        #   let
+        #     overlays = [ (import rust-overlay) ];
+        #     pkgs = import nixpkgs {
+        #       inherit system overlays;
+        #     };
+        #   in pkgs.mkShell {
+        #     buildInputs = [ pkgs.rust-bin.stable.latest.default ];
+        #   };
 
         #        go_1_18 = makeGolangShell [ golang_1_18.go_1_18 ] golang_1_18;
         #        go_1_19 = makeGolangShell [ golang_1_19.go_1_19 ] golang_1_19;
