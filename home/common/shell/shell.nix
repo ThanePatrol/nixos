@@ -67,10 +67,10 @@ in {
 
       eval "$(${pkgs.fzf}/bin/fzf --zsh)"
 
+      export PATH=$PATH:$HOME/.local/bin
 
     '' + (if isDarwin then macInit else "")
       + (if isWork then workExports else "");
-
   };
 }
 
