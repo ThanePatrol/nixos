@@ -105,8 +105,9 @@
 
       androidSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
-        in nix-on-droid.lib.nixOnDroidConfiguration {
-          inherit system pkgs;
+        in
+        nix-on-droid.lib.nixOnDroidConfiguration {
+          inherit pkgs;
           extraSpecialArgs = {
             customArgs = { inherit isWork email gitUserName; };
           };

@@ -14,6 +14,7 @@ in {
     python3
     direnv
     findutils
+    ripgrep
   ];
 
   user.shell = "${pkgs.zsh}/bin/zsh";
