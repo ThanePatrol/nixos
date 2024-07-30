@@ -71,20 +71,16 @@ in {
 
       #LSP
       nvim-lspconfig
-      nvim-lsp-ts-utils
 
       #debugger
-      nvim-dap
-      nvim-dap-virtual-text
-      nvim-dap-go
-      nvim-dap-ui
+#      nvim-dap
+#      nvim-dap-virtual-text
+#      nvim-dap-go
+#      nvim-dap-ui
 
       #Co pilot
-      copilot-lua
-      copilot-cmp
-
-      # Locally hosted AI model
-      #nvim-llama
+#      copilot-lua
+#      copilot-cmp
 
       #status bar
       lualine-nvim
@@ -98,7 +94,6 @@ in {
       #Completions
       cmp-nvim-lsp
       nvim-cmp
-      lspkind-nvim
 
       #rust
       rust-vim
@@ -122,33 +117,27 @@ in {
 
     extraPackages = with pkgs; [
       tree-sitter
+
       #Language servers
       bash-language-server
       lua-language-server
 
       luajitPackages.lua-utils-nvim
 
-      #c/c++
-      libclang
-
       #nix
       nil
-      nixpkgs-fmt
 
       #python
       pyright
-      #python311Packages.debugpy
-      #       python-debug
       black
+
       #typescript/web
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
-      nodejs_20
-      typescript
+
       #rust
       rust-analyzer
       rustfmt
-      rustc
 
       # generic sql
       postgres-lsp

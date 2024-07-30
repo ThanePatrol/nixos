@@ -43,7 +43,6 @@ in {
     lldb # for rust debugging
     libsecret # for storing passwords
     luaformatter # format lua
-    jdt-language-server
     jq
     jdk
     jupyter-all
@@ -51,13 +50,10 @@ in {
     neofetch
     nixfmt # autoformat nix files
     nomacs # image viewer
-    notcurses # terminal bling
     pandoc # document conversion
     #prismlauncher # minecraft!
     pciutils # useful pci utils
     pkg-config # build tools
-    qalculate-qt
-
     qbittorrent
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
