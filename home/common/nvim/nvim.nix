@@ -73,14 +73,14 @@ in {
       nvim-lspconfig
 
       #debugger
-#      nvim-dap
-#      nvim-dap-virtual-text
-#      nvim-dap-go
-#      nvim-dap-ui
+      #      nvim-dap
+      #      nvim-dap-virtual-text
+      #      nvim-dap-go
+      #      nvim-dap-ui
 
       #Co pilot
-#      copilot-lua
-#      copilot-cmp
+      #      copilot-lua
+      #      copilot-cmp
 
       #status bar
       lualine-nvim

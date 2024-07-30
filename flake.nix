@@ -105,8 +105,7 @@
 
       androidSystem = system: username: isWork: email: gitUserName:
         let pkgs = genPkgs system;
-        in
-        nix-on-droid.lib.nixOnDroidConfiguration {
+        in nix-on-droid.lib.nixOnDroidConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
             customArgs = { inherit isWork email gitUserName; };
@@ -200,19 +199,6 @@
           buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway ];
         };
 
-        #   rust-stable = 
-        #   let
-        #     overlays = [ (import rust-overlay) ];
-        #     pkgs = import nixpkgs {
-        #       inherit system overlays;
-        #     };
-        #   in pkgs.mkShell {
-        #     buildInputs = [ pkgs.rust-bin.stable.latest.default ];
-        #   };
-
-        #        go_1_18 = makeGolangShell [ golang_1_18.go_1_18 ] golang_1_18;
-        #        go_1_19 = makeGolangShell [ golang_1_19.go_1_19 ] golang_1_19;
-        #        go_1_22 = makeGolangShell [ golang_1_22.go_1_22 golang_1_22.nilaway ] golang_1_22;
       };
     };
 }

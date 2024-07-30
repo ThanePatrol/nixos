@@ -38,11 +38,7 @@ in {
       "mas" # mac app store cli
     ];
     # mainly used for gui things not packaged by nix
-    casks = [
-      "docker"
-      "firefox"
-      "spotify"
-    ];
+    casks = [ "docker" "firefox" "spotify" ];
   };
 
   # tiling window manager

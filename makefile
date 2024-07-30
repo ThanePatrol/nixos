@@ -51,4 +51,4 @@ clean: ## Runs nix GC and store optimization
 	nix-collect-garbage -d --quiet --log-format bar | grep --color 'deleted,' # Clean user profiles
 	nix-store --gc --max-jobs auto --log-format bar | grep --color 'deleted,'
 	nix-store --optimise --max-jobs auto --quiet --log-format bar
-	nix --extra-experimental-features "nix-command" profile wipe-history --older-than 7d
+	nix --extra-experimental-features "nix-command" profile wipe-history --older-than 1d
