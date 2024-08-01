@@ -198,7 +198,6 @@
         in pkgs.mkShell {
           buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway ];
         };
-
       };
     };
 }

@@ -99,8 +99,8 @@ in {
       rust-vim
       rust-tools-nvim
 
-      #c/c++
-      clangd_extensions-nvim
+      #typescript 
+      nvim-lsp-ts-utils
 
       #snippets
       luasnip
