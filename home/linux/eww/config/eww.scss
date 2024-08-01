@@ -1,6 +1,8 @@
 * {
 	all: unset;
 	font-family: feather;
+
+	// FIXME - don't want to depend on non-standard nerdfonts that can't be installed directly
 	font-family: DaddyTimeMono NF;
 	font-size: 24px;
 }

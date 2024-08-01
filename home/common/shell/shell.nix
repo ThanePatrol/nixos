@@ -36,7 +36,6 @@ in {
       ls = "ls --color=auto";
       open = (if isDarwin then "open" else "xdg-open");
       cat = "bat";
-      du = "dust";
       clean = (if isDarwin then macClean else linuxClean);
       gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";

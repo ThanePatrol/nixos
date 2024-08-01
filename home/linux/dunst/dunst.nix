@@ -17,6 +17,7 @@
         frame_width = 4;
         separator_color = "frame";
         idle_threshold = 120;
+		# FIXME - don't want to depend on non-standard nerdfonts that can't be installed directly
         font = "DaddyTimeMono NF 16";
         line_height = 0;
         format = ''
