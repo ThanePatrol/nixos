@@ -39,6 +39,7 @@ in {
       clean = (if isDarwin then macClean else linuxClean);
       gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";
+      gbn = "git branch -v | head -n 1 | awk '{print $2}'";
     };
     plugins = [
       {
