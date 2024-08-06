@@ -41,3 +41,5 @@ require('telescope-cfg')
 -- require('debugger')
 require('git-cfg')
 require('precognition-config')
+-- FIXME - setup trouble properly
+require('trouble')

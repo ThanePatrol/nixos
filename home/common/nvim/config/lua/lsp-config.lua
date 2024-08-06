@@ -41,13 +41,13 @@ nvim_lsp['bashls'].setup({
 })
 
 default_lsp_setup('nil_ls') -- nix
-default_lsp_setup('pyright')
-default_lsp_setup('cssls')
-default_lsp_setup('jsonls')
+default_lsp_setup('pyright') -- python
+default_lsp_setup('cssls') -- css
+default_lsp_setup('jsonls') -- json
 default_lsp_setup('clangd') -- c/c++
 default_lsp_setup('texlab') -- latex
 default_lsp_setup('postgres_lsp')
-default_lsp_setup('marksman')
+default_lsp_setup('marksman') -- markdown
 
 nvim_lsp.lua_ls.setup({
     on_attach = on_attach,
