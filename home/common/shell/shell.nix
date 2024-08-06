@@ -40,6 +40,7 @@ in {
       gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";
       gbn = "git branch -v | head -n 1 | awk '{print $2}'";
+      gc = "git commit -m";
     };
     plugins = [
       {
