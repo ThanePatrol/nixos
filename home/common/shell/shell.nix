@@ -41,6 +41,7 @@ in {
       nv = "nvim";
       gbn = "git branch -v | head -n 1 | awk '{print $2}'";
       gc = "git commit -m";
+      gp = "git push";
     };
     plugins = [
       {
