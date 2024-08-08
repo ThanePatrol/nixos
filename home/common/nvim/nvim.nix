@@ -98,6 +98,9 @@ in {
       cmp-nvim-lsp
       nvim-cmp
 
+      # breadcrumbs in status bar
+      nvim-navic
+
       #rust
       rust-vim
       rust-tools-nvim

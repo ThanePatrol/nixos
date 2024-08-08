@@ -1,7 +1,15 @@
+local navic = require('nvim-navic')
 local nvim_lsp = require('lspconfig')
+
 local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
+    end
+
+	-- FIXME not working
+	-- breadcrumb provider
+	if client.server_capabilities.documentSymbolProvider then
+        navic.attach(client, bufnr)
     end
 
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
