@@ -124,14 +124,13 @@
           ];
         };
 
-      makeGolangShell = goVersionPkgs: nixpkgsVersion:
-
-        let
-          pkgs = nixpkgsVersion.legacyPackages.aarch64-darwin;
-          commonPkgs = with pkgs; [ go-tools golangci-lint ];
-        in pkgs.mkShell {
-          buildInputs = with pkgs; [ goVersionPkgs ] ++ commonPkgs;
-        };
+      #makeGolangShell = goVersionPkgs: nixpkgsVersion:
+      #  let
+      #    pkgs = nixpkgsVersion.legacyPackages.aarch64-darwin;
+      #    commonPkgs = with pkgs; [ go-tools golangci-lint ];
+      #  in pkgs.mkShell {
+      #    buildInputs = with pkgs; [ goVersionPkgs ] ++ commonPkgs;
+      #  };
 
       makeRustDevShell = system:
         let

@@ -1,4 +1,5 @@
-{ isWork, isDarwin, theme, pkgs, lib, ... }:
+{isWork, isDarwin, pkgs, ... }:
+
 let
   linuxClean =
     "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";

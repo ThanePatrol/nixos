@@ -26,7 +26,7 @@ vim.opt.relativenumber = true
 require('mappings')
 require('color-theme')
 vim.cmd.colorscheme "catppuccin"
--- Fix colorscheme.
+-- Fixes colorscheme
 vim.opt.termguicolors = true
 require('nvim-tree-config')
 require('autopairs-config')
@@ -41,5 +41,4 @@ require('telescope-cfg')
 -- require('debugger')
 require('git-cfg')
 require('precognition-config')
--- FIXME - setup trouble properly
-require('trouble')
+require('trouble-config')
