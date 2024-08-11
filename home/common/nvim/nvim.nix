@@ -1,28 +1,15 @@
 { pkgs, lib, theme, ... }:
 with lib;
 let
-  # FIXME - too slow - try another plugin
-  #  nvim-llama = pkgs.vimUtils.buildVimPlugin {
-  #    pname = "nvim-llama";
-  #    version = "0.0.1";
-  #    src = pkgs.fetchFromGitHub {
-  #      owner = "jpmcb";
-  #      repo = "nvim-llama";
-  #      rev = "a1d3d64af5b8f9419128fba5964b463208b01851";
-  #      sha256 = "4Nvq0uxQLRjkQgoPbYsAaIPLp84OOXpV51eitj1Ibxs=";
-  #    };
-  #    meta.homepage = "https://github.com/jpmcb/nvim-llama";
-  #  };
-
-  # A package for nvim suggestions
-  precognition = pkgs.vimUtils.buildVimPlugin {
-    pname = "precognition.nvim";
-    version = "1.0.0";
+  # llm plugin
+  gp = pkgs.vimUtils.buildVimPlugin {
+    pname = "gp.nvim";
+    version = "3.8.0";
     src = pkgs.fetchFromGitHub {
-      owner = "tris203";
-      repo = "precognition.nvim";
-      rev = "5255b72c52b1159e9757f50389bde65e05e3bfb1";
-      sha256 = "AqWYV/59ugKyOWALOCdycWVm0bZ7qb981xnuw/mAVzM=";
+      owner = "Robitx";
+      repo = "gp.nvim";
+      rev = "7cc35997581dbfcfa5ac022843e12c04d64c3250";
+      sha256 = "";
     };
   };
 in {
@@ -47,7 +34,7 @@ in {
       nvim-web-devicons
 
       # cmd autosuggestions
-      precognition
+      precognition-nvim
 
       # colour preview in editor
       nvim-highlight-colors
@@ -75,6 +62,8 @@ in {
       # Quick fixes for issues in file
       trouble-nvim
 
+
+
       #debugger
       #      nvim-dap
       #      nvim-dap-virtual-text
@@ -84,6 +73,13 @@ in {
       #Co pilot
       #      copilot-lua
       #      copilot-cmp
+
+      # LLM plugin
+      # TODO - setup
+      #gp
+
+      # format on save
+      guard-nvim
 
       #status bar
       lualine-nvim
@@ -116,6 +112,8 @@ in {
 
       # browser render of markdown
       markdown-preview-nvim
+      # Renders markdown nicely 
+      markview-nvim
 
       # for eww LSP
       yuck-vim

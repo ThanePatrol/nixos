@@ -10,6 +10,7 @@ let
   #];
 in {
   packages = with pkgs; [
+    age # CLI encryption
     cargo-cross # cross compilation for rust
     cargo-flamegraph # flamegraph tool for many languages
     cmake
