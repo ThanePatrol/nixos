@@ -1,11 +1,6 @@
 {isWork, isDarwin, pkgs, ... }:
 
 let
-  linuxClean =
-    "nix-collect-garbage && nix-store --optimise && sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d";
-  macClean =
-    "nix-collect-garbage && nix-collect-garbage --delete-old && nix-store --optimise && nix-store gc";
-
   macExports = ''
     export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$NIX_PATH
   '';
@@ -37,12 +32,13 @@ in {
       ls = "ls --color=auto";
       open = (if isDarwin then "open" else "xdg-open");
       cat = "bat";
-      clean = (if isDarwin then macClean else linuxClean);
       gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";
       gbn = "git branch -v | head -n 1 | awk '{print $2}'";
       gc = "git commit -m";
       gp = "git push";
+      # hack for resetting clipboard when it starts playing up on macos
+      rclip = "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
     };
     plugins = [
       {
