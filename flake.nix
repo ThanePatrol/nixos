@@ -187,15 +187,27 @@
       devShells.aarch64-darwin = {
         go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
         in pkgs.mkShell {
-          buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint golines];
+          buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint golines ];
         };
         go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
         in pkgs.mkShell {
-          buildInputs = with pkgs; [ go_1_19 go-tools golangci-lint nilaway golines];
+          buildInputs = with pkgs; [
+            go_1_19
+            go-tools
+            golangci-lint
+            nilaway
+            golines
+          ];
         };
         go_1_22 = let pkgs = golang_1_22.legacyPackages.aarch64-darwin;
         in pkgs.mkShell {
-          buildInputs = with pkgs; [ go_1_22 go-tools golangci-lint nilaway golines];
+          buildInputs = with pkgs; [
+            go_1_22
+            go-tools
+            golangci-lint
+            nilaway
+            golines
+          ];
         };
       };
     };

@@ -48,3 +48,13 @@ vim.api.nvim_set_keymap('n', '<leader>xL', '<cmd>Trouble loclist toggle<cr>', {s
 vim.api.nvim_set_keymap('n', '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', {silent = true, noremap = true, desc = "Quickfix List (Trouble)"})
 
 -- Trouble.lua end
+
+-- formatter.nvim start
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+augroup("__formatter__", { clear = true })
+autocmd("BufWritePost", {
+	group = "__formatter__",
+	command = ":FormatWrite",
+})
+-- formatter.nvim end

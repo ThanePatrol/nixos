@@ -4,41 +4,39 @@ let
   #pythonPkgs = with pkgs.python3Packages; [
   #  matplotlib
   #  numpy
-  #  scipy 
-  #  pandas 
+  #  scipy
+  #  pandas
   #  requests
   #];
   # FIXME - upstream package
   wsl = pkgs.buildGoModule rec {
-  pname = "wsl";
-  version = "4.4.1";
+    pname = "wsl";
+    version = "4.4.1";
 
-  src = pkgs.fetchFromGitHub {
-    owner = "bombsimon";
-    repo = pname;
-    rev = "v${version}";
-    sha256 = "sha256-QvoJuRQBwm4xx7HzW767Bj/OB2WPA7NnMD1kLZQMfn8=";
+    src = pkgs.fetchFromGitHub {
+      owner = "bombsimon";
+      repo = pname;
+      rev = "v${version}";
+      sha256 = "sha256-QvoJuRQBwm4xx7HzW767Bj/OB2WPA7NnMD1kLZQMfn8=";
 
+    };
+
+    vendorHash = "sha256-cz4nWE0+vOW0j6avZgsiqcSo1zwFOn3I8anZsEB2/IA=";
+
+    meta = with lib; {
+      description = "A golang whitespace linter";
+      homepage = "https://github.com/bombsimon/wsl";
+      license = licenses.mit;
+      #maintainers = with maintainers; [ meain ];
+    };
   };
-
-  vendorHash = "sha256-cz4nWE0+vOW0j6avZgsiqcSo1zwFOn3I8anZsEB2/IA=";
-
-  meta = with lib; {
-    description = "A golang whitespace linter";
-    homepage = "https://github.com/bombsimon/wsl";
-    license = licenses.mit;
-    #maintainers = with maintainers; [ meain ];
-  };
-};
 
 in {
   packages = with pkgs; [
     age # CLI encryption
-    cargo-cross # cross compilation for rust
+    black # python formatter
     cargo-flamegraph # flamegraph tool for many languages
-    cmake
     du-dust # better du
-    #eww
     flex # lexical analysis
     fzf # fuzzy find
     ffmpeg-full
@@ -47,6 +45,7 @@ in {
     gettext # translations
     go
     gofumpt # formatter
+    golines # formatter
     gnumake
     gzip
     lazygit # git tui
@@ -75,7 +74,7 @@ in {
     texliveFull
     unzip
     wget
-    wsl 
+    wsl
     vim
     zlib
     zip # CLI compression

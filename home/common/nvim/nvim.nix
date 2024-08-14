@@ -79,7 +79,7 @@ in {
       #gp
 
       # format on save
-      guard-nvim
+      formatter-nvim
 
       #status bar
       lualine-nvim
