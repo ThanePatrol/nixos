@@ -14,27 +14,10 @@ require("formatter").setup {
             end
         },
 
-        nix = {
-            function()
-                return {
-                    exe = "nixfmt",
-                    --            args = {vim.api.nvim_buf_get_name(0)},
-                    stdin = true
-                }
-            end
-        },
+        nix = {function() return {exe = "nixfmt", stdin = true} end},
 
-        sh = {
-            function()
-                return {
-                    exe = "shfmt",
-                    args = {vim.api.nvim_buf_get_name(0)},
-                    stdin = true
-                }
-            end
-        },
+        sh = {function() return {exe = "shfmt", stdin = true} end},
 
-        -- FIXME double check edge cases + add wsl
         go = {
             function()
                 return {
@@ -48,7 +31,14 @@ require("formatter").setup {
                     args = {"-m", "128", vim.api.nvim_buf_get_name(0)},
                     stdin = true
                 }
-            end -- TODO add wsl when sysin is supported
+            end, function()
+                return {
+                    exe = "wsl",
+                    args = {"-fix", vim.api.nvim_buf_get_name(0)},
+                    stdin = false
+                }
+            end
+            -- TODO add wsl when sysin is supported
         },
 
         py = {function() return {exe = "black", args = {"-"}} end},
