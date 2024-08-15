@@ -31,54 +31,59 @@ let
     };
   };
 
-in {
-  packages = with pkgs; [
-    age # CLI encryption
+  codeFormattersAndLinters = with pkgs; [
     black # python formatter
-    cargo-flamegraph # flamegraph tool for many languages
-    du-dust # better du
-    flex # lexical analysis
-    fzf # fuzzy find
-    ffmpeg-full
-    gcc
-    geckodriver # webdriver automation
-    gettext # translations
-    go
+    prettierd # prettier daemon for web
     gofumpt # formatter
     golines # formatter
-    gnumake
-    gzip
-    lazygit # git tui
-    libvirt
-    libsecret # for storing passwords
-    luaformatter # format lua
-    jq
-    jdk
-    jupyter-all
-    mold # fast linker for llvm
+    wsl # whitespace linter for go
     nixfmt # autoformat nix files
-    nomacs # image viewer
-    pandoc # document conversion
-    #prismlauncher # minecraft!
-    pciutils # useful pci utils
-    pkg-config # build tools
-    qbittorrent
-    rclone # nice simple backup cli for cloud backups
-    ripgrep # nice and fast grep alternative for large codebases
-    rsync
-    sphinx # python docs generator
     shfmt # shell formatter
-    sshfs # mount remote file systems locally with ssh
-    terraform # Infra As Code
-    typescript
-    texliveFull
-    unzip
-    wget
-    wsl
-    vim
-    zlib
-    zip # CLI compression
-    zsh
-  ]; # ++ pythonPkgs;
+    luaformatter # format lua
+    yamlfmt
+  ];
+
+in {
+  packages = with pkgs;
+    [
+      age # CLI encryption
+      cargo-flamegraph # flamegraph tool for many languages
+      du-dust # better du
+      flex # lexical analysis
+      fzf # fuzzy find
+      ffmpeg-full
+      gcc
+      geckodriver # webdriver automation
+      gettext # translations
+      go
+      gnumake
+      gzip
+      lazygit # git tui
+      libvirt
+      libsecret # for storing passwords
+      jq
+      jdk
+      jupyter-all
+      nomacs # image viewer
+      pandoc # document conversion
+      #prismlauncher # minecraft!
+      pciutils # useful pci utils
+      pkg-config # build tools
+      qbittorrent
+      rclone # nice simple backup cli for cloud backups
+      ripgrep # nice and fast grep alternative for large codebases
+      rsync
+      sphinx # python docs generator
+      sshfs # mount remote file systems locally with ssh
+      terraform # Infra As Code
+      typescript
+      texliveFull
+      unzip
+      wget
+      vim
+      zlib
+      zip # CLI compression
+      zsh
+    ] ++ codeFormattersAndLinters;
 
 }
