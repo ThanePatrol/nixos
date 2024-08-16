@@ -3,7 +3,13 @@ local shell_formatter = function()
 end
 
 local python_formatter = function()
-    return {exe = "black", args = {"-"}, stdin = true}
+    return {
+        exe = "black",
+        args = {
+            "--quiet", "--stdin-filename", vim.api.nvim_buf_get_name(0), "-"
+        },
+        stdin = true
+    }
 end
 
 -- FIXME add a startup of prettierd
@@ -27,6 +33,8 @@ require("formatter").setup {
 
         nix = {function() return {exe = "nixfmt", stdin = true} end},
 
+        latex = require("formatter.filetypes.latex").latexindent,
+
         yml = {yaml_formatter},
         yaml = {yaml_formatter},
 
@@ -35,6 +43,10 @@ require("formatter").setup {
         zsh = {shell_formatter},
         tmux = {shell_formatter},
 
+        python = {python_formatter},
+        ipynb = {python_formatter},
+
+        -- FIXME  figure the file types that correspond here
         js = {web_formatter},
         ts = {web_formatter},
         css = {web_formatter},
@@ -55,12 +67,6 @@ require("formatter").setup {
                 }
             end
         },
-
-        -- FIXME  figure out why this is not working
-        py = {function()
-            return {exe = "black", args = {"-"}, stdin = true}
-        end},
-        ipynb = {python_formatter},
 
         ["*"] = {require("formatter.filetypes.any").remove_trailing_whitespace}
     }
