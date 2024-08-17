@@ -19,13 +19,13 @@ update-armisael: ## Updates Lenovo homelab
 
 update-leliel: ## Updates personal macbook
 	sudo -v # darwin rebuild requies sudo but it needs to be run as the current user so we elevate permissions here - avoiding a prompt later on
-	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel
-	darwin-rebuild switch --flake .#leliel
+	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
+	sudo ./leliel-flake-output/activate
 
 update-work: ## Updates work macbook
 	sudo -v
-	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel
-	darwin-rebuild switch --flake .#work
+	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
+	sudo ./work-flake-output/activate
 
 update-fold: ## Updates Samsung Galaxy fold 5
 	nix build --no-link --impure .#androidConfigurations.fold5.activationPackage
@@ -34,8 +34,8 @@ update-fold: ## Updates Samsung Galaxy fold 5
 
 update-remote-work: ## Updates a remote dev workstation
 	nix run --extra-experimental-features "nix-command flakes" home-manager/master -- init --swtich .#ubuntuConfigurations.work-server.activationPackage
-	home-manager switch --flake .#workServer
-# nix --experimental-features 'flakes nix-command' build .#homeManagerConfigurations.workServer.activationPackage
+	#home-manager switch --flake .#workServer
+	sudo ./result/activate
 
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update
