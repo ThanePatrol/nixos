@@ -51,7 +51,6 @@ in {
             bind-key -T copy-mode y send-keys -X copy-pipe-and-cancel
             bind-key -T copy-mode Y send-keys -X copy-pipe
 
-
             set-option -g renumber-windows on
 
             # set theme

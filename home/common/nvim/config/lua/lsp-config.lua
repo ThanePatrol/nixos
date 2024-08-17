@@ -6,9 +6,9 @@ local on_attach = function(client, bufnr)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
 
-	-- FIXME not working
-	-- breadcrumb provider
-	if client.server_capabilities.documentSymbolProvider then
+    -- FIXME not working
+    -- breadcrumb provider
+    if client.server_capabilities.documentSymbolProvider then
         navic.attach(client, bufnr)
     end
 

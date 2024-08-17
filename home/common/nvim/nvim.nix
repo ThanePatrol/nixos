@@ -62,8 +62,6 @@ in {
       # Quick fixes for issues in file
       trouble-nvim
 
-
-
       #debugger
       #      nvim-dap
       #      nvim-dap-virtual-text

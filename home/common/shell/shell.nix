@@ -1,4 +1,4 @@
-{isWork, isDarwin, pkgs, ... }:
+{ isWork, isDarwin, pkgs, ... }:
 
 let
   macExports = ''
@@ -38,9 +38,11 @@ in {
       gc = "git commit -m";
       gp = "git push";
       # hack for resetting clipboard when it starts playing up on macos
-      rclip = "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
+      rclip =
+        "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
       # TODO make portable for linux
-      unix-to-date = ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
+      unix-to-date =
+        ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
     };
     plugins = [
       {

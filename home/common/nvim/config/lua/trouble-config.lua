@@ -1,5 +1,2 @@
-require('trouble').setup({
-	opts = {},
-	cmd = "Trouble",
-})
+require('trouble').setup({opts = {}, cmd = "Trouble"})
 
