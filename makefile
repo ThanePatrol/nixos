@@ -9,7 +9,7 @@ help: ## Display this screen
 update-ramiel: ## Updates nixos desktop
 	sudo -v # Build can take a while and we need root to apply the flake
 	nix build .#nixosConfigurations.ramiel.config.system.build.toplevel
-	sudo nixos-rebuild switch --flake .#ramiel	
+	sudo nixos-rebuild switch --flake .#ramiel
 
 
 update-armisael: ## Updates Lenovo homelab
