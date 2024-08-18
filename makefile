@@ -18,14 +18,15 @@ update-armisael: ## Updates Lenovo homelab
 	sudo nixos-rebuild switch --flake .#armisael
 
 update-leliel: ## Updates personal macbook
-	sudo -v # darwin rebuild requies sudo but it needs to be run as the current user so we elevate permissions here - avoiding a prompt later on
+#	sudo -v # darwin rebuild requies sudo but it needs to be run as the current user so we elevate permissions here - avoiding a prompt later on
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
-	sudo ./leliel-flake-output/activate
+	#./leliel-flake-output/sw/bin/darwin-rebuild switch --flake .#leliel
+	darwin-rebuild switch --flake .#leliel
 
 update-work: ## Updates work macbook
-	sudo -v
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
-	sudo ./work-flake-output/activate
+	#./work-flake-output/sw/bin/darwin-rebuild switch --flake .#work
+	darwin-rebuild switch --flake .#work
 
 update-fold: ## Updates Samsung Galaxy fold 5
 	nix build --no-link --impure .#androidConfigurations.fold5.activationPackage

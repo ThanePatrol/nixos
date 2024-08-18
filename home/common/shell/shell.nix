@@ -6,8 +6,6 @@ let
   '';
 
   macInit = ''
-    export NVM_DIR=~/.nvm
-    source $(brew --prefix nvm)/nvm.sh
     export LIBRARY_PATH=$HOME/.nix-profile/lib:$LIBRARY_PATH
     export PATH=${pkgs.gnused}/bin:$PATH
   '';
@@ -76,4 +74,3 @@ in {
       + (if isWork then workExports else "");
   };
 }
-

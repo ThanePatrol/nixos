@@ -34,11 +34,10 @@ in {
 
     # mainly used for cmd line tools not packaged by nix
     brews = [
-      "nvm"
       "mas" # mac app store cli
     ];
     # mainly used for gui things not packaged by nix
-    casks = [ "docker" "firefox" "spotify" ];
+    casks = [ "docker" "firefox" "google-chrome" "spotify" "qmk-toolbox" ];
   };
 
   # tiling window manager

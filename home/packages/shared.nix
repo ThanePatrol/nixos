@@ -58,12 +58,12 @@ in {
       go
       gnumake
       gzip
-      lazygit # git tui
-      libvirt
-      libsecret # for storing passwords
       jq
       jdk
       jupyter-all
+      lazygit # git tui
+      libvirt
+      libsecret # for storing passwords
       nomacs # image viewer
       pandoc # document conversion
       #prismlauncher # minecraft!
@@ -79,7 +79,6 @@ in {
       typescript
       texliveFull
       unzip
-      wget
       vim
       zlib
       zip # CLI compression
