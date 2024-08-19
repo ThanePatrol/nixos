@@ -1,6 +1,53 @@
 local navic = require('nvim-navic')
 local nvim_lsp = require('lspconfig')
 
+function dump(o)
+    if type(o) == 'table' then
+        local s = '{ '
+        for k, v in pairs(o) do
+            if type(k) ~= 'number' then k = '"' .. k .. '"' end
+            s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+        end
+        return s .. '} '
+    else
+        return tostring(o)
+    end
+end
+
+local function refactor_functions_and_logging()
+    local curr_name = vim.fn.expand("<cword>")
+    local new_name = vim.fn.input("New name: ", curr_name)
+
+    if not new_name or #new_name == 0 or new_name == curr_name then
+        return -- Do nothing if the name is not changed
+    end
+
+    vim.lsp.buf.rename(new_name)
+
+    -- Get current filetypes
+    local curr_filetype = vim.bo.filetype
+    local file_extension = vim.fn.expand("%:e")
+
+    -- FIXME do something like below
+    -- Basically loop through all open buffers, apply the changes to the open files then apply changes to saved files
+    -- prevents changing files that have an open buffers
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) then
+            print(vim.api.nvim_buf_get_name(buf))
+        end
+    end
+
+    local files = vim.api.nvim_list_bufs()
+    print(dump(files))
+
+    local cmd = string.format(
+                    "rg --files-with-matches --type %s --glob '*.%s' '%s' | xargs sed -i '' 's/\\[%s\\]/\\[%s\\]/g'",
+                    curr_filetype, file_extension, curr_name, curr_name,
+                    new_name)
+    -- print(cmd)
+    -- os.execute(cmd)
+end
+
 local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
@@ -18,7 +65,8 @@ local on_attach = function(client, bufnr)
         if desc then desc = 'LSP: ' .. desc end
         vim.keymap.set('n', keys, func, {buffer = bufnr, desc = desc})
     end
-    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+
+    nmap('<leader>rn', refactor_functions_and_logging, '[R]e[n]ame')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
     nmap('<leader>gr', require('telescope.builtin').lsp_references,
@@ -121,4 +169,3 @@ nvim_lsp.html.setup({
 nvim_lsp.terraformls.setup({filetypes = {'terraform', 'tf', 'hcl'}})
 
 nvim_lsp.glslls.setup {}
-
