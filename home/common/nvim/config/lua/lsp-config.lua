@@ -178,6 +178,7 @@ default_lsp_setup('clangd') -- c/c++
 default_lsp_setup('texlab') -- latex
 default_lsp_setup('postgres_lsp')
 default_lsp_setup('marksman') -- markdown
+default_lsp_setup('thriftls')
 
 nvim_lsp.lua_ls.setup({
     on_attach = on_attach,

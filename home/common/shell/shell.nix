@@ -22,6 +22,8 @@ in {
       export EDITOR="nvim"
     '' + (if isDarwin then macExports else "");
 
+    defaultKeymap = "vicmd";
+
     shellAliases = {
       ".." = "cd ..";
       "..." = "cd ../..";
@@ -41,6 +43,7 @@ in {
       # TODO make portable for linux
       unix-to-date =
         ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
+      genpw = "tr -dc A-Za-z0-9 </dev/urandom | head -c 30 | tee >(pbcopy)";
     };
     plugins = [
       {

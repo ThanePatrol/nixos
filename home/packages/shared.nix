@@ -64,7 +64,9 @@ in {
       lazygit # git tui
       libvirt
       libsecret # for storing passwords
+      libsixel
       nomacs # image viewer
+      ollama
       pandoc # document conversion
       #prismlauncher # minecraft!
       pciutils # useful pci utils
@@ -78,6 +80,7 @@ in {
       terraform # Infra As Code
       typescript
       texliveFull
+      #ueberzugpp # images in terminal
       unzip
       vim
       zlib

@@ -1,6 +1,33 @@
 { pkgs, lib, theme, ... }:
 with lib;
 let
+  # TODO - upstream
+  thrift-ls = pkgs.buildGoModule rec {
+    pname = "thriftls";
+    version = "0.2.0";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "joyme123";
+      repo = pname;
+      rev = "v${version}";
+      sha256 = "sha256-Qib/xbTQiR0VpHsCOt5HGkbytaQ0GSCqaHVYFNPYGVs=";
+
+    };
+
+    vendorHash = "sha256-YoZ2dku84065Ygh9XU6dOwmCkuwX0r8a0Oo8c1HPsS4=";
+
+    postInstall = ''
+      mv $out/bin/thrift-ls $out/bin/thriftls
+    '';
+
+    meta = with lib; {
+      description = "A thrift language server";
+      homepage = "https://github.com/joyme123/thrift-ls";
+      #license = licenses.apache2;
+      #maintainers = with maintainers; [ meain ];
+    };
+  };
+
   # llm plugin
   gp = pkgs.vimUtils.buildVimPlugin {
     pname = "gp.nvim";
@@ -78,6 +105,9 @@ in {
 
       # format on save
       formatter-nvim
+
+      # Images in nvim
+      #image-nvim
 
       #status bar
       lualine-nvim
@@ -157,7 +187,13 @@ in {
       # Markdown
       marksman
 
+      thrift-ls
+
+      # image support
+      #     imagemagick
+
     ];
+    #    extraLuaPackages = ps: [ ps.magick];
   };
   xdg.configFile.nvim = {
     source = ./config;
