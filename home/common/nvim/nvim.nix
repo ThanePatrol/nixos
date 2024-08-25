@@ -34,7 +34,7 @@ in {
       nvim-web-devicons
 
       # cmd autosuggestions
-      precognition-nvim
+      #precognition-nvim
 
       # colour preview in editor
       nvim-highlight-colors
@@ -99,7 +99,7 @@ in {
       rust-vim
       rust-tools-nvim
 
-      #typescript 
+      #typescript
       nvim-lsp-ts-utils
 
       #snippets
@@ -110,7 +110,7 @@ in {
 
       # browser render of markdown
       markdown-preview-nvim
-      # Renders markdown nicely 
+      # Renders markdown nicely
       markview-nvim
 
       # for eww LSP
@@ -156,6 +156,7 @@ in {
 
       # Markdown
       marksman
+
     ];
   };
   xdg.configFile.nvim = {

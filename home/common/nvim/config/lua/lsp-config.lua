@@ -14,13 +14,80 @@ function dump(o)
     end
 end
 
+local function save_to_file(file_name, to_save)
+    str = dump(to_save)
+    local file = io.open(file_name, "w")
+    file:write(str)
+    file:close()
+end
+
+local function save_references_to_table()
+    local references = {}
+
+    local function on_list(options)
+        for _, item in pairs(options.items) do
+            table.insert(references, item)
+        end
+    end
+
+    vim.lsp.buf.references(nil, {on_list = on_list})
+
+    return references
+end
+
+local function capture_references()
+    local params = vim.lsp.util.make_position_params()
+
+    -- Table to store filenames
+    local filenames = {}
+
+    -- Custom handler to capture filenames
+    local function references_handler(err, result, ctx, config)
+        if err then
+            vim.notify(err.message, vim.log.levels.WARN)
+            return
+        end
+        if result then
+            for _, ref in ipairs(result) do
+                local uri = ref.uri
+                local filename = vim.uri_to_fname(uri)
+                table.insert(filenames, filename)
+            end
+        end
+        save_to_file("/tmp/filesss", filenames)
+        -- Output or use the filenames table as needed
+        print(vim.inspect(filenames))
+    end
+
+    -- Request references with custom handler
+    vim.lsp
+        .buf_request(0, 'textDocument/references', params, references_handler)
+end
+
 local function refactor_functions_and_logging()
     local curr_name = vim.fn.expand("<cword>")
     local new_name = vim.fn.input("New name: ", curr_name)
 
+    -- local files = save_references_to_table()
+    -- save_to_file("/tmp/filesss", files)
+    -- capture_references()
+
     if not new_name or #new_name == 0 or new_name == curr_name then
         return -- Do nothing if the name is not changed
     end
+
+    -- 	local original_handler = vim.lsp.handlers["textDocument/rename"]
+    -- 	vim.lsp.handlers["textDocument/rename"] = function (err, result, ctx, config)
+    -- 		if original_handler then
+    -- 			original_handler(err, result, ctx, config)
+    -- 		end
+    --
+    --
+    -- 	end
+    --
+    -- 	vim.lsp.handlers["textDocument/rename"] = vim.lsp.with(
+    -- 		vim.lsp.diagnostic.
+    -- 	)
 
     vim.lsp.buf.rename(new_name)
 
@@ -31,19 +98,26 @@ local function refactor_functions_and_logging()
     -- FIXME do something like below
     -- Basically loop through all open buffers, apply the changes to the open files then apply changes to saved files
     -- prevents changing files that have an open buffers
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if vim.api.nvim_buf_is_loaded(buf) then
-            print(vim.api.nvim_buf_get_name(buf))
-        end
-    end
+    -- for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    --     if vim.api.nvim_buf_is_loaded(buf) then
+    --         local file_str = tostring(vim.api.nvim_buf_get_name(buf))
+    --         print(file_str)
+    --         local regex = "/"
+    --         local file_st = file_str:gsub(regex, "-")
+    --         local file_name = "/tmp/"
+    --         file_name = file_name .. file_st
+    --         print(file_name)
+    --         save_to_file(file_name, buf)
+    --     end
+    -- end
 
-    local files = vim.api.nvim_list_bufs()
-    print(dump(files))
+    -- local files = vim.api.nvim_list_bufs()
+    -- print(dump(files))
 
-    local cmd = string.format(
-                    "rg --files-with-matches --type %s --glob '*.%s' '%s' | xargs sed -i '' 's/\\[%s\\]/\\[%s\\]/g'",
-                    curr_filetype, file_extension, curr_name, curr_name,
-                    new_name)
+    -- local cmd = string.format(
+    --                 "rg --files-with-matches --type %s --glob '*.%s' '%s' | xargs sed -i '' 's/\\[%s\\]/\\[%s\\]/g'",
+    --                 curr_filetype, file_extension, curr_name, curr_name,
+    --                 new_name)
     -- print(cmd)
     -- os.execute(cmd)
 end
