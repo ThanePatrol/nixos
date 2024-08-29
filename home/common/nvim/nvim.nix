@@ -3,7 +3,7 @@ with lib;
 let
   # TODO - upstream
   thrift-ls = pkgs.buildGoModule rec {
-    pname = "thriftls";
+    pname = "thrift-ls";
     version = "0.2.0";
 
     src = pkgs.fetchFromGitHub {

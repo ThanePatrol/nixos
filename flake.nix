@@ -149,7 +149,14 @@
               System
               SystemConfiguration
             ]);
-        in pkgs.mkShell { inherit buildInputs nativeBuildInputs; };
+        in pkgs.mkShell {
+          inherit buildInputs nativeBuildInputs;
+
+          # https://discourse.nixos.org/t/rust-src-not-found-and-other-misadventures-of-developing-rust-on-nixos/11570/4
+          RUST_SRC_PATH =
+            "${pkgs.latest.rustChannels.stable.rust-src}/lib/rustlib/src/rust/library";
+          shellHook = "";
+        };
 
     in {
       darwinConfigurations = {

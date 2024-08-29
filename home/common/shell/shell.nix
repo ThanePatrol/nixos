@@ -10,7 +10,11 @@ let
     export PATH=${pkgs.gnused}/bin:$PATH
   '';
 
-  workExports = "export PATH=$PATH:/opt/atlassian/bin";
+  workExports = ''
+    export PATH=$PATH:/opt/atlassian/bin
+    export WORKER_INSTALL="$HOME/.workerctl"
+    export PATH="$WORKER_INSTALL/bin:$PATH"
+  '';
 
 in {
 
