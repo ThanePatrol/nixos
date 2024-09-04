@@ -20,7 +20,7 @@ config.set_environment_variables = {TERM = "tmux-256color"}
 
 config.window_padding = {left = 0, right = 0, top = 0, bottom = 0}
 
-config.window_background_opacity = 0.9
+config.window_background_opacity = 1
 
 -- prefer tmux for handling this
 config.enable_tab_bar = false

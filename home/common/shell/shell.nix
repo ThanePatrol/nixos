@@ -26,8 +26,6 @@ in {
       export EDITOR="nvim"
     '' + (if isDarwin then macExports else "");
 
-    defaultKeymap = "vicmd";
-
     shellAliases = {
       ".." = "cd ..";
       "..." = "cd ../..";
