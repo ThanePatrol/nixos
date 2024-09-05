@@ -59,12 +59,12 @@ require("formatter").setup {
                 return {exe = "gofumpt", args = {}, stdin = true}
             end, function()
                 return {exe = "golines", args = {"--max-len=128"}, stdin = true}
-            end, function()
-                return {
-                    exe = "wsl",
-                    args = {"-fix", vim.api.nvim_buf_get_name(0)},
-                    stdin = false
-                }
+                -- end, function()
+                --     return {
+                --         exe = "wsl",
+                --         args = {"-fix", vim.api.nvim_buf_get_name(0)},
+                --         stdin = false
+                --     }
             end
         },
 
