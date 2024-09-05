@@ -86,9 +86,30 @@ autocmd("BufWritePost", {group = "__formatter__", command = ":FormatWrite"})
 -- formatter.nvim end
 
 -- vim test start
-vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>TestNearest<cr>')
-vim.api.nvim_set_keymap('n', '<leader>T', '<cmd>TestFile<cr>')
-vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>TestSuite<cr>')
-vim.api.nvim_set_keymap('n', '<leader>l', '<cmd>TestLast<cr>')
-vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>TestVisit<cr>')
+vim.api.nvim_set_keymap('n', '<leader>tn', '<cmd>TestNearest<cr>', {
+    silent = true,
+    noremap = true,
+    desc = "Test the nearest individual test. Test Nearest"
+})
+vim.api.nvim_set_keymap('n', '<leader>TT', '<cmd>TestFile<cr>', {
+    silent = true,
+    noremap = true,
+    desc = "Run all tests in the file. Test This"
+})
+vim.api.nvim_set_keymap('n', '<leader>ta', '<cmd>TestSuite<cr>', {
+    silent = true,
+    noremap = true,
+    desc = "Run the entire test suite. Test All"
+})
+vim.api.nvim_set_keymap('n', '<leader>tl', '<cmd>TestLast<cr>', {
+    silent = true,
+    noremap = true,
+    desc = "Test the most recently tested test. Test Last"
+})
+vim.api.nvim_set_keymap('n', '<leader>tv', '<cmd>TestVisit<cr>', {
+    silent = true,
+    noremap = true,
+    desc = "See the latest test. Test Visit"
+
+})
 -- vim test end

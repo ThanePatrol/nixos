@@ -89,6 +89,8 @@ in {
       # convenient testing
       vim-test
 
+      harpoon2
+
       #debugger
       #      nvim-dap
       #      nvim-dap-virtual-text
