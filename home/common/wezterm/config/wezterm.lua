@@ -25,4 +25,7 @@ config.window_background_opacity = 1
 -- prefer tmux for handling this
 config.enable_tab_bar = false
 
+-- https://github.com/wez/wezterm/issues/5990
+config.front_end = "WebGpu"
+
 return config

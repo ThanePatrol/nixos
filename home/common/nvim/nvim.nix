@@ -60,9 +60,6 @@ in {
       # icons!
       nvim-web-devicons
 
-      # cmd autosuggestions
-      #precognition-nvim
-
       # colour preview in editor
       nvim-highlight-colors
 
@@ -89,15 +86,14 @@ in {
       # Quick fixes for issues in file
       trouble-nvim
 
+      # convenient testing
+      vim-test
+
       #debugger
       #      nvim-dap
       #      nvim-dap-virtual-text
       #      nvim-dap-go
       #      nvim-dap-ui
-
-      #Co pilot
-      #      copilot-lua
-      #      copilot-cmp
 
       # LLM plugin
       # TODO - setup
@@ -105,9 +101,6 @@ in {
 
       # format on save
       formatter-nvim
-
-      # Images in nvim
-      #image-nvim
 
       #status bar
       lualine-nvim
@@ -187,13 +180,9 @@ in {
       # Markdown
       marksman
 
+      # Thrift lsp
       thrift-ls
-
-      # image support
-      #     imagemagick
-
     ];
-    #    extraLuaPackages = ps: [ ps.magick];
   };
   xdg.configFile.nvim = {
     source = ./config;

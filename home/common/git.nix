@@ -42,7 +42,6 @@ in {
       "node_modules"
       ".env"
       ".envrc"
-      "bin"
       ".direnv"
     ];
 

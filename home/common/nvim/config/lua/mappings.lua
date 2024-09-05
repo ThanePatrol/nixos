@@ -84,3 +84,11 @@ local autocmd = vim.api.nvim_create_autocmd
 augroup("__formatter__", {clear = true})
 autocmd("BufWritePost", {group = "__formatter__", command = ":FormatWrite"})
 -- formatter.nvim end
+
+-- vim test start
+vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>TestNearest<cr>')
+vim.api.nvim_set_keymap('n', '<leader>T', '<cmd>TestFile<cr>')
+vim.api.nvim_set_keymap('n', '<leader>a', '<cmd>TestSuite<cr>')
+vim.api.nvim_set_keymap('n', '<leader>l', '<cmd>TestLast<cr>')
+vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>TestVisit<cr>')
+-- vim test end
