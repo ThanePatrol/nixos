@@ -39,6 +39,7 @@ in {
       gbn = "git branch -v | head -n 1 | awk '{print $2}'";
       gc = "git commit -m";
       gp = "git push";
+      ga = "git add .";
       # hack for resetting clipboard when it starts playing up on macos
       rclip =
         "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
