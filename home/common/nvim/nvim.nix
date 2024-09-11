@@ -31,12 +31,19 @@ let
   # llm plugin
   gp = pkgs.vimUtils.buildVimPlugin {
     pname = "gp.nvim";
-    version = "3.8.0";
+    version = "3.9.0";
     src = pkgs.fetchFromGitHub {
       owner = "Robitx";
       repo = "gp.nvim";
       rev = "7cc35997581dbfcfa5ac022843e12c04d64c3250";
-      sha256 = "";
+      sha256 = "sha256-88UcYToQO3GU5Zw+EMUAP2NBpxf+b2l/PBXahrSp7fE=";
+    };
+
+    meta = with lib; {
+      description = "ChatGPT like sessions in Neovim";
+      homepage = "https://github.com/Robitx/gp.nvim";
+      license = licenses.mit;
+      maintainers = with maintainers; [ hughmandalidis ];
     };
   };
 in {
@@ -99,7 +106,7 @@ in {
 
       # LLM plugin
       # TODO - setup
-      #gp
+      gp
 
       # format on save
       formatter-nvim
