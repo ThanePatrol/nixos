@@ -19,6 +19,11 @@ in {
     name = username;
     home = "/Users/${username}";
   };
+  nix = {
+    settings = {
+      "extra-experimental-features" = [ "nix-command" "flakes" ];
+    };
+  };
 
   home-manager.users.${username} = homeConfig;
   home-manager.useGlobalPkgs = true;

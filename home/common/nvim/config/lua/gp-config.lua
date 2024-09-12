@@ -1,39 +1,12 @@
 require('gp').setup({
-    -- Please start with minimal config possible.
-    -- Just openai_api_key if you don't have OPENAI_API_KEY env set up.
-    -- Defaults change over time to improve things, options might get deprecated.
-    -- It's better to change only things where the default doesn't fit your needs.
-
-    -- required openai api key (string or table with command and arguments)
-    -- openai_api_key = { "cat", "path_to/openai_api_key" },
-    -- openai_api_key = { "bw", "get", "password", "OPENAI_API_KEY" },
-    -- openai_api_key: "sk-...",
-    -- openai_api_key = os.getenv("env_name.."),
     openai_api_key = os.getenv("OPENAI_API_KEY"),
 
-    -- at least one working provider is required
-    -- to disable a provider set it to empty table like openai = {}
     providers = {
-        -- secrets can be strings or tables with command and arguments
-        -- secret = { "cat", "path_to/openai_api_key" },
-        -- secret = { "bw", "get", "password", "OPENAI_API_KEY" },
-        -- secret : "sk-...",
-        -- secret = os.getenv("env_name.."),
         openai = {
-            disable = true,
-            endpoint = "https://api.openai.com/v1/chat/completions"
-            -- secret = os.getenv("OPENAI_API_KEY"),
+            endpoint = "https://api.openai.com/v1/chat/completions",
+            secret = os.getenv("OPENAI_API_KEY")
         },
-        ollama = {
-            disable = false,
-            endpoint = "http://localhost:11434/v1/chat/completions",
-            secret = ""
-        },
-        lmstudio = {
-            disable = true,
-            endpoint = "http://localhost:1234/v1/chat/completions",
-            secret = "dummy_secret"
-        }
+        ollama = {endpoint = "http://localhost:11434/api/chat", secret = ""}
     },
 
     -- prefix for all commands
@@ -57,30 +30,25 @@ require('gp').setup({
     -- to remove some default agent completely set it like:
     -- agents = {  { name = "ChatGPT3-5", disable = true, }, ... },
     agents = {
-        {name = "ExampleDisabledAgent", disable = true}, {
+        {
             name = "ChatGPT4o",
+            provider = "openai",
             chat = true,
-            command = false,
-            disable = true,
-            -- string with model name or table with model name and parameters
+            command = true,
             model = {model = "gpt-4o", temperature = 1.1, top_p = 1},
-            -- system prompt (use this to specify the persona/role of the AI)
             system_prompt = require("gp.defaults").chat_system_prompt
         }, {
             name = "ChatOllamaLlama3.1-8B",
             provider = "ollama",
             chat = true,
             command = true,
-            -- string with model name or table with model name and parameters
             model = {
                 model = "llama3.1",
                 temperature = 0.4,
                 top_p = 1,
                 min_p = 0.05
             },
-            -- TODO diagnose this: curl http://localhost:11434/v1/chat/completions -d '{ "model": "llama3.1","messages":[ {"role": "user", "content": "Why is the sky blue?"}], "stream": false}'
-            -- system prompt (use this to specify the persona/role of the AI)
-            system_prompt = require("gp.defaults").code_system_prompt
+            system_prompt = "You are a helpful assistant. You provide assistance to a programmer side by side. You will answer programming questions, write units and generally be helpful. If you do not know the answer, say you do not."
         }, {
             provider = "lmstudio",
             name = "ChatLMStudio",
