@@ -40,6 +40,7 @@ in {
       gc = "git commit -m";
       gp = "git push";
       ga = "git add .";
+      gs = "git status -s";
       dc = "docker compose";
       # hack for resetting clipboard when it starts playing up on macos
       rclip =
@@ -70,7 +71,10 @@ in {
       }
     ];
     initExtra = ''
+      # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
+      export DIRENV_LOG_FORMAT=
       eval "$(direnv hook zsh)"
+
       source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
       eval "$(${pkgs.fzf}/bin/fzf --zsh)"

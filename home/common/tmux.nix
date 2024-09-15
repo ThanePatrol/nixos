@@ -4,9 +4,19 @@ let
   themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ] theme;
 
   tmuxPopupShell = pkgs.writeShellScriptBin "tmux-popup" ''
-    tmux popup "tmux attach -t popup || tmux new -s popup"
-    # trap does not capture output from the nested commands
+    tmux popup -E "tmux attach -t popup || tmux new -s popup"
     exit 0
+    '';
+
+
+    tmuxClosePopup = pkgs.writeShellScriptBin "close-tmux-popup" ''
+    session_name=$(tmux display-message -p '#S')
+    if [[ "$session_name" == "popup" ]]; then
+      tmux detach-client -s popup
+      exit 0
+    else
+      tmux send-keys Escape
+    fi
   '';
 
 in {
@@ -31,8 +41,9 @@ in {
       bind-key & kill-window
       bind-key x kill-pane
 
-      # popup a shell session
+      # popup a shell session and close it
       bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
+      bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup' # run-shell "tmux detach-client -E -t  popup"
 
       # allow apps inside tmux to set clipboard
       set -s set-clipboard on
