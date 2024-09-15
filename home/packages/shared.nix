@@ -37,7 +37,7 @@ let
     gofumpt # formatter
     golines # formatter
     wsl # whitespace linter for go
-    nixfmt # autoformat nix files
+    nixfmt-rfc-style # autoformat nix files
     shfmt # shell formatter
     luaformatter # format lua
     yamlfmt

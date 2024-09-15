@@ -31,7 +31,7 @@ require("formatter").setup {
     filetype = {
         lua = {function() return {exe = "lua-format", stdin = true} end},
 
-        --        nix = {function() return {exe = "nixfmt", stdin = true} end},
+        nix = {function() return {exe = "nixfmt", stdin = true} end},
 
         latex = require("formatter.filetypes.latex").latexindent,
 
