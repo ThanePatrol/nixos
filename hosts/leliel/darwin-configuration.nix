@@ -63,6 +63,8 @@ in {
     };
   };
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   system.defaults.NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
     "com.apple.swipescrolldirection" = false;
