@@ -1,4 +1,9 @@
-{ isDarwin, theme, pkgs, ... }:
+{
+  isDarwin,
+  theme,
+  pkgs,
+  ...
+}:
 
 let
   themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ] theme;
@@ -6,10 +11,9 @@ let
   tmuxPopupShell = pkgs.writeShellScriptBin "tmux-popup" ''
     tmux popup -E "tmux attach -t popup || tmux new -s popup"
     exit 0
-    '';
+  '';
 
-
-    tmuxClosePopup = pkgs.writeShellScriptBin "close-tmux-popup" ''
+  tmuxClosePopup = pkgs.writeShellScriptBin "close-tmux-popup" ''
     session_name=$(tmux display-message -p '#S')
     if [[ "$session_name" == "popup" ]]; then
       tmux detach-client -s popup
@@ -19,7 +23,8 @@ let
     fi
   '';
 
-in {
+in
+{
   home.packages = [ pkgs.tmux ];
 
   programs.tmux = {
@@ -43,14 +48,14 @@ in {
 
       # popup a shell session and close it
       bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
-      bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup' # run-shell "tmux detach-client -E -t  popup"
+      bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+      bind-key -T copy-mode Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+      bind-key -T copy-mode-vi Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
 
       # allow apps inside tmux to set clipboard
       set -s set-clipboard on
       set -as terminal-features ',xterm-256color:clipboard'
-      set -s copy-command "${
-        if isDarwin then "reattach-to-user-namespace pbcopy" else "wl-copy"
-      }"
+      set -s copy-command "${if isDarwin then "reattach-to-user-namespace pbcopy" else "wl-copy"}"
 
       # Copy mode stuff
       bind-key -T copy-mode-vi v send-keys -X begin-selection
