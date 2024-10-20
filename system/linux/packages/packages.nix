@@ -133,7 +133,7 @@ in {
     sshfs
     thunderbird
     tor
-    transmission-gtk
+    transmission_4-gtk
     #uefi-run
     #udiskie # to allow automatic mounting of USB drives
     vlc
@@ -149,7 +149,7 @@ in {
     zoom-us # wrap
 
     # TODO - remove these once xournalpp allows for launch without issue 
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     shared-mime-info
     xournalpp
   ];

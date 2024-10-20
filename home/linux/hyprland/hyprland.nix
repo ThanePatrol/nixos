@@ -7,6 +7,12 @@ let
     Unit.After = [ "graphical-session.target" ];
     Install.WantedBy = [ "graphical-session.target" ];
   };
+
+  lockScreen = pkgs.writeShellScriptbin "lock-screen" ''
+  rm /tmp/lockscreen.png || true
+  screenshot-background 
+  swaylock -i /tmp/lockscreen.png)
+  '';
 in {
 
   wayland.windowManager.hyprland = {
@@ -62,11 +68,10 @@ in {
       input = {
         follow_mouse = 1;
         kb_options = "caps:escape";
-
       };
 
       general = {
-        gaps_in = 6;
+        gaps_in = 7;
         gaps_out = 11;
       };
 
@@ -124,7 +129,7 @@ in {
           SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
 
         # locking workspace
-        "CTRL + $SUPER, Q, exec, rm /tmp/lockscreen.png || screenshot-background || swaylock -i /tmp/lockscreen.png"
+        "$mod + CONTROL, Q, exec, "
 
         # clipboard
         # TODO - figure out why this isn't working
