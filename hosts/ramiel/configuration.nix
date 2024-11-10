@@ -44,7 +44,6 @@ in {
   boot.kernelParams = [
     "transparent_hugepage=madvise"
     "video=DP-2:3840x2160"
-    "systemd.unified_cgroup_hierarchy=0"
   ];
 
   # dm_mod required for issue with no graphical display after booting
@@ -54,15 +53,24 @@ in {
   networking.hostName = "ramiel"; # Define your hostname.
   networking.firewall = {
     enable = false;
-    allowedTCPPortRanges = [{
+    allowedTCPPortRanges = [
+      {
       from = 1714;
       to = 1764;
     } # KDE Connect
+    {
+      from = 25565;
+      to = 25565;
+      }
       ];
     allowedUDPPortRanges = [{
       from = 1714;
       to = 1764;
     } # KDE Connect
+    {
+      from = 25565;
+      to = 25565;
+    }
       ];
   };
 
