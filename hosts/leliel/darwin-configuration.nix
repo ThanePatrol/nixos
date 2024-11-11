@@ -1,4 +1,11 @@
-{ nixpkgs, config, pkgs, lib, customArgs, ... }:
+{
+  nixpkgs,
+  config,
+  pkgs,
+  lib,
+  customArgs,
+  ...
+}:
 
 let
   isWork = customArgs.isWork;
@@ -6,22 +13,33 @@ let
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
   isDarwin = true;
-  theme = if builtins.getEnv ("THEME") == "" then
-    "Catppuccin-mocha"
-  else
-    builtins.getEnv ("THEME");
+  theme = if builtins.getEnv ("THEME") == "" then "Catppuccin-mocha" else builtins.getEnv ("THEME");
   homeConfig = import ../../home/home.nix {
-    inherit email isWork isDarwin gitUserName username theme nixpkgs pkgs config
-      lib;
+    inherit
+      email
+      isWork
+      isDarwin
+      gitUserName
+      username
+      theme
+      nixpkgs
+      pkgs
+      config
+      lib
+      ;
   };
-in {
+in
+{
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
   };
   nix = {
     settings = {
-      "extra-experimental-features" = [ "nix-command" "flakes" ];
+      "extra-experimental-features" = [
+        "nix-command"
+        "flakes"
+      ];
     };
   };
 
@@ -42,7 +60,14 @@ in {
       "mas" # mac app store cli
     ];
     # mainly used for gui things not packaged by nix
-    casks = [ "docker" "firefox" "spotify" "qmk-toolbox" "anki" ];
+    casks = [
+      "docker"
+      "firefox"
+      "spotify"
+      "qmk-toolbox"
+      "anki"
+      "vial"
+    ];
   };
 
   # tiling window manager

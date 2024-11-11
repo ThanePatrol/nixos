@@ -179,6 +179,7 @@ default_lsp_setup('texlab') -- latex
 default_lsp_setup('postgres_lsp')
 default_lsp_setup('marksman') -- markdown
 default_lsp_setup('thriftls')
+default_lsp_setup('ts_ls')
 
 nvim_lsp.lua_ls.setup({
     on_attach = on_attach,
@@ -219,16 +220,6 @@ nvim_lsp.gopls.setup({
             -- To use gopls in files with exclusive buildFlags
             buildFlags = {"-tags=integration,unit"}
         }
-    }
-})
-
-nvim_lsp.tsserver.setup({
-    init_options = require('nvim-lsp-ts-utils').init_options,
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = {
-        'javascript', 'javascriptreact', 'javascript.jsx', 'typescript',
-        'typescriptreact', 'typescript.tsx'
     }
 })
 

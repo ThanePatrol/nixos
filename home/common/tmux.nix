@@ -37,7 +37,6 @@ in
     keyMode = "vi";
 
     plugins = [
-      pkgs.tmuxPlugins.sensible
       pkgs.tmuxPlugins.catppuccin
       pkgs.tmuxPlugins.vim-tmux-navigator
     ];
@@ -89,6 +88,9 @@ in
       bind '"' split-window -v -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
+
+      # set default shell to zsh instead of sh https://github.com/tmux/tmux/issues/4166
+      set -g default-command '$SHELL'
     '';
   };
 

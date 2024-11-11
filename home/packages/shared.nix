@@ -1,13 +1,6 @@
 { pkgs, lib, ... }:
 
 let
-  #pythonPkgs = with pkgs.python3Packages; [
-  #  matplotlib
-  #  numpy
-  #  scipy
-  #  pandas
-  #  requests
-  #];
   # FIXME - upstream package
   wsl = pkgs.buildGoModule rec {
     pname = "wsl";
@@ -43,8 +36,10 @@ let
     yamlfmt
   ];
 
-in {
-  packages = with pkgs;
+in
+{
+  packages =
+    with pkgs;
     [
       age # CLI encryption
       cargo-flamegraph # flamegraph tool for many languages
@@ -68,7 +63,7 @@ in {
       nomacs # image viewer
       ollama
       pandoc # document conversion
-      #prismlauncher # minecraft!
+      prismlauncher # minecraft!
       pciutils # useful pci utils
       pkg-config # build tools
       qbittorrent
@@ -86,6 +81,7 @@ in {
       zlib
       zip # CLI compression
       zsh
-    ] ++ codeFormattersAndLinters;
+    ]
+    ++ codeFormattersAndLinters;
 
 }
