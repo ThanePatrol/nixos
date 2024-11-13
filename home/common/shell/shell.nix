@@ -36,7 +36,7 @@ in {
       cat = "bat";
       gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";
-      gbn = "git branch -v | head -n 1 | awk '{print $2}'";
+      gbn = "git branch --show-current";
       gc = "git commit -m";
       gp = "git push";
       ga = "git add .";
