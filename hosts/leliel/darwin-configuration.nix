@@ -67,6 +67,7 @@ in
       "qmk-toolbox"
       "anki"
       "vial"
+      "MonitorControl"
     ];
   };
 
