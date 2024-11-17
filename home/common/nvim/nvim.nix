@@ -40,6 +40,9 @@ in
       # Language specifics
       vim-nix
 
+      # lots of overhauls
+      noice-nvim
+
       # File stuff
       nvim-tree-lua
 
@@ -77,12 +80,6 @@ in
 
       harpoon2
 
-      #debugger
-      #      nvim-dap
-      #      nvim-dap-virtual-text
-      #      nvim-dap-go
-      #      nvim-dap-ui
-
       # LLM plugin
       gp
 
@@ -102,8 +99,8 @@ in
       cmp-nvim-lsp
       nvim-cmp
 
-      # breadcrumbs in status bar
-      nvim-navic
+      # gpt integration
+      avante-nvim
 
       #rust
       rust-vim
@@ -115,13 +112,8 @@ in
 
       catppuccin-nvim
 
-      # browser render of markdown
-      markdown-preview-nvim
       # Renders markdown nicely
       markview-nvim
-
-      # for eww LSP
-      yuck-vim
     ];
 
     extraPackages = with pkgs; [
