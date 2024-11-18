@@ -12,4 +12,5 @@ require('markview').setup({
             vim.wo[win].conecalcursor = "c";
         end
     }
+
 })

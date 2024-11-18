@@ -1,7 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    darwinpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
 
     home-manager = {
@@ -29,42 +28,79 @@
     flake-utils.url = "github:numtide/flake-utils";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs = { nixpkgs.follows = "nixpkgs"; };
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
 
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, darwinpkgs, nix-on-droid
-    , golang_1_18, golang_1_19, golang_1_22, rust-overlay, flake-utils, ...
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      nix-on-droid,
+      golang_1_18,
+      golang_1_19,
+      golang_1_22,
+      rust-overlay,
+      flake-utils,
+      ...
     }@inputs:
     let
-      genPkgs = system:
+      genPkgs =
+        system:
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
-      genDarwin = system:
-        import darwinpkgs {
+      genDarwin =
+        system:
+        import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
 
-      ubuntuRemoteDevSystem = system: username: isWork: email: gitUserName:
-        let pkgs = genPkgs system;
-        in home-manager.lib.homeManagerConfiguration {
+      ubuntuRemoteDevSystem =
+        system: username: isWork: email: gitUserName:
+        let
+          pkgs = genPkgs system;
+        in
+        home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs;
           extraSpecialArgs = {
-            customArgs = { inherit system username isWork email gitUserName; };
+            customArgs = {
+              inherit
+                system
+                username
+                isWork
+                email
+                gitUserName
+                ;
+            };
           };
           modules = [ ./home/home.nix ];
         };
-      nixosDesktopSystem = system: username: isWork: email: gitUserName:
-        let pkgs = genPkgs system;
-        in nixpkgs.lib.nixosSystem {
+      nixosDesktopSystem =
+        system: username: isWork: email: gitUserName:
+        let
+          pkgs = genPkgs system;
+        in
+        nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
           specialArgs = {
-            customArgs = { inherit system username isWork email gitUserName; };
+            customArgs = {
+              inherit
+                system
+                username
+                isWork
+                email
+                gitUserName
+                ;
+            };
           };
 
           modules = [
@@ -74,25 +110,42 @@
 
         };
 
-      nixosServerSystem = system: username:
-        let pkgs = genPkgs system;
-        in nixpkgs.lib.nixosSystem {
+      nixosServerSystem =
+        system: username:
+        let
+          pkgs = genPkgs system;
+        in
+        nixpkgs.lib.nixosSystem {
           inherit system pkgs;
 
-          specialArgs = { customArgs = { inherit system username; }; };
+          specialArgs = {
+            customArgs = {
+              inherit system username;
+            };
+          };
 
           modules = [ ./hosts/armisael/configuration.nix ];
         };
 
-      darwinSystem = system: username: isWork: email: gitUserName:
-        let pkgs = genDarwin system;
-        in nix-darwin.lib.darwinSystem {
+      darwinSystem =
+        system: username: isWork: email: gitUserName:
+        let
+          pkgs = genDarwin system;
+        in
+        nix-darwin.lib.darwinSystem {
           inherit system pkgs;
 
           specialArgs = {
             unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
             customArgs = {
-              inherit system username pkgs isWork email gitUserName;
+              inherit
+                system
+                username
+                pkgs
+                isWork
+                email
+                gitUserName
+                ;
             };
           };
 
@@ -103,12 +156,17 @@
 
         };
 
-      androidSystem = system: username: isWork: email: gitUserName:
-        let pkgs = genPkgs system;
-        in nix-on-droid.lib.nixOnDroidConfiguration {
+      androidSystem =
+        system: username: isWork: email: gitUserName:
+        let
+          pkgs = genPkgs system;
+        in
+        nix-on-droid.lib.nixOnDroidConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
-            customArgs = { inherit isWork email gitUserName; };
+            customArgs = {
+              inherit isWork email gitUserName;
+            };
           };
 
           modules = [
@@ -117,7 +175,14 @@
               home-manager = {
                 config = ./home/android-home.nix;
                 extraSpecialArgs = {
-                  customArgs = { inherit username isWork email gitUserName; };
+                  customArgs = {
+                    inherit
+                      username
+                      isWork
+                      email
+                      gitUserName
+                      ;
+                  };
                 };
               };
             }
@@ -132,14 +197,18 @@
       #    buildInputs = with pkgs; [ goVersionPkgs ] ++ commonPkgs;
       #  };
 
-      makeRustDevShell = system:
+      makeRustDevShell =
+        system:
         let
           overlays = [ (import rust-overlay) ];
           pkgs = import nixpkgs { inherit system overlays; };
-          rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile
-            ./shells/rust-toolchain.toml;
-          nativeBuildInputs = with pkgs; [ rustToolchain pkg-config ];
-          buildInputs = with pkgs;
+          rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ./shells/rust-toolchain.toml;
+          nativeBuildInputs = with pkgs; [
+            rustToolchain
+            pkg-config
+          ];
+          buildInputs =
+            with pkgs;
             [
               openssl
             ]
@@ -149,30 +218,31 @@
               System
               SystemConfiguration
             ]);
-        in pkgs.mkShell {
+        in
+        pkgs.mkShell {
           inherit buildInputs nativeBuildInputs;
 
           # https://discourse.nixos.org/t/rust-src-not-found-and-other-misadventures-of-developing-rust-on-nixos/11570/4
-          RUST_SRC_PATH =
-            "${pkgs.latest.rustChannels.stable.rust-src}/lib/rustlib/src/rust/library";
+          RUST_SRC_PATH = "${pkgs.latest.rustChannels.stable.rust-src}/lib/rustlib/src/rust/library";
           shellHook = "";
         };
 
-    in {
+    in
+    {
       darwinConfigurations = {
         # personal M1
-        leliel =
-          darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com"
-          "Hugh Mandalidis";
+        leliel = darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
         # TikTok M2
-        work = darwinSystem "aarch64-darwin" "bytedance" true
-          "hugh.mandalidis@bytedance.com" "hugh.mandalidis";
+        work =
+          darwinSystem "aarch64-darwin" "bytedance" true "hugh.mandalidis@bytedance.com"
+            "hugh.mandalidis";
       };
 
       nixosConfigurations = {
         # main desktop
-        ramiel = nixosDesktopSystem "x86_64-linux" "hugh" false
-          "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
+        ramiel =
+          nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
+            "Hugh Mandalidis";
 
         # lenovo m710q server
         armisael = nixosServerSystem "x86_64-linux" "hugh";
@@ -180,42 +250,58 @@
       };
 
       homeConfigurations = {
-        workServer = ubuntuRemoteDevSystem "x86_64-linux" "hugh.mandalidis" true
-          "hugh.mandalidis@bytedance.com" "hugh.mandalidis";
+        workServer =
+          ubuntuRemoteDevSystem "x86_64-linux" "hugh.mandalidis" true "hugh.mandalidis@bytedance.com"
+            "hugh.mandalidis";
       };
 
       androidConfigurations = {
-        fold5 = androidSystem "aarch64-linux" "nix-on-droid" false
-          "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
+        fold5 =
+          androidSystem "aarch64-linux" "nix-on-droid" false "mandalidis.hugh@gmail.com"
+            "Hugh Mandalidis";
       };
 
       rustStableDevShell = makeRustDevShell "aarch64-darwin";
 
       devShells.aarch64-darwin = {
-        go_1_18 = let pkgs = golang_1_18.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell {
-          buildInputs = with pkgs; [ go_1_18 go-tools golangci-lint golines ];
-        };
-        go_1_19 = let pkgs = golang_1_19.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell {
-          buildInputs = with pkgs; [
-            go_1_19
-            go-tools
-            golangci-lint
-            nilaway
-            golines
-          ];
-        };
-        go_1_22 = let pkgs = golang_1_22.legacyPackages.aarch64-darwin;
-        in pkgs.mkShell {
-          buildInputs = with pkgs; [
-            go_1_22
-            go-tools
-            golangci-lint
-            nilaway
-            golines
-          ];
-        };
+        go_1_18 =
+          let
+            pkgs = golang_1_18.legacyPackages.aarch64-darwin;
+          in
+          pkgs.mkShell {
+            buildInputs = with pkgs; [
+              go_1_18
+              go-tools
+              golangci-lint
+              golines
+            ];
+          };
+        go_1_19 =
+          let
+            pkgs = golang_1_19.legacyPackages.aarch64-darwin;
+          in
+          pkgs.mkShell {
+            buildInputs = with pkgs; [
+              go_1_19
+              go-tools
+              golangci-lint
+              nilaway
+              golines
+            ];
+          };
+        go_1_22 =
+          let
+            pkgs = golang_1_22.legacyPackages.aarch64-darwin;
+          in
+          pkgs.mkShell {
+            buildInputs = with pkgs; [
+              go_1_22
+              go-tools
+              golangci-lint
+              nilaway
+              golines
+            ];
+          };
       };
     };
 }
