@@ -28,6 +28,7 @@ let
       lib
       ;
   };
+  windowGap = 6;
 in
 {
   users.users.${username} = {
@@ -46,7 +47,7 @@ in
   home-manager.users.${username} = homeConfig;
   home-manager.useGlobalPkgs = true;
 
-  environment.systemPackages = [ ];
+  environment.systemPackages = with pkgs; [ lua5_4 ];
 
   homebrew = {
     enable = true;
@@ -58,6 +59,7 @@ in
     # mainly used for cmd line tools not packaged by nix
     brews = [
       "mas" # mac app store cli
+      "sketchybar"
     ];
     # mainly used for gui things not packaged by nix
     casks = [
@@ -70,11 +72,6 @@ in
       "MonitorControl"
     ];
   };
-
-  # tiling window manager
-  # enable service here, configure with home-manager
-  services.yabai.enable = true;
-  services.skhd.enable = true;
 
   # customer launcher at login
   launchd.user.agents = {
@@ -90,6 +87,87 @@ in
   };
 
   security.pam.enableSudoTouchIdAuth = true;
+
+  services.aerospace = {
+    enable = true;
+    settings = {
+      enable-normalization-flatten-containers = false;
+      enable-normalization-opposite-orientation-for-nested-containers = false;
+      on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
+      on-focus-changed = [ "move-mouse window-lazy-center" ];
+      automatically-unhide-macos-hidden-apps = true;
+
+      gaps = {
+        inner = {
+          horizontal = windowGap;
+          vertical = windowGap;
+        };
+        outer = {
+          left = windowGap;
+          bottom = windowGap;
+          top = windowGap;
+          right = windowGap;
+        };
+      };
+
+      mode.main.binding = {
+        alt-1 = "workspace 1";
+        alt-2 = "workspace 2";
+        alt-3 = "workspace 3";
+        alt-4 = "workspace 4";
+        alt-5 = "workspace 5";
+        alt-6 = "workspace 6";
+        alt-7 = "workspace 7";
+        alt-8 = "workspace 8";
+        alt-9 = "workspace 9";
+        alt-0 = "workspace 10";
+
+        # Focus movement
+        alt-h = "focus left";
+        alt-j = "focus down";
+        alt-k = "focus up";
+        alt-l = "focus right";
+
+        # Window movement
+        alt-shift-h = "move left";
+        alt-shift-j = "move down";
+        alt-shift-k = "move up";
+        alt-shift-l = "move right";
+
+        alt-shift-1 = "move-node-to-workspace 1";
+        alt-shift-2 = "move-node-to-workspace 2";
+        alt-shift-3 = "move-node-to-workspace 3";
+        alt-shift-4 = "move-node-to-workspace 4";
+        alt-shift-5 = "move-node-to-workspace 5";
+        alt-shift-6 = "move-node-to-workspace 6";
+        alt-shift-7 = "move-node-to-workspace 7";
+        alt-shift-8 = "move-node-to-workspace 8";
+        alt-shift-9 = "move-node-to-workspace 9";
+        alt-shift-0 = "move-node-to-workspace 10";
+
+        alt-shift-enter = "exec-and-forget open -na wezterm";
+        alt-shift-b = "exec-and-forget open -a Firefox";
+        alt-shift-f = "exec-and-forget open -a Finder";
+
+        alt-r = "mode resize";
+      };
+
+      mode.resize.binding = {
+        h = "resize width -50";
+        j = "resize height +50";
+        k = "resize height -50";
+        l = "resize width +50";
+        enter = "mode main";
+        esc = "mode main";
+      };
+    };
+  };
+
+  services.jankyborders = {
+    enable = true;
+    active_color = "0xffe1e3e4";
+    inactive_color = "0xff494d64";
+  };
 
   system.defaults.NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
