@@ -93,6 +93,12 @@ in
     settings = {
       enable-normalization-flatten-containers = false;
       enable-normalization-opposite-orientation-for-nested-containers = false;
+      exec-on-workspace-change = [
+        "/bin/bash"
+        "-c"
+        "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
+        "exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0"
+      ];
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       on-focus-changed = [ "move-mouse window-lazy-center" ];
       automatically-unhide-macos-hidden-apps = true;

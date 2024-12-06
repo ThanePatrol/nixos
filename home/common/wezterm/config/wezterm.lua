@@ -14,6 +14,7 @@ else
     font_size = 30.0
 end
 config.font_size = font_size
+config.window_decorations = "RESIZE"
 
 -- proper color inside tmux
 config.set_environment_variables = {TERM = "tmux-256color"}
