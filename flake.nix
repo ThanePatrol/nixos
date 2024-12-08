@@ -83,7 +83,7 @@
           };
           modules = [ ./home/home.nix ];
         };
-      nixosDesktopSystem =
+      nixosRemoteDestopSystem =
         system: username: isWork: email: gitUserName:
         let
           pkgs = genPkgs system;
@@ -104,7 +104,7 @@
           };
 
           modules = [
-            ./hosts/ramiel/configuration.nix
+            ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
           ];
 
@@ -241,12 +241,12 @@
       nixosConfigurations = {
         # main desktop
         ramiel =
-          nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
+          nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
             "Hugh Mandalidis";
 
         # x570 server
         zeruel =
-          nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
+          nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
             "Hugh Mandalidis";
 
         # lenovo m710q server
