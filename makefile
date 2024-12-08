@@ -1,4 +1,4 @@
-.PHONY: update-ramiel update-armisael update-leliel update-work update-fold flake-update fmt clean
+.PHONY: update-ramiel update-zeruel update-armisael update-leliel update-work update-fold flake-update fmt clean
 
 help: ## Display this screen
 	@echo "Usage: make [target]"
@@ -11,6 +11,10 @@ update-ramiel: ## Updates nixos desktop
 	nix build .#nixosConfigurations.ramiel.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#ramiel
 
+update-zeruel: ## Updates nixos server
+	sudo -v # Build can take a while and we need root to apply the flake
+	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.zeruel.config.system.build.toplevel
+	sudo nixos-rebuild switch --flake .#zeruel
 
 update-armisael: ## Updates Lenovo homelab
 	sudo -v

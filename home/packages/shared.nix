@@ -60,6 +60,7 @@ in
       libvirt
       libsecret # for storing passwords
       libsixel
+      localsend
       ollama
       pandoc # document conversion
       prismlauncher # minecraft!
@@ -71,8 +72,9 @@ in
       rsync
       sphinx # python docs generator
       sshfs # mount remote file systems locally with ssh
-      typescript
       texliveFull
+      tldr
+      typescript
       #ueberzugpp # images in terminal
       unzip
       vim

@@ -244,6 +244,11 @@
           nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
             "Hugh Mandalidis";
 
+        # x570 server
+        zeruel =
+          nixosDesktopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
+            "Hugh Mandalidis";
+
         # lenovo m710q server
         armisael = nixosServerSystem "x86_64-linux" "hugh";
 

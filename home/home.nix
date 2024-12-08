@@ -59,8 +59,6 @@ in
     ++ (
       if isDarwin then
         [
-          #    ./macos/yabai/yabai.nix
-          #    ./macos/skhd/skhd.nix
           ./macos/sketchybar/sketchy.nix
         ]
       else

@@ -15,15 +15,15 @@ let
     ${pkgs.imagemagick}/bin/convert -filter Gaussian -resize 25% -blur 0x2.5 -resize 400% /tmp/lockscreen.png /tmp/lockscreen.png
   '';
 
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     wrappedBitwarden
     (symlinkJoin {
       inherit (brave) name;
       paths = [ brave ];
       buildInputs = [ makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
+      postBuild = ''wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
     })
     wrappedZoom
     (take_blurred_screenshot)
@@ -52,8 +52,10 @@ in {
     firefox
     gdb
     (google-chrome.override {
-      commandLineArgs =
-        [ "--enable-features=UseOzonePlatform" "--ozone-platform=wayland" ];
+      commandLineArgs = [
+        "--enable-features=UseOzonePlatform"
+        "--ozone-platform=wayland"
+      ];
     })
     graphviz
     grim # screenshot
@@ -72,7 +74,7 @@ in {
     kmod
     minicom # for serial connections
     mullvad-vpn # wrap
-    cinnamon.nemo # gui file manager
+    nemo # gui file manager
     nettools # cmd line utils like ethtool
     nfs-utils # for nfs drives
     nodejs
@@ -148,7 +150,7 @@ in {
     zotero # bibliography manager
     zoom-us # wrap
 
-    # TODO - remove these once xournalpp allows for launch without issue 
+    # TODO - remove these once xournalpp allows for launch without issue
     adwaita-icon-theme
     shared-mime-info
     xournalpp
