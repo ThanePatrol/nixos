@@ -110,23 +110,6 @@
 
         };
 
-      nixosServerSystem =
-        system: username:
-        let
-          pkgs = genPkgs system;
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system pkgs;
-
-          specialArgs = {
-            customArgs = {
-              inherit system username;
-            };
-          };
-
-          modules = [ ./hosts/armisael/configuration.nix ];
-        };
-
       darwinSystem =
         system: username: isWork: email: gitUserName:
         let
@@ -189,14 +172,6 @@
           ];
         };
 
-      #makeGolangShell = goVersionPkgs: nixpkgsVersion:
-      #  let
-      #    pkgs = nixpkgsVersion.legacyPackages.aarch64-darwin;
-      #    commonPkgs = with pkgs; [ go-tools golangci-lint ];
-      #  in pkgs.mkShell {
-      #    buildInputs = with pkgs; [ goVersionPkgs ] ++ commonPkgs;
-      #  };
-
       makeRustDevShell =
         system:
         let
@@ -248,10 +223,6 @@
         zeruel =
           nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
             "Hugh Mandalidis";
-
-        # lenovo m710q server
-        armisael = nixosServerSystem "x86_64-linux" "hugh";
-
       };
 
       homeConfigurations = {

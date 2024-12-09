@@ -10,149 +10,95 @@ let
   '';
 
   # TODO - consider implementing faster blur  https://github.com/johnae/blur
-  take_blurred_screenshot = pkgs.writeShellScriptBin "screenshot-background" ''
+  takeBlurredScreenshot = pkgs.writeShellScriptBin "screenshot-background" ''
     ${pkgs.grim}/bin/grim /tmp/lockscreen.png
     ${pkgs.imagemagick}/bin/convert -filter Gaussian -resize 25% -blur 0x2.5 -resize 400% /tmp/lockscreen.png /tmp/lockscreen.png
   '';
 
-in
-{
-  environment.systemPackages = with pkgs; [
-    wrappedBitwarden
-    (symlinkJoin {
-      inherit (brave) name;
-      paths = [ brave ];
-      buildInputs = [ makeWrapper ];
-      postBuild = ''wrapProgram $out/bin/brave --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --ozone-platform-hint=auto"'';
-    })
-    wrappedZoom
-    (take_blurred_screenshot)
-    alacritty
-    anki # flashcards
-    bear # compilation database for clang tooling
+  devDependencies = with pkgs; [
     binutils
-    bitwarden-cli
-    bitwarden
-    bluez # bluetooth memes
-    bc # cli multiplication
-    chafa
-    calibre
-    clipman # clipboard manager
-    cliphist
-    colord
     cmake
     clang
-    cups
     docker
     docker-compose
-    dotool # allows for simulating keyboard input
-    dnsmasq
-    ethtool
-    flex # lexical analysis
-    firefox
     gdb
+    kmod
+    linuxHeaders
+    qemu_full
+  ];
+
+  cliTools = with pkgs; [
+    takeBlurredScreenshot
+    clipman # clipboard manager
+    cliphist
+    bc # cli multiplication
+    ethtool
+    grim # screenshot
+    home-manager
+    hyprpicker # color picker
+    imagemagick # for cli screenshots
+    lsof
+    nettools # cmd line utils like ethtool
+    parted # disk partition tool
+    playerctl
+    socat # to establish socket connections
+    slurp
+    smartmontools
+    sshfs
+    wl-clipboard
+    wireplumber # sound memes
+  ];
+
+  guiTools = with pkgs; [
+    wrappedBitwarden
+    wrappedZoom
+    alacritty
+    anki
+    firefox
+    libsForQt5.polkit-kde-agent # for apps that want elevated permission
+    nemo # gui file manager
+    prismlauncher # minecraft!
+    qalculate-gtk # good graphical calculator
+    rofi
+    swaylock # lock screen for wayland
+    swayidle # idle management for wayland
+    spotify # wrap
+    tor
+    vlc
+    virt-manager # gui for VMs
     (google-chrome.override {
       commandLineArgs = [
         "--enable-features=UseOzonePlatform"
         "--ozone-platform=wayland"
       ];
     })
-    graphviz
-    grim # screenshot
-    home-manager
-    hyprpicker # color picker
-    imagemagick # for cli screenshots
-    libclang
-    libsForQt5.polkit-kde-agent # for apps that want elevated permission
-    libsForQt5.kdeconnect-kde # for sharing files with phone
+  ];
+
+  systemLibsAndPackages = with pkgs; [
+    bluez
     libguestfs
     libinput
     libsecret # for storing passwords
-    linuxHeaders # for kernel dev
-    llvm_16
-    luaformatter # format lua
-    kmod
-    minicom # for serial connections
-    mullvad-vpn # wrap
-    nemo # gui file manager
-    nettools # cmd line utils like ethtool
     nfs-utils # for nfs drives
-    nodejs
-    openrgb # manage rgb devices
     OVMFFull # UEFI firmware for QEMU
-    parted # disk partition tool
     pass-secret-service # dbus api for libsecret
-    playerctl
-    picocom
-    python3
-    prismlauncher # minecraft!
-    qalculate-gtk # good graphical calculator
-    #qemu_full
     qt5.qtwayland
     qt6.qtwayland
-    qmk # keyboard memes
-    rofi
-    rpi-imager # to add ssid and information into the bootable image
-    socat # to establish socket connections
-    signal-desktop # wrap
-    swaylock # lock screen for wayland
-    swayidle # idle management for wayland
     spice-vdagent
-    (heroic.override {
-      extraPkgs = pkgs: [
-        wineWowPackages.unstableFull
-        wineWowPackages.waylandFull
-        protontricks
-        glxinfo # OpenGL libraries for steamp
-        gamescope # steamOS session window manager
-        vkd3d-proton
-        ##mesa
-        #libGLU
-        vulkan-tools
-        vulkan-validation-layers
-        vulkan-loader
-        vulkan-headers
-      ];
-    })
-    (steam.override {
-      extraPkgs = pkgs: [
-        wineWowPackages.unstableFull
-        wineWowPackages.waylandFull
-        protontricks
-        glxinfo # OpenGL libraries for steamp
-        gamescope # steamOS session window manager
-        vkd3d-proton
-        ##mesa
-        #libGLU
-        vulkan-tools
-        vulkan-validation-layers
-        vulkan-loader
-        vulkan-headers
-      ];
-    })
-    spotify # wrap
-    slurp
-    sshfs
-    thunderbird
-    tor
-    transmission_4-gtk
-    #uefi-run
-    #udiskie # to allow automatic mounting of USB drives
-    vlc
-    virt-manager # gui for VMs
-    wl-clipboard
-    wireplumber # sound memes
+  ];
+
+  daemons = with pkgs; [
+    colord
     wpaperd # wallpaper daemon
-    wtype # input keyboard events in wayland
+  ];
+
+  misc = with pkgs; [
     xdg-desktop-portal-hyprland # allows for sharing of screen + audio
     xdg-user-dirs
-
-    zotero # bibliography manager
-    zoom-us # wrap
-
-    # TODO - remove these once xournalpp allows for launch without issue
-    adwaita-icon-theme
-    shared-mime-info
-    xournalpp
   ];
+
+in
+{
+  environment.systemPackages =
+    guiTools ++ cliTools ++ devDependencies ++ systemLibsAndPackages ++ daemons ++ misc;
 }
