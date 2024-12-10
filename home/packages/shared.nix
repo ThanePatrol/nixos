@@ -69,6 +69,7 @@ in
       qbittorrent
       rclone # nice simple backup cli for cloud backups
       ripgrep # nice and fast grep alternative for large codebases
+      rmlint
       rsync
       sphinx # python docs generator
       sshfs # mount remote file systems locally with ssh
