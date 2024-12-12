@@ -191,3 +191,24 @@ vim.keymap.set({"n", "i", "v", "x"}, "<C-g>n", "<cmd>GpNextAgent<cr>",
                keymapOptions("Next Agent"))
 
 -- gp nvim end
+
+-- Telescope begin
+local telescope = require('telescope-module.telescope-cfg')
+
+vim.keymap.set('n', '<leader>tg', telescope.multi_grep,
+               {desc = "Find files with file type"})
+vim.keymap.set('n', '<leader>tf', telescope.file_search, {desc = "Find files"})
+vim.keymap.set('n', '<leader>ts', telescope.text_search, {desc = "Text search"})
+-- find some emoji!
+vim.keymap.set('n', '<leader>ie', telescope.emojis,
+               {desc = "Open emoji picker 😀"})
+
+-- Telescope end
+
+-- Terminal begin
+local termtoggle = require('term.nvim-term')
+
+vim.keymap.set('n', 'to', termtoggle.toggleterm, {desc = 'toggle terminal'})
+vim.keymap.set('t', 'tc', termtoggle.toggleterm,
+               {buffer = termtoggle.buf, desc = 'toggle terminal'})
+-- Terminal end

@@ -46,13 +46,12 @@ local live_multigrep = function(opts)
     }):find()
 end
 
-M.setup = function() live_multigrep() end
-
-vim.keymap.set('n', '<leader>tg', live_multigrep)
-vim.keymap.set('n', '<leader>tf', builtin.find_files, {})
-vim.keymap.set('n', '<leader>ts', function()
+M.multi_grep = function() live_multigrep() end
+M.text_search = function()
     builtin.grep_string({search = vim.fn.input('Grep > ')})
-end)
+end
 
--- find some emoji!
-vim.keymap.set('n', '<leader>ie', builtin.symbols, {})
+M.file_search = function() builtin.find_files() end
+M.emojis = function() builtin.symbols() end
+
+return M
