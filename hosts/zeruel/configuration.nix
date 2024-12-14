@@ -13,7 +13,9 @@ let
   username = customArgs.username;
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
-  nasFolder = "/home/hugh/nas";
+  ssdFolder = "/home/hugh/nas";
+  hddBackupFolder = "/home/hugh/backups";
+  ssdBackupSystemdServiceName = "backup-local";
 
   theme = "Catppuccin-mocha";
 
@@ -64,17 +66,47 @@ in
     # workaround for lack of systemd support for multidisk file systems  https://github.com/systemd/systemd/issues/8234
     # bcachefs creates a new disk with a uuid when you have a multi disk setup
     script = ''
-      if [ ! -d ${nasFolder} ]; then
-        ${pkgs.coreutils}/bin/mkdir ${nasFolder}
-        ${pkgs.coreutils}/bin/chown -R ${username} ${nasFolder}
+      if [ ! -d ${ssdFolder} ]; then
+        ${pkgs.coreutils}/bin/mkdir ${ssdFolder}
+        ${pkgs.coreutils}/bin/chown -R ${username} ${ssdFolder}
       fi
-      if ${pkgs.util-linux}/bin/mountpoint -q "${nasFolder}"; then
-          ${pkgs.util-linux}/bin/umount ${nasFolder}
+      if ${pkgs.util-linux}/bin/mountpoint -q ${ssdFolder}; then
+          ${pkgs.util-linux}/bin/umount ${ssdFolder}
       fi
-        ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,uid=1000,gid=1000,umask=0022 -t bcachefs /dev/disk/by-uuid/bec8ac82-6ebb-4daa-9d7c-8f1289ddb78a ${nasFolder}
-        ${pkgs.coreutils}/bin/chown -R ${username} ${nasFolder}
+        ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid -t bcachefs /dev/disk/by-uuid/bec8ac82-6ebb-4daa-9d7c-8f1289ddb78a ${ssdFolder}
+        ${pkgs.coreutils}/bin/chown -R ${username} ${ssdFolder}
     '';
     wantedBy = [ "multi-user.target" ];
+  };
+
+  systemd.services."${ssdBackupSystemdServiceName}" = {
+    description = "Mount HDD and backup files";
+    script = ''
+      if [ ! -d ${hddBackupFolder} ]; then
+        ${pkgs.coreutils}/bin/mkdir ${hddBackupFolder}
+      fi
+      if [ ! ${pkgs.util-linux}/bin/mountpoint -q ]; then
+        ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,noexec -t btrfs /dev/disk/by-uuid/0bea86cf-242e-4ec8-9365-7c4b375df50e ${hddBackupFolder}
+      fi
+
+      new_folder_name=${hddBackupFolder}/"backup-$(${pkgs.coreutils}/bin/date -u +%Y-%m-%d_%H.%M.%S%Z)"
+      ${pkgs.coreutils}/bin/mkdir "$new_folder_name"
+      # remove all but the latest 3 dirs, if less than 3 do nothing - assume no other files in here!
+      ${pkgs.coreutils}/bin/ls ${hddBackupFolder} | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -n -3 | ${pkgs.findutils}/bin/xargs -I {} ${pkgs.coreutils}/bin/rm {}
+
+      # prevent shutdown until backup finishes
+      ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone sync ${ssdFolder} "$new_folder_name"
+
+      ${pkgs.util-linux}/bin/umount ${hddBackupFolder}
+    '';
+  };
+
+  systemd.timers.init-backup = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "10m";
+      Unit = "${ssdBackupSystemdServiceName}.service";
+    };
   };
 
   # fileSystems = {
