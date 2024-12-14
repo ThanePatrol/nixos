@@ -59,9 +59,9 @@ in
   };
 
   fileSystems = {
-    "/home/hugh/sda" = {
-      device = "/dev/disk/by-uuid/d6861d69-f542-421d-a956-3e58c4ff4e31";
-      fsType = "ext4";
+    "/home/hugh/nas" = {
+      device = "/dev/disk/by-uuid/28a15d8d-8c3f-4b4e-8c4b-799b7926068f:/dev/disk/by-uuid/ae07e42b-ae8b-4e38-9e16-aac8721b193f";
+      fsType = "bcachefs";
     };
   };
 
