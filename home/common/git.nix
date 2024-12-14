@@ -1,7 +1,9 @@
 { email, gitUserName, ... }:
 
-let DEFAULT_BRANCH = "main";
-in {
+let
+  DEFAULT_BRANCH = "main";
+in
+{
   # set up auth here: https://cli.github.com/manual/gh_auth_login
   programs.gh = {
     enable = true;
@@ -18,10 +20,10 @@ in {
   programs.git = {
     enable = true;
 
-    userName = gitUserName; # TODO pass down config in flake4
+    userName = gitUserName;
     userEmail = email;
 
-    includes = [{ path = "~/.config/git/gitconfig"; }];
+    includes = [ { path = "~/.config/git/gitconfig"; } ];
 
     extraConfig = {
       init.defaultBranch = DEFAULT_BRANCH;
