@@ -13,6 +13,7 @@ let
   username = customArgs.username;
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
+  nasFolder = "/home/hugh/nas";
 
   theme = "Catppuccin-mocha";
 
@@ -58,12 +59,30 @@ in
     ];
   };
 
-  fileSystems = {
-    "/home/hugh/nas" = {
-      device = "/dev/disk/by-uuid/28a15d8d-8c3f-4b4e-8c4b-799b7926068f:/dev/disk/by-uuid/ae07e42b-ae8b-4e38-9e16-aac8721b193f";
-      fsType = "bcachefs";
-    };
+  systemd.services.mount-nas = {
+    description = "Mount NAS SSDs";
+    # workaround for lack of systemd support for multidisk file systems  https://github.com/systemd/systemd/issues/8234
+    # bcachefs creates a new disk with a uuid when you have a multi disk setup
+    script = ''
+      if [ ! -d ${nasFolder} ]; then
+        ${pkgs.coreutils}/bin/mkdir ${nasFolder}
+        ${pkgs.coreutils}/bin/chown -R ${username} ${nasFolder}
+      fi
+      if ${pkgs.util-linux}/bin/mountpoint -q "${nasFolder}"; then
+          ${pkgs.util-linux}/bin/umount ${nasFolder}
+      fi
+        ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,uid=1000,gid=1000,umask=0022 -t bcachefs /dev/disk/by-uuid/bec8ac82-6ebb-4daa-9d7c-8f1289ddb78a ${nasFolder}
+        ${pkgs.coreutils}/bin/chown -R ${username} ${nasFolder}
+    '';
+    wantedBy = [ "multi-user.target" ];
   };
+
+  # fileSystems = {
+  #   "/home/hugh/nas" = {
+  #     device = "/dev/disk/by-uuid/28a15d8d-8c3f-4b4e-8c4b-799b7926068f:/dev/disk/by-uuid/ae07e42b-ae8b-4e38-9e16-aac8721b193f";
+  #     fsType = "bcachefs";
+  #   };
+  # };
 
   hardware = {
     bluetooth = {
