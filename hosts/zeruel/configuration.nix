@@ -14,7 +14,7 @@ let
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
   ssdFolder = "/home/hugh/nas";
-  hddBackupFolder = "/home/hugh/backups";
+  hddBackupFolder = "/home/hugh/Backups";
   ssdBackupSystemdServiceName = "backup-local";
 
   theme = "Catppuccin-mocha";
@@ -84,10 +84,11 @@ in
     script = ''
       if [ ! -d ${hddBackupFolder} ]; then
         ${pkgs.coreutils}/bin/mkdir ${hddBackupFolder}
-      fi
-      if [ ! ${pkgs.util-linux}/bin/mountpoint -q ]; then
+        fi
+
         ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,noexec -t btrfs /dev/disk/by-uuid/0bea86cf-242e-4ec8-9365-7c4b375df50e ${hddBackupFolder}
-      fi
+
+       ${pkgs.coreutils}/bin/chown -R ${username} ${hddBackupFolder}
 
       new_folder_name=${hddBackupFolder}/"backup-$(${pkgs.coreutils}/bin/date -u +%Y-%m-%d_%H.%M.%S%Z)"
       ${pkgs.coreutils}/bin/mkdir "$new_folder_name"
