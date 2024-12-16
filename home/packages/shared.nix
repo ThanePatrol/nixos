@@ -36,6 +36,10 @@ let
     yamlfmt
   ];
 
+  devTools = with pkgs; [
+    python312Packages.compiledb
+  ];
+
 in
 {
   packages =
@@ -83,6 +87,7 @@ in
       zip # CLI compression
       zsh
     ]
-    ++ codeFormattersAndLinters;
+    ++ codeFormattersAndLinters
+    ++ devTools;
 
 }

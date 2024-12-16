@@ -119,6 +119,11 @@ in
     extraPackages = with pkgs; [
       tree-sitter
 
+      # C/cpp
+      # For clangd
+      llvmPackages_19.clang-unwrapped
+      cmake
+
       #Language servers
       bash-language-server
       lua-language-server
