@@ -276,6 +276,7 @@
               golangci-lint
               nilaway
               golines
+              tinygo
             ];
           };
       };
