@@ -211,9 +211,8 @@ vim.keymap.set('n', '<leader>ie', telescope.emojis,
 -- Terminal begin
 local termtoggle = require('term.nvim-term')
 
-vim.keymap.set('n', 'to', termtoggle.toggleterm, {desc = 'toggle terminal'})
-vim.keymap.set('t', 'tc', termtoggle.toggleterm,
-               {buffer = termtoggle.buf, desc = 'toggle terminal'})
+vim.keymap.set({'n', 't'}, '<leader>tt', termtoggle.toggleterm,
+               {desc = 'toggle terminal'})
 -- Terminal end
 --
 -- Quickfix start

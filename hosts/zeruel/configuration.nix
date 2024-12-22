@@ -15,7 +15,15 @@ let
   gitUserName = customArgs.gitUserName;
   ssdFolder = "/home/hugh/SSDs";
   hddBackupFolder = "/home/hugh/Backups";
+  rcloneConfPath = "/home/hugh/.config/rclone/rclone.conf";
   ssdBackupSystemdServiceName = "backup-local";
+  tenGbEthernetPort1 = "enp36s0f0";
+  tenGbEthernetPort2 = "enp36s0f1"; # TODO - identify physical location
+  onboardGigabitEthernetPort1 = "enp38s0";
+  onboardGigabitEthernetPort2 = "enp39s0"; # physically the bottom port
+  managementPort = "enp42s0f3u5u3c2";
+  wanID = 10;
+  lanID = 20;
 
   theme = "Catppuccin-mocha";
 
@@ -60,6 +68,150 @@ in
     kernelParams = [
       "transparent_hugepage=madvise"
     ];
+
+    # allow forwarding of packets
+    kernel.sysctl = {
+      "net.ipv4.conf.all.forwarding" = true;
+      "net.ipv6.conf.all.forwarding" = true;
+
+      # do not configure ipv6 addresses by default
+      "net.ipv6.conf.all.accept_ra" = 0;
+      "net.ipv6.conf.all.autoconf" = 0;
+      "net.ipv6.conf.all.use_tempaddr" = 0;
+    };
+  };
+
+  # router config
+  networking = {
+    useDHCP = false;
+    hostName = "zeruel";
+
+    # use nftables instead of scripted routing
+    nat.enable = false;
+    firewall.enable = false;
+    nftables = {
+      enable = true;
+      ruleset = ''
+        table inet filter {
+         # flowtable f {
+         #   hook ingress priority 0;
+         #   devices = { lan };
+         # }
+          # allow router to create output connections
+          chain output {
+            type filter hook output priority 100; policy accept;
+          }
+          # handle packets destined for the device itself
+          chain input {
+            type filter hook input priority filter; policy drop;
+
+            # accept local inputs
+            iifname {
+              "lan",
+            } counter accept
+
+            # allow established connections from wan, drop everything else
+            iifname "wan" ct state { established, related } counter accept
+            iifname "wan" drop
+          }
+          # handle packets routed through but not destined for router
+          chain forward {
+            type filter hook forward priority filter; policy drop;
+
+            # use flow table for more efficient processing
+            # ip protocol { tcp, udp } flow offload @f
+
+            iifname {
+              "lan",
+            } oifname {
+              "wan",
+            } counter accept comment "Allow LAN to WAN"
+
+            iifname {
+              "wan",
+            } oifname {
+              "lan",
+            } ct state established,related counter accept comment "allow established connection back to lan"
+
+          }
+        }
+
+        table ip nat {
+          chain prerouting {
+            type nat hook prerouting priority filter; policy accept;
+          }
+
+          # Setup NAT masquerading on the wan interface
+          chain postrouting {
+            type nat hook postrouting priority filter; policy accept;
+            oifname "wan" masquerade
+          }
+        }
+      '';
+    };
+
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+    vlans = {
+      wan = {
+        id = wanID;
+        interface = onboardGigabitEthernetPort2;
+      };
+      lan = {
+        id = lanID;
+        interface = tenGbEthernetPort1;
+      };
+    };
+    interfaces = {
+      ${onboardGigabitEthernetPort1}.useDHCP = false;
+      ${onboardGigabitEthernetPort2}.useDHCP = false;
+      ${tenGbEthernetPort1}.useDHCP = false;
+      ${tenGbEthernetPort2}.useDHCP = false;
+      managementPort.useDHCP = true;
+
+      wan.useDHCP = false;
+      lan = {
+        ipv4.addresses = [
+          {
+            address = "10.0.0.1";
+            prefixLength = 24;
+          }
+        ];
+      };
+    };
+  };
+
+  # allow lan devices to get IPs!
+  services.kea.dhcp4 = {
+    enable = true;
+    settings = {
+      interfaces-config = {
+        interfaces = [
+          "lan"
+        ];
+      };
+      rebind-timer = 2000;
+      renew-timer = 1000;
+      lease-database = {
+        name = "/var/lib/kea/dhcp4.leases";
+        persist = true;
+        type = "memfile";
+      };
+      subnet4 = [
+        {
+          id = 1;
+          pools = [
+            {
+              pool = "10.0.0.100 - 10.0.0.254";
+            }
+          ];
+          subnet = "10.0.0.0/24";
+        }
+      ];
+      valid-lifetime = 4000;
+    };
   };
 
   systemd.services.mount-nas = {
@@ -97,7 +249,7 @@ in
       ${pkgs.coreutils}/bin/ls ${hddBackupFolder} | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -n -3 | ${pkgs.findutils}/bin/xargs -I {} ${pkgs.coreutils}/bin/rm {}
 
       # prevent shutdown until backup finishes
-      ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone sync ${ssdFolder} "$new_folder_name"
+      ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone --config=${rcloneConfPath} sync ${ssdFolder} "$new_folder_name"
 
       ${pkgs.util-linux}/bin/umount ${hddBackupFolder}
     '';
@@ -127,26 +279,26 @@ in
     };
   };
 
-  networking = {
-    networkmanager.enable = true;
-    hostName = "zeruel";
-    firewall = {
-      enable = false;
-      allowedTCPPortRanges = [
-        # minecraft
-        {
-          from = 25565;
-          to = 25565;
-        }
-      ];
-      allowedUDPPortRanges = [
-        {
-          from = 25565;
-          to = 25565;
-        }
-      ];
-    };
-  };
+  # networking = {
+  #   networkmanager.enable = true;
+  #   hostName = "zeruel"; # Define your hostname.
+  #   firewall = {
+  #     enable = false;
+  #     allowedTCPPortRanges = [
+  #       # minecraft
+  #       {
+  #         from = 25565;
+  #         to = 25565;
+  #       }
+  #     ];
+  #     allowedUDPPortRanges = [
+  #       {
+  #         from = 25565;
+  #         to = 25565;
+  #       }
+  #     ];
+  #   };
+  # };
 
   programs = {
     hyprland.enable = true;

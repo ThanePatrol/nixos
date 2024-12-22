@@ -1,49 +1,49 @@
 local M = {}
 
--- M.toggleterm = function()
---     for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
---         local buffer_name = vim.api.nvim_buf_get_name(buffer)
---         if (string.sub(buffer_name, 1, 7) == "term://") then
---             vim.api.nvim_win_set_buf(0, buffer)
---             return
---         end
---     end
---     vim.api.nvim_command(":terminal")
--- end
+-- go back to normal mode
+vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
 
-M.config = {
-    cmd = {vim.o.shell},
-    winopt = {
-        relative = 'editor',
-        col = math.floor(vim.o.columns * 0.1),
-        row = math.floor(vim.o.lines * 0.1),
-        width = math.floor(vim.o.columns * 0.8),
-        height = math.floor(vim.o.lines * 0.8),
-        border = 'rounded',
-        style = 'minimal',
-        hide = true
-    }
-}
+local state = {floating = {buf = -1, win = -1}}
 
-M.toggleterm = function()
-    if not vim.api.nvim_buf_is_valid(M.buf or -1) then
-        M.buf = vim.api.nvim_create_buf(false, false)
-    end
-    M.win = vim.iter(vim.fn.win_findbuf(M.buf)):find(function(b_wid)
-        return vim.iter(vim.api.nvim_tabpage_list_wins(0)):any(function(t_wid)
-            return b_wid == t_wid
-        end)
-    end) or vim.api.nvim_open_win(M.buf, false, M.config.winopt)
+local function create_floating_window(opts)
+    opts = opts or {}
+    local width = opts.width or math.floor(vim.o.columns * 0.8)
+    local height = opts.height or math.floor(vim.o.lines * 0.8)
+    local col = math.floor((vim.o.columns - width) / 2)
+    local row = math.floor((vim.o.lines - height) / 2)
 
-    if vim.api.nvim_win_get_config(M.win).hide then
-        vim.api.nvim_win_set_config(M.win, {hide = false})
-        vim.api.nvim_set_current_win(M.win)
-        if vim.bo[M.buf].channel <= 0 then vim.fn.termopen(M.config.cmd) end
-        vim.cmd('startinsert')
+    local buf = nil
+    if vim.api.nvim_buf_is_valid(opts.buf) then
+        buf = opts.buf
     else
-        vim.api.nvim_win_set_config(M.win, {hide = true})
-        vim.api.nvim_set_current_win(vim.fn.win_getid(vim.fn.winnr('#')))
+        buf = vim.api.nvim_create_buf(false, true)
+    end
+
+    local win_config = {
+        relative = 'editor',
+        col = col,
+        row = row,
+        width = width,
+        height = height,
+        border = 'rounded',
+        style = 'minimal'
+    }
+
+    local win = vim.api.nvim_open_win(buf, true, win_config)
+    return {buf = buf, win = win}
+end
+
+local toggle_terminal = function()
+    if not vim.api.nvim_buf_is_valid(state.floating.win) then
+        state.floating = create_floating_window({buf = state.floating.buf})
+        if vim.bo[state.floating.buf].buftype ~= "terminal" then
+            vim.cmd.term()
+        end
+    else
+        vim.api.nvim_win_hide(state.floating.win)
     end
 end
+
+M.toggleterm = toggle_terminal
 
 return M
