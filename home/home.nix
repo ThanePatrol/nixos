@@ -34,6 +34,7 @@ in
   imports =
     [
       (import ./common/direnv.nix)
+      (import ./common/ghostty.nix)
       (import ./common/bat/bat.nix { inherit theme; })
       (import ./common/btop/btop.nix { inherit theme pkgs; })
       ./common/rclone.nix
