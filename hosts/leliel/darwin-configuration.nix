@@ -70,6 +70,7 @@ in
       "anki"
       "vial"
       "MonitorControl"
+      "ghostty"
     ];
   };
 

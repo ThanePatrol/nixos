@@ -66,6 +66,7 @@ in
       libsixel
       localsend
       ollama
+      ncurses # for terminfo stuff
       pandoc # document conversion
       prismlauncher # minecraft!
       pciutils # useful pci utils
