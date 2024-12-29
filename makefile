@@ -16,6 +16,11 @@ update-zeruel: ## Updates nixos server
 	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.zeruel.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#zeruel
 
+update-zeruel-local: ## Updates nixos server
+	sudo -v # Build can take a while and we need root to apply the flake
+	nix build --extra-experimental-features "nix-command flakes" --option substituters "file:///nix/store" .#nixosConfigurations.zeruel.config.system.build.toplevel
+	sudo nixos-rebuild switch --flake .#zeruel
+
 update-armisael: ## Updates Lenovo homelab
 	sudo -v
 	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.armisael.config.system.build.toplevel
