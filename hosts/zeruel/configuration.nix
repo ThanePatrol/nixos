@@ -93,10 +93,6 @@ in
       enable = true;
       ruleset = ''
         table inet filter {
-         # flowtable f {
-         #   hook ingress priority 0;
-         #   devices = { lan };
-         # }
           # allow router to create output connections
           chain output {
             type filter hook output priority 100; policy accept;
@@ -104,35 +100,27 @@ in
           # handle packets destined for the device itself
           chain input {
             type filter hook input priority filter; policy drop;
+            iif lo accept
 
             # accept local inputs
-            iifname {
-              "lan",
-            } counter accept
+            iifname "lan" counter accept
 
             # allow established connections from wan, drop everything else
-            iifname "wan" ct state { established, related } counter accept
+            iifname "wan" ct state established,related counter accept
             iifname "wan" drop
+
+            meta l4proto icmp accept comment "Accept ICMP"
+            udp dport 67 counter accept comment "Allow DHCP requests"
+            udp dport 53 counter accept comment "Allow DNS queries"
+
           }
           # handle packets routed through but not destined for router
           chain forward {
             type filter hook forward priority filter; policy drop;
 
-            # use flow table for more efficient processing
-            # ip protocol { tcp, udp } flow offload @f
+            iifname "lan" oifname "wan" counter accept comment "Allow LAN to WAN"
 
-            iifname {
-              "lan",
-            } oifname {
-              "wan",
-            } counter accept comment "Allow LAN to WAN"
-
-            iifname {
-              "wan",
-            } oifname {
-              "lan",
-            } ct state established,related counter accept comment "allow established connection back to lan"
-
+            iifname "wan" oifname "lan" ct state established,related counter accept comment "allow established connection back to lan"
           }
         }
 
@@ -175,7 +163,7 @@ in
       lan = {
         ipv4.addresses = [
           {
-            address = "10.0.0.1";
+            address = "10.0.1.1";
             prefixLength = 24;
           }
         ];
@@ -204,10 +192,10 @@ in
           id = 1;
           pools = [
             {
-              pool = "10.0.0.100 - 10.0.0.254";
+              pool = "10.0.1.100 - 10.0.1.254";
             }
           ];
-          subnet = "10.0.0.0/24";
+          subnet = "10.0.1.0/24";
         }
       ];
       valid-lifetime = 4000;
