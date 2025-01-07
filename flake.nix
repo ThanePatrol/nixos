@@ -277,6 +277,8 @@
               nilaway
               golines
               tinygo
+              python39
+              python39Packages.pip
             ];
           };
       };

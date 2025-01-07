@@ -212,3 +212,8 @@ vim.keymap.set('n', 'to', termtoggle.toggleterm, {desc = 'toggle terminal'})
 vim.keymap.set('t', 'tc', termtoggle.toggleterm,
                {buffer = termtoggle.buf, desc = 'toggle terminal'})
 -- Terminal end
+--
+-- Quickfix start
+vim.api.nvim_command(
+    "autocmd FileType qf nnoremap <buffer> dd :RemoveQFItem<cr>")
+-- Quickfix end
