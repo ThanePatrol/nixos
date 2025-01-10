@@ -52,7 +52,7 @@ M.text_search = function()
 end
 
 M.file_search = function()
-    builtin.find_files({search = vim.fn.input('File Name > ')})
+    builtin.find_files({search_file = vim.fn.input('File Name > ')})
 end
 M.emojis = function() builtin.symbols() end
 
