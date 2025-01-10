@@ -4,9 +4,7 @@ local function refactor_functions_and_logging()
     local curr_name = vim.fn.expand("<cword>")
     local new_name = vim.fn.input("New name: ", curr_name)
 
-    if not new_name or #new_name == 0 or new_name == curr_name then
-        return -- Do nothing if the name is not changed
-    end
+    if not new_name or #new_name == 0 or new_name == curr_name then return end
 
     vim.lsp.buf.rename(new_name)
 end

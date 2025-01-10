@@ -63,6 +63,7 @@ in
     ];
     # mainly used for gui things not packaged by nix
     casks = [
+      "macfuse"
       "docker"
       "firefox"
       "spotify"
