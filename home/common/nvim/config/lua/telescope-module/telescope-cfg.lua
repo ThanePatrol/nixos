@@ -51,7 +51,9 @@ M.text_search = function()
     builtin.grep_string({search = vim.fn.input('Grep > ')})
 end
 
-M.file_search = function() builtin.find_files() end
+M.file_search = function()
+    builtin.find_files({search = vim.fn.input('File Name > ')})
+end
 M.emojis = function() builtin.symbols() end
 
 return M
