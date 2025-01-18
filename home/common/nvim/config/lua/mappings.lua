@@ -197,7 +197,10 @@ local telescope = require('telescope-module.telescope-cfg')
 
 vim.keymap.set('n', '<leader>tg', telescope.multi_grep,
                {desc = "Find files with file type"})
-vim.keymap.set('n', '<leader>tf', telescope.file_search, {desc = "Find files"})
+vim.keymap.set('n', '<leader>tf', telescope.file_search,
+               {desc = "Find files with fuzzy matching"})
+vim.keymap.set('n', '<leader>tt', telescope.file_search_copy,
+               {desc = "Find files with input prompt for copy and paste"})
 vim.keymap.set('n', '<leader>ts', telescope.text_search, {desc = "Text search"})
 -- find some emoji!
 vim.keymap.set('n', '<leader>ie', telescope.emojis,

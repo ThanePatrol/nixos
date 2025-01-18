@@ -5,6 +5,11 @@ local finders = require('telescope.finders')
 local make_entry = require('telescope.make_entry')
 local conf = require('telescope.config').values
 
+-- set default visualizer
+require('telescope').setup({
+    defaults = {layout_config = {horizontal = {width = 0.95}}}
+})
+
 local M = {}
 
 local live_multigrep = function(opts)
@@ -51,9 +56,11 @@ M.text_search = function()
     builtin.grep_string({search = vim.fn.input('Grep > ')})
 end
 
-M.file_search = function()
+M.file_search_copy = function()
     builtin.find_files({search_file = vim.fn.input('File Name > ')})
 end
+
+M.file_search = function() builtin.find_files() end
 M.emojis = function() builtin.symbols() end
 
 return M
