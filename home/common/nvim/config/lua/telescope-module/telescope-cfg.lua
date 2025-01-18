@@ -60,7 +60,7 @@ M.file_search_copy = function()
     builtin.find_files({search_file = vim.fn.input('File Name > ')})
 end
 
-M.file_search = function() builtin.find_files() end
+M.file_search = builtin.find_files
 M.emojis = function() builtin.symbols() end
 
 return M
