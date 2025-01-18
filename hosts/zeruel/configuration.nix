@@ -39,6 +39,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
+    #../../system/linux/modules/udev-rules.nix
   ];
   nix.settings.experimental-features = [
     "nix-command"
@@ -110,13 +111,6 @@ in
     };
   };
 
-  # fileSystems = {
-  #   "/home/hugh/nas" = {
-  #     device = "/dev/disk/by-uuid/28a15d8d-8c3f-4b4e-8c4b-799b7926068f:/dev/disk/by-uuid/ae07e42b-ae8b-4e38-9e16-aac8721b193f";
-  #     fsType = "bcachefs";
-  #   };
-  # };
-
   hardware = {
     bluetooth = {
       enable = true;
@@ -135,7 +129,7 @@ in
 
   networking = {
     networkmanager.enable = true;
-    hostName = "zeruel"; # Define your hostname.
+    hostName = "zeruel";
     firewall = {
       enable = false;
       allowedTCPPortRanges = [
@@ -164,15 +158,7 @@ in
     virt-manager.enable = true;
   };
 
-  # FIXME - do we really want this on a server?
   services = {
-    udev = {
-      packages = with pkgs; [ via ];
-      extraRules = ''
-        KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
-        ACTION=="add", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{ID_FS_USAGE}=="filesystem", RUN+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /home/hugh/removable"
-      '';
-    };
     # Enable clipboard sharing to VM
     spice-vdagentd.enable = true;
     openssh.enable = true;
