@@ -72,6 +72,7 @@ in
       "vial"
       "MonitorControl"
       "ghostty"
+      "zen-browser"
     ];
   };
 

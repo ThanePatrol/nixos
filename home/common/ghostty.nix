@@ -1,6 +1,15 @@
 {
+  lib,
+  theme,
+  ...
+}:
+
+let
+  themeString = lib.toLower theme;
+in
+{
   xdg.configFile."ghostty/config".text = ''
-    theme = catppuccin-mocha
+    theme = ${themeString}
     font-size = 16
 
     clipboard-read = allow

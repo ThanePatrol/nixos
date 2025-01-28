@@ -21,11 +21,16 @@ update-armisael: ## Updates Lenovo homelab
 	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.armisael.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#armisael
 
-update-leliel: ## Updates personal macbook
-#	sudo -v # darwin rebuild requies sudo but it needs to be run as the current user so we elevate permissions here - avoiding a prompt later on
-	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
-	#./leliel-flake-output/sw/bin/darwin-rebuild switch --flake .#leliel
-	darwin-rebuild switch --flake .#leliel
+build-leliel: ## Updates personal macbook
+	 nix build --extra-experimental-features "nix-command flakes"  .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
+
+update-leliel-light: build-leliel
+	THEME="Catppuccin-latte" darwin-rebuild switch --impure --flake .#leliel
+	./change-modes.sh
+
+update-leliel-dark: build-leliel
+	THEME="Catppuccin-mocha" darwin-rebuild switch --impure --flake .#leliel
+	./change-modes.sh
 
 update-work: ## Updates work macbook
 	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
