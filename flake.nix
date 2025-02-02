@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
+
     golang_1_19 = {
       url = "github:NixOS/nixpkgs?rev=7a339d87931bba829f68e94621536cad9132971a";
     };
@@ -47,9 +51,13 @@
       golang_1_22,
       rust-overlay,
       flake-utils,
+      neovim-nightly-overlay,
       ...
     }@inputs:
     let
+      overlays = [
+        inputs.neovim-nightly-overlay.overlays.default
+      ];
       genPkgs =
         system:
         import nixpkgs {
@@ -106,6 +114,9 @@
           modules = [
             ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
+            {
+              nixpkgs.overlays = overlays;
+            }
           ];
 
         };
@@ -135,8 +146,10 @@
           modules = [
             ./hosts/leliel/darwin-configuration.nix
             home-manager.darwinModules.home-manager
+            {
+              nixpkgs.overlays = overlays;
+            }
           ];
-
         };
 
       androidSystem =

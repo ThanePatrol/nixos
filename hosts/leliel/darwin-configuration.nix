@@ -59,7 +59,6 @@ in
     # mainly used for cmd line tools not packaged by nix
     brews = [
       "mas" # mac app store cli
-      "sketchybar"
     ];
     # mainly used for gui things not packaged by nix
     casks = [
