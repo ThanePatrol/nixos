@@ -1,10 +1,12 @@
-.PHONY: update-ramiel update-zeruel update-armisael update-leliel update-work update-fold flake-update fmt clean
+.PHONY: update-ramiel update-zeruel update-armisael update-leliel update-work update-fold flake-update fmt clean install-nix
 
 help: ## Display this screen
 	@echo "Usage: make [target]"
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?##' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s \033[0m %s\n", $$1, $$2}'
 
+install-nix:
+	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
 update-ramiel: ## Updates nixos desktop
 	sudo -v # Build can take a while and we need root to apply the flake
