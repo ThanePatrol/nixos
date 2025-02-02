@@ -207,10 +207,8 @@
       darwinConfigurations = {
         # personal M1
         leliel = darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
-        # TikTok M2
-        work =
-          darwinSystem "aarch64-darwin" "bytedance" true "hugh.mandalidis@bytedance.com"
-            "hugh.mandalidis";
+        # Google m3
+        work = darwinSystem "aarch64-darwin" "hmandalidis" true "hmandalidis@google.com" "hugh.mandalidis";
       };
 
       nixosConfigurations = {
