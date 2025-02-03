@@ -55,9 +55,6 @@
       ...
     }@inputs:
     let
-      overlays = [
-        inputs.neovim-nightly-overlay.overlays.default
-      ];
       genPkgs =
         system:
         import nixpkgs {
@@ -102,6 +99,7 @@
           specialArgs = {
             customArgs = {
               inherit
+                inputs
                 system
                 username
                 isWork
@@ -114,9 +112,6 @@
           modules = [
             ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
-            {
-              nixpkgs.overlays = overlays;
-            }
           ];
 
         };
@@ -133,6 +128,7 @@
             unstablePkgs = inputs.nixpkgs-unstable.legacyPackages.${system};
             customArgs = {
               inherit
+                inputs
                 system
                 username
                 pkgs
@@ -146,9 +142,6 @@
           modules = [
             ./hosts/leliel/darwin-configuration.nix
             home-manager.darwinModules.home-manager
-            {
-              nixpkgs.overlays = overlays;
-            }
           ];
         };
 

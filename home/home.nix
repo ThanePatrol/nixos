@@ -1,4 +1,5 @@
 {
+  inputs,
   email,
   isWork,
   isDarwin,
@@ -50,7 +51,14 @@ in
           ;
       })
       (import ./common/git.nix { inherit email gitUserName theme; })
-      (import ./common/nvim/nvim.nix { inherit pkgs lib theme; })
+      (import ./common/nvim/nvim.nix {
+        inherit
+          inputs
+          pkgs
+          lib
+          theme
+          ;
+      })
       (import ./common/tmux.nix { inherit isDarwin theme pkgs; })
       ./common/rust.nix
       ./common/spotify/spotify.nix

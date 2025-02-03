@@ -12,10 +12,12 @@ let
   username = customArgs.username;
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
+  inputs = customArgs.inputs;
   isDarwin = true;
   theme = if builtins.getEnv ("THEME") == "" then "Catppuccin-mocha" else builtins.getEnv ("THEME");
   homeConfig = import ../../home/home.nix {
     inherit
+      inputs
       email
       isWork
       isDarwin
