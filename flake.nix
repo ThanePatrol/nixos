@@ -110,6 +110,8 @@
               gitUserName = gitUserName;
               theme = "Catppuccin-mocha";
               homeDirectory = homeDirectory;
+              pkgs = pkgs;
+              lib = home-manager.lib;
             })
           ];
         };
