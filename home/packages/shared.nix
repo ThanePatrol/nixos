@@ -37,7 +37,7 @@ let
   ];
 
   devTools = with pkgs; [
-    python312Packages.compiledb
+    #python312Packages.compiledb
     uv
   ];
 
