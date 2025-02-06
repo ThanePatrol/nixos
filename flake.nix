@@ -89,7 +89,29 @@
                 ;
             };
           };
-          modules = [ ./home/home.nix ];
+
+          #inputs,
+          #email,
+          #isWork,
+          #isDarwin,
+          #username,
+          #gitUserName,
+          #theme,
+          #homeDirectory,
+          #lib,
+          #pkgs,
+          modules = [
+            (import ./home/home.nix {
+              inputs = inputs;
+              email = email;
+              isWork = isWork;
+              isDarwin = isDarwin;
+              username = username;
+              gitUserName = gitUserName;
+              theme = "Catppuccin-mocha";
+              homeDirectory = homeDirectory;
+            })
+          ];
         };
       nixosRemoteDestopSystem =
         system: username: isWork: email: gitUserName: homeDirectory:
