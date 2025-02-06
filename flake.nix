@@ -68,8 +68,8 @@
           config.allowUnfree = true;
         };
 
-      ubuntuRemoteDevSystem =
-        system: username: isWork: email: gitUserName:
+      cloudTopDevSystem =
+        system: username: isWork: email: gitUserName: homeDirectory:
         let
           pkgs = genPkgs system;
         in
@@ -83,13 +83,14 @@
                 isWork
                 email
                 gitUserName
+                homeDirectory
                 ;
             };
           };
           modules = [ ./home/home.nix ];
         };
       nixosRemoteDestopSystem =
-        system: username: isWork: email: gitUserName:
+        system: username: isWork: email: gitUserName: homeDirectory:
         let
           pkgs = genPkgs system;
         in
@@ -105,6 +106,7 @@
                 isWork
                 email
                 gitUserName
+                homeDirectory
                 ;
             };
           };
@@ -117,7 +119,7 @@
         };
 
       darwinSystem =
-        system: username: isWork: email: gitUserName:
+        system: username: isWork: email: gitUserName: homeDirectory:
         let
           pkgs = genDarwin system;
         in
@@ -135,6 +137,7 @@
                 isWork
                 email
                 gitUserName
+                homeDirectory
                 ;
             };
           };
@@ -146,7 +149,7 @@
         };
 
       androidSystem =
-        system: username: isWork: email: gitUserName:
+        system: username: isWork: email: gitUserName: homeDirectory:
         let
           pkgs = genPkgs system;
         in
@@ -170,6 +173,7 @@
                       isWork
                       email
                       gitUserName
+                      homeDirectory
                       ;
                   };
                 };
@@ -212,9 +216,13 @@
     {
       darwinConfigurations = {
         # personal M1
-        leliel = darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis";
+        leliel =
+          darwinSystem "aarch64-darwin" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis"
+            "/Users/hugh";
         # Google m3
-        work = darwinSystem "aarch64-darwin" "hmandalidis" true "hmandalidis@google.com" "hugh.mandalidis";
+        work =
+          darwinSystem "aarch64-darwin" "hmandalidis" true "hmandalidis@google.com" "hugh.mandalidis"
+            "/Users/hmandalidis";
       };
 
       nixosConfigurations = {
@@ -225,14 +233,15 @@
 
         # x570 server
         zeruel =
-          nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
-            "Hugh Mandalidis";
+          nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis"
+            "/home/hugh";
       };
 
       homeConfigurations = {
         workServer =
-          ubuntuRemoteDevSystem "x86_64-linux" "hugh.mandalidis" true "hugh.mandalidis@bytedance.com"
-            "hugh.mandalidis";
+          cloudTopDevSystem "x86_64-linux" "hugh.mandalidis" true "hugh.mandalidis@bytedance.com"
+            "hmandalidis"
+            "/usr/local/google/home/hmandalidis";
       };
 
       androidConfigurations = {

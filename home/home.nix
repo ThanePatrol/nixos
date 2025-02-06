@@ -6,6 +6,7 @@
   username,
   gitUserName,
   theme,
+  homeDirectory,
   lib,
   pkgs,
   ...
@@ -26,7 +27,7 @@ in
 {
   home.username = "${username}";
 
-  home.homeDirectory = (if isDarwin then "/Users/${username}" else "/home/${username}");
+  home.homeDirectory = homeDirectory;
   home.stateVersion = "23.05"; # Please read the comment before changing.
   programs.home-manager.enable = true;
 

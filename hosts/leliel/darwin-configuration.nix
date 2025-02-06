@@ -13,6 +13,7 @@ let
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
   inputs = customArgs.inputs;
+  homeDirectory = customArgs.homeDirectory;
   isDarwin = true;
   theme = if builtins.getEnv ("THEME") == "" then "Catppuccin-mocha" else builtins.getEnv ("THEME");
   homeConfig = import ../../home/home.nix {
@@ -24,6 +25,7 @@ let
       gitUserName
       username
       theme
+      homeDirectory
       nixpkgs
       pkgs
       config
