@@ -72,6 +72,7 @@
         system: username: isWork: email: gitUserName: homeDirectory:
         let
           pkgs = genPkgs system;
+          isDarwin = false;
         in
         home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs;
@@ -81,6 +82,7 @@
                 system
                 username
                 isWork
+                isDarwin
                 email
                 gitUserName
                 homeDirectory
@@ -239,7 +241,7 @@
 
       homeConfigurations = {
         workServer =
-          cloudTopDevSystem "x86_64-linux" "hugh.mandalidis" false "hugh.mandalidis@bytedance.com"
+          cloudTopDevSystem "x86_64-linux" "hugh.mandalidis" true "hugh.mandalidis@bytedance.com"
             "hmandalidis"
             "/usr/local/google/home/hmandalidis";
       };
