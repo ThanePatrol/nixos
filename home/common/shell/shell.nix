@@ -1,4 +1,9 @@
-{ isWork, isDarwin, pkgs, ... }:
+{
+  isWork,
+  isDarwin,
+  pkgs,
+  ...
+}:
 
 let
   macExports = ''
@@ -11,20 +16,21 @@ let
   '';
 
   workExports = ''
-    export PATH=$PATH:/opt/atlassian/bin
-    export WORKER_INSTALL="$HOME/.workerctl"
-    export PATH="$WORKER_INSTALL/bin:$PATH"
+    export PATH="$PATH:$HOME/.nix-profile/bin"
   '';
 
-in {
+in
+{
 
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
-    envExtra = ''
-      export EDITOR="nvim"
-    '' + (if isDarwin then macExports else "");
+    envExtra =
+      ''
+        export EDITOR="nvim"
+      ''
+      + (if isDarwin then macExports else "");
 
     shellAliases = {
       ".." = "cd ..";
@@ -43,11 +49,9 @@ in {
       gs = "git status -s";
       dc = "docker compose";
       # hack for resetting clipboard when it starts playing up on macos
-      rclip =
-        "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
+      rclip = "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
       # TODO make portable for linux
-      unix-to-date =
-        ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
+      unix-to-date = ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
       genpw = "tr -dc A-Za-z0-9 </dev/urandom | head -c 30 | tee >(pbcopy)";
     };
     plugins = [
@@ -70,18 +74,20 @@ in {
         file = "p10k.zsh";
       }
     ];
-    initExtra = ''
-      # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
-      export DIRENV_LOG_FORMAT=
-      eval "$(direnv hook zsh)"
+    initExtra =
+      ''
+        # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
+        export DIRENV_LOG_FORMAT=
+        eval "$(direnv hook zsh)"
 
-      source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+        source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-      eval "$(${pkgs.fzf}/bin/fzf --zsh)"
+        eval "$(${pkgs.fzf}/bin/fzf --zsh)"
 
-      export PATH=$PATH:$HOME/.local/bin
+        export PATH=$PATH:$HOME/.local/bin
 
-    '' + (if isDarwin then macInit else "")
+      ''
+      + (if isDarwin then macInit else "")
       + (if isWork then workExports else "");
   };
 }

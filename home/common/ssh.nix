@@ -7,7 +7,9 @@
     matchBlocks = {
       "thane" = {
         hostname = "thane.c.googlers.com";
-        sendEnv = [ "TERM=xterm-256color" ];
+        setEnv = {
+          TERM = "xterm-256color";
+        };
       };
       "rockpro05" = {
         host = "rockpro05";
