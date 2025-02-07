@@ -5,6 +5,10 @@
   programs.ssh = {
     enable = true;
     matchBlocks = {
+      "thane" = {
+        hostname = "thane.c.googlers.com";
+        sendEnv = [ "TERM=xterm-256color" ];
+      };
       "rockpro05" = {
         host = "rockpro05";
         hostname = "10.0.0.15";
@@ -50,8 +54,7 @@
         host = "azure";
         hostname = "74.249.58.10";
         user = "azureuser";
-        identityFile =
-          "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
+        identityFile = "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
       };
       "*" = {
         extraOptions = {

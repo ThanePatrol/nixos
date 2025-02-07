@@ -89,17 +89,6 @@
                 ;
             };
           };
-
-          #inputs,
-          #email,
-          #isWork,
-          #isDarwin,
-          #username,
-          #gitUserName,
-          #theme,
-          #homeDirectory,
-          #lib,
-          #pkgs,
           modules = [
             (import ./home/home.nix {
               inputs = inputs;
@@ -111,7 +100,7 @@
               theme = "Catppuccin-mocha";
               homeDirectory = homeDirectory;
               pkgs = pkgs;
-              lib = home-manager.lib;
+              lib = pkgs.lib;
             })
           ];
         };
@@ -265,8 +254,7 @@
 
       homeConfigurations = {
         workServer =
-          cloudTopDevSystem "x86_64-linux" "hugh.mandalidis" true "hugh.mandalidis@bytedance.com"
-            "hmandalidis"
+          cloudTopDevSystem "x86_64-linux" "hmandalidis" true "hugh.mandalidis@bytedance.com" "hmandalidis"
             "/usr/local/google/home/hmandalidis";
       };
 
