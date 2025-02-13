@@ -220,3 +220,13 @@ vim.keymap.set('t', 'tc', termtoggle.toggleterm,
 vim.api.nvim_command(
     "autocmd FileType qf nnoremap <buffer> dd :RemoveQFItem<cr>")
 -- Quickfix end
+--
+
+-- Custom scripts start
+local custom_text_objects = require('custom-scripts.scripts')
+vim.keymap.set('n', 'vi`', function() custom_text_objects.inner_backtick() end,
+               {desc = 'Visual inner backtick'})
+
+vim.keymap.set('n', 'va`', function() custom_text_objects.around_backtick() end,
+               {desc = 'Visual around backtick'})
+-- Custom scripts end
