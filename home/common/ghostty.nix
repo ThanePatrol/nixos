@@ -17,6 +17,8 @@ in
 
     keybind = cmd+shift+d=new_split:right
 
+    macos-option-as-alt = left
+
     keybind = cmd+h=goto_split:left
     keybind = cmd+j=goto_split:down
     keybind = cmd+k=goto_split:up
