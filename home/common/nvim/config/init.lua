@@ -23,6 +23,9 @@ vim.wo.signcolumn = 'yes'
 
 vim.opt.relativenumber = true
 
+-- Set default notification client
+vim.notify = require("notify")
+
 require('mappings')
 require('color-theme')
 vim.cmd.colorscheme "catppuccin"

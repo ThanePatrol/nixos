@@ -48,6 +48,9 @@ in
       # File stuff
       nvim-tree-lua
 
+      # notifications!
+      nvim-notify
+
       # icons!
       nvim-web-devicons
 
