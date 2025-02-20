@@ -86,6 +86,9 @@ in
 
         export PATH=$PATH:$HOME/.local/bin
 
+        bindkey "^[f" forward-word
+        bindkey "^[b" backward-word
+
       ''
       + (if isDarwin then macInit else "")
       + (if isWork then workExports else "");
