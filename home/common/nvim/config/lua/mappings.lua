@@ -57,12 +57,12 @@ vim.api.nvim_set_keymap('n', '<leader>xX',
     noremap = true,
     desc = "Buffer Diagnostics (Trouble)"
 })
-vim.api.nvim_set_keymap('n', '<leader>cs',
-                        '<cmd>Trouble symbols toggle focus=false<cr>', {
-    silent = true,
-    noremap = true,
-    desc = "Symbols (Trouble)"
-})
+-- vim.api.nvim_set_keymap('n', '<leader>cs',
+--                        '<cmd>Trouble symbols toggle focus=false<cr>', {
+--    silent = true,
+--    noremap = true,
+--    desc = "Symbols (Trouble)"
+-- })
 vim.api.nvim_set_keymap('n', '<leader>cl',
                         '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
                         {
