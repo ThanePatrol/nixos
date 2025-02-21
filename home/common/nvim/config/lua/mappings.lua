@@ -27,6 +27,11 @@ vim.api.nvim_set_keymap('n', '<leader>dvs',
                         '<cmd>lua local widgets = require("dap.ui.widgets"); local sidebar = widgets.sidebar(widgets.scopes); sidebar.open(); <CR>',
                         {noremap = true, silent = true})
 
+-- toggle case sensitive search
+vim.api.nvim_set_keymap('n', '<leader>cs',
+                        '<cmd>set ignorecase! ignorecase?<cr>',
+                        {desc = 'toggle case sensitive search'})
+
 -- in visual mode surround selection
 vim.keymap.set("x", "'", [[:s/\%V\(.*\)\%V/'\1'/ <CR>]],
                {desc = "Surround selection with '"})
