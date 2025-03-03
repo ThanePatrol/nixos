@@ -75,7 +75,7 @@ in
       bind-key / copy-mode \; send-key ?
 
       # Images
-      set -gq allow-passthrough on
+      set -g allow-passthrough on
 
       # theming and font fixing
       set -g @catppuccin_no_patched_fonts_theme_enabled on
