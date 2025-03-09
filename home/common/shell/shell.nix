@@ -28,7 +28,8 @@ in
     autosuggestion.enable = true;
     envExtra =
       ''
-        export EDITOR="nvim"
+      export EDITOR="nvim"
+      export MANPAGER='nvim +Man!'
       ''
       + (if isDarwin then macExports else "");
 

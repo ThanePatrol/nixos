@@ -92,7 +92,7 @@ in
     };
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   services.aerospace = {
     enable = true;
@@ -223,8 +223,6 @@ in
     "com.apple.ImageCapture".disableHotPlug = true;
     "com.apple.commerce".AutoUpdate = true;
   };
-
-  services.nix-daemon.enable = true;
   nix.gc.automatic = true;
 
   programs.zsh.enable = true; # default shell on catalina
