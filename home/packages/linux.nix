@@ -3,7 +3,13 @@
 # for linux specific user packages
 let
 
-in {
-  packages = with pkgs; [ eclipses.eclipse-java eww tor-browser ];
+in
+{
+  packages = with pkgs; [
+    eclipses.eclipse-java
+    eww
+    tor-browser
+    wl-clipboard
+  ];
 
 }

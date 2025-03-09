@@ -10,6 +10,7 @@
         setEnv = {
           TERM = "xterm-256color";
         };
+        forwardAgent = true;
       };
       "rockpro05" = {
         host = "rockpro05";

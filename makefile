@@ -38,7 +38,7 @@ update-work: ## Updates work macbook
 	# have to use root zshrc/bashrc as defined by google but nix wants to write to it 😭
 	- 	sudo mv /etc/zshrc /etc/zshrc-temp
 	- 	sudo mv /etc/bashrc /etc/bashrc-temp
-	nix build --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
+	nix build --impure --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
 	#./work-flake-output/sw/bin/darwin-rebuild switch --flake .#work
 	darwin-rebuild switch --flake .#work
 	- sudo mv /etc/zshrc-temp /etc/zshrc
@@ -50,7 +50,7 @@ update-fold: ## Updates Samsung Galaxy fold 5
 	$$(nix path-info --impure .#androidConfigurations.fold5.activationPackage)/activate
 
 update-remote-work: ## Updates a remote dev workstation
-	home-manager switch --flake .#workServer
+	home-manager switch --impure --flake .#workServer
 
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update

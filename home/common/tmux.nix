@@ -42,55 +42,57 @@ in
     ];
 
     extraConfig = ''
-      bind-key & kill-window
-      bind-key x kill-pane
+          bind-key & kill-window
+          bind-key x kill-pane
 
-      # popup a shell session and close it
-      bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
-      bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
-      bind-key -T copy-mode Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
-      bind-key -T copy-mode-vi Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+          # popup a shell session and close it
+          bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
+          bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+          bind-key -T copy-mode Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+          bind-key -T copy-mode-vi Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
 
-      # allow apps inside tmux to set clipboard
-      set -s set-clipboard on
-      set -as terminal-features ',xterm-256color:clipboard'
-      set -s copy-command "${if isDarwin then "reattach-to-user-namespace pbcopy" else "wl-copy"}"
+          # allow apps inside tmux to set clipboard
+          set -s set-clipboard on
+          set -as terminal-features ',xterm-256color:clipboard'
+          #set -s copy-command "${if isDarwin then "reattach-to-user-namespace pbcopy" else "wl-copy"}"
 
-      # Copy mode stuff
-      bind-key -T copy-mode-vi v send-keys -X begin-selection
-      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
-      bind-key -T copy-mode-vi Y send-keys -X copy-pipe
-      bind-key -T copy-mode y send-keys -X copy-pipe-and-cancel
-      bind-key -T copy-mode Y send-keys -X copy-pipe
+      #    set -as terminal-features ',rxvt-unicode-256color:clipboard'
 
-      set-option -g renumber-windows on
+          # Copy mode stuff
+         # bind-key -T copy-mode-vi v send-keys -X begin-selection
+         # bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
+         # bind-key -T copy-mode-vi Y send-keys -X copy-pipe
+         # bind-key -T copy-mode y send-keys -X copy-pipe-and-cancel
+         # bind-key -T copy-mode Y send-keys -X copy-pipe
 
-      # set theme
-      set-option -g @catppuccin_flavour '${themeString}'
+          set-option -g renumber-windows on
 
-      # fixes colors inside neovim
-      set -ga terminal-overrides ",*256col*:Tc"
+          # set theme
+          set-option -g @catppuccin_flavour '${themeString}'
 
-      # Enter search mode immediately
-      bind-key / copy-mode \; send-key ?
+          # fixes colors inside neovim
+          set -ga terminal-overrides ",*256col*:Tc"
 
-      # Images
-      set -g allow-passthrough on
+          # Enter search mode immediately
+          bind-key / copy-mode \; send-key ?
 
-      # theming and font fixing
-      set -g @catppuccin_no_patched_fonts_theme_enabled on
-      set -g @catppuccin_date_time "%Y-%m-%d %H:%M"
-      set -g @catppuccin_status_modules_right "application session date_time"
-      #set -g @catppuccin_status_left_separator "█"
-      #set -g @catppuccin_status_right_separator " "
+          # Images
+          set -gsq allow-passthrough on
 
-      # launch new pane in current dir
-      bind '"' split-window -v -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-      bind c new-window -c "#{pane_current_path}"
+          # theming and font fixing
+          set -g @catppuccin_no_patched_fonts_theme_enabled on
+          set -g @catppuccin_date_time "%Y-%m-%d %H:%M"
+          set -g @catppuccin_status_modules_right "application session date_time"
+          #set -g @catppuccin_status_left_separator "█"
+          #set -g @catppuccin_status_right_separator " "
 
-      # set default shell to zsh instead of sh https://github.com/tmux/tmux/issues/4166
-      set -g default-command '$SHELL'
+          # launch new pane in current dir
+          bind '"' split-window -v -c "#{pane_current_path}"
+          bind % split-window -h -c "#{pane_current_path}"
+          bind c new-window -c "#{pane_current_path}"
+
+          # set default shell to zsh instead of sh https://github.com/tmux/tmux/issues/4166
+          set -g default-command '$SHELL'
     '';
   };
 

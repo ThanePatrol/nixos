@@ -54,6 +54,7 @@ in
       (import ./common/git.nix { inherit email gitUserName theme; })
       (import ./common/nvim/nvim.nix {
         inherit
+          isDarwin
           inputs
           pkgs
           lib
@@ -80,7 +81,7 @@ in
           ./linux/wofi/wofi.nix
           ./linux/wayland/wayland.nix
           ./linux/walls/wpapred.nix
-          ./linux/xdg/xdg.nix
+          #./linux/xdg/xdg.nix
           ./linux/cursor.nix
           ./linux/swaylock.nix
           ./linux/swayidle.nix

@@ -45,7 +45,6 @@ let
     slurp
     smartmontools
     sshfs
-    wl-clipboard
     wireplumber # sound memes
   ];
 

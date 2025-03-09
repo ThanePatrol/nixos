@@ -58,6 +58,7 @@ in
       go
       gnumake
       gzip
+      imagemagick
       jq
       jdk
       jupyter-all
