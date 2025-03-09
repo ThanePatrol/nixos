@@ -67,13 +67,14 @@ in
     # mainly used for gui things not packaged by nix
     casks = [
       "macfuse"
-      "docker"
+      # "docker" - not allowed at G
       "firefox"
       "spotify"
       "qmk-toolbox"
-      "anki"
+      #      "anki" - not allowed at G
       "vial"
       "MonitorControl"
+      "mochi"
       "ghostty"
       "zen-browser"
     ];
@@ -184,6 +185,7 @@ in
   system.defaults.NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
     "com.apple.swipescrolldirection" = false;
+    ApplePressAndHoldEnabled = false;
   };
 
   system.defaults.dock = {

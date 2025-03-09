@@ -15,8 +15,12 @@ let
     export PATH=${pkgs.gnused}/bin:$PATH
   '';
 
+  # Need the google git first in path instead of oss git
   workExports = ''
+    export PATH="/usr/local/git/git-google/bin:$PATH"
     export PATH="$PATH:$HOME/.nix-profile/bin"
+    source /etc/bash_completion.d/hgd
+    source /etc/bash_completion.d/g4d
   '';
 
 in
@@ -54,6 +58,7 @@ in
       # TODO make portable for linux
       unix-to-date = ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
       genpw = "tr -dc A-Za-z0-9 </dev/urandom | head -c 30 | tee >(pbcopy)";
+      tmux = (if isWork then "tmx2" else "tmux");
     };
     plugins = [
       {
