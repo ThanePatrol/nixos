@@ -32,8 +32,8 @@ in
     autosuggestion.enable = true;
     envExtra =
       ''
-      export EDITOR="nvim"
-      export MANPAGER='nvim +Man!'
+        export EDITOR="nvim"
+        export MANPAGER='nvim +Man!'
       ''
       + (if isDarwin then macExports else "");
 
@@ -94,6 +94,7 @@ in
 
         bindkey "^[f" forward-word
         bindkey "^[b" backward-word
+        bindkey "^[\b" backward-kill-word
 
       ''
       + (if isDarwin then macInit else "")
