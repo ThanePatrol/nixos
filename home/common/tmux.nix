@@ -23,6 +23,11 @@ let
     fi
   '';
 
+  getLastThreeDirs = pkgs.writeShellScriptBin "get-last-three-dirs" ''
+    last_three="$(awk '{split($0,arr,"/"); print arr[length(arr)-2],arr[length(arr)-1],arr[length(arr)]}' | tr ' ' '/')"
+    echo $last_three
+  '';
+
 in
 {
   home.packages = [ pkgs.tmux ];
@@ -42,57 +47,55 @@ in
     ];
 
     extraConfig = ''
-          bind-key & kill-window
-          bind-key x kill-pane
+      bind-key & kill-window
+      bind-key x kill-pane
 
-          # popup a shell session and close it
-          bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
-          bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
-          bind-key -T copy-mode Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
-          bind-key -T copy-mode-vi Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+      # popup a shell session and close it
+      bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
+      bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+      bind-key -T copy-mode Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
+      bind-key -T copy-mode-vi Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
 
-          # allow apps inside tmux to set clipboard
-          set -s set-clipboard on
-          set -as terminal-features ',xterm-256color:clipboard'
-          #set -s copy-command "${if isDarwin then "reattach-to-user-namespace pbcopy" else "wl-copy"}"
+      # allow apps inside tmux to set clipboard
+      set -gs set-clipboard on
+      set -as terminal-features ',xterm-256color:clipboard'
 
-      #    set -as terminal-features ',rxvt-unicode-256color:clipboard'
+      set-option -g renumber-windows on
 
-          # Copy mode stuff
-         # bind-key -T copy-mode-vi v send-keys -X begin-selection
-         # bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
-         # bind-key -T copy-mode-vi Y send-keys -X copy-pipe
-         # bind-key -T copy-mode y send-keys -X copy-pipe-and-cancel
-         # bind-key -T copy-mode Y send-keys -X copy-pipe
+      # fixes colors inside neovim
+      set -ga terminal-overrides ",*256col*:Tc"
 
-          set-option -g renumber-windows on
+      # Enter search mode immediately
+      bind-key / copy-mode \; send-key ?
 
-          # set theme
-          set-option -g @catppuccin_flavour '${themeString}'
+      # Images
+      set -gsq allow-passthrough on
 
-          # fixes colors inside neovim
-          set -ga terminal-overrides ",*256col*:Tc"
+      # set theme
+      set-option -g @catppuccin_flavor '${themeString}'
+      # theming and font fixing
+      set -g @catppuccin_no_patched_fonts_theme_enabled on
+      set -g @catppuccin_date_time "%Y-%m-%d %H:%M"
 
-          # Enter search mode immediately
-          bind-key / copy-mode \; send-key ?
+      # Set right status bar
+      set -g status-right ""
+      set -ag status-right "#{E:@catppuccin_status_application}"
+      set -ag status-right "#{E:@catppuccin_status_session}"
+      set -ag status-right "#{E:@catppuccin_status_date_time}"
+      set -g status-right-length 100
 
-          # Images
-          set -gsq allow-passthrough on
+      # Set window names
+      set -g status-left ""
+      set -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}] #I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #(echo #{pane_current_path} | ${getLastThreeDirs}/bin/get-last-three-dirs) "
+      set -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}] #I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #(echo #{pane_current_path} | ${getLastThreeDirs}/bin/get-last-three-dirs) "
 
-          # theming and font fixing
-          set -g @catppuccin_no_patched_fonts_theme_enabled on
-          set -g @catppuccin_date_time "%Y-%m-%d %H:%M"
-          set -g @catppuccin_status_modules_right "application session date_time"
-          #set -g @catppuccin_status_left_separator "█"
-          #set -g @catppuccin_status_right_separator " "
+      # launch new pane in current dir
+      bind '"' split-window -v -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
 
-          # launch new pane in current dir
-          bind '"' split-window -v -c "#{pane_current_path}"
-          bind % split-window -h -c "#{pane_current_path}"
-          bind c new-window -c "#{pane_current_path}"
-
-          # set default shell to zsh instead of sh https://github.com/tmux/tmux/issues/4166
-          set -g default-command '$SHELL'
+      # set default shell to zsh instead of sh https://github.com/tmux/tmux/issues/4166
+      set -g default-command '$SHELL'
     '';
   };
 

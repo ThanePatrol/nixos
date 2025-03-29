@@ -23,9 +23,6 @@ vim.wo.signcolumn = 'yes'
 
 vim.opt.relativenumber = true
 
--- Set default notification client
-vim.notify = require("notify")
-
 require('mappings')
 require('color-theme')
 vim.cmd.colorscheme "catppuccin"
@@ -41,9 +38,7 @@ require('rust')
 require('indent-blankline-config')
 require('vim-tmux')
 -- require('telescope-cfg')
--- require('debugger')
 require('git-cfg')
--- require('precognition-config')
 require('trouble-config')
 require('markview-config')
 require('formatter-config')
