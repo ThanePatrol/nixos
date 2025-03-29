@@ -12,20 +12,33 @@ let
   isWork = customArgs.isWork;
   username = customArgs.username;
   email = customArgs.email;
+  inputs = customArgs.inputs;
   gitUserName = customArgs.gitUserName;
+  rcloneConfPath = "/home/hugh/.config/rclone/rclone.conf";
+  homeDirectory = "/home/hugh";
   ssdFolder = "/home/hugh/SSDs";
   hddBackupFolder = "/home/hugh/Backups";
   ssdBackupSystemdServiceName = "backup-local";
+
+  tenGbEthernetPort1 = "enp36s0f0";
+  tenGbEthernetPort2 = "enp36s0f1"; # TODO - identify physical location
+  onboardGigabitEthernetPort1 = "enp38s0";
+  onboardGigabitEthernetPort2 = "enp39s0"; # physically the bottom port
+  managementPort = "enp42s0f3u5u3c2";
+  wanID = 10;
+  lanID = 20;
 
   theme = "Catppuccin-mocha";
 
   homeConfig = import ../../home/home.nix {
     inherit
+      inputs
       email
       isWork
       isDarwin
       username
       gitUserName
+      homeDirectory
       nixpkgs
       pkgs
       config
@@ -97,7 +110,7 @@ in
       ${pkgs.coreutils}/bin/ls ${hddBackupFolder} | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -n -3 | ${pkgs.findutils}/bin/xargs -I {} ${pkgs.coreutils}/bin/rm {}
 
       # prevent shutdown until backup finishes
-      ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone sync ${ssdFolder} "$new_folder_name"
+      ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone --config=${rcloneConfPath} sync ${ssdFolder} "$new_folder_name"
 
       ${pkgs.util-linux}/bin/umount ${hddBackupFolder}
     '';
@@ -156,6 +169,13 @@ in
     # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
     dconf.enable = true;
     virt-manager.enable = true;
+  };
+
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "0 0 25 * * root  /home/hugh/dev/rent/stinky.sh"
+    ];
   };
 
   services = {
