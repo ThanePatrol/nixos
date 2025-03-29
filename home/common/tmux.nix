@@ -69,7 +69,7 @@ in
       bind-key / copy-mode \; send-key ?
 
       # Images
-      set -gsq allow-passthrough on
+      set -gwsq allow-passthrough on
 
       # set theme
       set-option -g @catppuccin_flavor '${themeString}'
