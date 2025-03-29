@@ -37,6 +37,9 @@
       };
     };
 
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
   };
 
   outputs =
@@ -52,6 +55,7 @@
       rust-overlay,
       flake-utils,
       neovim-nightly-overlay,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -129,6 +133,7 @@
           modules = [
             ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
           ];
 
         };
