@@ -22,11 +22,9 @@ let
 
   tenGbEthernetPort1 = "enp36s0f0"; # physically the bottom port
   tenGbEthernetPort2 = "enp36s0f1";
-  onboardGigabitEthernetPort1 = "enp38s0";
+  _onboardGigabitEthernetPort1 = "enp38s0";
   onboardGigabitEthernetPort2 = "enp39s0"; # physically the bottom port
-  managementPort = "enp42s0f3u5u3c2";
-  wanID = 10;
-  lanID = 20;
+  _managementPort = "enp42s0f3u5u3c2";
 
   theme = "Catppuccin-mocha";
 
@@ -52,7 +50,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    #../../system/linux/modules/udev-rules.nix
   ];
   nix.settings.experimental-features = [
     "nix-command"
@@ -147,10 +144,6 @@ in
     "net.ipv4.conf.${onboardGigabitEthernetPort2}.rp_filter" = 1;
   };
 
-  # TODO - SOPs nix install by updating
-  # Add password file to wap conf
-  # try the rp_filter for wan interfaces then re-add the flowtable
-
   systemd.network = {
     wait-online.anyInterface = true;
 
@@ -221,7 +214,7 @@ in
 
     nftables = {
       enable = true;
-      checkRuleset = false;
+      checkRuleset = true;
       ruleset = ''
         table inet filter {
 
@@ -285,33 +278,6 @@ in
     };
   };
 
-  services.hostapd = {
-    enable = true;
-    radios = {
-      wlan0 = {
-        band = "5g";
-        channel = 0; # ACS
-
-        wifi5.enable = true;
-        wifi6.enable = true;
-
-        networks = {
-          wlan0 = {
-            ssid = "skynet-04";
-            authentication = {
-              mode = "wpa3-sae";
-              saePasswordsFile = config.sops.secrets.wifi_password.path;
-            };
-            bssid = "3C:52:A1:B5:17:0E";
-            settings = {
-              bridge = "br-lan";
-            };
-          };
-        };
-      };
-    };
-  };
-
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
     age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
@@ -321,46 +287,6 @@ in
       wifi_password = { };
     };
   };
-
-  # networking = {
-  #
-  #   networkmanager.enable = true;
-  #
-  #   hostName = "zeruel";
-  #
-  #   firewall = {
-  #
-  #     enable = false;
-  #
-  #     allowedTCPPortRanges = [
-  #
-  #       # minecraft
-  #
-  #       {
-  #
-  #         from = 25565;
-  #
-  #         to = 25565;
-  #
-  #       }
-  #
-  #     ];
-  #
-  #     allowedUDPPortRanges = [
-  #
-  #       {
-  #
-  #         from = 25565;
-  #
-  #         to = 25565;
-  #
-  #       }
-  #
-  #     ];
-  #
-  #   };
-  #
-  # };
 
   programs = {
     hyprland.enable = true;
@@ -429,13 +355,13 @@ in
 
   virtualisation = {
 
-    docker = {
-      enable = true;
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
-    };
+    # docker = {
+    #   enable = true;
+    #   rootless = {
+    #     enable = true;
+    #     setSocketVariable = true;
+    #   };
+    # };
 
     libvirtd = {
       enable = true;
@@ -444,7 +370,7 @@ in
   };
 
   systemd.services = {
-    docker.wantedBy = [ "multi-user.target" ];
+    #docker.wantedBy = [ "multi-user.target" ];
     libvirtd.enable = true;
     virtlogd.enable = true;
   };
