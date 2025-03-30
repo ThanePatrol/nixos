@@ -142,11 +142,14 @@ in
 
   boot.kernel.sysctl = {
     "net.ipv4.conf.all.forwarding" = true;
-    "net.ipv6.conf.all.forwarding" = false;
+    "net.ipv6.conf.all.forwarding" = true;
     "net.ipv4.conf.br-lan.rp_filter" = 1;
-    ## "net.ipv4.conf.br-lan.rp_filter" = 1;
-    ## "net.ipv4.conf.wan.rp_filter" = 1;
+    "net.ipv4.conf.${onboardGigabitEthernetPort2}.rp_filter" = 1;
   };
+
+  # TODO - SOPs nix install by updating
+  # Add password file to wap conf
+  # try the rp_filter for wan interfaces then re-add the flowtable
 
   systemd.network = {
     wait-online.anyInterface = true;
@@ -194,10 +197,12 @@ in
         networkConfig = {
           # start a DHCP Client for IPv4 Addressing/Routing
           DHCP = "ipv4";
+          IPv6AcceptRA = true;
           DNSOverTLS = true;
           DNSSEC = true;
-          IPv6PrivacyExtensions = false;
+          IPv6PrivacyExtensions = true;
           IPv4Forwarding = true;
+          IPv6Forwarding = true;
         };
         # make routing on this interface a dependency for network-online.target
         linkConfig.RequiredForOnline = "routable";
@@ -279,6 +284,83 @@ in
       ];
     };
   };
+
+  services.hostapd = {
+    enable = true;
+    radios = {
+      wlan0 = {
+        band = "5g";
+        channel = 0; # ACS
+
+        wifi5.enable = true;
+        wifi6.enable = true;
+
+        networks = {
+          wlan0 = {
+            ssid = "skynet-04";
+            authentication = {
+              mode = "wpa3-sae";
+              saePasswordsFile = config.sops.secrets.wifi_password.path;
+            };
+            bssid = "3C:52:A1:B5:17:0E";
+            settings = {
+              bridge = "br-lan";
+            };
+          };
+        };
+      };
+    };
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
+    age.generateKey = false;
+    secrets = {
+      # This is the actual specification of the secrets.
+      wifi_password = { };
+    };
+  };
+
+  # networking = {
+  #
+  #   networkmanager.enable = true;
+  #
+  #   hostName = "zeruel";
+  #
+  #   firewall = {
+  #
+  #     enable = false;
+  #
+  #     allowedTCPPortRanges = [
+  #
+  #       # minecraft
+  #
+  #       {
+  #
+  #         from = 25565;
+  #
+  #         to = 25565;
+  #
+  #       }
+  #
+  #     ];
+  #
+  #     allowedUDPPortRanges = [
+  #
+  #       {
+  #
+  #         from = 25565;
+  #
+  #         to = 25565;
+  #
+  #       }
+  #
+  #     ];
+  #
+  #   };
+  #
+  # };
 
   programs = {
     hyprland.enable = true;

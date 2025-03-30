@@ -1,0 +1,7 @@
+keys:
+  - &thane age1j7gh4xngexv93qchxjhvesfvrdqaxftgc2mg56s8724mzk98ku7sv4egvq
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *thane
