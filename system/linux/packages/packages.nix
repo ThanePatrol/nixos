@@ -32,6 +32,7 @@ let
     clipman # clipboard manager
     cliphist
     bc # cli multiplication
+    dig
     ethtool
     grim # screenshot
     home-manager

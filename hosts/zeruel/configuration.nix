@@ -208,7 +208,8 @@ in
     networkmanager.enable = true;
     hostName = "zeruel";
     useNetworkd = true;
-    useDHCP = false;
+    interfaces.${onboardGigabitEthernetPort2}.useDHCP = false;
+
     nat.enable = false;
     firewall.enable = false;
 
