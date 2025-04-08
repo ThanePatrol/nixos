@@ -259,7 +259,7 @@
 
       homeConfigurations = {
         workServer =
-          cloudTopDevSystem "x86_64-linux" "hmandalidis" true "hugh.mandalidis@bytedance.com" "hmandalidis"
+          cloudTopDevSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
             "/usr/local/google/home/hmandalidis";
       };
 
