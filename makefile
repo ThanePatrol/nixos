@@ -26,13 +26,9 @@ update-armisael: ## Updates Lenovo homelab
 build-leliel: ## Updates personal macbook
 	 nix build --extra-experimental-features "nix-command flakes"  .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
 
-update-leliel-light: build-leliel
+update-leliel: build-leliel
 	THEME="Catppuccin-latte" darwin-rebuild switch --impure --flake .#leliel
-	./change-modes.sh
 
-update-leliel-dark: build-leliel
-	THEME="Catppuccin-mocha" darwin-rebuild switch --impure --flake .#leliel
-	./change-modes.sh
 
 update-work: ## Updates work macbook
 	# have to use root zshrc/bashrc as defined by google but nix wants to write to it 😭
