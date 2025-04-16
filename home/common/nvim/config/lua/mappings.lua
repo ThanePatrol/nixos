@@ -2,10 +2,10 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeToggle<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'tf', ':NvimTreeFocus<CR>',
-                        {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeToggle<CR>',
+--                        {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', 'tf', ':NvimTreeFocus<CR>',
+--                        {noremap = true, silent = true})
 
 vim.api.nvim_set_keymap('n', 'g?', '<cmd>lua vim.diagnostic.open_float()<CR>',
                         {noremap = true, silent = true}) -- expand error messages

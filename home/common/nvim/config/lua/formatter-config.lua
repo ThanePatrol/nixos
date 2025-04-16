@@ -54,19 +54,19 @@ require("formatter").setup {
         jsx = {web_formatter},
         tsx = {web_formatter},
 
-        -- go = {
-        --     function()
-        --         return {exe = "gofumpt", args = {}, stdin = true}
-        --     end, function()
-        --         return {exe = "golines", args = {"--max-len=128"}, stdin = true}
-        --         -- end, function()
-        --         --     return {
-        --         --         exe = "wsl",
-        --         --         args = {"-fix", vim.api.nvim_buf_get_name(0)},
-        --         --         stdin = false
-        --         --     }
-        --     end
-        -- },
+        go = {
+            function()
+                return {exe = "gofumpt", args = {}, stdin = true}
+            end, function()
+                return {exe = "golines", args = {"--max-len=128"}, stdin = true}
+            end, function()
+                return {
+                    exe = "wsl",
+                    args = {"-fix", vim.api.nvim_buf_get_name(0)},
+                    stdin = false
+                }
+            end
+        },
 
         ["*"] = {require("formatter.filetypes.any").remove_trailing_whitespace}
     }

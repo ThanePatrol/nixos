@@ -46,7 +46,7 @@ in
       noice-nvim
 
       # File stuff
-      nvim-tree-lua
+      #nvim-tree-lua
 
       # notifications!
       nvim-notify
