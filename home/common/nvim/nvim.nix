@@ -118,7 +118,7 @@ in
       catppuccin-nvim
 
       # Renders markdown nicely
-      markview-nvim
+      render-markdown-nvim
     ];
 
     extraPackages = with pkgs; [
