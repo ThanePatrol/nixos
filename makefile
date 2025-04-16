@@ -27,7 +27,7 @@ build-leliel: ## Updates personal macbook
 	 nix build --extra-experimental-features "nix-command flakes"  .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
 
 update-leliel: build-leliel
-	THEME="Catppuccin-latte" darwin-rebuild switch --impure --flake .#leliel
+	THEME="Catppuccin-mocha" darwin-rebuild switch --impure --flake .#leliel
 
 
 update-work: ## Updates work macbook

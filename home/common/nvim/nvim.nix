@@ -39,14 +39,7 @@ in
       #General
       vim-sensible
 
-      # Language specifics
-      vim-nix
-
-      # lots of overhauls
-      noice-nvim
-
-      # File stuff
-      #nvim-tree-lua
+      vim-tmux-navigator
 
       # notifications!
       nvim-notify
@@ -68,9 +61,6 @@ in
       #indent lines
       indent-blankline-nvim
 
-      # allow movement between tmux panes
-      vim-tmux-navigator
-
       #rainbow brackets
       rainbow-delimiters-nvim
 
@@ -81,9 +71,6 @@ in
       trouble-nvim
 
       harpoon2
-
-      # LLM plugin
-      gp
 
       # format on save
       formatter-nvim
@@ -101,12 +88,8 @@ in
       cmp-nvim-lsp
       nvim-cmp
 
-      # gpt integration
-      avante-nvim
-
       #rust
-      rust-vim
-      rust-tools-nvim
+      rustaceanvim
 
       #snippets
       luasnip
