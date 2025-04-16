@@ -1,14 +1,28 @@
+-- set default visualizer
+require('telescope').setup({
+    defaults = {
+        layout_config = {horizontal = {width = 0.95}},
+        mappings = {
+            n = {
+                ["p"] = function(prompt_bufnr)
+                    local current_picker =
+                        require('telescope.actions.state').get_current_picker(
+                            prompt_bufnr)
+                    local text = vim.fn.getreg('"')
+                    local stripped = string.match(text, "^%s*(.-)%s*$")
+                    current_picker:set_prompt(stripped, false)
+                end
+            }
+        }
+    }
+})
+
 local builtin = require('telescope.builtin')
 
 local pickers = require('telescope.pickers')
 local finders = require('telescope.finders')
 local make_entry = require('telescope.make_entry')
 local conf = require('telescope.config').values
-
--- set default visualizer
-require('telescope').setup({
-    defaults = {layout_config = {horizontal = {width = 0.95}}}
-})
 
 local M = {}
 
