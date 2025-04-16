@@ -74,7 +74,6 @@ in
       #      "anki" - not allowed at G
       "vial"
       "MonitorControl"
-      "mochi"
       "ghostty"
       "zen-browser"
     ];
