@@ -80,9 +80,6 @@ in
       # Quick fixes for issues in file
       trouble-nvim
 
-      # convenient testing
-      vim-test
-
       harpoon2
 
       # LLM plugin
