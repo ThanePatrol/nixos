@@ -79,10 +79,8 @@ vim.keymap.set('n', '<leader>ts', telescope.text_search, {desc = "Text search"})
 -- find some emoji!
 vim.keymap.set('n', '<leader>ie', telescope.emojis,
                {desc = "Open emoji picker 😀"})
-
-vim.keymap.set('n', '<leader>td', telescope.file_search_copy,
+vim.keymap.set('n', '<leader>td', telescope.file_search_cwd,
                {desc = "Find files from the cwd of the open buffer"})
-
 vim.keymap.set('n', '<leader>tc', telescope.text_search_cwd,
                {desc = "Find files with fuzzy matching from the cwd of buffer"})
 
