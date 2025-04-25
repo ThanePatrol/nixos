@@ -23,6 +23,15 @@ vim.wo.signcolumn = 'yes'
 
 vim.opt.relativenumber = true
 
+-- diff view start
+vim.opt.fillchars = {diff = '/'}
+
+vim.opt.diffopt = {
+    'internal', 'filler', 'closeoff', 'context:12', 'algorithm:histogram',
+    'linematch:200', 'indent-heuristic', 'inline:word'
+}
+-- diff view end
+
 require('mappings')
 require('color-theme')
 vim.cmd.colorscheme "catppuccin"

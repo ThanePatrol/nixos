@@ -33,6 +33,7 @@ in
       pull.ff = "only";
       push.autoSetupRemote = true;
       tag.gpgSign = true;
+      merge.tool = "nvimdiff2";
     };
 
     # global ignores to not include
