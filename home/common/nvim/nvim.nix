@@ -8,23 +8,35 @@
 with lib;
 let
   # llm plugin
-  gp = pkgs.vimUtils.buildVimPlugin {
-    pname = "gp.nvim";
-    version = "3.9.0";
+  codeCompanion = pkgs.vimUtils.buildVimPlugin {
+    pname = "codecompanion.nvim";
+    version = "14.11.0";
     src = pkgs.fetchFromGitHub {
-      owner = "Robitx";
-      repo = "gp.nvim";
-      rev = "7cc35997581dbfcfa5ac022843e12c04d64c3250";
-      sha256 = "sha256-88UcYToQO3GU5Zw+EMUAP2NBpxf+b2l/PBXahrSp7fE=";
+      owner = "olimorris";
+      repo = "codecompanion.nvim";
+      rev = "748b3d4e2a920142d1bbbc8fb069959671915796";
+      sha256 = "sha256-VECkYXyrw9VfWnU0NTcTgnK/H17ih63bb13wV2dArNE=";
     };
 
+    nativeBuildInputs = [
+      pkgs.vimPlugins.plenary-nvim
+      pkgs.vimPlugins.telescope-nvim
+    ];
+
+    nvimSkipModules = [
+      # vim plugin with optional toggleterm integration
+      "minimal"
+      "codecompanion.providers.actions.mini_pick"
+    ];
+
     meta = with lib; {
-      description = "ChatGPT like sessions in Neovim";
-      homepage = "https://github.com/Robitx/gp.nvim";
+      description = "Copilot meets Zed AI in Neovim";
+      homepage = "https://github.com/olimorris/codecompanion.nvim";
       license = licenses.mit;
       maintainers = with maintainers; [ hughmandalidis ];
     };
   };
+
 in
 {
   programs.neovim = {
@@ -36,6 +48,8 @@ in
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
+      codeCompanion
+
       #General
       vim-sensible
 
@@ -104,11 +118,6 @@ in
     extraPackages = with pkgs; [
       tree-sitter
 
-      # C/cpp
-      # For clangd
-      llvmPackages_19.clang-unwrapped
-      cmake
-
       #Language servers
       bash-language-server
       lua-language-server
@@ -145,9 +154,6 @@ in
 
       # Markdown
       marksman
-
-      # Thrift lsp
-      thrift-ls
     ];
   };
   xdg.configFile.nvim = {
