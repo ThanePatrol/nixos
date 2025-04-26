@@ -302,7 +302,7 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "0 0 25 * * root  /home/hugh/dev/rent/stinky.sh"
+      "0 0 25 * * root  /home/hugh/dev/rent/stinky.sh >> /var/log/rent/stinky.log"
     ];
   };
 
@@ -356,13 +356,13 @@ in
 
   virtualisation = {
 
-    # docker = {
-    #   enable = true;
-    #   rootless = {
-    #     enable = true;
-    #     setSocketVariable = true;
-    #   };
-    # };
+    docker = {
+      enable = true;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+    };
 
     libvirtd = {
       enable = true;
@@ -371,7 +371,7 @@ in
   };
 
   systemd.services = {
-    #docker.wantedBy = [ "multi-user.target" ];
+    docker.wantedBy = [ "multi-user.target" ];
     libvirtd.enable = true;
     virtlogd.enable = true;
   };
