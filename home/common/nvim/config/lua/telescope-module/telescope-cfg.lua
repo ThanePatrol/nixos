@@ -82,11 +82,11 @@ local dir_name_of_buf = function()
 end
 
 M.file_search_cwd = function()
-    builtin.find_files({search_dir = dir_name_of_buf()})
+    builtin.find_files({search_dirs = {dir_name_of_buf()}})
 end
 
 M.text_search_cwd = function()
-    builtin.grep_string({search_dir = dir_name_of_buf()})
+    builtin.grep_string({search_dirs = {dir_name_of_buf()}})
 end
 
 return M
