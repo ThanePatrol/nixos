@@ -80,7 +80,7 @@ in
         file = "p10k.zsh";
       }
     ];
-    initExtra =
+    initContent =
       ''
         # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
         export DIRENV_LOG_FORMAT=
