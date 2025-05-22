@@ -96,6 +96,9 @@ in
         bindkey "^[b" backward-word
         bindkey "^[\b" backward-kill-word
 
+        # disable vim editing mode
+        bindkey -e
+
       ''
       + (if isDarwin then macInit else "")
       + (if isWork then workExports else "");

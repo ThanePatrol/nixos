@@ -68,6 +68,9 @@ in
       # Enter search mode immediately
       bind-key / copy-mode \; send-key ?
 
+      # copy highlighted content when drag finished
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel
+
       # Images
       set -gwsq allow-passthrough on
 
