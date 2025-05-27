@@ -1,7 +1,5 @@
 local nvim_lsp = require('lspconfig')
 
--- lsp lines upstream
-vim.diagnostic.config({virtual_lines = true})
 
 local function refactor_functions_and_logging()
     local curr_name = vim.fn.expand("<cword>")

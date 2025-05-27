@@ -31,6 +31,10 @@ vim.opt.diffopt = {
     'linematch:200', 'indent-heuristic', 'inline:word'
 }
 -- diff view end
+--
+
+-- virtual text for lsp info
+vim.diagnostic.config({virtual_lines = false})
 
 require('mappings')
 require('color-theme')
