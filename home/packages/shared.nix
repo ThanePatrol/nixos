@@ -68,6 +68,7 @@ in
       libsixel
       localsend
       ollama
+      osc
       ncurses # for terminfo stuff
       pandoc # document conversion
       prismlauncher # minecraft!
