@@ -35,6 +35,7 @@ require("formatter").setup {
 
         latex = require("formatter.filetypes.latex").latexindent,
         cpp = {function() return {exe = "clang-format", stdin = true} end},
+        rs = {function() return {exe = "rustfmt", stdin = true} end},
 
         yml = {yaml_formatter},
         yaml = {yaml_formatter},
