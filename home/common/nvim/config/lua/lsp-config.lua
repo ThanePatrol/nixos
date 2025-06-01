@@ -71,28 +71,6 @@ nvim_lsp.lua_ls.setup({
     settings = {Lua = {diagnostics = {globals = {'vim'}}}}
 })
 
---require('rust-tools').setup({
---    server = {
---        on_attach = on_attach,
---        capabilities = capabilities,
---        settings = {
---            cargo = {allFeatures = true},
---            procMacro = {enable = true},
---            diagnostics = {experimental = {enable = true}}
---        }
---    },
---    tools = {
---        runnables = {use_telescope = true},
---        inlay_hints = {
---            auto = true,
---            show_parameter_hints = false,
---            parameter_hints_prefix = '',
---            other_hints_prefix = ''
---        },
---        reload_workspace_from_cargo_toml = true
---    }
---})
-
 nvim_lsp.gopls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
@@ -110,7 +88,7 @@ nvim_lsp.gopls.setup({
 nvim_lsp.html.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = {'html', 'rust'},
+    filetypes = {'html'},
     configurationSection = {'html', 'css', 'javascript'},
     embeddedLanguages = {css = true, javascript = true},
     provideFormatter = true
