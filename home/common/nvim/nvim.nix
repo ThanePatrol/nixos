@@ -102,9 +102,6 @@ in
       cmp-nvim-lsp
       nvim-cmp
 
-      #rust
-      rustaceanvim
-
       #snippets
       luasnip
       cmp_luasnip

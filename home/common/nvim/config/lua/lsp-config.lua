@@ -64,6 +64,7 @@ default_lsp_setup('postgres_lsp')
 default_lsp_setup('marksman') -- markdown
 default_lsp_setup('thriftls')
 default_lsp_setup('ts_ls')
+default_lsp_setup('rust_analyzer')
 
 nvim_lsp.lua_ls.setup({
     on_attach = on_attach,
