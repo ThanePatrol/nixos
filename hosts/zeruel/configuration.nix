@@ -302,7 +302,7 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "0 0 25 * * root  /home/hugh/dev/rent/stinky.sh >> /var/log/rent/stinky.log"
+      "0 0 25 * * hugh /home/hugh/dev/rent/stinky.sh >> /var/log/rent/stinky.log"
     ];
   };
 
