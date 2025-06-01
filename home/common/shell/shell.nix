@@ -13,6 +13,7 @@ let
   macInit = ''
     export LIBRARY_PATH=$HOME/.nix-profile/lib:$LIBRARY_PATH
     export PATH=${pkgs.gnused}/bin:$PATH
+    export PATH=${pkgs.coreutils}/bin:$PATH
   '';
 
   # Need the google git first in path instead of oss git

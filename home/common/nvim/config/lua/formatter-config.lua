@@ -34,6 +34,7 @@ require("formatter").setup {
         nix = {function() return {exe = "nixfmt", stdin = true} end},
 
         latex = require("formatter.filetypes.latex").latexindent,
+        cpp = {function() return {exe = "clang-format", stdin = true} end},
 
         yml = {yaml_formatter},
         yaml = {yaml_formatter},
