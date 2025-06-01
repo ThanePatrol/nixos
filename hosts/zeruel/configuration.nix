@@ -97,14 +97,19 @@ in
         ${pkgs.coreutils}/bin/mkdir ${hddBackupFolder}
       fi
 
-      ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,noexec -t btrfs /dev/disk/by-uuid/0bea86cf-242e-4ec8-9365-7c4b375df50e ${hddBackupFolder}
-
-      ${pkgs.coreutils}/bin/chown -R ${username} ${hddBackupFolder}
+      if ${pkgs.coreutils}/bin/grep -qs " ${hddBackupFolder} " /proc/mounts; then
+        echo "file system already mounted"
+      else
+        ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,noexec -t btrfs /dev/disk/by-uuid/0bea86cf-242e-4ec8-9365-7c4b375df50e ${hddBackupFolder}
+        ${pkgs.coreutils}/bin/chown -R ${username} ${hddBackupFolder}
+        echo "mounted hdds"
+      fi
 
       new_folder_name=${hddBackupFolder}/"backup-$(${pkgs.coreutils}/bin/date -u +%Y-%m-%d_%H.%M.%S%Z)"
       ${pkgs.coreutils}/bin/mkdir "$new_folder_name"
       # remove all but the latest 3 dirs, if less than 3 do nothing - assume no other files in here!
-      ${pkgs.coreutils}/bin/ls ${hddBackupFolder} | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -n -3 | ${pkgs.findutils}/bin/xargs -I {} ${pkgs.coreutils}/bin/rm {}
+      ${pkgs.coreutils}/bin/ls ${hddBackupFolder} | ${pkgs.coreutils}/bin/sort | ${pkgs.coreutils}/bin/head -n -3 | ${pkgs.findutils}/bin/xargs -I {} ${pkgs.coreutils}/bin/rm -r ${hddBackupFolder}/{} || true
+      ${pkgs.coreutils}/bin/echo "Removed old backups"
 
       # prevent shutdown until backup finishes
       ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone --config=${rcloneConfPath} sync ${ssdFolder} "$new_folder_name"
@@ -118,6 +123,26 @@ in
     timerConfig = {
       OnBootSec = "10m";
       Unit = "${ssdBackupSystemdServiceName}.service";
+    };
+  };
+
+  systemd.services.run-xml-scrape = {
+    script = ''
+      /home/hugh/dev/trader/target/release/rss
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+  systemd.timers.run-xml-scrape = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5m";
+      OnBootActiveSec = "24h";
+      Unit = "run-xml-scrape.service";
+      RandomizedDelaySec = "10m"; # Don't scrape at the same time
     };
   };
 
