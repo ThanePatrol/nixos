@@ -140,7 +140,7 @@ in
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "5m";
-      OnBootActiveSec = "24h";
+      OnBootActiveSec = "1h";
       Unit = "run-xml-scrape.service";
       RandomizedDelaySec = "10m"; # Don't scrape at the same time
     };
@@ -327,7 +327,10 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "0 0 25 * * hugh /home/hugh/dev/rent/stinky.sh >> /var/log/rent/stinky.log"
+      ''0 0 25 * * hugh curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999''
+      ''0 0 25 * * hugh curl -d "/home/hugh/dev/rent/kazmiimad@gmail.com.json" --request POST localhost:2999''
+      # Pay every second monday on an even week because cron can't hack it 😭
+      ''0 0 * * MON hugh case $(($(date +\%s) / (60*60*24*7))) in *[02468]) curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com" --request POST localhost:2999;; esac ''
     ];
   };
 
