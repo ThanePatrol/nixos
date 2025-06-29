@@ -35,6 +35,7 @@ let
   windowGap = 6;
 in
 {
+  system.primaryUser = username;
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
@@ -75,7 +76,6 @@ in
       "vial"
       "MonitorControl"
       "ghostty"
-      "zen-browser"
     ];
   };
 
@@ -210,11 +210,10 @@ in
     _FXShowPosixPathInTitle = true;
   };
 
-  system.activationScripts.postUserActivation.text = ''
-    # Following line should allow us to avoid a logout/login cycle when changing settings
-    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  system.activationScripts.activateSettings.text = ''
+    # Following line should allow us to avoid a logout/login cycle
+       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   '';
-
   system.defaults.CustomUserPreferences = {
     "com.apple.desktopservices" = {
       # Avoid creating .DS_Store files on network or USB volumes
