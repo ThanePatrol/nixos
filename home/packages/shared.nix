@@ -67,6 +67,7 @@ in
       libsecret # for storing passwords
       libsixel
       localsend
+      llama-cpp
       ollama
       osc
       ncurses # for terminfo stuff
