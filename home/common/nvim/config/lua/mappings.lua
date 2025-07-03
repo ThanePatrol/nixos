@@ -110,7 +110,7 @@ vim.keymap.set('n', 'va`', function() custom_text_objects.around_backtick() end,
 
 local function file_path_to_clipboard()
     local file_path = vim.fn.expand('%')
-    vim.fn.setreg('', file_path)
+    vim.fn.setreg('+', file_path)
 end
 
 vim.keymap.set('n', '<leader>d', file_path_to_clipboard)
