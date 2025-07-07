@@ -84,7 +84,7 @@ in
       rsync
       sphinx # python docs generator
       sshfs # mount remote file systems locally with ssh
-      texliveFull
+      # texliveFull TODO - renable once build issue is fixed
       tldr
       typescript
       #ueberzugpp # images in terminal
