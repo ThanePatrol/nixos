@@ -40,6 +40,7 @@ let
     #python312Packages.compiledb
     gemini-cli
     uv
+    sqlite
   ];
 
 in
