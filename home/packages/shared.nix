@@ -73,7 +73,7 @@ in
       ollama
       osc
       ncurses # for terminfo stuff
-      nodejs_24
+      nodejs_22
       pandoc # document conversion
       prismlauncher # minecraft!
       pciutils # useful pci utils

@@ -181,7 +181,6 @@ in
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "5m";
-      OnBootActiveSec = "1h";
       Unit = "run-xml-scrape.service";
       RandomizedDelaySec = "10m"; # Don't scrape at the same time
     };
@@ -437,6 +436,19 @@ in
       enable = true;
       qemu.package = pkgs.qemu;
     };
+  };
+
+  # services.paperless = {
+  #   enable = true;
+  #   mediaDir = "${ssdFolder}/paperless/media";
+  #   dataDir = "${ssdFolder}/paperless/data";
+  #   port = 28981;
+  # };
+
+  services.immich = {
+    enable = true;
+    port = 2283;
+    mediaLocation = "${ssdFolder}/immich";
   };
 
   systemd.services = {
