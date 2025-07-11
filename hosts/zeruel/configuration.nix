@@ -181,6 +181,7 @@ in
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "5m";
+      OnUnitActiveSec = "1h";
       Unit = "run-xml-scrape.service";
       RandomizedDelaySec = "10m"; # Don't scrape at the same time
     };
