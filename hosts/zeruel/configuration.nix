@@ -62,7 +62,7 @@ in
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    supportedFilesystems = [ "bcachefs" ];
+    supportedFilesystems = [ "btrfs" ];
     # use latest linux kernel
     kernelPackages = pkgs.linuxPackages_latest;
 
@@ -72,22 +72,14 @@ in
     ];
   };
 
-  systemd.services.mount-nas = {
-    description = "Mount NAS SSDs";
-    # workaround for lack of systemd support for multidisk file systems  https://github.com/systemd/systemd/issues/8234
-    # bcachefs creates a new disk with a uuid when you have a multi disk setup
-    script = ''
-      if [ ! -d ${ssdFolder} ]; then
-        ${pkgs.coreutils}/bin/mkdir ${ssdFolder}
-        ${pkgs.coreutils}/bin/chown -R ${username} ${ssdFolder}
-      fi
-      if ${pkgs.util-linux}/bin/mountpoint -q ${ssdFolder}; then
-          ${pkgs.util-linux}/bin/umount ${ssdFolder}
-      fi
-        ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid -t bcachefs /dev/disk/by-uuid/bec8ac82-6ebb-4daa-9d7c-8f1289ddb78a ${ssdFolder}
-        ${pkgs.coreutils}/bin/chown -R ${username} ${ssdFolder}
-    '';
-    wantedBy = [ "multi-user.target" ];
+  fileSystems."${ssdFolder}" = {
+    device = "/dev/disk/by-uuid/e9d7c34a-bf3c-45d0-bb00-5aeb26d998e0";
+    fsType = "btrfs";
+    options = [
+      "noatime"
+      "nodev"
+      "nosuid"
+    ];
   };
 
   systemd.services."${ssdBackupSystemdServiceName}" = {
@@ -131,9 +123,9 @@ in
   # Notify monthly paying renters
   systemd.services.run-fortnight-rent-payments = {
     script = ''
-      	    echo "running jerico"
-      		case $(($(date +\%s) / (60*60*24*7))) in *[02468]) ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com" --request POST localhost:2999;; esac
-            	'';
+      echo "running jerico"
+      case $(($(date +\%s) / (60*60*24*7))) in *[02468]) ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com" --request POST localhost:2999;; esac
+    '';
     serviceConfig = {
       Type = "oneshot";
       User = "root";

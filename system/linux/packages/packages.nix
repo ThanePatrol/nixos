@@ -32,6 +32,7 @@ let
     clipman # clipboard manager
     cliphist
     bc # cli multiplication
+    btrfs-progs
     dig
     ethtool
     grim # screenshot
