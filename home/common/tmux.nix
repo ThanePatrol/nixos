@@ -50,6 +50,12 @@ in
       bind-key & kill-window
       bind-key x kill-pane
 
+      set-option -g renumber-windows on
+      # CRL + Shift + key to left/right a window
+      bind-key -n C-S-h previous-window
+      bind-key -n C-S-l next-window
+
+
       # popup a shell session and close it
       bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
       bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
@@ -60,7 +66,6 @@ in
       set -gs set-clipboard on
       set -as terminal-features ',xterm-256color:clipboard'
 
-      set-option -g renumber-windows on
 
       # fixes colors inside neovim
       set -ga terminal-overrides ",*256col*:Tc"
