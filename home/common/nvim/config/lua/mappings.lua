@@ -69,19 +69,19 @@ autocmd("BufWritePost", {group = "__formatter__", command = ":FormatWrite"})
 -- Telescope begin
 local telescope = require('telescope-module.telescope-cfg')
 
-vim.keymap.set('n', '<leader>tg', telescope.multi_grep,
+vim.keymap.set('n', '<leader>fg', telescope.multi_grep,
                {desc = "Find files with file type"})
-vim.keymap.set('n', '<leader>tf', telescope.file_search,
+vim.keymap.set('n', '<leader>ff', telescope.file_search,
                {desc = "Find files with fuzzy matching"})
-vim.keymap.set('n', '<leader>tt', telescope.file_search_copy,
+vim.keymap.set('n', '<leader>ft', telescope.file_search_copy,
                {desc = "Find files with input prompt for copy and paste"})
 vim.keymap.set('n', '<leader>ts', telescope.text_search, {desc = "Text search"})
 -- find some emoji!
 vim.keymap.set('n', '<leader>ie', telescope.emojis,
                {desc = "Open emoji picker 😀"})
-vim.keymap.set('n', '<leader>td', telescope.file_search_cwd,
+vim.keymap.set('n', '<leader>fd', telescope.file_search_cwd,
                {desc = "Find files from the cwd of the open buffer"})
-vim.keymap.set('n', '<leader>tc', telescope.text_search_cwd,
+vim.keymap.set('n', '<leader>fc', telescope.text_search_cwd,
                {desc = "Find files with fuzzy matching from the cwd of buffer"})
 
 -- Telescope end
@@ -115,3 +115,14 @@ end
 
 vim.keymap.set('n', '<leader>d', file_path_to_clipboard)
 -- Custom scripts end
+
+-- Tabs start
+vim.keymap.set('n', '<leader>t', '<cmd>tabnew<cr>', {desc = 'Open new tab'})
+
+for i = 1, 9 do
+    vim.keymap.set('n', '<leader>' .. i, '<cmd>' .. i .. 'tabnext<cr>',
+                   {desc = 'Go to tab ' .. i})
+end
+
+vim.keymap.set('n', '<leader>w', '<cmd>tabclose<cr>', {desc = 'Close tab'})
+-- Tabs end
