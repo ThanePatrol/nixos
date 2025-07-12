@@ -365,20 +365,16 @@ in
     virt-manager.enable = true;
   };
 
-  services.cron = {
+  services.openssh = {
     enable = true;
-    systemCronJobs = [
-      ''0 0 25 * * hugh curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999''
-      ''0 0 25 * * hugh curl -d "/home/hugh/dev/rent/kazmiimad@gmail.com.json" --request POST localhost:2999''
-      # Pay every second monday if week is even because cron can't hack it 😭
-      ''0 0 * * MON hugh case $(($(date +\%s) / (60*60*24*7))) in *[02468]) curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com" --request POST localhost:2999;; esac ''
-    ];
+    settings = {
+      PasswordAuthentication = false;
+    };
   };
 
   services = {
     # Enable clipboard sharing to VM
     spice-vdagentd.enable = true;
-    openssh.enable = true;
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -446,11 +442,11 @@ in
   #   port = 28981;
   # };
 
-  services.immich = {
-    enable = true;
-    port = 2283;
-    mediaLocation = "${ssdFolder}/immich";
-  };
+  # services.immich = {
+  #   enable = true;
+  #   port = 2283;
+  #   mediaLocation = "${ssdFolder}/immich";
+  # };
 
   systemd.services = {
     docker.wantedBy = [ "multi-user.target" ];
