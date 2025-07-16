@@ -124,7 +124,7 @@ in
   systemd.services.run-fortnight-rent-payments = {
     script = ''
       echo "running jerico"
-      case $(($(date +\%s) / (60*60*24*7))) in *[02468]) ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com" --request POST localhost:2999;; esac
+      case $(($(date +\%s) / (60*60*24*7))) in *[02468]) ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com.json" --request POST localhost:2999;; esac
     '';
     serviceConfig = {
       Type = "oneshot";
