@@ -73,7 +73,6 @@ in
       ncurses # for terminfo stuff
       nodejs_22
       pandoc # document conversion
-      prismlauncher # minecraft!
       pciutils # useful pci utils
       pkg-config # build tools
       qbittorrent

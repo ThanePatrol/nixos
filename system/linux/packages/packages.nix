@@ -24,7 +24,6 @@ let
     gdb
     kmod
     linuxHeaders
-    qemu_full
   ];
 
   cliTools = with pkgs; [
@@ -59,7 +58,6 @@ let
     libsForQt5.polkit-kde-agent # for apps that want elevated permission
     nemo # gui file manager
     openrgb-with-all-plugins
-    prismlauncher # minecraft!
     qalculate-gtk # good graphical calculator
     rofi
     swaylock # lock screen for wayland
@@ -78,7 +76,6 @@ let
 
   systemLibsAndPackages = with pkgs; [
     bluez
-    libguestfs
     libinput
     libsecret # for storing passwords
     nfs-utils # for nfs drives

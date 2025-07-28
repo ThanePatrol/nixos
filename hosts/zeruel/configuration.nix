@@ -159,6 +159,40 @@ in
     };
   };
 
+  systemd.services.read-ubank = {
+    script = "/home/hugh/dev/finance/run_budget.sh";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+  systemd.timers.read-ubank = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnUnitActiveSec = "1d";
+      Unit = "read-ubank.service";
+    };
+  };
+
+  systemd.services.run-rent-reminders = {
+    script = ''
+      	${pkgs.curl}/bin/curl  localhost:2999/remind
+      	'';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+  systemd.timers.run-rent-reminders = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnUnitActiveSec = "1d";
+      Unit = "run-rent-reminders.service";
+    };
+  };
+
   systemd.services.run-xml-scrape = {
     script = ''
       /home/hugh/dev/trader/target/release/rss
