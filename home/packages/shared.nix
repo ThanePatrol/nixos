@@ -62,6 +62,7 @@ in
       gzip
       imagemagick
       jq
+      jujutsu
       lazygit # git tui
       libvirt
       libsecret # for storing passwords
