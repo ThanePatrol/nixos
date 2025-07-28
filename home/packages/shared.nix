@@ -62,8 +62,6 @@ in
       gzip
       imagemagick
       jq
-      jdk
-      jupyter-all
       lazygit # git tui
       libvirt
       libsecret # for storing passwords
