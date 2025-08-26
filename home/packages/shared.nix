@@ -38,6 +38,7 @@ let
 
   devTools = with pkgs; [
     #python312Packages.compiledb
+    ast-grep
     gemini-cli
     uv
     sqlite
@@ -86,7 +87,6 @@ in
       # texliveFull TODO - renable once build issue is fixed
       tldr
       typescript
-      #ueberzugpp # images in terminal
       unzip
       vim
       zlib

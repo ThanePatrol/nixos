@@ -7,35 +7,6 @@
 }:
 with lib;
 let
-  # llm plugin
-  codeCompanion = pkgs.vimUtils.buildVimPlugin {
-    pname = "codecompanion.nvim";
-    version = "14.11.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "olimorris";
-      repo = "codecompanion.nvim";
-      rev = "748b3d4e2a920142d1bbbc8fb069959671915796";
-      sha256 = "sha256-VECkYXyrw9VfWnU0NTcTgnK/H17ih63bb13wV2dArNE=";
-    };
-
-    nativeBuildInputs = [
-      pkgs.vimPlugins.plenary-nvim
-      pkgs.vimPlugins.telescope-nvim
-    ];
-
-    nvimSkipModules = [
-      # vim plugin with optional toggleterm integration
-      "minimal"
-      "codecompanion.providers.actions.mini_pick"
-    ];
-
-    meta = with lib; {
-      description = "Copilot meets Zed AI in Neovim";
-      homepage = "https://github.com/olimorris/codecompanion.nvim";
-      license = licenses.mit;
-      maintainers = with maintainers; [ hughmandalidis ];
-    };
-  };
 
 in
 {
@@ -48,8 +19,6 @@ in
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-      codeCompanion
-
       #General
       vim-sensible
 
@@ -72,6 +41,7 @@ in
 
       #add emoji!
       telescope-symbols-nvim
+
       #indent lines
       indent-blankline-nvim
 
@@ -101,6 +71,8 @@ in
       #Completions
       cmp-nvim-lsp
       nvim-cmp
+
+      codecompanion-nvim
 
       #snippets
       luasnip

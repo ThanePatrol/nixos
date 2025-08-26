@@ -79,19 +79,6 @@ in
     ];
   };
 
-  # customer launcher at login
-  launchd.user.agents = {
-    "docker-desktop" = {
-      script = "open -a Docker";
-      serviceConfig = {
-        Label = "com.docker.desktop.launch";
-        RunAtLoad = true;
-        StandardErrorPath = "/tmp/docker.err";
-        StandardOutPath = "/tmp/docker.out";
-      };
-    };
-  };
-
   security.pam.services.sudo_local.touchIdAuth = true;
 
   services.aerospace = {
