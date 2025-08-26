@@ -36,12 +36,10 @@ vim.opt.diffopt = {
 -- virtual text for lsp info
 vim.diagnostic.config({virtual_lines = false})
 
-require('mappings')
-require('color-theme')
-vim.cmd.colorscheme "catppuccin"
--- Fixes colorscheme
+vim.cmd.colorscheme "everforest"
 vim.opt.termguicolors = true
--- require('nvim-tree-config')
+
+require('mappings')
 require('autopairs-config')
 require('cmp-config')
 require('lsp-config')
