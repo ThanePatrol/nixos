@@ -6,7 +6,6 @@ let
 in
 {
   packages = with pkgs; [
-    eclipses.eclipse-java
     eww
     tor-browser
     wl-clipboard

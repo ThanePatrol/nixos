@@ -8,11 +8,6 @@ help: ## Display this screen
 install-nix:
 	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
-update-ramiel: ## Updates nixos desktop
-	sudo -v # Build can take a while and we need root to apply the flake
-	nix build .#nixosConfigurations.ramiel.config.system.build.toplevel
-	sudo nixos-rebuild switch --flake .#ramiel
-
 update-zeruel: ## Updates nixos server
 	sudo -v # Build can take a while and we need root to apply the flake
 	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.zeruel.config.system.build.toplevel
@@ -38,11 +33,6 @@ update-work: ## Updates work macbook
 	darwin-rebuild switch --flake .#work
 	- sudo mv /etc/zshrc-temp /etc/zshrc
 	- sudo mv /etc/bashrc-temp /etc/bashrc
-
-update-fold: ## Updates Samsung Galaxy fold 5
-	nix build --no-link --impure .#androidConfigurations.fold5.activationPackage
-	# find where the flake has been built then run the activation script
-	$$(nix path-info --impure .#androidConfigurations.fold5.activationPackage)/activate
 
 update-remote-work: ## Updates a remote dev workstation
 	home-manager switch --impure --flake .#workServer

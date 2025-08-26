@@ -8,25 +8,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
-    };
-
-    golang_1_19 = {
-      url = "github:NixOS/nixpkgs?rev=7a339d87931bba829f68e94621536cad9132971a";
-    };
-
-    golang_1_18 = {
-      url = "github:NixOS/nixpkgs?rev=9957cd48326fe8dbd52fdc50dd2502307f188b0d";
-    };
-
-    golang_1_22 = {
-      url = "github:nixos/nixpkgs?rev=05bbf675397d5366259409139039af8077d695ce";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -48,10 +31,6 @@
       nixpkgs,
       nix-darwin,
       home-manager,
-      nix-on-droid,
-      golang_1_18,
-      golang_1_19,
-      golang_1_22,
       rust-overlay,
       flake-utils,
       neovim-nightly-overlay,
@@ -168,40 +147,6 @@
           ];
         };
 
-      androidSystem =
-        system: username: isWork: email: gitUserName: homeDirectory:
-        let
-          pkgs = genPkgs system;
-        in
-        nix-on-droid.lib.nixOnDroidConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = {
-            customArgs = {
-              inherit isWork email gitUserName;
-            };
-          };
-
-          modules = [
-            ./hosts/fold5/nix-on-droid.nix
-            {
-              home-manager = {
-                config = ./home/android-home.nix;
-                extraSpecialArgs = {
-                  customArgs = {
-                    inherit
-                      username
-                      isWork
-                      email
-                      gitUserName
-                      homeDirectory
-                      ;
-                  };
-                };
-              };
-            }
-          ];
-        };
-
       makeRustDevShell =
         system:
         let
@@ -246,11 +191,6 @@
       };
 
       nixosConfigurations = {
-        # main desktop
-        ramiel =
-          nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com"
-            "Hugh Mandalidis";
-
         # x570 server
         zeruel =
           nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis"
@@ -263,56 +203,9 @@
             "/usr/local/google/home/hmandalidis";
       };
 
-      androidConfigurations = {
-        fold5 =
-          androidSystem "aarch64-linux" "nix-on-droid" false "mandalidis.hugh@gmail.com"
-            "Hugh Mandalidis";
-      };
-
       rustStableDevShell = makeRustDevShell "aarch64-darwin";
 
       devShells.aarch64-darwin = {
-        go_1_18 =
-          let
-            pkgs = golang_1_18.legacyPackages.aarch64-darwin;
-          in
-          pkgs.mkShell {
-            buildInputs = with pkgs; [
-              go_1_18
-              go-tools
-              golangci-lint
-              golines
-            ];
-          };
-        go_1_19 =
-          let
-            pkgs = golang_1_19.legacyPackages.aarch64-darwin;
-          in
-          pkgs.mkShell {
-            buildInputs = with pkgs; [
-              go_1_19
-              go-tools
-              golangci-lint
-              nilaway
-              golines
-            ];
-          };
-        go_1_22 =
-          let
-            pkgs = golang_1_22.legacyPackages.aarch64-darwin;
-          in
-          pkgs.mkShell {
-            buildInputs = with pkgs; [
-              go_1_22
-              go-tools
-              golangci-lint
-              nilaway
-              golines
-              tinygo
-              python39
-              python39Packages.pip
-            ];
-          };
       };
     };
 }
