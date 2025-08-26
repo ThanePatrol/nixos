@@ -27,7 +27,7 @@ build-leliel: ## Updates personal macbook
 	 nix build --extra-experimental-features "nix-command flakes"  .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
 
 update-leliel: build-leliel
-	THEME="Catppuccin-mocha" sudo darwin-rebuild switch --impure --flake .#leliel
+	sudo darwin-rebuild switch --flake .#leliel
 
 update-work: ## Updates work macbook
 	# have to use root zshrc/bashrc as defined by google but nix wants to write to it 😭
