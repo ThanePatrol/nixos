@@ -78,6 +78,7 @@ in
       pciutils # useful pci utils
       pkg-config # build tools
       qbittorrent
+      rainfrog
       rclone # nice simple backup cli for cloud backups
       ripgrep # nice and fast grep alternative for large codebases
       rmlint
