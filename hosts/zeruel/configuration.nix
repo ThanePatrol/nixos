@@ -468,11 +468,11 @@ in
   #   port = 28981;
   # };
 
-  # services.immich = {
-  #   enable = true;
-  #   port = 2283;
-  #   mediaLocation = "${ssdFolder}/immich";
-  # };
+  services.immich = {
+    enable = true;
+    port = 2283;
+    #mediaLocation = "${ssdFolder}/immich";
+  };
 
   systemd.services = {
     docker.wantedBy = [ "multi-user.target" ];
