@@ -257,60 +257,60 @@ in
   systemd.network = {
     wait-online.anyInterface = true;
 
-    netdevs = {
-      # Create the bridge interface
-      "20-br-lan" = {
-        netdevConfig = {
-          Kind = "bridge";
-          Name = "br-lan";
-        };
-      };
-    };
-    networks = {
-      "30-lan0" = {
-        matchConfig.Name = tenGbEthernetPort1;
-        linkConfig.RequiredForOnline = "enslaved";
-        networkConfig = {
-          Bridge = "br-lan";
-          ConfigureWithoutCarrier = true;
-        };
-      };
-      "30-lan1" = {
-        matchConfig.Name = tenGbEthernetPort2;
-        linkConfig.RequiredForOnline = "enslaved";
-        networkConfig = {
-          Bridge = "br-lan";
-          ConfigureWithoutCarrier = true;
-        };
-      };
-      # Configure bridge
-      "40-br-lan" = {
-        matchConfig.Name = "br-lan";
-        bridgeConfig = { };
-        address = [
-          "10.0.1.1/24"
-        ];
-        networkConfig = {
-          ConfigureWithoutCarrier = true;
-        };
-        linkConfig.RequiredForOnline = "no";
-      };
-      "10-wan" = {
-        matchConfig.Name = onboardGigabitEthernetPort2;
-        networkConfig = {
-          # start a DHCP Client for IPv4 Addressing/Routing
-          DHCP = "ipv4";
-          IPv6AcceptRA = true;
-          DNSOverTLS = true;
-          DNSSEC = true;
-          IPv6PrivacyExtensions = true;
-          IPv4Forwarding = true;
-          IPv6Forwarding = true;
-        };
-        # make routing on this interface a dependency for network-online.target
-        linkConfig.RequiredForOnline = "routable";
-      };
-    };
+    # netdevs = {
+    #   # Create the bridge interface
+    #   "20-br-lan" = {
+    #     netdevConfig = {
+    #       Kind = "bridge";
+    #       Name = "br-lan";
+    #     };
+    #   };
+    # };
+    # networks = {
+    #   "30-lan0" = {
+    #     matchConfig.Name = tenGbEthernetPort1;
+    #     linkConfig.RequiredForOnline = "enslaved";
+    #     networkConfig = {
+    #       Bridge = "br-lan";
+    #       ConfigureWithoutCarrier = true;
+    #     };
+    #   };
+    #   "30-lan1" = {
+    #     matchConfig.Name = tenGbEthernetPort2;
+    #     linkConfig.RequiredForOnline = "enslaved";
+    #     networkConfig = {
+    #       Bridge = "br-lan";
+    #       ConfigureWithoutCarrier = true;
+    #     };
+    #   };
+    #   # Configure bridge
+    #   "40-br-lan" = {
+    #     matchConfig.Name = "br-lan";
+    #     bridgeConfig = { };
+    #     address = [
+    #       "10.0.1.1/24"
+    #     ];
+    #     networkConfig = {
+    #       ConfigureWithoutCarrier = true;
+    #     };
+    #     linkConfig.RequiredForOnline = "no";
+    #   };
+    #   "10-wan" = {
+    #     matchConfig.Name = onboardGigabitEthernetPort2;
+    #     networkConfig = {
+    #       # start a DHCP Client for IPv4 Addressing/Routing
+    #       DHCP = "ipv4";
+    #       IPv6AcceptRA = true;
+    #       DNSOverTLS = true;
+    #       DNSSEC = true;
+    #       IPv6PrivacyExtensions = true;
+    #       IPv4Forwarding = true;
+    #       IPv6Forwarding = true;
+    #     };
+    #     # make routing on this interface a dependency for network-online.target
+    #     linkConfig.RequiredForOnline = "routable";
+    #   };
+    # };
   };
   services.resolved.enable = false;
 
@@ -318,76 +318,81 @@ in
     networkmanager.enable = true;
     hostName = "zeruel";
     useNetworkd = true;
-    interfaces.${onboardGigabitEthernetPort2}.useDHCP = false;
+    interfaces.${onboardGigabitEthernetPort2}.ipv4.addresses = [
+      {
+        address = "10.0.0.50";
+        prefixLength = 16;
+      }
+    ];
 
     nat.enable = false;
     firewall.enable = false;
 
-    nftables = {
-      enable = true;
-      checkRuleset = true;
-      ruleset = ''
-        table inet filter {
-
-          chain input {
-            type filter hook input priority 0; policy drop;
-
-            iifname { "br-lan" } accept comment "Allow local network to access the router"
-            iifname "${onboardGigabitEthernetPort2}" ct state { established, related } accept comment "Allow established traffic"
-            iifname "${onboardGigabitEthernetPort2}" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
-            iifname "${onboardGigabitEthernetPort2}" counter drop comment "Drop all other unsolicited traffic from wan"
-            iifname "lo" accept comment "Accept everything from loopback interface"
-          }
-          chain forward {
-            type filter hook forward priority filter; policy drop;
-
-            iifname { "br-lan" } oifname { "${onboardGigabitEthernetPort2}" } accept comment "Allow trusted LAN to WAN"
-            iifname { "${onboardGigabitEthernetPort2}" } oifname { "br-lan" } ct state { established, related } accept comment "Allow established back to LANs"
-          }
-        }
-
-        table ip nat {
-          chain postrouting {
-            type nat hook postrouting priority 100; policy accept;
-            oifname "${onboardGigabitEthernetPort2}" masquerade
-          }
-        }
-      '';
-    };
+    # nftables = {
+    #   enable = true;
+    #   checkRuleset = true;
+    #   ruleset = ''
+    #     table inet filter {
+    #
+    #       chain input {
+    #         type filter hook input priority 0; policy drop;
+    #
+    #         iifname { "br-lan" } accept comment "Allow local network to access the router"
+    #         iifname "${onboardGigabitEthernetPort2}" ct state { established, related } accept comment "Allow established traffic"
+    #         iifname "${onboardGigabitEthernetPort2}" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
+    #         iifname "${onboardGigabitEthernetPort2}" counter drop comment "Drop all other unsolicited traffic from wan"
+    #         iifname "lo" accept comment "Accept everything from loopback interface"
+    #       }
+    #       chain forward {
+    #         type filter hook forward priority filter; policy drop;
+    #
+    #         iifname { "br-lan" } oifname { "${onboardGigabitEthernetPort2}" } accept comment "Allow trusted LAN to WAN"
+    #         iifname { "${onboardGigabitEthernetPort2}" } oifname { "br-lan" } ct state { established, related } accept comment "Allow established back to LANs"
+    #       }
+    #     }
+    #
+    #     table ip nat {
+    #       chain postrouting {
+    #         type nat hook postrouting priority 100; policy accept;
+    #         oifname "${onboardGigabitEthernetPort2}" masquerade
+    #       }
+    #     }
+    #   '';
+    # };
   };
 
-  services.dnsmasq = {
-    enable = true;
-    settings = {
-      server = [
-        "9.9.9.9"
-        "8.8.8.8"
-        "1.1.1.1"
-      ];
-      # sensible behaviours
-      domain-needed = true;
-      bogus-priv = true;
-      no-resolv = true;
-
-      # Cache dns queries.
-      cache-size = 1000;
-
-      dhcp-range = [ "br-lan,10.0.1.50,10.0.1.254,24h" ];
-      interface = "br-lan";
-      dhcp-host = "10.0.1.1";
-
-      # local domains
-      local = "/lan/";
-      domain = "lan";
-      expand-hosts = true;
-
-      # don't use /etc/hosts as this would advertise as localhost
-      no-hosts = true;
-      address = [
-        "/zeruel.lan/10.0.1.1"
-      ];
-    };
-  };
+  # services.dnsmasq = {
+  #   enable = true;
+  #   settings = {
+  #     server = [
+  #       "9.9.9.9"
+  #       "8.8.8.8"
+  #       "1.1.1.1"
+  #     ];
+  #     # sensible behaviours
+  #     domain-needed = true;
+  #     bogus-priv = true;
+  #     no-resolv = true;
+  #
+  #     # Cache dns queries.
+  #     cache-size = 1000;
+  #
+  #     dhcp-range = [ "br-lan,10.0.1.50,10.0.1.254,24h" ];
+  #     interface = "br-lan";
+  #     dhcp-host = "10.0.1.1";
+  #
+  #     # local domains
+  #     local = "/lan/";
+  #     domain = "lan";
+  #     expand-hosts = true;
+  #
+  #     # don't use /etc/hosts as this would advertise as localhost
+  #     no-hosts = true;
+  #     address = [
+  #       "/zeruel.lan/10.0.1.1"
+  #     ];
+  #   };
+  # };
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
@@ -481,14 +486,12 @@ in
 
   # services.paperless = {
   #   enable = true;
-  #   mediaDir = "${ssdFolder}/paperless/media";
-  #   dataDir = "${ssdFolder}/paperless/data";
-  #   port = 28981;
   # };
 
   services.immich = {
     enable = true;
     port = 2283;
+    host = "0.0.0.0";
     #mediaLocation = "${ssdFolder}/immich";
   };
 
