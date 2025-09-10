@@ -53,9 +53,9 @@ let
     wrappedBitwarden
     wrappedZoom
     alacritty
-    anki
+    # anki
     firefox
-    libsForQt5.polkit-kde-agent # for apps that want elevated permission
+    kdePackages.polkit-kde-agent-1
     nemo # gui file manager
     openrgb-with-all-plugins
     qalculate-gtk # good graphical calculator
