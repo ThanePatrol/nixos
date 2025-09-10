@@ -318,12 +318,7 @@ in
     networkmanager.enable = true;
     hostName = "zeruel";
     useNetworkd = true;
-    interfaces.${onboardGigabitEthernetPort2}.ipv4.addresses = [
-      {
-        address = "10.0.0.50";
-        prefixLength = 16;
-      }
-    ];
+    interfaces.${onboardGigabitEthernetPort2}.useDHCP = true;
 
     nat.enable = false;
     firewall.enable = false;
