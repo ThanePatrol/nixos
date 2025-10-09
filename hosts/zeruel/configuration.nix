@@ -321,73 +321,7 @@ in
     interfaces.${onboardGigabitEthernetPort2}.useDHCP = true;
 
     nat.enable = false;
-    firewall.enable = false;
-
-    # nftables = {
-    #   enable = true;
-    #   checkRuleset = true;
-    #   ruleset = ''
-    #     table inet filter {
-    #
-    #       chain input {
-    #         type filter hook input priority 0; policy drop;
-    #
-    #         iifname { "br-lan" } accept comment "Allow local network to access the router"
-    #         iifname "${onboardGigabitEthernetPort2}" ct state { established, related } accept comment "Allow established traffic"
-    #         iifname "${onboardGigabitEthernetPort2}" icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow select ICMP"
-    #         iifname "${onboardGigabitEthernetPort2}" counter drop comment "Drop all other unsolicited traffic from wan"
-    #         iifname "lo" accept comment "Accept everything from loopback interface"
-    #       }
-    #       chain forward {
-    #         type filter hook forward priority filter; policy drop;
-    #
-    #         iifname { "br-lan" } oifname { "${onboardGigabitEthernetPort2}" } accept comment "Allow trusted LAN to WAN"
-    #         iifname { "${onboardGigabitEthernetPort2}" } oifname { "br-lan" } ct state { established, related } accept comment "Allow established back to LANs"
-    #       }
-    #     }
-    #
-    #     table ip nat {
-    #       chain postrouting {
-    #         type nat hook postrouting priority 100; policy accept;
-    #         oifname "${onboardGigabitEthernetPort2}" masquerade
-    #       }
-    #     }
-    #   '';
-    # };
   };
-
-  # services.dnsmasq = {
-  #   enable = true;
-  #   settings = {
-  #     server = [
-  #       "9.9.9.9"
-  #       "8.8.8.8"
-  #       "1.1.1.1"
-  #     ];
-  #     # sensible behaviours
-  #     domain-needed = true;
-  #     bogus-priv = true;
-  #     no-resolv = true;
-  #
-  #     # Cache dns queries.
-  #     cache-size = 1000;
-  #
-  #     dhcp-range = [ "br-lan,10.0.1.50,10.0.1.254,24h" ];
-  #     interface = "br-lan";
-  #     dhcp-host = "10.0.1.1";
-  #
-  #     # local domains
-  #     local = "/lan/";
-  #     domain = "lan";
-  #     expand-hosts = true;
-  #
-  #     # don't use /etc/hosts as this would advertise as localhost
-  #     no-hosts = true;
-  #     address = [
-  #       "/zeruel.lan/10.0.1.1"
-  #     ];
-  #   };
-  # };
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
@@ -414,6 +348,37 @@ in
     settings = {
       PasswordAuthentication = false;
     };
+  };
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      	/home/hugh/SSDs    10.0.0.118/24(insecure,rw,sync,no_subtree_check)
+      	'';
+    # fixed rpc.statd port; for firewall
+    lockdPort = 4001;
+    mountdPort = 4002;
+    statdPort = 4000;
+  };
+  networking.firewall = {
+    enable = true;
+    # for NFSv3; view with `rpcinfo -p`
+    allowedTCPPorts = [
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+    ];
+    allowedUDPPorts = [
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+    ];
   };
 
   services = {
