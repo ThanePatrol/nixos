@@ -16,12 +16,14 @@ let
     export PATH=${pkgs.coreutils}/bin:$PATH
   '';
 
-  # Need the google git first in path instead of oss git
-  workExports = ''
-    export PATH="/usr/local/git/git-google/bin:$PATH"
+  workLinuxExports = ''
     export PATH="$PATH:$HOME/.nix-profile/bin"
     source /etc/bash_completion.d/hgd
     source /etc/bash_completion.d/g4d
+  '';
+  # Need the google git first in path instead of oss git
+  workExports = ''
+    export PATH="/usr/local/git/git-google/bin:$PATH"
   '';
 
 in
@@ -31,12 +33,11 @@ in
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
-    envExtra =
-      ''
-        export EDITOR="nvim"
-        export MANPAGER='nvim +Man!'
-      ''
-      + (if isDarwin then macExports else "");
+    envExtra = ''
+      export EDITOR="nvim"
+      export MANPAGER='nvim +Man!'
+    ''
+    + (if isDarwin then macExports else "");
 
     shellAliases = {
       ".." = "cd ..";
@@ -81,27 +82,27 @@ in
         file = "p10k.zsh";
       }
     ];
-    initContent =
-      ''
-        # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
-        export DIRENV_LOG_FORMAT=
-        eval "$(direnv hook zsh)"
+    initContent = ''
+      # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
+      export DIRENV_LOG_FORMAT=
+      eval "$(direnv hook zsh)"
 
-        source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+      source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
-        eval "$(${pkgs.fzf}/bin/fzf --zsh)"
+      eval "$(${pkgs.fzf}/bin/fzf --zsh)"
 
-        export PATH=$PATH:$HOME/.local/bin
+      export PATH=$PATH:$HOME/.local/bin
 
-        bindkey "^[f" forward-word
-        bindkey "^[b" backward-word
-        bindkey "^[\b" backward-kill-word
+      bindkey "^[f" forward-word
+      bindkey "^[b" backward-word
+      bindkey "^[\b" backward-kill-word
 
-        # disable vim editing mode
-        bindkey -e
+      # disable vim editing mode
+      bindkey -e
 
-      ''
-      + (if isDarwin then macInit else "")
-      + (if isWork then workExports else "");
+    ''
+    + (if isDarwin then macInit else "")
+    + (if isWork then workExports else "")
+    + (if isWork && !isDarwin then workLinuxExports else "");
   };
 }

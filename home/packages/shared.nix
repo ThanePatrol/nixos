@@ -1,35 +1,12 @@
 { pkgs, lib, ... }:
 
 let
-  # FIXME - upstream package
-  wsl = pkgs.buildGoModule rec {
-    pname = "wsl";
-    version = "4.4.1";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "bombsimon";
-      repo = pname;
-      rev = "v${version}";
-      sha256 = "sha256-QvoJuRQBwm4xx7HzW767Bj/OB2WPA7NnMD1kLZQMfn8=";
-
-    };
-
-    vendorHash = "sha256-cz4nWE0+vOW0j6avZgsiqcSo1zwFOn3I8anZsEB2/IA=";
-
-    meta = with lib; {
-      description = "A golang whitespace linter";
-      homepage = "https://github.com/bombsimon/wsl";
-      license = licenses.mit;
-      #maintainers = with maintainers; [ meain ];
-    };
-  };
 
   codeFormattersAndLinters = with pkgs; [
     black # python formatter
     prettierd # prettier daemon for web
     gofumpt # formatter
     golines # formatter
-    wsl # whitespace linter for go
     nixfmt-rfc-style # autoformat nix files
     shfmt # shell formatter
     luaformatter # format lua
