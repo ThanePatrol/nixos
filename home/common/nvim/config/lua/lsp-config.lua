@@ -1,6 +1,6 @@
 local nvim_lsp = require('lspconfig')
 
-local function refactor_functions_and_logging()
+local function refactor_functions()
     local curr_name = vim.fn.expand("<cword>")
     local new_name = vim.fn.input("New name: ", curr_name)
 
@@ -10,18 +10,14 @@ local function refactor_functions_and_logging()
 end
 
 local on_attach = function(client, bufnr)
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
         vim.keymap.set('n', keys, func, {buffer = bufnr, desc = desc})
     end
 
-    nmap('<leader>rn', refactor_functions_and_logging, '[R]e[n]ame')
+    nmap('<leader>rn', refactor_functions, '[R]e[n]ame')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
     nmap('<leader>gr', require('telescope.builtin').lsp_references,
@@ -41,7 +37,6 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
--- enable LSPs
 local function default_lsp_setup(module)
     nvim_lsp[module].setup({on_attach = on_attach, capabilities = capabilities})
 end
