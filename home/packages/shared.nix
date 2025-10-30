@@ -8,7 +8,7 @@ let
     golines # formatter
     nixfmt-rfc-style # autoformat nix files
     shfmt # shell formatter
-    luaformatter # format lua
+    #luaformatter # format lua
     yamlfmt
   ];
 

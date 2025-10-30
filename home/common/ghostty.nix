@@ -5,7 +5,7 @@
 }:
 
 let
-  themeString = lib.toLower theme;
+  themeString = builtins.replaceStrings [ "-" ] [ " " ] theme;
 in
 {
   xdg.configFile."ghostty/config".text = ''
