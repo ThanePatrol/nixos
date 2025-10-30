@@ -4,6 +4,7 @@
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     matchBlocks = {
       "thane" = {
         hostname = "thane.c.googlers.com";

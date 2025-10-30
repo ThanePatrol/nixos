@@ -17,15 +17,26 @@ in
     };
   };
 
+  programs.delta = {
+    # git-delta
+    # https://github.com/dandavison/delta
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      features = "side-by-side line-numbers";
+      syntax-theme = "base16";
+      delta.navigate = true;
+    };
+  };
+
   programs.git = {
     enable = true;
 
-    userName = gitUserName;
-    userEmail = email;
-
     includes = [ { path = "~/.config/git/gitconfig"; } ];
 
-    extraConfig = {
+    settings = {
+      user.name = gitUserName;
+      user.email = email;
       init.defaultBranch = DEFAULT_BRANCH;
       branch.sort = "-committerdate";
       core.editor = "vim";
@@ -48,15 +59,5 @@ in
       ".direnv"
     ];
 
-    # git-delta
-    # https://github.com/dandavison/delta
-    delta = {
-      enable = true;
-      options = {
-        features = "side-by-side line-numbers";
-        syntax-theme = "base16";
-        delta.navigate = true;
-      };
-    };
   };
 }

@@ -79,7 +79,7 @@ in
       cmp_luasnip
 
       # Colorschemes
-      # catppuccin-nvim
+      catppuccin-nvim
       everforest
 
       # Renders markdown nicely
@@ -111,7 +111,7 @@ in
       rustfmt
 
       # generic sql
-      postgres-lsp
+      postgres-language-server
 
       #terraform lsp
       terraform-ls

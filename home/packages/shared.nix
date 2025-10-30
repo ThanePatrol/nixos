@@ -8,7 +8,7 @@ let
     golines # formatter
     nixfmt-rfc-style # autoformat nix files
     shfmt # shell formatter
-    #luaformatter # format lua
+    luaformatter # format lua
     yamlfmt
   ];
 
@@ -27,7 +27,7 @@ in
     [
       age # CLI encryption
       cargo-flamegraph # flamegraph tool for many languages
-      du-dust # better du
+      dust # better du
       flex # lexical analysis
       fzf # fuzzy find
       ffmpeg-full
@@ -39,7 +39,7 @@ in
       gzip
       imagemagick
       jq
-      jujutsu
+      #jujutsu
       lazygit # git tui
       libvirt
       libsecret # for storing passwords

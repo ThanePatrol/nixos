@@ -36,7 +36,7 @@ vim.opt.diffopt = {
 -- virtual text for lsp info
 vim.diagnostic.config({virtual_lines = false})
 
-vim.cmd.colorscheme "everforest"
+vim.cmd.colorscheme "catppuccin-mocha"
 vim.opt.termguicolors = true
 
 require('mappings')
