@@ -1,10 +1,6 @@
 { pkgs, ... }:
 
 let
-  wrappedBitwarden = pkgs.writeShellScriptBin "bitwarden" ''
-    exec ${pkgs.bitwarden}/bin/bitwarden --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
-
   wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
@@ -50,7 +46,6 @@ let
   ];
 
   guiTools = with pkgs; [
-    wrappedBitwarden
     wrappedZoom
     alacritty
     # anki
