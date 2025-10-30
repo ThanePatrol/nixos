@@ -1,7 +1,6 @@
 { pkgs, lib, ... }:
 
 let
-
   codeFormattersAndLinters = with pkgs; [
     black # python formatter
     prettierd # prettier daemon for web

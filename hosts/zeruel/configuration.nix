@@ -315,7 +315,7 @@ in
   services.resolved.enable = false;
 
   networking = {
-    networkmanager.enable = true;
+    networkmanager.enable = false;
     hostName = "zeruel";
     useNetworkd = true;
     interfaces.${onboardGigabitEthernetPort2}.useDHCP = true;
