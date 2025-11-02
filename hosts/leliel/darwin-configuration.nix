@@ -68,11 +68,9 @@ in
     # mainly used for gui things not packaged by nix
     casks = [
       "macfuse"
-      # "docker" - not allowed at G
       "firefox"
       "spotify"
       "qmk-toolbox"
-      #      "anki" - not allowed at G
       "vial"
       "MonitorControl"
       "ghostty"

@@ -40,7 +40,6 @@ vim.cmd.colorscheme "catppuccin-mocha"
 vim.opt.termguicolors = true
 
 require('mappings')
-require('autopairs-config')
 require('cmp-config')
 require('lsp-config')
 require('treesitter-config')

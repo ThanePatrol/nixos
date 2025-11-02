@@ -54,7 +54,6 @@ in
       gp = "git push";
       ga = "git add .";
       gs = "git status -s";
-      dc = "docker compose";
       # hack for resetting clipboard when it starts playing up on macos
       rclip = "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
       # TODO make portable for linux
