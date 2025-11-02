@@ -35,31 +35,46 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local function lsp_setup(module, filetypes, settings)
+local function lsp_setup(module, cmd, filetypes, root_markers, settings)
     vim.lsp.config(module, {
         on_attach = on_attach,
         capabilities = capabilities,
+        cmd = cmd,
         filetypes = filetypes,
+        root_markers = root_markers,
         settings = settings
     })
     vim.lsp.enable(module)
 end
 
-lsp_setup('bashls', {"sh", "tmux"})
-lsp_setup('nil_ls') -- nix
-lsp_setup('pyright') -- python
-lsp_setup('cssls') -- css
-lsp_setup('jsonls') -- json
-lsp_setup('clangd') -- c/c++
-lsp_setup('texlab') -- latex
-lsp_setup('postgres_lsp')
-lsp_setup('marksman') -- markdown
-lsp_setup('ts_ls')
-lsp_setup('rust_analyzer')
-lsp_setup('lua_ls', {"lua"}, {Lua = {diagnostics = {globals = {'vim'}}}})
-lsp_setup('terraformls', {'terraform', 'tf', 'hcl'})
-lsp_setup('html')
-lsp_setup('gopls', {"go"}, {
+local default_root_marker = {".git"}
+
+lsp_setup('bashls', {"lua-language-server"}, {"sh", "tmux"}, default_root_marker)
+lsp_setup('nil_ls', {"nil"}, {"nix"}, default_root_marker) -- nix
+lsp_setup('pyright', {"pyright-langserver", "--stdio"}, {"python"},
+          default_root_marker) -- python
+lsp_setup('cssls', {"vscode-css-language-server", "--stdio"}, {"css", "scss"},
+          default_root_marker) -- css
+lsp_setup('jsonls', {"vscode-json-language-server", "--stdio"}, {"json"}) -- json
+lsp_setup('clangd', {"clangd"}, {"c", "cpp", "objc", "objcpp", "cuda"},
+          default_root_marker) -- c/c++
+lsp_setup('postgres_lsp', {"postgres-language-server", "lsp-proxy"}, {"sql"},
+          default_root_marker)
+lsp_setup('tsgo', {"tsgo", "--lsp", "--stdio"}, {
+    "javascript", "javascriptreact", "javascript.jsx", "typescript",
+    "typescriptreact", "typescript.tsx"
+}, default_root_marker)
+lsp_setup('rust_analyzer', {"rust-analyzer"}, {"rust"}, default_root_marker)
+lsp_setup('lua_ls', {"lua-language-server"}, {"lua"}, default_root_marker, {
+    Lua = {
+        diagnostics = {globals = {'vim'}},
+        runtime = {version = "LuaJIT"},
+        signatureHelp = {enabled = true}
+    }
+})
+lsp_setup('terraformls', {"terraform-lsp"}, {'terraform', 'tf', 'hcl'},
+          default_root_marker)
+lsp_setup('gopls', {"gopls"}, {"go", "gomod", "gotmpl"}, default_root_marker, {
     gopls = {
         analyses = {unused_params = true},
         staticcheck = true,

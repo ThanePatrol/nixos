@@ -20,17 +20,11 @@
 
       vim-tmux-navigator
 
-      # notifications!
-      nvim-notify
-
       # icons!
       nvim-web-devicons
 
       # colour preview in editor
       nvim-highlight-colors
-
-      #autoclose
-      nvim-autopairs
 
       #awesome file search
       telescope-nvim
