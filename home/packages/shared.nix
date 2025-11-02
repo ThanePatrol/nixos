@@ -39,7 +39,7 @@ in
       gzip
       imagemagick
       jq
-      #jujutsu
+      jujutsu
       lazygit # git tui
       libvirt
       libsecret # for storing passwords

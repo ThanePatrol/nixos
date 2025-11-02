@@ -35,24 +35,34 @@ end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local function default_lsp_setup(module)
-    vim.lsp.config(module, {on_attach = on_attach, capabilities = capabilities})
+local function lsp_setup(module, filetypes, settings)
+    vim.lsp.config(module, {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        filetypes = filetypes,
+        settings = settings
+    })
     vim.lsp.enable(module)
 end
 
-default_lsp_setup('bashls')
-default_lsp_setup('nil_ls') -- nix
-default_lsp_setup('pyright') -- python
-default_lsp_setup('cssls') -- css
-default_lsp_setup('jsonls') -- json
-default_lsp_setup('clangd') -- c/c++
-default_lsp_setup('texlab') -- latex
-default_lsp_setup('postgres_lsp')
-default_lsp_setup('marksman') -- markdown
-default_lsp_setup('thriftls')
-default_lsp_setup('ts_ls')
-default_lsp_setup('rust_analyzer')
-default_lsp_setup('lua_ls')
-default_lsp_setup('gopls')
-default_lsp_setup('terraformls')
-default_lsp_setup('html')
+lsp_setup('bashls', {"sh", "tmux"})
+lsp_setup('nil_ls') -- nix
+lsp_setup('pyright') -- python
+lsp_setup('cssls') -- css
+lsp_setup('jsonls') -- json
+lsp_setup('clangd') -- c/c++
+lsp_setup('texlab') -- latex
+lsp_setup('postgres_lsp')
+lsp_setup('marksman') -- markdown
+lsp_setup('ts_ls')
+lsp_setup('rust_analyzer')
+lsp_setup('lua_ls', {"lua"}, {Lua = {diagnostics = {globals = {'vim'}}}})
+lsp_setup('terraformls', {'terraform', 'tf', 'hcl'})
+lsp_setup('html')
+lsp_setup('gopls', {"go"}, {
+    gopls = {
+        analyses = {unused_params = true},
+        staticcheck = true,
+        usePlaceholders = true
+    }
+})

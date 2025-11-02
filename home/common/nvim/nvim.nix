@@ -117,6 +117,9 @@
 
       # Markdown
       marksman
+
+      # provides many packages, including clangd
+      llvmPackages_21.clang-unwrapped
     ];
   };
   xdg.configFile.nvim = {
