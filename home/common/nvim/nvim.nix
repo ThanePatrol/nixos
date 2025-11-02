@@ -59,6 +59,9 @@
       cmp-nvim-lsp
       nvim-cmp
 
+      # lsp helper, sets up root_dir, on_attach and other niceties
+      nvim-lspconfig
+
       codecompanion-nvim
 
       #snippets

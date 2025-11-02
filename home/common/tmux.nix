@@ -8,21 +8,6 @@
 let
   themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ] theme;
 
-  tmuxPopupShell = pkgs.writeShellScriptBin "tmux-popup" ''
-    tmux popup -E "tmux attach -t popup || tmux new -s popup"
-    exit 0
-  '';
-
-  tmuxClosePopup = pkgs.writeShellScriptBin "close-tmux-popup" ''
-    session_name=$(tmux display-message -p '#S')
-    if [[ "$session_name" == "popup" ]]; then
-      tmux detach-client -s popup
-      exit 0
-    else
-      tmux send-keys Escape
-    fi
-  '';
-
   getLastThreeDirs = pkgs.writeShellScriptBin "get-last-three-dirs" ''
     last_three="$(awk '{split($0,arr,"/"); print arr[length(arr)-2],arr[length(arr)-1],arr[length(arr)]}' | tr ' ' '/')"
     echo $last_three
@@ -54,13 +39,6 @@ in
       # CRL + Shift + key to left/right a window
       bind-key -n C-S-h previous-window
       bind-key -n C-S-l next-window
-
-
-      # popup a shell session and close it
-      bind-key j run-shell '${tmuxPopupShell}/bin/tmux-popup'
-      bind-key -T root Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
-      bind-key -T copy-mode Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
-      bind-key -T copy-mode-vi Escape run-shell '${tmuxClosePopup}/bin/close-tmux-popup'
 
       # allow apps inside tmux to set clipboard
       set -gs set-clipboard on
