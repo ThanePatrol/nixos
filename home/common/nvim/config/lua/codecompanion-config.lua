@@ -1,6 +1,12 @@
 require("codecompanion").setup({
     strategies = {
-        chat = {adapter = "gemini"},
+        chat = {adapter = "gemini", variables = {
+			["buffer"] = {
+				opts = {
+					default_params = 'pin',
+				}
+			}
+		}},
         inline = {adapter = "gemini"},
         cmd = {adapter = "gemini"}
     },
