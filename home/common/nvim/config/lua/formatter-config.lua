@@ -29,13 +29,13 @@ require("formatter").setup {
     logging = false,
     log_level = vim.log.levels.WARN,
     filetype = {
-        lua = {function() return {exe = "lua-format", stdin = true} end},
+        lua = require('formatter.filetypes.lua').luaformat,
 
-        nix = {function() return {exe = "nixfmt", stdin = true} end},
+        nix = require('formatter.filetypes.nix').nixfmt,
 
         latex = require("formatter.filetypes.latex").latexindent,
-        cpp = {function() return {exe = "clang-format", stdin = true} end},
-        rs = {function() return {exe = "rustfmt", stdin = true} end},
+        cpp = require('formatter.filetypes.cpp').clangformat,
+        rust = require('formatter.filetypes.rust').rustfmt,
 
         yml = {yaml_formatter},
         yaml = {yaml_formatter},

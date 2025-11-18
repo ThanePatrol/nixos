@@ -185,13 +185,13 @@ in
     };
   };
 
-  systemd.timers.read-ubank = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "hourly";
-      Unit = "read-ubank.service";
-    };
-  };
+  # systemd.timers.read-ubank = {
+  #   wantedBy = [ "timers.target" ];
+  #   timerConfig = {
+  #     OnCalendar = "hourly";
+  #     Unit = "read-ubank.service";
+  #   };
+  # };
 
   # systemd.services.run-rent-reminders = {
   #   script = ''
@@ -314,6 +314,10 @@ in
   };
   services.resolved.enable = false;
 
+  services.jellyseerr = {
+    enable = true;
+  };
+
   networking = {
     networkmanager.enable = false;
     hostName = "zeruel";
@@ -369,7 +373,9 @@ in
       4000
       4001
       4002
+      5055 # Jellyseer
       20048
+      25565 # MC
     ];
     allowedUDPPorts = [
       111
@@ -377,7 +383,9 @@ in
       4000
       4001
       4002
+      5055 # Jellyseer
       20048
+      25565 # MC
     ];
   };
 
