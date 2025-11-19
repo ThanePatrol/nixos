@@ -117,28 +117,6 @@ in
     };
   };
 
-  # Pay every second monday if week is even because cron can't hack it 😭
-  #''0 0 * * MON hugh case $(($(date +\%s) / (60*60*24*7))) in *[02468]) curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com" --request POST localhost:2999;; esac ''
-  # Notify monthly paying renters
-  # systemd.services.run-fortnight-rent-payments = {
-  #   script = ''
-  #     echo "running jerico"
-  #     case $(($(date +\%s) / (60*60*24*7))) in *[02468]) ;; esac
-  #   '';
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     User = "root";
-  #   };
-  # };
-  #
-  # systemd.timers.run-fortnight-rent-payments = {
-  #   wantedBy = [ "timers.target" ];
-  #   timerConfig = {
-  #     OnCalendar = "weekly";
-  #     Unit = "run-fortnight-rent-payments.service";
-  #   };
-  # };
-
   systemd.services.run-monthly-rent-payments = {
     script = ''
       	${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999
@@ -175,40 +153,6 @@ in
       Unit = "run-imad-rent-payments.service";
     };
   };
-
-  systemd.services.read-ubank = {
-    script = "${pkgs.bash}/bin/bash /home/hugh/dev/finance/run_budget.sh";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
-
-  # systemd.timers.read-ubank = {
-  #   wantedBy = [ "timers.target" ];
-  #   timerConfig = {
-  #     OnCalendar = "hourly";
-  #     Unit = "read-ubank.service";
-  #   };
-  # };
-
-  # systemd.services.run-rent-reminders = {
-  #   script = ''
-  #     	${pkgs.curl}/bin/curl  localhost:2999/remind
-  #     	'';
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     User = "root";
-  #   };
-  # };
-  #
-  # systemd.timers.run-rent-reminders = {
-  #   wantedBy = [ "timers.target" ];
-  #   timerConfig = {
-  #     OnCalendar = "daily";
-  #     Unit = "run-rent-reminders.service";
-  #   };
-  # };
 
   systemd.services.run-xml-scrape = {
     script = ''
