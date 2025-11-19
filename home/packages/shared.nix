@@ -18,6 +18,7 @@ let
     gemini-cli
     uv
     sqlite
+    watchexec
   ];
 
 in

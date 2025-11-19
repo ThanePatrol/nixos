@@ -164,10 +164,15 @@
             ]
 
             # needed for linker errors, add others as needed
-            ++ (with darwin.apple_sdk.frameworks; [
-              System
-              SystemConfiguration
-            ]);
+            ++ (
+              if system == "aarch64-darwin" then
+                (with darwin.apple_sdk.frameworks; [
+                  System
+                  SystemConfiguration
+                ])
+              else
+                [ ]
+            );
         in
         pkgs.mkShell {
           inherit buildInputs nativeBuildInputs;
@@ -203,7 +208,8 @@
             "/usr/local/google/home/hmandalidis";
       };
 
-      rustStableDevShell = makeRustDevShell "aarch64-darwin";
+      rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";
+      rustStableLinuxDevShell = makeRustDevShell "x86_64-linux";
 
       devShells.aarch64-darwin = {
       };
