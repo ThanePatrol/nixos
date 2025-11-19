@@ -246,13 +246,6 @@ in
     };
   };
 
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = true;
-    "net.ipv6.conf.all.forwarding" = true;
-    "net.ipv4.conf.br-lan.rp_filter" = 1;
-    "net.ipv4.conf.${onboardGigabitEthernetPort2}.rp_filter" = 1;
-  };
-
   services.jellyseerr = {
     enable = true;
   };
@@ -264,7 +257,6 @@ in
       "8.8.8.8"
     ];
     hostName = "zeruel";
-    interfaces.${onboardGigabitEthernetPort2}.useDHCP = true;
   };
 
   sops = {
