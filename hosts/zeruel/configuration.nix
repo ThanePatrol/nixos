@@ -63,10 +63,9 @@ in
       efi.canTouchEfiVariables = true;
     };
     supportedFilesystems = [ "btrfs" ];
-    # use latest linux kernel
+
     kernelPackages = pkgs.linuxPackages_latest;
 
-    # TODO add "video=DP-2:3840x2160" or similar for game streaming
     kernelParams = [
       "transparent_hugepage=madvise"
     ];
@@ -254,77 +253,18 @@ in
     "net.ipv4.conf.${onboardGigabitEthernetPort2}.rp_filter" = 1;
   };
 
-  systemd.network = {
-    wait-online.anyInterface = true;
-
-    # netdevs = {
-    #   # Create the bridge interface
-    #   "20-br-lan" = {
-    #     netdevConfig = {
-    #       Kind = "bridge";
-    #       Name = "br-lan";
-    #     };
-    #   };
-    # };
-    # networks = {
-    #   "30-lan0" = {
-    #     matchConfig.Name = tenGbEthernetPort1;
-    #     linkConfig.RequiredForOnline = "enslaved";
-    #     networkConfig = {
-    #       Bridge = "br-lan";
-    #       ConfigureWithoutCarrier = true;
-    #     };
-    #   };
-    #   "30-lan1" = {
-    #     matchConfig.Name = tenGbEthernetPort2;
-    #     linkConfig.RequiredForOnline = "enslaved";
-    #     networkConfig = {
-    #       Bridge = "br-lan";
-    #       ConfigureWithoutCarrier = true;
-    #     };
-    #   };
-    #   # Configure bridge
-    #   "40-br-lan" = {
-    #     matchConfig.Name = "br-lan";
-    #     bridgeConfig = { };
-    #     address = [
-    #       "10.0.1.1/24"
-    #     ];
-    #     networkConfig = {
-    #       ConfigureWithoutCarrier = true;
-    #     };
-    #     linkConfig.RequiredForOnline = "no";
-    #   };
-    #   "10-wan" = {
-    #     matchConfig.Name = onboardGigabitEthernetPort2;
-    #     networkConfig = {
-    #       # start a DHCP Client for IPv4 Addressing/Routing
-    #       DHCP = "ipv4";
-    #       IPv6AcceptRA = true;
-    #       DNSOverTLS = true;
-    #       DNSSEC = true;
-    #       IPv6PrivacyExtensions = true;
-    #       IPv4Forwarding = true;
-    #       IPv6Forwarding = true;
-    #     };
-    #     # make routing on this interface a dependency for network-online.target
-    #     linkConfig.RequiredForOnline = "routable";
-    #   };
-    # };
-  };
-  services.resolved.enable = false;
-
   services.jellyseerr = {
     enable = true;
   };
 
   networking = {
     networkmanager.enable = false;
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
     hostName = "zeruel";
-    useNetworkd = true;
     interfaces.${onboardGigabitEthernetPort2}.useDHCP = true;
-
-    nat.enable = false;
   };
 
   sops = {
