@@ -126,3 +126,8 @@ end
 
 vim.keymap.set('n', '<leader>w', '<cmd>tabclose<cr>', {desc = 'Close tab'})
 -- Tabs end
+--
+-- Fyler start
+local fyler_conf = require('fyler-config')
+vim.keymap.set('n', 'tt', fyler_conf.open_at_cwd)
+-- Fyler end

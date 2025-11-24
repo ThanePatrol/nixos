@@ -5,6 +5,17 @@
   theme,
   ...
 }:
+let
+  fyler = pkgs.vimUtils.buildVimPlugin {
+    name = "fyler-nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "A7Lavinraj";
+      repo = "fyler.nvim";
+      rev = "5c4e10511fe8117ac9832c2b1b5d5017355552c5";
+      hash = "sha256-MByXyTX0ucCg9MDSBIs1J/15uVrcvL6x6ouy1d54Md4=";
+    };
+  };
+in
 {
   programs.neovim = {
     enable = true;
@@ -73,6 +84,9 @@
 
       # Renders markdown nicely
       render-markdown-nvim
+
+      # Tree view with editable buffer
+      fyler
     ];
 
     extraPackages = with pkgs; [

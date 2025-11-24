@@ -209,7 +209,6 @@
       };
 
       rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";
-      rustStableLinuxDevShell = makeRustDevShell "x86_64-linux";
 
       devShells.aarch64-darwin = {
       };
