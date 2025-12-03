@@ -120,7 +120,6 @@ in
   systemd.services.run-monthly-rent-payments = {
     script = ''
       	${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999
-        ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/jericocherreguine@gmail.com.json" --request POST localhost:2999
       	'';
     serviceConfig = {
       Type = "oneshot";
@@ -149,7 +148,7 @@ in
   systemd.timers.run-imad-rent-payments = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnCalendar = "*-*-30 00:00:00";
+      OnCalendar = "weekly";
       Unit = "run-imad-rent-payments.service";
     };
   };
@@ -246,6 +245,7 @@ in
     allowedTCPPorts = [
       111
       2049
+      3000 # general dev
       4000
       4001
       4002
