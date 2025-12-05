@@ -9,7 +9,24 @@ vim.o.mouse = 'a'
 -- sync clipboard with OS
 vim.o.clipboard = 'unnamedplus'
 
+-- ignore case
+vim.opt.ignorecase = true
+-- unless capitals in search term
+vim.opt.smartcase = true
+
+-- Keep context around cursor
+vim.opt.scrolloff = 10
+
+-- Open vsplits to the right
+vim.opt.splitright = true
+-- open hsplits below
+vim.opt.splitleft = true
+
+vim.opt.smartindent = true
 vim.o.breakindent = true
+
+-- automatically reload file from disk if buffer hasn't changed
+vim.opt.autoread = true
 
 -- save undo history
 vim.o.undofile = true
