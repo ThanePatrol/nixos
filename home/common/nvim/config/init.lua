@@ -19,8 +19,6 @@ vim.opt.scrolloff = 10
 
 -- Open vsplits to the right
 vim.opt.splitright = true
--- open hsplits below
-vim.opt.splitleft = true
 
 vim.opt.smartindent = true
 vim.o.breakindent = true
