@@ -2,6 +2,10 @@ local shell_formatter = function()
     return {exe = "shfmt", args = {"-"}, stdin = true}
 end
 
+local comment_formatter = function()
+    return {exe = "fmt", args = {"-w", "80", "p", "//"}, stdin = true}
+end
+
 local python_formatter = function()
     return {
         exe = "black",
