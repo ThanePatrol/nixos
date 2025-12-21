@@ -23,11 +23,6 @@ update-zeruel: install-nix ## Updates nixos server
 	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.zeruel.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#zeruel
 
-update-armisael: ## Updates Lenovo homelab
-	sudo -v
-	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.armisael.config.system.build.toplevel
-	sudo nixos-rebuild switch --flake .#armisael
-
 build-leliel: ## Updates personal macbook
 	 nix build --extra-experimental-features "nix-command flakes"  .#darwinConfigurations.leliel.config.system.build.toplevel -o leliel-flake-output
 
