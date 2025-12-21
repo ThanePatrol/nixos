@@ -5,12 +5,14 @@ help: ## Display this screen
 	@echo "Targets:"
 	@grep -E '^[a-zA-Z_-]+:.*?##' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s \033[0m %s\n", $$1, $$2}'
 
+NIX := $(shell command -v nix 2> /dev/null)
+HOME_MANAGER := $(shell command -v home-manager 2> /dev/null)
 install-nix: ## Installs determinate nix via CLI. See https://docs.determinate.systems/determinate-nix/#getting-started
-	ifeq (, $(shell which nix))
+	ifndef NIX
 		curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install -y
 		. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 	endif
-	ifeq (, $(shell which home-manager))
+	ifndef HOME_MANAGER
 		nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 		nix-channel --update
 		nix-shell '<home-manager>' -A install
