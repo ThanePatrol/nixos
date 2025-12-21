@@ -66,8 +66,8 @@ in
   ]
   ++ (
     if minimal then # Packages not suitable for headless.
-      [
-      ]
+      ([
+      ])
     else
       (
         if isDarwin then
