@@ -6,9 +6,19 @@ help: ## Display this screen
 	@grep -E '^[a-zA-Z_-]+:.*?##' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s \033[0m %s\n", $$1, $$2}'
 
 install-nix: ## Installs determinate nix via CLI. See https://docs.determinate.systems/determinate-nix/#getting-started
-	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+	NIX := $(shell command -v nix 2> /dev/null)
+	ifndef ($(NIX),)
+		curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install -y
+		. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+	endif
+	HOME_MANAGER := $(shell command -v home-manager 2> /dev/null)
+	ifndef ($(HOME_MANAGER),)
+		nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+		nix-channel --update
+		nix-shell '<home-manager>' -A install
+	endif
 
-update-zeruel: ## Updates nixos server
+update-zeruel: install-nix ## Updates nixos server
 	sudo -v # Build can take a while and we need root to apply the flake
 	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.zeruel.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#zeruel
@@ -34,10 +44,10 @@ update-work: ## Updates work macbook
 	- sudo mv /etc/zshrc-temp /etc/zshrc
 	- sudo mv /etc/bashrc-temp /etc/bashrc
 
-update-remote-work: ## Updates a remote dev workstation
+update-remote-work: install-nix ## Updates a remote dev workstation
 	home-manager switch --impure --flake .#workServer
 
-update-oracle: ## Updates a remote VPS with home-manager
+update-oracle: install-nix ## Updates a remote VPS with home-manager
 	home-manager switch --impure --flake .#oracleServer
 
 flake-update: ## Updates flake inputs
