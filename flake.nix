@@ -22,7 +22,6 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-
   };
 
   outputs =
@@ -51,7 +50,7 @@
           config.allowUnfree = true;
         };
 
-      cloudTopDevSystem =
+      vpsSystem =
         system: username: isWork: email: gitUserName: homeDirectory:
         let
           pkgs = genPkgs system;
@@ -204,8 +203,12 @@
 
       homeConfigurations = {
         workServer =
-          cloudTopDevSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
+          vpsSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
             "/usr/local/google/home/hmandalidis";
+        # first oracle vps
+        oracleServer =
+          vpsSystem "x86_64-linux" "ubuntu" false "mandalidis.hugh@gmail.com" "hmandalidis"
+            "/home/ubuntu";
       };
 
       rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";
