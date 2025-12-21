@@ -10,6 +10,7 @@
 let
   isDarwin = false;
   isWork = customArgs.isWork;
+  minimal = false;
   username = customArgs.username;
   email = customArgs.email;
   inputs = customArgs.inputs;
@@ -37,6 +38,7 @@ let
       username
       gitUserName
       homeDirectory
+      minimal
       nixpkgs
       pkgs
       config

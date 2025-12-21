@@ -51,7 +51,7 @@
         };
 
       vpsSystem =
-        system: username: isWork: email: gitUserName: homeDirectory:
+        system: username: isWork: email: gitUserName: homeDirectory: minimal:
         let
           pkgs = genPkgs system;
           isDarwin = false;
@@ -68,6 +68,7 @@
                 email
                 gitUserName
                 homeDirectory
+				minimal
                 ;
             };
           };
@@ -81,6 +82,7 @@
               gitUserName = gitUserName;
               theme = "Catppuccin-mocha";
               homeDirectory = homeDirectory;
+			  minimal = minimal;
               pkgs = pkgs;
               lib = pkgs.lib;
             })
@@ -204,11 +206,11 @@
       homeConfigurations = {
         workServer =
           vpsSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
-            "/usr/local/google/home/hmandalidis";
+            "/usr/local/google/home/hmandalidis" false;
         # first oracle vps
         oracleServer =
           vpsSystem "x86_64-linux" "ubuntu" false "mandalidis.hugh@gmail.com" "hmandalidis"
-            "/home/ubuntu";
+            "/home/ubuntu" true;
       };
 
       rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";

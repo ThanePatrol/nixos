@@ -14,7 +14,7 @@
 }:
 
 let
-  commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
+  commonPkgs = import ./packages/shared.nix { inherit pkgs lib minimal; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
   linuxPkgs = if !minimal then import ./packages/linux.nix { inherit pkgs; } else [ ];
 
@@ -65,7 +65,7 @@ in
     ./common/rust.nix
   ]
   ++ (
-    if minimal then # Packages common to linux and mac that ARE suitable for headless.
+    if minimal then # Packages not suitable for headless.
       [
       ]
     else

@@ -15,6 +15,7 @@ let
   inputs = customArgs.inputs;
   homeDirectory = customArgs.homeDirectory;
   isDarwin = true;
+  minimal = false;
   theme = if builtins.getEnv ("THEME") == "" then "Catppuccin-mocha" else builtins.getEnv ("THEME");
   homeConfig = import ../../home/home.nix {
     inherit
@@ -26,6 +27,7 @@ let
       username
       theme
       homeDirectory
+      minimal
       nixpkgs
       pkgs
       config
