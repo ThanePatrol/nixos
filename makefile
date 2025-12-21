@@ -8,15 +8,15 @@ help: ## Display this screen
 NIX := $(shell command -v nix 2> /dev/null)
 HOME_MANAGER := $(shell command -v home-manager 2> /dev/null)
 install-nix: ## Installs determinate nix via CLI. See https://docs.determinate.systems/determinate-nix/#getting-started
-	ifndef NIX
-		curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install -y
-		. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-	endif
-	ifndef HOME_MANAGER
-		nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-		nix-channel --update
-		nix-shell '<home-manager>' -A install
-	endif
+ifndef NIX
+	curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install -y
+	. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+endif
+ifndef HOME_MANAGER
+	nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+	nix-channel --update
+	nix-shell '<home-manager>' -A install
+endif
 
 update-zeruel: install-nix ## Updates nixos server
 	sudo -v # Build can take a while and we need root to apply the flake
