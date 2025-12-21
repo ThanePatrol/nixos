@@ -37,7 +37,7 @@ update-work: ## Updates work macbook
 update-remote-work: ## Updates a remote dev workstation
 	home-manager switch --impure --flake .#workServer
 
-update-remote-work: ## Updates a remote VPS with home-manager
+update-oracle: ## Updates a remote VPS with home-manager
 	home-manager switch --impure --flake .#oracleServer
 
 flake-update: ## Updates flake inputs
