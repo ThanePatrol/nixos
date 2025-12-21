@@ -7,6 +7,7 @@
   gitUserName,
   theme,
   homeDirectory,
+  minimal,
   lib,
   pkgs,
   ...
@@ -15,7 +16,7 @@
 let
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
-  linuxPkgs = import ./packages/linux.nix { inherit pkgs; };
+  linuxPkgs = if !minimal then import ./packages/linux.nix { inherit pkgs; } else [ ];
 
   finalPackages =
     if isDarwin then
@@ -62,29 +63,37 @@ in
     })
     (import ./common/tmux.nix { inherit isDarwin theme pkgs; })
     ./common/rust.nix
-    ./common/spotify/spotify.nix
-    (import ./common/wezterm/wezterm.nix { inherit pkgs theme; })
-    (import ./common/zathura/zathura.nix { inherit theme; })
   ]
   ++ (
-    if isDarwin then
+    if minimal then # Packages common to linux and mac that ARE suitable for headless.
       [
       ]
     else
-      [
-        ./linux/gtk_themes.nix
-        ./linux/hyprland/hyprland.nix
-        ./linux/dunst/dunst.nix
-        ./linux/waybar/waybar.nix
-        ./linux/wofi/wofi.nix
-        ./linux/wayland/wayland.nix
-        ./linux/walls/wpapred.nix
-        #./linux/xdg/xdg.nix
-        ./linux/cursor.nix
-        ./linux/swaylock.nix
-        ./linux/swayidle.nix
-        ./linux/dconf.nix
-        #  ./linux/eww/eww.nix
-      ]
+      (
+        if isDarwin then
+          [
+          ]
+        else
+          [
+            ./linux/gtk_themes.nix
+            ./linux/hyprland/hyprland.nix
+            ./linux/dunst/dunst.nix
+            ./linux/waybar/waybar.nix
+            ./linux/wofi/wofi.nix
+            ./linux/wayland/wayland.nix
+            ./linux/walls/wpapred.nix
+            #./linux/xdg/xdg.nix
+            ./linux/cursor.nix
+            ./linux/swaylock.nix
+            ./linux/swayidle.nix
+            ./linux/dconf.nix
+            #  ./linux/eww/eww.nix
+          ]
+      )
+      ++ ([
+        # Common packages suitable for headless.
+        ./common/spotify/spotify.nix
+        (import ./common/zathura/zathura.nix { inherit theme; })
+      ])
   );
 }

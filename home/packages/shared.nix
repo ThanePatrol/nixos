@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  minimal,
+  ...
+}:
 
 let
   codeFormattersAndLinters = with pkgs; [
@@ -21,57 +26,61 @@ let
     watchexec
   ];
 
+  cliTools = with pkgs; [
+    age # CLI encryption
+    dust # better du
+    fzf # fuzzy find
+    gcc
+    go
+    gnumake
+    gzip
+    jq
+    jujutsu
+    libsecret # for storing passwords
+    osc
+    ncurses # for terminfo stuff
+    nodejs_22
+    pciutils # useful pci utils
+    rainfrog
+    rmlint
+    rclone # nice simple backup cli for cloud backups
+    ripgrep # nice and fast grep alternative for large codebases
+    unzip
+    vim
+    zlib
+    zip # CLI compression
+  ];
+
+  fatTools = with pkgs; [
+    cargo-flamegraph # flamegraph tool for many languages
+    ffmpeg-full
+    geckodriver # webdriver automation
+    gettext # translations
+    flex # lexical analysis
+    imagemagick
+    lazygit # git tui
+    libvirt
+    libsixel
+    localsend
+    llama-cpp
+    ollama
+    pandoc # document conversion
+    pkg-config # build tools
+    qbittorrent
+    sphinx # python docs generator
+    sshfs # mount remote file systems locally with ssh
+    texliveFull
+    tldr
+    typescript
+  ];
+
 in
 {
   packages =
     with pkgs;
     [
-      age # CLI encryption
-      cargo-flamegraph # flamegraph tool for many languages
-      dust # better du
-      flex # lexical analysis
-      fzf # fuzzy find
-      ffmpeg-full
-      gcc
-      geckodriver # webdriver automation
-      gettext # translations
-      go
-      gnumake
-      gzip
-      imagemagick
-      jq
-      jujutsu
-      lazygit # git tui
-      libvirt
-      libsecret # for storing passwords
-      libsixel
-      localsend
-      llama-cpp
-      ollama
-      osc
-      ncurses # for terminfo stuff
-      nodejs_22
-      pandoc # document conversion
-      pciutils # useful pci utils
-      pkg-config # build tools
-      qbittorrent
-      rainfrog
-      rclone # nice simple backup cli for cloud backups
-      ripgrep # nice and fast grep alternative for large codebases
-      rmlint
-      rsync
-      sphinx # python docs generator
-      sshfs # mount remote file systems locally with ssh
-      texliveFull #TODO - renable once build issue is fixed
-      tldr
-      typescript
-      unzip
-      vim
-      zlib
-      zip # CLI compression
       zsh
     ]
-    ++ codeFormattersAndLinters
-    ++ devTools;
+    ++ (if minimal then cliTools else codeFormattersAndLinters ++ devTools ++ cliTools ++ fatTools);
 
 }
