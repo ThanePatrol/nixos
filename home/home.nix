@@ -16,13 +16,12 @@
 let
   commonPkgs = import ./packages/shared.nix { inherit pkgs lib minimal; };
   macPkgs = import ./packages/mac.nix { inherit pkgs; };
-  linuxPkgs = if !minimal then import ./packages/linux.nix { inherit pkgs; } else { };
 
   finalPackages =
     if isDarwin then
       commonPkgs.packages ++ macPkgs.packages
     else
-      commonPkgs.packages ++ linuxPkgs.packages;
+      commonPkgs.packages ++ (if !minimal then import ./packages/linux.nix { inherit pkgs; } else { });
 
 in
 {
