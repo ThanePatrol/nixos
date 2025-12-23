@@ -38,11 +38,9 @@ in
 
   imports = [
     (import ./common/direnv.nix)
-    (import ./common/ghostty.nix { inherit lib theme; })
     (import ./common/bat/bat.nix { inherit theme; })
     (import ./common/btop/btop.nix { inherit theme pkgs; })
     ./common/rclone.nix
-    ./common/fonts.nix
     (import ./common/ssh.nix { inherit gitUserName; })
     (import ./common/shell/shell.nix {
       inherit
@@ -92,10 +90,12 @@ in
             #  ./linux/eww/eww.nix
           ]
       )
-      ++ ([
+      ++ [
         # Common packages suitable for headless.
+    	(import ./common/ghostty.nix { inherit lib theme; })
+    	./common/fonts.nix
         ./common/spotify/spotify.nix
         (import ./common/zathura/zathura.nix { inherit theme; })
-      ])
+      ]
   );
 }
