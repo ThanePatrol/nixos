@@ -21,6 +21,7 @@ let
     #python312Packages.compiledb
     ast-grep
     gemini-cli
+    patchelf
     uv
     sqlite
     watchexec
