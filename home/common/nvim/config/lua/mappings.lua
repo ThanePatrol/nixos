@@ -87,11 +87,11 @@ vim.keymap.set('n', '<leader>fc', telescope.text_search_cwd,
 -- Telescope end
 
 -- Terminal begin
-local termtoggle = require('term.nvim-term')
-
-vim.keymap.set('n', 'to', termtoggle.toggleterm, {desc = 'toggle terminal'})
-vim.keymap.set('t', 'tc', termtoggle.toggleterm,
-               {buffer = termtoggle.buf, desc = 'toggle terminal'})
+-- local termtoggle = require('term.nvim-term')
+--
+-- vim.keymap.set('n', 'to', termtoggle.toggleterm, {desc = 'toggle terminal'})
+-- vim.keymap.set('t', 'tc', termtoggle.toggleterm,
+--                {buffer = termtoggle.buf, desc = 'toggle terminal'})
 -- Terminal end
 --
 -- Quickfix start
