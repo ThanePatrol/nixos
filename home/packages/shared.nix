@@ -28,7 +28,9 @@ let
   ];
 
   cliTools = with pkgs; [
-    age # CLI encryption
+    age
+    # CLI encryption
+    claude-code
     dust # better du
     fzf # fuzzy find
     gcc
