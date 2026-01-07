@@ -45,6 +45,9 @@ update-remote-work: install-nix ## Updates a remote dev workstation
 update-oracle: install-nix ## Updates a remote VPS with home-manager
 	home-manager switch --impure --flake .#oracleServer
 
+update-glinux: install-nix ## Updates a glinux laptop
+	home-manage switch --impure --flake .#workLinuxLaptop
+
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update
 

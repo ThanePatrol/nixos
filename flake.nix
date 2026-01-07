@@ -50,7 +50,7 @@
           config.allowUnfree = true;
         };
 
-      vpsSystem =
+      homeManagerSystem =
         system: username: isWork: email: gitUserName: homeDirectory: minimal:
         let
           pkgs = genPkgs system;
@@ -205,13 +205,20 @@
 
       homeConfigurations = {
         workServer =
-          vpsSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
+          homeManagerSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
             "/usr/local/google/home/hmandalidis"
             false;
         # first oracle vps
         oracleServer =
-          vpsSystem "x86_64-linux" "ubuntu" false "mandalidis.hugh@gmail.com" "hmandalidis" "/home/ubuntu"
+          homeManagerSystem "x86_64-linux" "ubuntu" false "mandalidis.hugh@gmail.com" "hmandalidis"
+            "/home/ubuntu"
             true;
+
+        workLinuxLaptop =
+          homeManagerSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
+            "/home/hmandalidis"
+            false;
+
       };
 
       rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";
