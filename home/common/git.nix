@@ -40,6 +40,7 @@ in
       init.defaultBranch = DEFAULT_BRANCH;
       branch.sort = "-committerdate";
       core.editor = "vim";
+      core.hooksPath = ".githooks";
       http.postBuffer = 524288000; # increase size for larger files
       pull.ff = "only";
       push.autoSetupRemote = true;
