@@ -3,5 +3,8 @@
 {
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ jetbrains-mono roboto-mono ];
+  home.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.roboto-mono
+  ];
 }
