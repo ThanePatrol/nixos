@@ -11,7 +11,6 @@ in
     coreutils-prefixed
     reattach-to-user-namespace
     prismlauncher
-    utm
   ];
 
 }
