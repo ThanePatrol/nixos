@@ -91,8 +91,14 @@ let
     xdg-user-dirs
   ];
 
+  homelab = with pkgs; [
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+  ];
+
 in
 {
   environment.systemPackages =
-    guiTools ++ cliTools ++ devDependencies ++ systemLibsAndPackages ++ daemons ++ misc;
+    guiTools ++ cliTools ++ devDependencies ++ systemLibsAndPackages ++ daemons ++ misc ++ homelab;
 }

@@ -191,8 +191,9 @@ in
     };
   };
 
-  services.jellyseerr = {
+  services.jellyfin = {
     enable = true;
+    openFirewall = true;
   };
 
   networking = {
