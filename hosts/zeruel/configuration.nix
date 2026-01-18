@@ -248,6 +248,7 @@ in
     allowedTCPPorts = [
       111
       2049
+      2283 # immich
       3000 # general dev
       4000
       4001

@@ -2,7 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ nixpkgs, lib, config, pkgs, customArgs, ... }:
+{
+  nixpkgs,
+  lib,
+  config,
+  pkgs,
+  customArgs,
+  ...
+}:
 
 let
 
@@ -12,24 +19,38 @@ let
   email = customArgs.email;
   gitUserName = customArgs.gitUserName;
 
-  theme = if builtins.getEnv ("THEME") == "" then
-    "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
-  else
-    builtins.getEnv ("THEME");
+  theme =
+    if builtins.getEnv ("THEME") == "" then
+      "Catppuccin-mocha" # fallback to my fav theme if not set. Theme should always be in the Name-derv format
+    else
+      builtins.getEnv ("THEME");
 
   homeConfig = import ../../home/home.nix {
-    inherit email isWork isDarwin username gitUserName nixpkgs pkgs config lib
-      theme;
+    inherit
+      email
+      isWork
+      isDarwin
+      username
+      gitUserName
+      nixpkgs
+      pkgs
+      config
+      lib
+      theme
+      ;
   };
 
-  syspackages =
-    import ../../system/linux/packages/packages.nix { inherit pkgs; };
-in {
+  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
+in
+{
   imports = [
     ./hardware-configuration.nix
     #    ./system/linux/modules/udev-rules.nix
   ];
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -48,30 +69,34 @@ in {
 
   # dm_mod required for issue with no graphical display after booting
   #i2c-dev for brightness control https://wiki.archlinux.org/title/backlight#setpci
-  boot.initrd.kernelModules = [ "dm_mod" "i2c-dev" ];
+  boot.initrd.kernelModules = [
+    "dm_mod"
+    "i2c-dev"
+  ];
 
   networking.hostName = "ramiel"; # Define your hostname.
   networking.firewall = {
     enable = false;
     allowedTCPPortRanges = [
       {
-      from = 1714;
-      to = 1764;
-    } # KDE Connect
-    {
-      from = 25565;
-      to = 25565;
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+      {
+        from = 25565;
+        to = 25565;
       }
-      ];
-    allowedUDPPortRanges = [{
-      from = 1714;
-      to = 1764;
-    } # KDE Connect
-    {
-      from = 25565;
-      to = 25565;
-    }
-      ];
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+      {
+        from = 25565;
+        to = 25565;
+      }
+    ];
   };
 
   # Enable networking
@@ -85,8 +110,15 @@ in {
   fileSystems."/nfs/samsung4tb" = {
     device = "10.0.0.15:/mnt/samsung4tb/nas";
     fsType = "nfs";
-    options =
-      [ "auto" "nofail" "noatime" "nolock" "intr" "tcp" "actimeo=1800" ];
+    options = [
+      "auto"
+      "nofail"
+      "noatime"
+      "nolock"
+      "intr"
+      "tcp"
+      "actimeo=1800"
+    ];
   };
 
   # Set your time zone.
@@ -105,14 +137,6 @@ in {
     LC_PAPER = "en_AU.UTF-8";
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
-  };
-
-  services.udev = {
-    packages = with pkgs; [ via ];
-    extraRules = ''
-      KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
-      ACTION=="add", SUBSYSTEM=="block", SUBSYSTEMS=="usb", ENV{ID_FS_USAGE}=="filesystem", RUN+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /home/hugh/removable"
-    '';
   };
 
   # Enable clipboard sharing to VM
@@ -148,7 +172,7 @@ in {
   home-manager.useGlobalPkgs = true;
   home-manager.users.${username} = homeConfig;
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # Define user account 
+  # Define user account
   users.users.${username} = {
     isNormalUser = true;
     description = username;
@@ -165,8 +189,13 @@ in {
     shell = pkgs.zsh;
   };
 
-  environment.systemPackages = with pkgs;
-    [ wget kitty ] ++ syspackages.environment.systemPackages;
+  environment.systemPackages =
+    with pkgs;
+    [
+      wget
+      kitty
+    ]
+    ++ syspackages.environment.systemPackages;
 
   environment.pathsToLink = [
     "/share/zsh"
