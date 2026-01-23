@@ -196,6 +196,12 @@ in
     openFirewall = true;
   };
 
+  services.qbittorent = {
+	  enable = true;
+	  webuiPort = 8010;
+	  openFirewall = true;
+  };
+
   networking = {
     networkmanager.enable = false;
     nameservers = [
