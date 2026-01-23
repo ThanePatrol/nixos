@@ -48,7 +48,24 @@ in
         "nix-command"
         "flakes"
       ];
+      trusted-users = [ "hugh" ];
     };
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "10.0.0.3";
+        sshUser = "hugh";
+        protocol = "ssh";
+        system = "x86_64-linux";
+        maxJobs = 4;
+        speedFactor = 1;
+        supportedFeatures = [
+          "big-parallel"
+          "kvm"
+        ];
+        sshKey = "/var/root/.ssh/nix_builder_key";
+      }
+    ];
   };
 
   home-manager.users.${username} = homeConfig;
