@@ -57,6 +57,10 @@ in
     "nix-command"
     "flakes"
   ];
+  nix.settings.trusted-users = [
+    "root"
+    "hugh"
+  ];
 
   # Bootloader.
   boot = {
