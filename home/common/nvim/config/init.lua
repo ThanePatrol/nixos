@@ -46,13 +46,14 @@ vim.opt.diffopt = {
     'linematch:200', 'indent-heuristic', 'inline:word'
 }
 -- diff view end
---
 
 -- virtual text for lsp info
 vim.diagnostic.config({virtual_lines = false})
 
 vim.cmd.colorscheme "catppuccin-mocha"
 vim.opt.termguicolors = true
+
+require('mappings')
 
 require('mappings')
 require('cmp-config')
@@ -68,3 +69,10 @@ require('harpoon-config')
 require('quickfix')
 require('codecompanion-config')
 require('fyler-config')
+
+local function require_module_if_not_macos(module_name)
+    local os_name = vim.fn.has('macunix') and vim.fn.has('unix') and
+                        vim.fn.has('mac') and "macos" or vim.fn.has('win32') and
+                        "windows" or "other"
+    if os_name ~= "macos" then require(module_name) end
+end

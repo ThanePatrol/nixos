@@ -10,7 +10,8 @@ in
     darwin.libiconv
     coreutils-prefixed
     reattach-to-user-namespace
-    prismlauncher
+    #prismlauncher
+    utm
   ];
 
 }

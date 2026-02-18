@@ -5,12 +5,6 @@ let
     exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
   '';
 
-  # TODO - consider implementing faster blur  https://github.com/johnae/blur
-  takeBlurredScreenshot = pkgs.writeShellScriptBin "screenshot-background" ''
-    ${pkgs.grim}/bin/grim /tmp/lockscreen.png
-    ${pkgs.imagemagick}/bin/convert -filter Gaussian -resize 25% -blur 0x2.5 -resize 400% /tmp/lockscreen.png /tmp/lockscreen.png
-  '';
-
   devDependencies = with pkgs; [
     binutils
     cmake

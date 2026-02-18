@@ -1,4 +1,5 @@
 {
+  isDarwin,
   inputs,
   pkgs,
   lib,
@@ -15,6 +16,10 @@ let
       hash = "sha256-MByXyTX0ucCg9MDSBIs1J/15uVrcvL6x6ouy1d54Md4=";
     };
   };
+
+  linuxPlugins = [
+  ];
+
 in
 {
   programs.neovim = {
@@ -25,69 +30,126 @@ in
     vimAlias = true;
     vimdiffAlias = true;
 
-    plugins = with pkgs.vimPlugins; [
-      #General
-      vim-sensible
+    plugins =
+      with pkgs.vimPlugins;
 
-      vim-tmux-navigator
+      [
+        plenary-nvim
 
-      # icons!
-      nvim-web-devicons
+        #General
+        vim-sensible
 
-      # colour preview in editor
-      nvim-highlight-colors
+        # Language specifics
+        vim-nix
 
-      #awesome file search
-      telescope-nvim
+        vim-tmux-navigator
+        # lots of overhauls
+        noice-nvim
 
-      #add emoji!
-      telescope-symbols-nvim
+        # icons!
+        nvim-web-devicons
 
-      #indent lines
-      indent-blankline-nvim
+        # File stuff
+        #nvim-tree-lua
+        # icons!
+        nvim-web-devicons
 
-      #rainbow brackets
-      rainbow-delimiters-nvim
+        # icons!
+        nvim-web-devicons
+        # colour preview in editor
+        nvim-highlight-colors
 
-      # Quick fixes for issues in file
-      trouble-nvim
+        #awesome file search
+        telescope-nvim
 
-      harpoon2
+        #add emoji!
+        telescope-symbols-nvim
 
-      # format on save
-      formatter-nvim
+        #indent lines
+        indent-blankline-nvim
 
-      #status bar
-      lualine-nvim
+        # Quick fixes for issues in file
+        trouble-nvim
+        # allow movement between tmux panes
+        vim-tmux-navigator
 
-      # ide-like git highlighting
-      gitsigns-nvim
+        #rainbow brackets
+        rainbow-delimiters-nvim
 
-      #syntax highlighting
-      nvim-treesitter.withAllGrammars
+        # Quick fixes for issues in file
+        trouble-nvim
 
-      #Completions
-      cmp-nvim-lsp
-      nvim-cmp
+        # convenient testing
+        vim-test
 
-      # lsp helper, sets up root_dir, on_attach and other niceties
-      nvim-lspconfig
+        harpoon2
 
-      codecompanion-nvim
+        # format on save
+        formatter-nvim
+        # format on save
+        formatter-nvim
 
-      #snippets
-      luasnip
-      cmp_luasnip
+        # lsp helper, sets up root_dir, on_attach and other niceties
+        nvim-lspconfig
 
-      # Colorschemes
-      catppuccin-nvim
+        codecompanion-nvim
 
-      # Renders markdown nicely
-      render-markdown-nvim
+        #status bar
+        lualine-nvim
+        # Colorschemes
+        catppuccin-nvim
+        everforest
 
-      # Tree view with editable buffer
-      fyler
-    ];
+        #snippets
+        luasnip
+        cmp_luasnip
+
+        # ide-like git highlighting
+        gitsigns-nvim
+
+        # Renders markdown nicely
+        render-markdown-nvim
+
+        #syntax highlighting
+        nvim-treesitter.withAllGrammars
+        # https://discourse.nixos.org/t/adding-a-new-tree-sitter-parser-to-neovim/23693/2
+        # (nvim-treesitter.withPlugins (
+        #   _:
+        #   ++ (
+        #     if isDarwin then
+        #       [ ]
+        #     else
+        #       [
+        #         (pkgs.tree-sitter.buildGrammar {
+        #           language = "just";
+        #           version = "8af0aab";
+        #           src = pkgs.fetchFromGitHub {
+        #             owner = "IndianBoy42";
+        #             repo = "tree-sitter-just";
+        #             rev = "8af0aab79854aaf25b620a52c39485849922f766";
+        #             sha256 = "sha256-hYKFidN3LHJg2NLM1EiJFki+0nqi1URnoLLPknUbFJY=";
+        #           };
+        #         })
+        #       ]
+        #   )
+        # ))
+
+        #Completions
+        cmp-nvim-lsp
+        nvim-cmp
+
+        # Tree view with editable buffer
+        fyler
+        #snippets
+        luasnip
+        cmp_luasnip
+
+        catppuccin-nvim
+
+        # Renders markdown nicely
+        render-markdown-nvim
+      ]
+      ++ (if isDarwin then [ ] else linuxPlugins);
 
     extraPackages = with pkgs; [
       tree-sitter

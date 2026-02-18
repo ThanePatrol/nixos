@@ -2,9 +2,11 @@
 
 {
   home.pointerCursor = {
-    package = pkgs.apple-cursor;
+    enable = true;
+    gtk.enable = true;
+    hyprcursor.enable = true;
+    package = pkgs.phinger-cursors;
     size = 32;
-    name = "macOS-BigSur";
-
+    name = "phinger-cursors-dark";
   };
 }
