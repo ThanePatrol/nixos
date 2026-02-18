@@ -6,6 +6,23 @@ local comment_formatter = function()
     return {exe = "fmt", args = {"-w", "80", "p", "//"}, stdin = true}
 end
 
+local google3_formatter = function()
+    local full_path = vim.api.nvim_buf_get_name(0)
+    local maybe_index = string.find(full_path, "google3")
+
+    if maybe_index == nil then return {} end
+
+    -- string.find returns tuple, first element is the one
+    local cut_path = string.sub(full_path, maybe_index)
+    local full_path_with_prefix = string.format("//depot/%s", cut_path)
+
+    return {
+        exe = "google3format",
+        args = {"--depot_path", full_path_with_prefix, "--whole_file"},
+        stdin = true
+    }
+end
+
 local python_formatter = function()
     return {
         exe = "black",
@@ -59,20 +76,6 @@ require("formatter").setup {
         html = {web_formatter},
         jsx = {web_formatter},
         tsx = {web_formatter},
-
-        go = {
-            function()
-                return {exe = "gofumpt", args = {}, stdin = true}
-            end, function()
-                return {exe = "golines", args = {"--max-len=128"}, stdin = true}
-            end, function()
-                return {
-                    exe = "wsl",
-                    args = {"-fix", vim.api.nvim_buf_get_name(0)},
-                    stdin = false
-                }
-            end
-        },
 
         ["*"] = {require("formatter.filetypes.any").remove_trailing_whitespace}
     }

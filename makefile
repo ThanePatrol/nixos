@@ -35,7 +35,7 @@ update-work: ## Updates work macbook
 	- 	sudo mv /etc/bashrc /etc/bashrc-temp
 	nix build --impure --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
 	#./work-flake-output/sw/bin/darwin-rebuild switch --flake .#work
-	darwin-rebuild switch --flake .#work
+	sudo -E env "PATH=$$PATH" darwin-rebuild switch --flake .#work
 	- sudo mv /etc/zshrc-temp /etc/zshrc
 	- sudo mv /etc/bashrc-temp /etc/bashrc
 

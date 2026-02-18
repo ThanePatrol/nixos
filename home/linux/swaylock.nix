@@ -1,6 +1,7 @@
 {
   programs.swaylock = {
     enable = true;
+    package = null; # See https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable
     settings = {
       indicator-idle-visible = true;
       indicator-thickness = 7;

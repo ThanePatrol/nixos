@@ -14,16 +14,7 @@ let
     export LIBRARY_PATH=$HOME/.nix-profile/lib:$LIBRARY_PATH
     export PATH=${pkgs.gnused}/bin:$PATH
     export PATH=${pkgs.coreutils}/bin:$PATH
-  '';
-
-  workLinuxExports = ''
-    export PATH="$PATH:$HOME/.nix-profile/bin"
-    source /etc/bash_completion.d/hgd
-    source /etc/bash_completion.d/g4d
-  '';
-  # Need the google git first in path instead of oss git
-  workExports = ''
-    export PATH="/usr/local/git/git-google/bin:$PATH"
+    export PATH=$PATH:/opt/homebrew/bin
   '';
 
 in
@@ -95,6 +86,12 @@ in
       bindkey "^[f" forward-word
       bindkey "^[b" backward-word
       bindkey "^[\b" backward-kill-word
+
+      # Edit command in editor
+      autoload -z edit-command-line
+      zle -N edit-command-line
+      bindkey "^X^E" edit-command-line
+
 
       # disable vim editing mode
       bindkey -e
