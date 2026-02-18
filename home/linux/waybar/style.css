@@ -21,7 +21,7 @@ window#waybar {
 
 window#waybar.hidden {
     opacity: 0.2;
-}
+  }
 
 #clock {
     font-weight: 700;
@@ -52,26 +52,4 @@ window#waybar.hidden {
 
 #workspaces button.urgent {
     background-color: #eba0ac;
-}
-
-#pulseaudio-slider {
-	min-width: 10em;
-}
-
-#cpu,
-#network,
-#battery,
-#memory,
-#pulseaudio {
-  font-size: 0.75em;
-  color: #ebdbb2;
-  margin-right: 3px;
-  margin-left: 3px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-right: 4px;
-  padding-left: 4px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  border: 0.5px solid #ebdbd9
 }
