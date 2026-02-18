@@ -41,9 +41,6 @@ cmp.setup {
     sources = {
         {name = 'copilot', group_index = 2},
         {name = 'nvim_lsp', group_index = 2},
-        {name = 'luasnip', group_index = 2},
-        {name = 'codeium', group_index = 2},
-        {name = "googlers", max_item_count = 5}, {name = 'buganizer'}
-
+        {name = 'luasnip', group_index = 2}, {name = 'codeium', group_index = 2}
     }
 }

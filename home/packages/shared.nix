@@ -22,7 +22,6 @@ let
     ast-grep
     gemini-cli
     patchelf
-    mermaid-cli
     uv
     sqlite
     watchexec

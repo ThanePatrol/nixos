@@ -8,7 +8,13 @@ require("codecompanion").setup({
         cmd = {adapter = "gemini"}
     },
     display = {chat = {window = {position = 'right'}}},
-    opts = {
-        log_level = "TRACE" -- TRACE|DEBUG|ERROR|INFO
+    adapters = {
+        acp = {
+            gemini_cli = function()
+                return require("codecompanion.adapters").extend("gemini_cli", {
+                    defaults = {auth_method = "gemini-api-key"}
+                })
+            end
+        }
     }
 })

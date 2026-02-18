@@ -33,7 +33,6 @@ in
   home.homeDirectory = homeDirectory;
   home.stateVersion = "23.05"; # Please read the comment before changing.
   programs.home-manager.enable = true;
-  news.display = "silent";
 
   home.packages = finalPackages;
 
@@ -83,19 +82,18 @@ in
             ./linux/wofi/wofi.nix
             ./linux/wayland/wayland.nix
             ./linux/walls/wpapred.nix
-            # ./linux/xdg/xdg.nix
+            #./linux/xdg/xdg.nix
             ./linux/cursor.nix
             ./linux/swaylock.nix
             ./linux/swayidle.nix
             ./linux/dconf.nix
             #  ./linux/eww/eww.nix
-            ./linux/kitty.nix
           ]
       )
       ++ [
         # Common packages suitable for headless.
-        (import ./common/ghostty.nix { inherit lib theme; })
-        ./common/fonts.nix
+    	(import ./common/ghostty.nix { inherit lib theme; })
+    	./common/fonts.nix
         ./common/spotify/spotify.nix
         (import ./common/zathura/zathura.nix { inherit theme; })
       ]

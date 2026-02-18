@@ -1,5 +1,4 @@
 require('lspconfig')
-
 local function refactor_functions()
     local curr_name = vim.fn.expand("<cword>")
     local new_name = vim.fn.input("New name: ", curr_name)

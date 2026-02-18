@@ -81,16 +81,8 @@ vim.keymap.set('n', '<leader>ie', telescope.emojis,
                {desc = "Open emoji picker 😀"})
 vim.keymap.set('n', '<leader>fd', telescope.file_search_cwd,
                {desc = "Find files from the cwd of the open buffer"})
-vim.keymap.set('n', '<leader>fs', telescope.text_search_cwd,
+vim.keymap.set('n', '<leader>fc', telescope.text_search_cwd,
                {desc = "Find files with fuzzy matching from the cwd of buffer"})
-
-local function is_macos()
-    local os_name = vim.fn.has('macunix') and vim.fn.has('unix') and
-                        vim.fn.has('mac') and "macos" or vim.fn.has('win32') and
-                        "windows" or "other"
-    if os_name ~= "macos" then return false end
-    return true
-end
 
 -- Telescope end
 
