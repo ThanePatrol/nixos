@@ -47,6 +47,17 @@ let
       ;
   };
 
+  copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
+          for file in $(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" | ${pkgs.ripgrep}/bin/rg '\.(mp4|mkv)'); do
+            if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" $file; then
+              ${pkgs.rsync}/bin/rsync -azvP $file /var/lib/jellyfin/Shows
+            else
+              ${pkgs.rsync}/bin/rsync -azvP $file /var/lib/jellyfin/Movies
+            fi
+          done
+        ${pkgs.coreutils}/bin/chown -R jellyfin /var/lib/jellyfin
+  '';
+
   syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
 in
 {
@@ -125,13 +136,15 @@ in
 
   systemd.services.run-monthly-rent-payments = {
     script = ''
-      	${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999
-      	'';
+        ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999
+        '';
     serviceConfig = {
       Type = "oneshot";
       User = "root";
     };
   };
+
+# TODO(Rename jellyfin files): for f in $(ls); do new_file=$(echo $f | tr '.' ' ' | awk '{print $1 " " $2 " " $3 ".mkv"}'); mv $f "$new_file"; done
 
   systemd.timers.run-monthly-rent-payments = {
     wantedBy = [ "timers.target" ];
@@ -144,7 +157,7 @@ in
   systemd.services.run-imad-rent-payments = {
     script = ''
         ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/kazmiimad@gmail.com.json" --request POST localhost:2999
-      	'';
+        '';
     serviceConfig = {
       Type = "oneshot";
       User = "root";
@@ -200,10 +213,29 @@ in
     openFirewall = true;
   };
 
-  services.qbittorent = {
-	  enable = true;
-	  webuiPort = 8010;
-	  openFirewall = true;
+  services.qbittorrent = {
+    enable = true;
+    webuiPort = 8010;
+    openFirewall = true;
+  };
+
+  systemd.services.copy-torrent-jellyfin = {
+    script = ''
+          ${copyMoviesAndShows}/bin/copy-movies-shows
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+  systemd.timers.copy-torrent-jellyfin = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5m";
+      OnUnitActiveSec = "5m";
+      Unit = "copy-torrent-jellyfin.service";
+    };
   };
 
   networking = {
@@ -245,8 +277,8 @@ in
   services.nfs.server = {
     enable = true;
     exports = ''
-      	/home/hugh/SSDs    10.0.0.118/24(insecure,rw,sync,no_subtree_check)
-      	'';
+        /home/hugh/SSDs    10.0.0.118/24(insecure,rw,sync,no_subtree_check)
+        '';
     # fixed rpc.statd port; for firewall
     lockdPort = 4001;
     mountdPort = 4002;
