@@ -48,14 +48,14 @@ let
   };
 
   copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
-          for file in $(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" | ${pkgs.ripgrep}/bin/rg '\.(mp4|mkv)'); do
-            if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" $file; then
-              ${pkgs.rsync}/bin/rsync -azvP $file /var/lib/jellyfin/Shows
-            else
-              ${pkgs.rsync}/bin/rsync -azvP $file /var/lib/jellyfin/Movies
-            fi
-          done
-        ${pkgs.coreutils}/bin/chown -R jellyfin /var/lib/jellyfin
+      for file in $(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" | ${pkgs.ripgrep}/bin/rg '\.(mp4|mkv)'); do
+        if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" "$file"; then
+          ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows
+        else
+          ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies
+        fi
+      done
+    ${pkgs.coreutils}/bin/chown -R jellyfin /var/lib/jellyfin
   '';
 
   syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
@@ -134,43 +134,7 @@ in
     };
   };
 
-  systemd.services.run-monthly-rent-payments = {
-    script = ''
-        ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/thanhtra2004@gmail.com.json" --request POST localhost:2999
-        '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
-
-# TODO(Rename jellyfin files): for f in $(ls); do new_file=$(echo $f | tr '.' ' ' | awk '{print $1 " " $2 " " $3 ".mkv"}'); mv $f "$new_file"; done
-
-  systemd.timers.run-monthly-rent-payments = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-25 00:00:00";
-      Unit = "run-monthly-rent-payments.service";
-    };
-  };
-
-  systemd.services.run-imad-rent-payments = {
-    script = ''
-        ${pkgs.curl}/bin/curl -d "/home/hugh/dev/rent/kazmiimad@gmail.com.json" --request POST localhost:2999
-        '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
-
-  systemd.timers.run-imad-rent-payments = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "weekly";
-      Unit = "run-imad-rent-payments.service";
-    };
-  };
+  # TODO(Rename jellyfin files): for f in $(ls); do new_file=$(echo $f | tr '.' ' ' | awk '{print $1 " " $2 " " $3 ".mkv"}'); mv $f "$new_file"; done
 
   systemd.services.run-xml-scrape = {
     script = ''
@@ -221,7 +185,7 @@ in
 
   systemd.services.copy-torrent-jellyfin = {
     script = ''
-          ${copyMoviesAndShows}/bin/copy-movies-shows
+      ${copyMoviesAndShows}/bin/copy-movies-shows
     '';
     serviceConfig = {
       Type = "oneshot";
@@ -277,8 +241,8 @@ in
   services.nfs.server = {
     enable = true;
     exports = ''
-        /home/hugh/SSDs    10.0.0.118/24(insecure,rw,sync,no_subtree_check)
-        '';
+      /home/hugh/SSDs    10.0.0.118/24(insecure,rw,sync,no_subtree_check)
+    '';
     # fixed rpc.statd port; for firewall
     lockdPort = 4001;
     mountdPort = 4002;
@@ -346,6 +310,7 @@ in
       "audio"
       "input"
       "lp" # for bluetooth
+      "jellyfin"
     ];
     shell = pkgs.zsh;
   };
