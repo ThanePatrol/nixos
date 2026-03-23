@@ -57,9 +57,6 @@ in
       # format on save
       formatter-nvim
 
-      #status bar
-      lualine-nvim
-
       # ide-like git highlighting
       gitsigns-nvim
 
@@ -69,6 +66,8 @@ in
       #Completions
       cmp-nvim-lsp
       nvim-cmp
+      # convenient testing
+      vim-test
 
       # lsp helper, sets up root_dir, on_attach and other niceties
       nvim-lspconfig
@@ -79,11 +78,14 @@ in
       luasnip
       cmp_luasnip
 
-      # Colorschemes
-      catppuccin-nvim
-
       # Renders markdown nicely
       render-markdown-nvim
+
+      #status bar
+      lualine-nvim
+
+      # Colorschemes
+      catppuccin-nvim
 
       # Tree view with editable buffer
       fyler
