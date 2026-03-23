@@ -11,7 +11,7 @@ let
     prettierd # prettier daemon for web
     gofumpt # formatter
     golines # formatter
-    nixfmt-rfc-style # autoformat nix files
+    nixfmt # autoformat nix files
     shfmt # shell formatter
     luaformatter # format lua
     yamlfmt

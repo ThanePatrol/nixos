@@ -56,12 +56,26 @@ in
 
       # format on save
       formatter-nvim
+        #indent lines
+        indent-blankline-nvim
+
+        # Quick fixes for issues in file
+        trouble-nvim
+        # allow movement between tmux panes
+        vim-tmux-navigator
+
+        #rainbow brackets
+        # rainbow-delimiters-nvim
+
+        # Quick fixes for issues in file
+        trouble-nvim
 
       # ide-like git highlighting
       gitsigns-nvim
 
       #syntax highlighting
       nvim-treesitter.withAllGrammars
+
 
       #Completions
       cmp-nvim-lsp
