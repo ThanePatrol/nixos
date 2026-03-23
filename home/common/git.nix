@@ -47,6 +47,7 @@ in
       tag.gpgSign = true;
       merge.tool = "nvimdiff2";
     };
+    signing.format = "openpgp";
 
     # global ignores to not include
     ignores = [
