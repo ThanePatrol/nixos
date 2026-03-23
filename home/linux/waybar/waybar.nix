@@ -1,11 +1,17 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   dummy = pkgs.writeShellScriptbin "dummyScript" ''
     #!/usr/bin/env bash
     # todo make a proper script
   '';
-in {
+in
+{
   programs.waybar = {
     enable = true;
     package = pkgs.waybar;
@@ -17,7 +23,11 @@ in {
         spacing = 7;
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "clock" ];
-        modules-right = [ "pulseaudio" "network" "cpu" ];
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "cpu"
+        ];
         clock = {
           format = "{:%a %b %d %H:%M}";
           interval = 1;
@@ -36,7 +46,13 @@ in {
           format = "{icon} {volume}%";
           format-alt = "{icon} {volume}%";
           format-alt-click = "click-left";
-          format-icons = { default = [ "" "" "" ]; };
+          format-icons = {
+            default = [
+              ""
+              ""
+              ""
+            ];
+          };
         };
       };
     };

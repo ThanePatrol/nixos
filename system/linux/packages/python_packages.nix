@@ -1,6 +1,16 @@
 { pkgs }:
 
-let python = pkgs.python3;
+let
+  python = pkgs.python3;
 
-in python.withPackages
-(ps: with ps; [ numpy scipy pandas matplotlib requests selenium ])
+in
+python.withPackages (
+  ps: with ps; [
+    numpy
+    scipy
+    pandas
+    matplotlib
+    requests
+    selenium
+  ]
+)

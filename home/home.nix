@@ -92,8 +92,8 @@ in
       )
       ++ [
         # Common packages suitable for headless.
-    	(import ./common/ghostty.nix { inherit lib theme; })
-    	./common/fonts.nix
+        (import ./common/ghostty.nix { inherit lib theme; })
+        ./common/fonts.nix
         ./common/spotify/spotify.nix
         (import ./common/zathura/zathura.nix { inherit theme; })
       ]

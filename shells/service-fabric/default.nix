@@ -17,7 +17,8 @@ let
     '';
   };
 
-in mkShell {
+in
+mkShell {
 
   buildInputs = [
     #go

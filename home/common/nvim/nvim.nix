@@ -15,6 +15,22 @@ let
       hash = "sha256-MByXyTX0ucCg9MDSBIs1J/15uVrcvL6x6ouy1d54Md4=";
     };
   };
+
+  rainbow-delimiter = pkgs.vimUtils.buildVimPlugin {
+    name = "rainbow-delimiters.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "HiPhish";
+      repo = "rainbow-delimiters.nvim";
+      rev = "607a438d8c647a355749973fd295e33505afafde";
+      hash = "sha256-nqZKbqUeVkwzZlUR+xAKe4cb65DahWgStreRtGUchXE=";
+    };
+    nvimSkipModules = [
+      # vim plugin with optional toggleterm integration
+      "rainbow-delimiters.types"
+      "rainbow-delimiters._test.highlight"
+    ];
+  };
+
 in
 {
   programs.neovim = {
@@ -56,33 +72,35 @@ in
 
       # format on save
       formatter-nvim
-        #indent lines
-        indent-blankline-nvim
+      #indent lines
+      indent-blankline-nvim
+      # format on save
+      formatter-nvim
+      #indent lines
 
-        # Quick fixes for issues in file
-        trouble-nvim
-        # allow movement between tmux panes
-        vim-tmux-navigator
+      # Quick fixes for issues in file
+      trouble-nvim
+      # allow movement between tmux panes
+      vim-tmux-navigator
 
-        #rainbow brackets
-        # rainbow-delimiters-nvim
-
-        # Quick fixes for issues in file
-        trouble-nvim
+      # Quick fixes for issues in file
+      trouble-nvim
 
       # ide-like git highlighting
       gitsigns-nvim
+      # convenient testing
+      vim-test
 
       #syntax highlighting
       nvim-treesitter.withAllGrammars
 
+      rainbow-delimiter
 
       #Completions
       cmp-nvim-lsp
       nvim-cmp
       # convenient testing
       vim-test
-
       # lsp helper, sets up root_dir, on_attach and other niceties
       nvim-lspconfig
 

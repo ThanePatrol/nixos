@@ -3,7 +3,8 @@
 let
   wallsDir = ./pics;
   saveDir = "./.config/wpaperd/walls";
-in {
+in
+{
   home.file = lib.mkMerge [
     {
       "./.config/wpaperd/wallpaper.toml".text = ''
@@ -14,7 +15,9 @@ in {
     }
     (lib.mapAttrs' (name: _: {
       name = "${saveDir}/${name}";
-      value = { source = "${wallsDir}/${name}"; };
+      value = {
+        source = "${wallsDir}/${name}";
+      };
     }) (builtins.readDir "${wallsDir}"))
 
   ];
