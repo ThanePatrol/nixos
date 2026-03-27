@@ -3,9 +3,9 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function(args)
         local ft = vim.bo[args.buf].filetype
         local lang = vim.treesitter.language.get_lang(ft)
-        if lang == 'TelescopeResults' or lang == 'TelescopePrompt' then
-            return
-        end
+        -- Ignore languages that treesitter fails on
+        if lang == 'TelescopeResults' or lang == 'TelescopePrompt' or lang ==
+            'cmp_menu' or lang == 'cmp_docs' then return end
         require('nvim-treesitter').install(lang)
         vim.treesitter.language.add(lang)
         vim.treesitter.start(args.buf, lang)
