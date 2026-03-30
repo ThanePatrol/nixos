@@ -163,6 +163,9 @@ in
       # Markdown
       marksman
 
+      # Rego policy files
+      regols
+
       # provides many packages, including clangd
       llvmPackages_21.clang-unwrapped
     ];

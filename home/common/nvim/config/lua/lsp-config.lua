@@ -47,6 +47,7 @@ local function lsp_setup(module, filetypes, settings)
 end
 
 lsp_setup('bashls', {"sh", "tmux"})
+lsp_setup('regols')
 lsp_setup('nil_ls') -- nix
 lsp_setup('pyright') -- python
 lsp_setup('cssls') -- css
