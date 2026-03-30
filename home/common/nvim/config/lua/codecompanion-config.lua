@@ -17,7 +17,7 @@ require("codecompanion").setup({
                     defaults = {
                         auth_method = "gemini-api-key", -- Needs to be this and a blank env var for work LOAS
                         model = "auto-gemini-3",
-                        timeout = 60000 -- 60 seconds timeout required for work CLI
+                        timeout = 120000 -- 120 seconds timeout required for work CLI
                     },
                     commands = {
                         default = {
