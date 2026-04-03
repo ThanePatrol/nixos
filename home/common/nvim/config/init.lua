@@ -53,7 +53,7 @@ vim.diagnostic.config({virtual_lines = false})
 
 vim.cmd.colorscheme "catppuccin-mocha"
 -- builtin undotree
-vim.cmd.packadd("undotree")
+vim.cmd.packadd("nvim.undotree")
 vim.opt.termguicolors = true
 
 require('mappings')
