@@ -12,14 +12,16 @@ let
   '';
 
   devDependencies = with pkgs; [
+    # keep-sorted start
     binutils
-    cmake
     clang
+    cmake
     docker
     docker-compose
     gdb
     kmod
     linuxHeaders
+    # keep-sorted end
   ];
 
   cliTools = with pkgs; [

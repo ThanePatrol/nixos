@@ -55,6 +55,7 @@ fmt: ## Formats nix, lua and shell files
 	find . -name "*.nix" | xargs nixfmt
 	find . -name "*.lua" | xargs lua-format -i
 	find . -name "*.sh"  | xargs shfmt -w
+	find . -type f -not -path "./.*" | xargs -I {} keep-sorted "{}"
 
 clean: ## Runs nix GC and store optimization
 	sudo -v
