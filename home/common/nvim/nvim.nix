@@ -6,16 +6,6 @@
   ...
 }:
 let
-  fyler = pkgs.vimUtils.buildVimPlugin {
-    name = "fyler-nvim";
-    src = pkgs.fetchFromGitHub {
-      owner = "A7Lavinraj";
-      repo = "fyler.nvim";
-      rev = "5c4e10511fe8117ac9832c2b1b5d5017355552c5";
-      hash = "sha256-MByXyTX0ucCg9MDSBIs1J/15uVrcvL6x6ouy1d54Md4=";
-    };
-  };
-
   rainbow-delimiter = pkgs.vimUtils.buildVimPlugin {
     name = "rainbow-delimiters.nvim";
     src = pkgs.fetchFromGitHub {
@@ -52,7 +42,7 @@ in
       # format on save
       formatter-nvim
       # Tree view with editable buffer
-      fyler
+      fyler-nvim
       # ide-like git highlighting
       gitsigns-nvim
       harpoon2

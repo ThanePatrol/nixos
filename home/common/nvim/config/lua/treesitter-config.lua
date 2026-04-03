@@ -4,9 +4,17 @@ vim.api.nvim_create_autocmd("FileType", {
         local ft = vim.bo[args.buf].filetype
         local lang = vim.treesitter.language.get_lang(ft)
         -- Ignore languages that treesitter fails on
-        if lang == 'TelescopeResults' or lang == 'TelescopePrompt' or lang ==
-            'cmp_menu' or lang == 'cmp_docs' or lang == 'fyler' or lang ==
-            'jjdescription' or lang == 'conf' then return end
+        ignore_langs = {
+            ["TelescopeResults"] = true,
+            ["TelescopePrompt"] = true,
+            ["cmp_menu"] = true,
+            ["cmp_docs"] = true,
+            ["fyler"] = true,
+            ["jjdescription"] = true,
+            ["conf"] = true,
+            ["nvim-undotree"] = true
+        }
+        if ignore_langs[lang] then return end
 
         local lang_to_install = lang
         if lang == 'conf' then lang_to_install = 'pbtxt' end
