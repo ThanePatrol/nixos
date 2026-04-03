@@ -7,6 +7,7 @@
 
 let
   codeFormattersAndLinters = with pkgs; [
+    # keep-sorted start
     black # python formatter
     prettierd # prettier daemon for web
     gofumpt # formatter
@@ -15,19 +16,23 @@ let
     shfmt # shell formatter
     luaformatter # format lua
     yamlfmt
+    # keep-sorted end
   ];
 
   devTools = with pkgs; [
-    #python312Packages.compiledb
+    # keep-sorted start
     ast-grep
     gemini-cli
+    keep-sorted
     patchelf
     uv
     sqlite
     watchexec
+    # keep-sorted end
   ];
 
   cliTools = with pkgs; [
+    # keep-sorted start
     age
     # CLI encryption
     claude-code
@@ -52,9 +57,11 @@ let
     vim
     zlib
     zip # CLI compression
+    # keep-sorted end
   ];
 
   fatTools = with pkgs; [
+    # keep-sorted start
     cargo-flamegraph # flamegraph tool for many languages
     ffmpeg-full
     geckodriver # webdriver automation
@@ -75,6 +82,7 @@ let
     texliveFull
     tldr
     typescript
+    # keep-sorted end
   ];
 
 in
