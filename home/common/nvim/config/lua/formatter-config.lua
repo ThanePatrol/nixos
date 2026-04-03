@@ -79,7 +79,7 @@ require("formatter").setup {
                 return {exe = "sed", args = {"s/[ \t]*$//"}, stdin = true}
             end,
             function()
-                return {exe = "keep-sorted", args = {}, stdin = true}
+                return {exe = "keep-sorted", args = {"-"}, stdin = true}
             end
         }
     }

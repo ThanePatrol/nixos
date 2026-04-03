@@ -9,12 +9,12 @@ let
   codeFormattersAndLinters = with pkgs; [
     # keep-sorted start
     black # python formatter
-    prettierd # prettier daemon for web
     gofumpt # formatter
     golines # formatter
-    nixfmt # autoformat nix files
-    shfmt # shell formatter
     luaformatter # format lua
+    nixfmt # autoformat nix files
+    prettierd # prettier daemon for web
+    shfmt # shell formatter
     yamlfmt
     # keep-sorted end
   ];
@@ -25,8 +25,8 @@ let
     gemini-cli
     keep-sorted
     patchelf
-    uv
     sqlite
+    uv
     watchexec
     # keep-sorted end
   ];
@@ -39,24 +39,24 @@ let
     dust # better du
     fzf # fuzzy find
     gcc
-    go
     gnumake
+    go
     gzip
     jq
     jujutsu
     libsecret # for storing passwords
-    osc
     ncurses # for terminfo stuff
     nodejs_22
+    osc
     pciutils # useful pci utils
     rainfrog
-    rmlint
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
+    rmlint
     unzip
     vim
-    zlib
     zip # CLI compression
+    zlib
     # keep-sorted end
   ];
 
@@ -64,15 +64,15 @@ let
     # keep-sorted start
     cargo-flamegraph # flamegraph tool for many languages
     ffmpeg-full
+    flex # lexical analysis
     geckodriver # webdriver automation
     gettext # translations
-    flex # lexical analysis
     imagemagick
     lazygit # git tui
-    libvirt
     libsixel
-    localsend
+    libvirt
     llama-cpp
+    localsend
     ollama
     pandoc # document conversion
     pkg-config # build tools
