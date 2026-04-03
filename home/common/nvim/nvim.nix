@@ -42,129 +42,88 @@ in
     vimdiffAlias = true;
 
     plugins = with pkgs.vimPlugins; [
-      #General
-      vim-sensible
-
-      vim-tmux-navigator
-
-      # icons!
-      nvim-web-devicons
-
-      # colour preview in editor
-      nvim-highlight-colors
-
-      #awesome file search
-      telescope-nvim
-
-      #add emoji!
-      telescope-symbols-nvim
-
-      #indent lines
-      indent-blankline-nvim
-
-      # Quick fixes for issues in file
-      trouble-nvim
-
-      harpoon2
-
-      # format on save
-      formatter-nvim
-      #indent lines
-      indent-blankline-nvim
-      # format on save
-      formatter-nvim
-      #indent lines
-
-      # Quick fixes for issues in file
-      trouble-nvim
-      # allow movement between tmux panes
-      vim-tmux-navigator
-
-      # Quick fixes for issues in file
-      trouble-nvim
-
-      # ide-like git highlighting
-      gitsigns-nvim
-      # convenient testing
-      vim-test
-
-      #syntax highlighting
-      nvim-treesitter.withAllGrammars
-
-      rainbow-delimiter
-
-      #Completions
-      cmp-nvim-lsp
-      nvim-cmp
-      # convenient testing
-      vim-test
-      # lsp helper, sets up root_dir, on_attach and other niceties
-      nvim-lspconfig
-
-      codecompanion-nvim
-
-      #snippets
-      luasnip
-      cmp_luasnip
-
-      # Renders markdown nicely
-      render-markdown-nvim
-
-      #status bar
-      lualine-nvim
-
+      # keep-sorted start
       # Colorschemes
       catppuccin-nvim
-
+      #Completions
+      cmp-nvim-lsp
+      cmp_luasnip
+      codecompanion-nvim
+      # format on save
+      formatter-nvim
       # Tree view with editable buffer
       fyler
+      # ide-like git highlighting
+      gitsigns-nvim
+      harpoon2
+      #indent lines
+      indent-blankline-nvim
+      #status bar
+      lualine-nvim
+      #snippets
+      luasnip
+      nvim-cmp
+      # colour preview in editor
+      nvim-highlight-colors
+      # lsp helper, sets up root_dir, on_attach and other niceties
+      nvim-lspconfig
+      #syntax highlighting
+      nvim-treesitter.withAllGrammars
+      # icons!
+      nvim-web-devicons
+      rainbow-delimiter
+      # Renders markdown nicely
+      render-markdown-nvim
+      #awesome file search
+      telescope-nvim
+      #add emoji!
+      telescope-symbols-nvim
+      # Quick fixes for issues in file
+      trouble-nvim
+      #General
+      vim-sensible
+      # convenient testing
+      vim-test
+      vim-tmux-navigator
+      # allow movement between tmux panes
+      vim-tmux-navigator
+      # keep-sorted end
     ];
 
     extraPackages = with pkgs; [
-      tree-sitter
-
+      # keep-sorted start
       #Language servers
       bash-language-server
+      black
+      delve
+      # go
+      gopls
+      # provides many packages, including clangd
+      llvmPackages_21.clang-unwrapped
       lua-language-server
-
       luajitPackages.lua-utils-nvim
-
+      # Markdown
+      marksman
       #nix
       nil
-
-      #python
-      pyright
-      black
-
       #typescript/web
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
-
+      # generic sql
+      postgres-language-server
+      #python
+      pyright
+      # Rego policy files
+      regols
       #rust
       rust-analyzer
       rustfmt
-
-      # generic sql
-      postgres-language-server
-
       #terraform lsp
       terraform-ls
-
-      # go
-      gopls
-      delve
-
       #latex
       texlab
-
-      # Markdown
-      marksman
-
-      # Rego policy files
-      regols
-
-      # provides many packages, including clangd
-      llvmPackages_21.clang-unwrapped
+      tree-sitter
+      # keep-sorted end
     ];
   };
   xdg.configFile.nvim = {

@@ -6,11 +6,13 @@ let
 in
 {
   packages = with pkgs; [
-    iproute2mac
-    darwin.libiconv
+    # keep-sorted start
     coreutils-prefixed
-    reattach-to-user-namespace
+    darwin.libiconv
+    iproute2mac
     prismlauncher
+    reattach-to-user-namespace
+    # keep-sorted end
   ];
 
 }
