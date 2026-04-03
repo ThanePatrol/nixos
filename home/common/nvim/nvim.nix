@@ -62,9 +62,6 @@ in
       #indent lines
       indent-blankline-nvim
 
-      #rainbow brackets
-      rainbow-delimiters-nvim
-
       # Quick fixes for issues in file
       trouble-nvim
 
