@@ -74,6 +74,13 @@ require("formatter").setup {
             end
         },
 
-        ["*"] = {require("formatter.filetypes.any").remove_trailing_whitespace}
+        ["*"] = {
+            function()
+                return {exe = "sed", args = {"s/[ \t]*$//"}, stdin = true}
+            end,
+            function()
+                return {exe = "keep-sorted", args = {}, stdin = true}
+            end
+        }
     }
 }
