@@ -47,6 +47,9 @@ let
       ;
   };
 
+  # TODO: Add this snippet
+  # dir="/var/lib/qBittorrent/qBittorrent/downloads"; find "$dir" -path "$dir/temp" -prune -o -type f -printf '%p %Cs\n'
+  # and check modification time to see if it should be fed to a llm to categorize and rename into shows/movies
   copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
       for file in $(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" | ${pkgs.ripgrep}/bin/rg '\.(mp4|mkv)'); do
         if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" "$file"; then
@@ -253,6 +256,7 @@ in
     # for NFSv3; view with `rpcinfo -p`
     allowedTCPPorts = [
       111
+      1883 # Mosquitto
       2049
       2283 # immich
       3000 # general dev
@@ -260,6 +264,8 @@ in
       4001
       4002
       5055 # Jellyseer
+      8123 # Home assistant
+      8080 # Zigbee2Mqtt
       20048
       25565 # MC
     ];
@@ -270,6 +276,7 @@ in
       4001
       4002
       5055 # Jellyseer
+      8080 # Zigbee2Mqtt
       20048
       25565 # MC
     ];
@@ -348,6 +355,113 @@ in
     port = 2283;
     host = "0.0.0.0";
     #mediaLocation = "${ssdFolder}/immich";
+  };
+
+  services.home-assistant = {
+    enable = true;
+    extraComponents = [
+      "analytics"
+      "google_translate"
+      "met"
+      "radio_browser"
+      "shopping_list"
+      "isal"
+      "mqtt"
+      "zha"
+      "tasmota"
+    ];
+    config = {
+      # Includes dependencies for a basic setup
+      # https://www.home-assistant.io/integrations/default_config/
+      default_config = { };
+      homeassistant = {
+        name = "Home";
+        # latitude = "!secret latitude";
+        # longitude = "!secret longitude";
+        # elevation = "!secret elevation";
+        unit_system = "metric";
+        # time_zone = "UTC";
+      };
+    };
+  };
+  services.mosquitto = {
+    enable = true;
+    listeners = [
+      {
+        acl = [ "pattern readwrite #" ];
+        omitPasswordAuth = true;
+        settings.allow_anonymous = true;
+      }
+    ];
+  };
+
+  services.zigbee2mqtt = {
+    enable = true;
+    settings = {
+      homeassistant.enabled = true;
+      mqtt = {
+        base_topic = "zigbee2mqtt";
+        server = "mqtt://10.0.0.3:1883";
+      };
+      serial = {
+        port = "tcp://10.0.0.5:6638";
+        adapter = "ezsp";
+        baudrate = 115200;
+        disable_led = false;
+      };
+      permit_join = true;
+      frontend = {
+        enabled = true;
+        port = 8080; # TODO - change this to something else
+      };
+      advanced = {
+        transmit_power = 20;
+        channel = 11;
+        pan_id = 34591;
+        # ext_pan_id = "[0xc0,0x5a,0x00,0x84,0x51,0xff,0x94,0xca]";
+        # # ext_pan_id = [
+        # #   "0xc0"
+        # #   "0x5a"
+        # #   "0x00"
+        # #   "0x84"
+        # #   "0x51"
+        # #   "0xff"
+        # #   "0x94"
+        # #   "0xca"
+        # # ];
+        # network_key = "[0xba,0x8f,0x5b,0xd5,0x0b,0x00,0xba,0x14,0xaf,0x07,0x56,0x1b,0x61,0x6d,0x6a,0x0d]";
+        network_key = [
+          186
+          143
+          91
+          213
+          11
+          0
+          186
+          20
+          175
+          7
+          86
+          27
+          97
+          109
+          106
+          13
+        ];
+
+        # c0 5a 00 84 51 ff 94 ca
+        ext_pan_id = [
+          192
+          90
+          0
+          132
+          81
+          255
+          148
+          202
+        ];
+      };
+    };
   };
 
   systemd.services = {
