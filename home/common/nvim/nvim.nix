@@ -114,7 +114,7 @@ in
         vim-tmux-navigator
         # keep-sorted end
       ]
-      ++ (if !isDarwin && isWork then [ workPlugins ] else [ ]);
+      ++ (if !isDarwin && isWork then workPlugins else [ ]);
 
     extraPackages = with pkgs; [
       # keep-sorted start

@@ -1,13 +1,13 @@
 {
   isWork,
-  config,
+  #config,
   lib,
   pkgs,
   ...
 }:
 
 let
-  pointer = config.home.pointerCursor;
+  #pointer = config.home.pointerCursor;
   mkService = lib.recursiveUpdate {
     Unit.PartOf = [ "graphical-session.target" ];
     Unit.After = [ "graphical-session.target" ];
@@ -68,7 +68,7 @@ in
       exec-once = [
 
         # set cursor
-        "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
+        #"hyprctl setcursor ${pointer.name} ${toString pointer.size}"
         "dunst" # notifications
         "waybar"
         "rm $HOME/.cache/cliphist/db"
