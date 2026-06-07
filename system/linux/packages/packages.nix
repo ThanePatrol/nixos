@@ -39,7 +39,6 @@ let
     smartmontools
     socat # to establish socket connections
     sshfs
-    takeBlurredScreenshot
     wireplumber # sound memes
     # keep-sorted end
   ];
