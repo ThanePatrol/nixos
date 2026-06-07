@@ -86,8 +86,8 @@ if require('utils').is_cloudtop() then
             '--tooltag=nvim-lsp', '--noforward_sync_responses'
         },
         filetypes = {
-            "c", "cpp", "java", "kotlin", "objc", "proto", "textproto", "go",
-            "python", "bzl", "typescript", "pi", "sdl", "sql"
+            "borg", "c", "cpp", "java", "kotlin", "objc", "proto", "textproto",
+            "go", "python", "bzl", "typescript", "pi", "sdl", "sql"
         },
         offset_encoding = 'utf-8',
         root_markers = {'.citc'},
