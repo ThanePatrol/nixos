@@ -35,7 +35,7 @@ update-work: ## Updates work macbook
 	- 	sudo mv /etc/bashrc /etc/bashrc-temp
 	nix build --impure --extra-experimental-features "nix-command flakes" .#darwinConfigurations.work.config.system.build.toplevel -o work-flake-output
 	#./work-flake-output/sw/bin/darwin-rebuild switch --flake .#work
-	darwin-rebuild switch --flake .#work
+	sudo -E env "PATH=$$PATH" darwin-rebuild switch --flake .#work
 	- sudo mv /etc/zshrc-temp /etc/zshrc
 	- sudo mv /etc/bashrc-temp /etc/bashrc
 
@@ -45,6 +45,9 @@ update-remote-work: install-nix ## Updates a remote dev workstation
 update-oracle: install-nix ## Updates a remote VPS with home-manager
 	home-manager switch --impure --flake .#oracleServer
 
+update-glinux: ## Updates a glinux laptop
+	home-manager switch --impure --flake .#workLinuxLaptop
+
 flake-update: ## Updates flake inputs
 	nix --extra-experimental-features "nix-command flakes" flake update
 
@@ -52,6 +55,7 @@ fmt: ## Formats nix, lua and shell files
 	find . -name "*.nix" | xargs nixfmt
 	find . -name "*.lua" | xargs lua-format -i
 	find . -name "*.sh"  | xargs shfmt -w
+	find . -type f -not -path "./.*" | xargs -I {} keep-sorted "{}"
 
 clean: ## Runs nix GC and store optimization
 	sudo -v

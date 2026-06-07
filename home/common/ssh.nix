@@ -19,6 +19,13 @@
         user = "azureuser";
         identityFile = "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
       };
+      "zeruel" = {
+        hostname = "10.0.0.3";
+        user = "hugh";
+        extraOptions = {
+          "AddKeysToAgent" = "yes";
+        };
+      };
       "*" = {
         forwardAgent = false;
         addKeysToAgent = "no";

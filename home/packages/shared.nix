@@ -7,62 +7,73 @@
 
 let
   codeFormattersAndLinters = with pkgs; [
+    # keep-sorted start
     black # python formatter
-    prettierd # prettier daemon for web
     gofumpt # formatter
     golines # formatter
-    nixfmt-rfc-style # autoformat nix files
-    shfmt # shell formatter
     luaformatter # format lua
+    prettierd # prettier daemon for web
+    nixfmt # autoformat nix files
+    shfmt # shell formatter
     yamlfmt
+    # keep-sorted end
   ];
 
   devTools = with pkgs; [
-    #python312Packages.compiledb
+    # keep-sorted start
     ast-grep
     gemini-cli
+    keep-sorted
+    patchelf
+    mermaid-cli
     uv
     sqlite
     watchexec
+    # keep-sorted end
   ];
 
   cliTools = with pkgs; [
-    age # CLI encryption
+    # keep-sorted start
+    # CLI encryption
+    age
     dust # better du
     fzf # fuzzy find
     gcc
-    go
     gnumake
+    go
     gzip
     jq
     jujutsu
     libsecret # for storing passwords
-    osc
     ncurses # for terminfo stuff
     nodejs_22
+    osc
     pciutils # useful pci utils
     rainfrog
-    rmlint
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
+    rmlint
+    sops
     unzip
     vim
-    zlib
     zip # CLI compression
+    zlib
+    # keep-sorted end
   ];
 
   fatTools = with pkgs; [
+    # keep-sorted start
     cargo-flamegraph # flamegraph tool for many languages
-    ffmpeg-full
+    #ffmpeg-full
+    flex # lexical analysis
     geckodriver # webdriver automation
     gettext # translations
-    flex # lexical analysis
     imagemagick
     lazygit # git tui
-    libvirt
     libsixel
-    localsend
+    libvirt
     llama-cpp
+    localsend
     ollama
     pandoc # document conversion
     pkg-config # build tools
@@ -72,6 +83,7 @@ let
     texliveFull
     tldr
     typescript
+    # keep-sorted end
   ];
 
 in

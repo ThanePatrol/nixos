@@ -20,6 +20,10 @@
       };
     };
 
+    proxmox-nixos = {
+      url = "github:SaumonNet/proxmox-nixos";
+    };
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -34,6 +38,7 @@
       flake-utils,
       neovim-nightly-overlay,
       sops-nix,
+      proxmox-nixos,
       ...
     }@inputs:
     let
@@ -50,7 +55,7 @@
           config.allowUnfree = true;
         };
 
-      vpsSystem =
+      homeManagerSystem =
         system: username: isWork: email: gitUserName: homeDirectory: minimal:
         let
           pkgs = genPkgs system;
@@ -114,6 +119,17 @@
             ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
+            proxmox-nixos.nixosModules.proxmox-ve
+            (
+              { pkgs, lib, ... }:
+              {
+
+                nixpkgs.overlays = [
+                  proxmox-nixos.overlays.${system}
+                ];
+
+              }
+            )
           ];
 
         };
@@ -205,13 +221,20 @@
 
       homeConfigurations = {
         workServer =
-          vpsSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
+          homeManagerSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
             "/usr/local/google/home/hmandalidis"
             false;
         # first oracle vps
         oracleServer =
-          vpsSystem "x86_64-linux" "ubuntu" false "mandalidis.hugh@gmail.com" "hmandalidis" "/home/ubuntu"
+          homeManagerSystem "x86_64-linux" "ubuntu" false "mandalidis.hugh@gmail.com" "hmandalidis"
+            "/home/ubuntu"
             true;
+
+        workLinuxLaptop =
+          homeManagerSystem "x86_64-linux" "hmandalidis" true "hmandalidis@google.com" "hmandalidis"
+            "/home/hmandalidis"
+            false;
+
       };
 
       rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";

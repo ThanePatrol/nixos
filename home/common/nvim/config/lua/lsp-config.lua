@@ -1,4 +1,5 @@
 require('lspconfig')
+
 local function refactor_functions()
     local curr_name = vim.fn.expand("<cword>")
     local new_name = vim.fn.input("New name: ", curr_name)
@@ -47,6 +48,7 @@ local function lsp_setup(module, filetypes, settings)
 end
 
 lsp_setup('bashls', {"sh", "tmux"})
+lsp_setup('regols')
 lsp_setup('nil_ls') -- nix
 lsp_setup('pyright') -- python
 lsp_setup('cssls') -- css
@@ -73,3 +75,29 @@ lsp_setup('gopls', {"go"}, {
         usePlaceholders = true
     }
 })
+
+-- Work config below ----
+if require('utils').is_cloudtop() then
+    vim.lsp.config('ciderlsp', {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        cmd = {
+            '/google/bin/releases/cider/ciderlsp/ciderlsp',
+            '--tooltag=nvim-lsp', '--noforward_sync_responses'
+        },
+        filetypes = {
+            "c", "cpp", "java", "kotlin", "objc", "proto", "textproto", "go",
+            "python", "bzl", "typescript", "pi", "sdl", "sql"
+        },
+        offset_encoding = 'utf-8',
+        root_markers = {'.citc'},
+        settings = {}
+    })
+    vim.lsp.enable('ciderlsp', true)
+    vim.lsp.enable('gopls', false)
+    vim.lsp.enable('pyright', false)
+    vim.lsp.enable('clangd', false)
+    vim.lsp.enable('ts_ls', false)
+    vim.lsp.enable('postgres_lsp', false)
+
+end

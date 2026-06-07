@@ -81,19 +81,33 @@ vim.keymap.set('n', '<leader>ie', telescope.emojis,
                {desc = "Open emoji picker 😀"})
 vim.keymap.set('n', '<leader>fd', telescope.file_search_cwd,
                {desc = "Find files from the cwd of the open buffer"})
-vim.keymap.set('n', '<leader>fc', telescope.text_search_cwd,
+vim.keymap.set('n', '<leader>fs', telescope.text_search_cwd,
                {desc = "Find files with fuzzy matching from the cwd of buffer"})
 
--- Telescope end
+-- Work stuff begin
+if require('utils').is_cloudtop() then
 
--- Terminal begin
-local termtoggle = require('term.nvim-term')
+    vim.keymap
+        .set('n', '<leader>fc', "<cmd>Telescope codesearch find_files<cr>")
+    vim.keymap.set('n', '<leader>fcc',
+                   "<cmd>Telescope codesearch find_query<cr>")
+    vim.keymap.set('n', '<leader>cm', "<cmd>Telescope citc modified<cr>",
+                   {desc = "[C]itc [M]odified"})
+    vim.keymap.set('n', '<leader>cw', "<cmd>Telescope citc workspaces<cr>",
+                   {desc = "[C]itc [W]orkspaces"})
 
-vim.keymap.set('n', 'to', termtoggle.toggleterm, {desc = 'toggle terminal'})
-vim.keymap.set('t', 'tc', termtoggle.toggleterm,
-               {buffer = termtoggle.buf, desc = 'toggle terminal'})
--- Terminal end
---
+    -- TODO add keymappings
+    --       { "]c", "<cmd>CritiqueGotoNextComment<CR>" },
+    -- { "[c", "<cmd>CritiqueGotoPrevComment<CR>" },
+    -- { "<Leader>lc", "<cmd>CritiqueToggleLineComment<CR>" },
+    -- { "<Leader>uc", "<cmd>CritiqueToggleUnresolvedComments<CR>" },
+    -- { "<Leader>ac", "<cmd>CritiqueToggleAllComments<CR>" },
+    -- { "<Leader>fc", "<cmd>CritiqueFetchComments<CR>" },
+    -- { "<Leader>tc", "<cmd>CritiqueCommentsTelescope<CR>" },
+end
+
+-- Work stuff end
+
 -- Quickfix start
 vim.api.nvim_command(
     "autocmd FileType qf nnoremap <buffer> dd :RemoveQFItem<cr>")

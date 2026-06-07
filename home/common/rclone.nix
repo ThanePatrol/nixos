@@ -1,21 +1,27 @@
-{ pkgs, ... }:
+{ pkgs, osConfig, ... }:
 
 {
   home.packages = [ pkgs.rclone ];
-
-  #todo - configure local backups and remote backups
-  # get prompting for local
-  home.file."./.config/rclone/rclone.conf".text = ''
-    [seafile_to_NAS]
-    type = local
-
-    [b2-01]
-    type = b2
-    account = 004736e907299a10000000002
-
-    [b2-ironwolfs]
-    type = b2
-    account = 004736e907299a10000000003
-    hard_delete = true
-  '';
+  # home.file."./.config/rclone/rclone.conf".text = ''
+  #   [b2-ironwolfs]
+  #   type = b2
+  #   account = ${osConfig.sops.secrets.backblaze_key_id.path}
+  #   key = ${osConfig.sops.secrets.backblaze_application_key.path}
+  #   hard_delete = true
+  # '';
+  programs.rclone = {
+    enable = true;
+    remotes = {
+      b2backup = {
+        config = {
+          type = "b2";
+          hard_delete = true;
+        };
+        secrets = {
+          account = osConfig.sops.secrets.backblaze_key_id.path;
+          key = osConfig.sops.secrets.backblaze_application_key.path;
+        };
+      };
+    };
+  };
 }

@@ -1,0 +1,31 @@
+#!/bin/sh
+# pre-push hook to prevent pushing work info to github 
+
+_REMOTE_NAME="$1"
+REMOTE_URL="$2"
+
+# origin is always github
+BANNED_URL="github.com" 
+BANNED_BRANCH_REF="refs/heads/work"
+
+echo "$REMOTE_URL" | grep -q "$BANNED_URL"
+
+if [ $? -eq 0 ]; then
+  # Read stdin line-by-line. Format: <local_ref> <local_sha> <remote_ref> <remote_sha>
+  while read -r _LOCAL_REF _LOCAL_SHA REMOTE_REF _REMOTE_SHA; do
+    # Check if the ref being pushed to on the remote matches our banned branch
+    if [ "$REMOTE_REF" = "$BANNED_BRANCH_REF" ]; then
+      echo ""
+      echo "#########################################################################"
+      echo "ERROR: Do not push '$BANNED_BRANCH_NAME' to $BANNED_URL."
+      echo "Push aborted."
+      echo "#########################################################################"
+      echo ""
+      exit 1
+    fi
+	echo "remote $REMOTE_REF"
+  done
+fi
+
+exit 0
+

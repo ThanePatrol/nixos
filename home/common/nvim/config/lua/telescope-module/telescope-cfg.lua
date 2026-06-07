@@ -24,6 +24,21 @@ local finders = require('telescope.finders')
 local make_entry = require('telescope.make_entry')
 local conf = require('telescope.config').values
 
+-- This asks telescope to load the codesearch extension and makes
+-- the 'codesearch' picker available through the `Telescope` command.
+local function is_macos()
+    local os_name = vim.fn.has('macunix') and vim.fn.has('unix') and
+                        vim.fn.has('mac') and "macos" or vim.fn.has('win32') and
+                        "windows" or "other"
+    if os_name ~= "macos" then return false end
+    return true
+end
+
+if not is_macos() then
+    require('telescope').load_extension('codesearch')
+    require('telescope').load_extension('citc')
+end
+
 local M = {}
 
 local live_multigrep = function(opts)
@@ -86,7 +101,10 @@ M.file_search_cwd = function()
 end
 
 M.text_search_cwd = function()
-    builtin.grep_string({search_dirs = {dir_name_of_buf()}})
+    builtin.grep_string({
+        search_dirs = {dir_name_of_buf()},
+        search = vim.fn.input('Grep > ')
+    })
 end
 
 return M

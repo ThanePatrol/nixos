@@ -1,4 +1,5 @@
 {
+  isDarwin,
   inputs,
   pkgs,
   lib,
@@ -6,131 +7,149 @@
   ...
 }:
 let
-  fyler = pkgs.vimUtils.buildVimPlugin {
-    name = "fyler-nvim";
+  rainbow-delimiter = pkgs.vimUtils.buildVimPlugin {
+    name = "rainbow-delimiters.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "A7Lavinraj";
-      repo = "fyler.nvim";
-      rev = "5c4e10511fe8117ac9832c2b1b5d5017355552c5";
-      hash = "sha256-MByXyTX0ucCg9MDSBIs1J/15uVrcvL6x6ouy1d54Md4=";
+      owner = "HiPhish";
+      repo = "rainbow-delimiters.nvim";
+      rev = "607a438d8c647a355749973fd295e33505afafde";
+      hash = "sha256-nqZKbqUeVkwzZlUR+xAKe4cb65DahWgStreRtGUchXE=";
+    };
+    nvimSkipModules = [
+      # vim plugin with optional toggleterm integration
+      "rainbow-delimiters.types"
+      "rainbow-delimiters._test.highlight"
+    ];
+  };
+
+  # use absolute paths - hack 😭
+  telescopeCodesearch = pkgs.vimUtils.buildVimPlugin {
+    pname = "telescope-codesearch";
+    version = "1.0";
+    src = builtins.path {
+      path = "/usr/local/google/home/hmandalidis/nvim-plugins/telescope-codesearch.nvim";
+      name = "telescope-codesearch";
     };
   };
+
+  critique = pkgs.vimUtils.buildVimPlugin {
+    pname = "critique-nvim";
+    version = "1.0.2";
+    src = builtins.path {
+      path = "/usr/local/google/home/hmandalidis/nvim-plugins/critique-nvim";
+      name = "critique-nvim";
+    };
+    # depends on pkgs for build
+    nativeBuildInputs = [
+      pkgs.vimPlugins.plenary-nvim
+      pkgs.vimPlugins.telescope-nvim
+    ];
+  };
+
+  linuxPlugins = [
+    # google plugins
+    telescopeCodesearch
+    critique
+  ];
+
 in
 {
   programs.neovim = {
     enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    withPython3 = false; # shut up eval warnings
+    withRuby = false; # ditto ^
 
-    plugins = with pkgs.vimPlugins; [
-      #General
-      vim-sensible
-
-      vim-tmux-navigator
-
-      # icons!
-      nvim-web-devicons
-
-      # colour preview in editor
-      nvim-highlight-colors
-
-      #awesome file search
-      telescope-nvim
-
-      #add emoji!
-      telescope-symbols-nvim
-
-      #indent lines
-      indent-blankline-nvim
-
-      #rainbow brackets
-      rainbow-delimiters-nvim
-
-      # Quick fixes for issues in file
-      trouble-nvim
-
-      harpoon2
-
-      # format on save
-      formatter-nvim
-
-      #status bar
-      lualine-nvim
-
-      # ide-like git highlighting
-      gitsigns-nvim
-
-      #syntax highlighting
-      nvim-treesitter.withAllGrammars
-
-      #Completions
-      cmp-nvim-lsp
-      nvim-cmp
-
-      # lsp helper, sets up root_dir, on_attach and other niceties
-      nvim-lspconfig
-
-      codecompanion-nvim
-
-      #snippets
-      luasnip
-      cmp_luasnip
-
-      # Colorschemes
-      catppuccin-nvim
-
-      # Renders markdown nicely
-      render-markdown-nvim
-
-      # Tree view with editable buffer
-      fyler
-    ];
+    plugins =
+      with pkgs.vimPlugins;
+      [
+        # keep-sorted start
+        # Colorschemes
+        catppuccin-nvim
+        #Completions
+        cmp-nvim-lsp
+        cmp_luasnip
+        codecompanion-nvim
+        # format on save
+        formatter-nvim
+        # Tree view with editable buffer
+        fyler-nvim
+        # ide-like git highlighting
+        gitsigns-nvim
+        harpoon2
+        #indent lines
+        indent-blankline-nvim
+        #status bar
+        lualine-nvim
+        #snippets
+        luasnip
+        nvim-cmp
+        # colour preview in editor
+        nvim-highlight-colors
+        # lsp helper, sets up root_dir, on_attach and other niceties
+        nvim-lspconfig
+        #syntax highlighting
+        nvim-treesitter.withAllGrammars
+        # icons!
+        nvim-web-devicons
+        rainbow-delimiter
+        # Renders markdown nicely
+        render-markdown-nvim
+        #awesome file search
+        telescope-nvim
+        #add emoji!
+        telescope-symbols-nvim
+        # Quick fixes for issues in file
+        trouble-nvim
+        #General
+        vim-sensible
+        # convenient testing
+        vim-test
+        vim-tmux-navigator
+        # allow movement between tmux panes
+        vim-tmux-navigator
+        # keep-sorted end
+      ]
+      ++ (if isDarwin then [ ] else linuxPlugins);
 
     extraPackages = with pkgs; [
-      tree-sitter
-
+      # keep-sorted start
       #Language servers
       bash-language-server
+      black
+      delve
+      # go
+      gopls
+      # provides many packages, including clangd
+      llvmPackages_21.clang-unwrapped
       lua-language-server
-
       luajitPackages.lua-utils-nvim
-
+      # Markdown
+      marksman
       #nix
       nil
-
+      # generic sql
+      postgres-language-server
       #python
       pyright
-      black
-
-      #typescript/web
-      nodePackages.typescript-language-server
-      nodePackages.vscode-langservers-extracted
-
+      # Rego policy files
+      regols
       #rust
       rust-analyzer
       rustfmt
-
-      # generic sql
-      postgres-language-server
-
       #terraform lsp
       terraform-ls
-
-      # go
-      gopls
-      delve
-
       #latex
       texlab
-
-      # Markdown
-      marksman
-
-      # provides many packages, including clangd
-      llvmPackages_21.clang-unwrapped
+      tree-sitter
+      #typescript/web
+      typescript-language-server
+      vscode-langservers-extracted
+      # keep-sorted end
     ];
   };
   xdg.configFile.nvim = {

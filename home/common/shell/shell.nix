@@ -14,12 +14,16 @@ let
     export LIBRARY_PATH=$HOME/.nix-profile/lib:$LIBRARY_PATH
     export PATH=${pkgs.gnused}/bin:$PATH
     export PATH=${pkgs.coreutils}/bin:$PATH
+    export PATH=$PATH:/opt/homebrew/bin
   '';
 
   workLinuxExports = ''
     export PATH="$PATH:$HOME/.nix-profile/bin"
-    source /etc/bash_completion.d/hgd
-    source /etc/bash_completion.d/g4d
+    export PATH="$PATH:/usr/local/google/home/hmandalidis/go/bin"
+    export PATH="$PATH:/google/src/head/depot/eng/tools"
+    source /etc/bash_completion.d/jjd
+    export REPLACE_BLAZE_WITH_DBIP=""
+    export CORP_WORK_ENV=true
   '';
   # Need the google git first in path instead of oss git
   workExports = ''
@@ -96,9 +100,10 @@ in
       bindkey "^[b" backward-word
       bindkey "^[\b" backward-kill-word
 
-      # disable vim editing mode
-      bindkey -e
-
+      # Edit command in editor
+      autoload -z edit-command-line
+      zle -N edit-command-line
+      bindkey "^X^E" edit-command-line
     ''
     + (if isDarwin then macInit else "")
     + (if isWork then workExports else "")

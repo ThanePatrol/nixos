@@ -6,9 +6,15 @@ let
 in
 {
   packages = with pkgs; [
-    eww
+    brightnessctl
+    clipman # clipboard manager
+    cliphist # clipboard history
+    grim # Grabs images
+    hyprpicker
     tor-browser
-    wl-clipboard
+    playerctl # control player via CLI
+    slurp # select region
+    wl-clipboard # cli clipboard
   ];
 
 }

@@ -33,6 +33,7 @@ in
   home.homeDirectory = homeDirectory;
   home.stateVersion = "23.05"; # Please read the comment before changing.
   programs.home-manager.enable = true;
+  news.display = "silent";
 
   home.packages = finalPackages;
 
@@ -40,7 +41,6 @@ in
     (import ./common/direnv.nix)
     (import ./common/bat/bat.nix { inherit theme; })
     (import ./common/btop/btop.nix { inherit theme pkgs; })
-    ./common/rclone.nix
     (import ./common/ssh.nix { inherit gitUserName; })
     (import ./common/shell/shell.nix {
       inherit
@@ -65,7 +65,7 @@ in
     ./common/rust.nix
   ]
   ++ (
-    if minimal then # Packages not suitable for headless.
+    if minimal then # Packages suitable for headless.
       [
       ]
     else
@@ -81,21 +81,32 @@ in
             ./linux/waybar/waybar.nix
             ./linux/wofi/wofi.nix
             ./linux/wayland/wayland.nix
-            ./linux/walls/wpapred.nix
-            #./linux/xdg/xdg.nix
+            # ./linux/xdg/xdg.nix
             ./linux/cursor.nix
             ./linux/swaylock.nix
             ./linux/swayidle.nix
             ./linux/dconf.nix
             #  ./linux/eww/eww.nix
+            ./linux/kitty.nix
           ]
       )
       ++ [
-        # Common packages suitable for headless.
-    	(import ./common/ghostty.nix { inherit lib theme; })
-    	./common/fonts.nix
+        # Common packages not suitable for headless.
+        (import ./common/ghostty.nix { inherit lib theme; })
+        ./common/fonts.nix
         ./common/spotify/spotify.nix
-        (import ./common/zathura/zathura.nix { inherit theme; })
+        #(import ./common/zathura/zathura.nix { inherit theme; })
       ]
-  );
+  )
+  ++
+    # hack to avoid loading in sops.nix files as we don't need them anywhere else.
+    (
+      # TODO - should probably define this elsewhere.
+      if !isDarwin && !isWork then
+        [
+          ./common/rclone.nix
+        ]
+      else
+        [ ]
+    );
 }

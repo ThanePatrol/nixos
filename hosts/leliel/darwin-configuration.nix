@@ -48,7 +48,24 @@ in
         "nix-command"
         "flakes"
       ];
+      trusted-users = [ "hugh" ];
     };
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "10.0.0.3";
+        sshUser = "hugh";
+        protocol = "ssh";
+        system = "x86_64-linux";
+        maxJobs = 4;
+        speedFactor = 1;
+        supportedFeatures = [
+          "big-parallel"
+          "kvm"
+        ];
+        sshKey = "/var/root/.ssh/nix_builder_key";
+      }
+    ];
   };
 
   home-manager.users.${username} = homeConfig;
@@ -63,17 +80,9 @@ in
       autoUpdate = true;
     };
 
-    # mainly used for cmd line tools not packaged by nix
-    brews = [
-      "mas" # mac app store cli
-    ];
     # mainly used for gui things not packaged by nix
     casks = [
-      "macfuse"
       "firefox"
-      "spotify"
-      "qmk-toolbox"
-      "vial"
       "MonitorControl"
       "ghostty"
     ];
@@ -217,4 +226,7 @@ in
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+  # Only for work macbook
+  # default builder changed in Sequoia: https://github.com/NixOS/nix/issues/10892.
+  ids.gids.nixbld = if isWork then 350 else 30000;
 }

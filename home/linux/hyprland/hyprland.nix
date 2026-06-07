@@ -1,4 +1,5 @@
 {
+  isWork,
   config,
   lib,
   pkgs,
@@ -13,41 +14,78 @@ let
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  lockScreen = pkgs.writeShellScriptbin "lock-screen" ''
+  lockScreen = pkgs.writeShellScriptBin "lock-screen" ''
     rm /tmp/lockscreen.png || true
     screenshot-background
-    swaylock -i /tmp/lockscreen.png)
+    swaylock -i /tmp/lockscreen.png
   '';
+
+  clamshell = pkgs.writeShellScriptBin "clamshell" ''
+    hyprctl monitors -j | jq -r '.[].name' | rg -q '^DP-[0-9]+'
+    if [[ $? ]]; then
+      if [[ $1 == "open" ]]; then
+        hyprctl keyword monitor "eDP-1,preferred,auto,1"
+      else
+        hyprctl keyword monitor "eDP-1,disable"
+      fi
+    fi
+  '';
+
+  keepInClamshell = pkgs.writeShellScriptBin "stay-clamshell" ''
+    hyprctl monitors -j | jq -r '.[].name' | rg -q '^DP-[0-9]+'
+    not_connected=$?
+      if [[ $not_connected ]]; then
+        hyprctl keyword monitor "eDP-1,preferred,auto,1"
+      else
+        hyprctl keyword monitor "eDP-1,disable"
+      fi
+  '';
+
 in
 {
 
+  # services.swayidle = {
+  #   enable = true;
+  #
+  # };
+
+  # Read https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable before enabling
+  # services.swaylock = {
+  #
+  # };
+
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      variables = [ "-all" ];
+    };
     xwayland.enable = true;
 
     settings = {
       "$mod" = "alt";
 
       exec-once = [
+
         # set cursor
         "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
         "dunst" # notifications
-        "eww open example"
+        "waybar"
         "rm $HOME/.cache/cliphist/db"
         "wl-paste --type text --watch cliphist store"
-        "wpaperd"
-        "~/nixos/home/hyprland/tmux_init.sh"
-        # TODO make this work properly
-        "udiskie &" # mount usbs in the background
-        "kdeconnect-app"
-        "[workspace 1 silent] wezterm"
-        "[workspace 2 silent] firefox"
-        "[workspace 3 silent] thunderbird"
+        "nm-applet" # networking
+        "[workspace 1 silent] kitty"
+        "[workspace 2 silent] google-chrome"
+        "[workspace 3 silent] /opt/google/chrome/google-chrome --profile-directory=Default --app-id=fmgjjmmmlfnkbppncabfkddbjimcfncm" # Gmail
+        "[workspace 4 silent] /opt/google/chrome/google-chrome --profile-directory=Default --app-id=kjbdgfilnfhdoflbpgamdcdgpehopbep" # Calendar
 
-        #set up clipman for copy and paste memes
-        "wl-paste -t text --watch clipman store --no-persist"
+        # #set up clipman for copy and paste memes
+        # "wl-paste -t text --watch clipman store --no-persist"
 
+      ];
+
+      exec = [
+        "${keepInClamshell}/bin/stay-clamshell"
       ];
 
       animations = {
@@ -89,13 +127,13 @@ in
           passes = 1;
         };
 
-        drop_shadow = "yes";
+        # drop_shadow = "yes";
       };
 
       bind = [
         "$mod, Q, killactive"
         "$mod, M, exit"
-        "$SUPER, SPACE, exec, wofi --show drun" # make it more similar to mac os - shock horror
+        "$SUPER, SPACE, exec, XDG_DATA_DIRS=/home/hmandalidis/.nix-profile/share:/usr/share:/home/hmandalidis/.local/share wofi --show drun"
         "$mod, S, togglesplit, " # split workspace
         "$mod,H,movefocus,l"
         "$mod,L,movefocus,r"
@@ -103,6 +141,9 @@ in
         "$mod,J,movefocus,d"
         # Copy color and send to clipboard
         "$mod, p, exec, hyprpicker -a"
+
+        "$mod + SHIFT, w, exec,ps aux | rg waybar | awk '{print $2}' | head -n 1 | xargs -I {} kill {}"
+        "$mod, w, exec, waybar &"
 
         #workspace memes
         "SHIFT + ALT, K, movetoworkspace,+1"
@@ -132,30 +173,28 @@ in
         "$mod, down, movewindow, d"
         ''SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
 
-        # locking workspace
-        "$mod + CONTROL, Q, exec, "
+        "$mod + CONTROL, Q, exec, screenshot-background; ${lockScreen}/bin/lock-screen"
 
         # clipboard
-        # TODO - figure out why this isn't working
         # want SUPER + C and SUPER + V for copy and paste globally
-        "$SUPER, C, exec, wtype -M ctrl c -m ctrl" # to make this like mac os with CMD + C
-        "$SUPER, H, exec, clipman pick -t wofi | wl-copy" # show clipboard history
+        #"$SUPER, C, exec, wtype -M ctrl c -m ctrl" # to make this like mac os with CMD + C
+        #"$SUPER, H, exec, clipman pick -t wofi | wl-copy" # show clipboard history
         #"$SUPER, V, exec, clipman pick -t wofi --err-on-no-selection && wtype -M ctrl -M shift v"
 
         #Move cursor to start or end of line like Mac os
-        "SUPER, left, exec, wtype -P Home"
-        "SUPER, right, exec, wtype -P End"
-        "SUPER + SHIFT, left, exec, wtype -M shift -P Home"
-        "SUPER + SHIFT, right, exec, wtype -M shift -P End"
+        # "SUPER, left, exec, wtype -P Home"
+        # "SUPER, right, exec, wtype -P End"
+        # "SUPER + SHIFT, left, exec, wtype -M shift -P Home"
+        # "SUPER + SHIFT, right, exec, wtype -M shift -P End"
+      ];
+      bindl = [
+        # Lid open
+        ",switch:off:Lid Switch,exec,${clamshell}/bin/clamshell open"
+        # Lid closed
+        ",switch:on:Lid Switch,exec,${clamshell}/bin/clamshell closed"
       ];
       # XF86 options https://github.com/xkbcommon/libxkbcommon/blob/master/include/xkbcommon/xkbcommon-keysyms.h
       # playerctl options https://github.com/altdesktop/playerctl
-      bindl = [
-        ",XF86AudioPlay,exec,playerctl play-pause"
-        ",XF86AudioPrev,exec,playerctl previous"
-        ",XF86AudioNext,exec,playerctl next"
-
-      ];
       # binde allows for repeat button presses
       binde = [
         "$mod,XF86AudioLowerVolume,exec,playerctl volume 0.1-" # application level volume controls
@@ -163,6 +202,13 @@ in
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" # system level volume control
         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+" # system level volume control
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86MonBrightnessUp, exec, brightnessctl set +10%"
+        ", XF86MonBrightnessDown, exec, brightnessctl set 10%-"
+
+        # Media control
+        ",XF86AudioPlay,exec,playerctl play-pause"
+        ",XF86AudioPrev,exec,playerctl previous"
+        ",XF86AudioNext,exec,playerctl next"
       ];
       bindm = [
         #move and resize windows
@@ -170,11 +216,27 @@ in
         #"$mod, down, resizewindow"
       ];
 
-      windowrulev2 = [
-        "tile, title:CodeBrowser"
-        "tile, title:Ghidra:*"
-        "workspace 9, class:org.kde.kdeconnect.app" # want it available but not somewhere i use all the time
+      env = (
+        if isWork then
+          [
+            "SSH_AUTH_SOCK,/run/user/1415626/openssh_agent"
+          ]
+        else
+          [ ]
+      );
+
+      windowrule = [
+        #        "tile, title:CodeBrowser"
+        #        "tile, title:Ghidra:*"
+        #        "workspace 9, class:org.kde.kdeconnect.app" # want it available but not somewhere i use all the time
       ];
+
+      # TODO(hmandalidis): Update this properly
+      # windowrule = [
+      #   "tile, title:CodeBrowser"
+      #   "tile, title:Ghidra:*"
+      #   "workspace 9, class:org.kde.kdeconnect.app" # want it available but not somewhere i use all the time
+      # ];
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
@@ -183,17 +245,18 @@ in
 
     };
     extraConfig = ''
-      monitor=DP-2,3840x2160@60,0x0,1
+      monitor=eDP-1,preferred,auto,1
+      monitor=,preferred,auto,1.5
     '';
 
   };
-  systemd.user.services = {
-    cliphist = mkService {
-      Unit.Description = "Clipboard history";
-      Service = {
-        ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${lib.getBin pkgs.cliphist}/cliphist store";
-        Restart = "always";
-      };
-    };
-  };
+  # systemd.user.services = {
+  #   cliphist = mkService {
+  #     Unit.Description = "Clipboard history";
+  #     Service = {
+  #       ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${lib.getBin pkgs.cliphist}/cliphist store";
+  #       Restart = "always";
+  #     };
+  #   };
+  # };
 }
