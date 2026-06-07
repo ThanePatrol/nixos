@@ -99,5 +99,4 @@ if require('utils').is_cloudtop() then
     vim.lsp.enable('clangd', false)
     vim.lsp.enable('ts_ls', false)
     vim.lsp.enable('postgres_lsp', false)
-
 end

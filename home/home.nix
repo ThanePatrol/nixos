@@ -54,6 +54,7 @@ in
     (import ./common/git.nix { inherit email gitUserName theme; })
     (import ./common/nvim/nvim.nix {
       inherit
+        isWork
         isDarwin
         inputs
         pkgs
@@ -76,7 +77,7 @@ in
         else
           [
             ./linux/gtk_themes.nix
-            ./linux/hyprland/hyprland.nix
+            (import ./linux/hyprland/hyprland.nix { inherit isWork; })
             ./linux/dunst/dunst.nix
             ./linux/waybar/waybar.nix
             ./linux/wofi/wofi.nix

@@ -1,4 +1,5 @@
 {
+  isWork,
   isDarwin,
   inputs,
   pkgs,
@@ -46,8 +47,7 @@ let
     ];
   };
 
-  linuxPlugins = [
-    # google plugins
+  workPlugins = [
     telescopeCodesearch
     critique
   ];
@@ -68,85 +68,85 @@ in
       with pkgs.vimPlugins;
       [
         # keep-sorted start
+        # allow movement between tmux panes
         # Colorschemes
-        catppuccin-nvim
+        # colour preview in editor
+        # convenient testing
+        # format on save
+        # icons!
+        # ide-like git highlighting
+        # lsp helper, sets up root_dir, on_attach and other niceties
+        # Quick fixes for issues in file
+        # Renders markdown nicely
+        # Tree view with editable buffer
+        #add emoji!
+        #awesome file search
         #Completions
+        #General
+        #indent lines
+        #snippets
+        #status bar
+        #syntax highlighting
+        catppuccin-nvim
         cmp-nvim-lsp
         cmp_luasnip
         codecompanion-nvim
-        # format on save
         formatter-nvim
-        # Tree view with editable buffer
         fyler-nvim
-        # ide-like git highlighting
         gitsigns-nvim
         harpoon2
-        #indent lines
         indent-blankline-nvim
-        #status bar
         lualine-nvim
-        #snippets
         luasnip
         nvim-cmp
-        # colour preview in editor
         nvim-highlight-colors
-        # lsp helper, sets up root_dir, on_attach and other niceties
         nvim-lspconfig
-        #syntax highlighting
         nvim-treesitter.withAllGrammars
-        # icons!
         nvim-web-devicons
         rainbow-delimiter
-        # Renders markdown nicely
         render-markdown-nvim
-        #awesome file search
         telescope-nvim
-        #add emoji!
         telescope-symbols-nvim
-        # Quick fixes for issues in file
         trouble-nvim
-        #General
         vim-sensible
-        # convenient testing
         vim-test
         vim-tmux-navigator
-        # allow movement between tmux panes
         vim-tmux-navigator
         # keep-sorted end
       ]
-      ++ (if isDarwin then [ ] else linuxPlugins);
+      ++ (if !isDarwin && isWork then [ workPlugins ] else [ ]);
 
     extraPackages = with pkgs; [
       # keep-sorted start
+      # generic sql
+      # go
+      # Markdown
+      # provides many packages, including clangd
+      # Rego policy files
       #Language servers
+      #latex
+      #nix
+      #python
+      #rust
+      #terraform lsp
+      #typescript/web
       bash-language-server
       black
       delve
-      # go
       gopls
-      # provides many packages, including clangd
       llvmPackages_21.clang-unwrapped
       lua-language-server
       luajitPackages.lua-utils-nvim
-      # Markdown
       marksman
-      #nix
       nil
-      # generic sql
       postgres-language-server
-      #python
       pyright
-      # Rego policy files
       regols
-      #rust
       rust-analyzer
       rustfmt
-      #terraform lsp
       terraform-ls
-      #latex
       texlab
       tree-sitter
-      #typescript/web
       typescript-language-server
       vscode-langservers-extracted
       # keep-sorted end
