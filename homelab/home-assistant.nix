@@ -337,14 +337,13 @@ in
       };
       script = scripts;
       automation = "!include automations.yaml";
-      command_line = [
+      mqtt = [
         {
           binary_sensor = {
-            name = "Phones Home";
-            command = "cat /var/lib/wap-presence/state";
+            name = "Phones Home MQTT";
+            state_topic = "wap/presence";
             payload_on = "true";
             payload_off = "false";
-            scan_interval = 5;
           };
         }
       ];

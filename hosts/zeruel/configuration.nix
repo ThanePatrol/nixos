@@ -186,9 +186,9 @@ in
   systemd.services.backup-immich = {
     description = "Backup immich database and media.";
     script = ''
-      	    ${pkgs.rclone}/bin/rclone sync /var/lib/immich ${ssdFolder}/immich-backup/media
-            	${pkgs.sudo}/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall --clean --if-exists > ${ssdFolder}/immich-backup/db.sql
-      	    ${pkgs.coreutils}/bin/chown -R ${username} ${ssdFolder}/immich-backup
+      ${pkgs.rclone}/bin/rclone sync /var/lib/immich ${ssdFolder}/immich-backup/media
+      ${pkgs.sudo}/bin/sudo -u postgres ${pkgs.postgresql}/bin/pg_dumpall --clean --if-exists > ${ssdFolder}/immich-backup/db.sql
+      ${pkgs.coreutils}/bin/chown -R ${username} ${ssdFolder}/immich-backup
     '';
     serviceConfig = {
       Type = "oneshot";
@@ -214,7 +214,6 @@ in
     script = ''
       source ${config.sops.templates."wap-env".path}
       cookie_path="/tmp/wap_cookie.txt"
-      output_path="/var/lib/wap-presence/state"
 
       function login() {
           ${pkgs.curl}/bin/curl -sS 'http://10.0.0.242/' \
@@ -263,9 +262,9 @@ in
               '[.data[]? | select(.MAC | IN($a, $b))] | length')
 
           if [ "$match" -gt 0 ]; then
-              echo "true" > "$output_path"
+            ${pkgs.mosquitto}/bin/mosquitto_pub -h localhost -t "wap/presence" -m "true" -u iot -P "$MQTT_PASSWORD" -r 
           else
-              echo "false" > "$output_path"
+            ${pkgs.mosquitto}/bin/mosquitto_pub -h localhost -t "wap/presence" -m "false" -u iot -P "$MQTT_PASSWORD" -r 
           fi
       }
 
@@ -309,8 +308,8 @@ in
   systemd.timers.get-connected-clients = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnBootSec = "15s";
-      OnUnitActiveSec = "15s";
+      OnBootSec = "5s";
+      OnUnitActiveSec = "5s";
       Unit = "get-connected-clients.service";
     };
   };
@@ -390,6 +389,7 @@ in
         USER_AGENT="${config.sops.placeholder.user_agent}"
         THANE_MAC=${config.sops.placeholder.thane_fold_mac}
         WESTO_MAC=${config.sops.placeholder.westo_iphone_mac}
+        MQTT_PASSWORD=${config.sops.placeholder.mosquitto_password}
       '';
       owner = "${username}";
     };
