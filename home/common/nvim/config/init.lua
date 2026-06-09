@@ -8,6 +8,8 @@ vim.o.mouse = 'a'
 
 -- sync clipboard with OS
 vim.o.clipboard = 'unnamedplus'
+-- Specify the clipboard directly to avoid long startup times.
+vim.g.clipboard = 'osc52'
 
 -- ignore case
 vim.opt.ignorecase = true

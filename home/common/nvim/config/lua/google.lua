@@ -1,11 +1,9 @@
 vim.filetype.add({pattern = {['.*pi'] = 'python', ['*.gcl'] = 'python'}})
 
 require("critique.comments").setup({
-    -- Automatically fetch comments after setup and on BufEnter events.
-    auto_fetch = true,
-    -- If true, unresolved comments are automatically rendered when a buffer is opened.
-    auto_render = true,
-    -- Debounce time for throttling stubby requests to Critique, in milliseconds. Default is 10 seconds.
+    -- Don't automatically fetch comments after setup and on BufEnter events.
+    auto_fetch = false,
+    auto_render = false,
     debounce = 10000,
     display = {
         -- Max width in character to render a comment's text before wrapping to a newline.
@@ -15,7 +13,6 @@ require("critique.comments").setup({
     },
     -- Debug message level
     debug = 0,
-    -- Whether or not the new comments notification includes file names.
     verbose_notifications = true
 })
 
