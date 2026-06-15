@@ -104,19 +104,6 @@ in
       on-focus-changed = [ "move-mouse window-lazy-center" ];
       automatically-unhide-macos-hidden-apps = true;
 
-      gaps = {
-        inner = {
-          horizontal = windowGap;
-          vertical = windowGap;
-        };
-        outer = {
-          left = windowGap;
-          bottom = windowGap;
-          top = windowGap;
-          right = windowGap;
-        };
-      };
-
       mode.main.binding = {
         alt-1 = "workspace 1";
         alt-2 = "workspace 2";
@@ -170,12 +157,6 @@ in
     };
   };
 
-  services.jankyborders = {
-    enable = true;
-    active_color = "0xffe1e3e4";
-    inactive_color = "0xff494d64";
-  };
-
   system.defaults.NSGlobalDomain = {
     AppleInterfaceStyle = "Dark";
     "com.apple.swipescrolldirection" = false;
@@ -187,6 +168,7 @@ in
     autohide-delay = 0.0;
     launchanim = false;
     show-recents = false;
+    persistent-apps = [ ];
   };
 
   system.keyboard = {
