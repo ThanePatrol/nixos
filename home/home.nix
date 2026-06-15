@@ -88,15 +88,13 @@ in
             ./linux/swayidle.nix
             ./linux/dconf.nix
             #  ./linux/eww/eww.nix
-            ./linux/kitty.nix
           ]
       )
       ++ [
         # Common packages not suitable for headless.
-        (import ./common/ghostty.nix { inherit lib theme; })
         ./common/fonts.nix
         ./common/spotify/spotify.nix
-        #(import ./common/zathura/zathura.nix { inherit theme; })
+        ./common/kitty.nix
       ]
   )
   ++

@@ -2,7 +2,6 @@
 {
   programs.kitty = {
     enable = true;
-    package = null; # use apt version
     font = {
       package = pkgs.nerd-fonts.jetbrains-mono;
       name = "JetbrainsMono Nerd Font";
