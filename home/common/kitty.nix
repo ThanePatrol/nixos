@@ -3,8 +3,8 @@
   programs.kitty = {
     enable = true;
     font = {
-      package = pkgs.nerd-fonts.jetbrains-mono;
-      name = "JetbrainsMono Nerd Font";
+      package = pkgs.monocraft;
+      name = "Monocraft";
       size = 12;
     };
     shellIntegration.enableZshIntegration = true;
