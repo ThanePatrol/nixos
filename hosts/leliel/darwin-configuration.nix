@@ -168,7 +168,14 @@ in
     autohide-delay = 0.0;
     launchanim = false;
     show-recents = false;
-    persistent-apps = [ ];
+    persistent-apps = [
+      {
+        app = "${homeDirectory}/.nix-profile/Applications/kitty.app/";
+      }
+      {
+        app = "${homeDirectory}/.nix-profile/Applications/LocalSend.app";
+      }
+    ];
   };
 
   system.keyboard = {
