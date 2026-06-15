@@ -11,7 +11,8 @@
     themeFile = "Catppuccin-Mocha";
     settings = {
       clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
+      hide_window_decorations = "titlebar-only";
+      macos_hide_titlebar = "yes";
     };
-
   };
 }
