@@ -1,3 +1,4 @@
+vim.g.codecompanion_yolo_mode = true
 local function settings()
     if require('utils').is_cloudtop() then
         return {
@@ -9,6 +10,7 @@ local function settings()
                         ["run_command"] = {
                             opts = {
                                 require_approval_before = false,
+                                allowed_in_yolo_mode = true,
                                 require_cmd_approval = false
                             }
                         },

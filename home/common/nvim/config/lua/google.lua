@@ -55,15 +55,21 @@ local function run_f1_sql()
         return
     end
 
+    local buf_name = "F1-SQL Query Output" .. os.date("%Y-%m-%d %H:%M:%S")
+
     -- Create new buffer in a new tab
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-    vim.api.nvim_buf_set_name(buf, "F1-SQL Query Output")
+    vim.api.nvim_buf_set_name(buf, buf_name)
+
+    -- Required as newlines breaks the set_lines func.
+    local single_line_query = string.gsub(query, "\n", " ")
 
     vim.cmd("tabnew")
     vim.api.nvim_win_set_buf(0, buf)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, {
-        "# Running f1-sql...", "", "Query:", "```sql", query, "```", ""
+        "# Running f1-sql...", "", "Query:", "```sql", single_line_query, "```",
+        ""
     })
 
     local stdout_data = {}
