@@ -3,8 +3,10 @@
   programs.kitty = {
     enable = true;
     font = {
-      package = pkgs.monocraft;
-      name = "Monocraft";
+      # package = pkgs.miracode;
+      # name = "Miracode";
+      package = pkgs._0xproto;
+      name = "0xProto";
       size = 12;
     };
     shellIntegration.enableZshIntegration = true;
