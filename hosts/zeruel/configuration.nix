@@ -52,6 +52,11 @@ let
       config
       ;
   };
+  monitoringConfig = import ../../homelab/monitoring.nix {
+    inherit
+      pkgs
+      ;
+  };
 
   # TODO: Use this once PR is merged: https://nixpk.gs/pr-tracker.html?pr=506919
   renamePrompt = ''
@@ -438,6 +443,7 @@ in
       8123 # Home assistant
       8080 # Zigbee2Mqtt
       8888 # ledfx
+      9090 # prometheus # TODO Not actually required. Just for debugging.
       20048
       25565 # MC
     ];
@@ -502,9 +508,12 @@ in
 
   environment.systemPackages = syspackages.environment.systemPackages;
 
+  # TODO: Surely there's a better way?
   services.home-assistant = homeAssistantConfig.services.home-assistant;
   services.mosquitto = homeAssistantConfig.services.mosquitto;
   services.zigbee2mqtt = homeAssistantConfig.services.zigbee2mqtt;
+
+  services.prometheus = monitoringConfig.services.prometheus;
 
   environment.pathsToLink = [
     "/share/zsh"
