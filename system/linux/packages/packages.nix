@@ -21,7 +21,6 @@ let
   cliTools = with pkgs; [
     # keep-sorted start
     bc # cli multiplication
-    btrfs-progs
     cliphist
     clipman # clipboard manager
     dig
@@ -45,8 +44,8 @@ let
 
   guiTools = with pkgs; [
     # keep-sorted start
-    alacritty
     # anki
+    alacritty
     firefox
     kdePackages.polkit-kde-agent-1
     nemo # gui file manager
@@ -71,11 +70,11 @@ let
 
   systemLibsAndPackages = with pkgs; [
     # keep-sorted start
-    OVMFFull # UEFI firmware for QEMU
     bluez
     libinput
     libsecret # for storing passwords
     nfs-utils # for nfs drives
+    OVMFFull # UEFI firmware for QEMU
     pass-secret-service # dbus api for libsecret
     qt5.qtwayland
     qt6.qtwayland
@@ -101,7 +100,7 @@ let
     jellyfin
     jellyfin-ffmpeg
     jellyfin-web
-    ledfx
+    prometheus-node-exporter
     # keep-sorted end
   ];
 

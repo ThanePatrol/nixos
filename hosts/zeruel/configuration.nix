@@ -55,6 +55,7 @@ let
   monitoringConfig = import ../../homelab/monitoring.nix {
     inherit
       pkgs
+      config
       ;
   };
 
@@ -373,6 +374,7 @@ in
       backblaze_application_key = {
         owner = "${username}";
       };
+      ipmi_password = { };
     };
     templates."ha-secrets.yaml" = {
       content = ''

@@ -82,12 +82,10 @@ in
             ./linux/waybar/waybar.nix
             ./linux/wofi/wofi.nix
             ./linux/wayland/wayland.nix
-            # ./linux/xdg/xdg.nix
             ./linux/cursor.nix
             ./linux/swaylock.nix
             ./linux/swayidle.nix
             ./linux/dconf.nix
-            #  ./linux/eww/eww.nix
           ]
       )
       ++ [
