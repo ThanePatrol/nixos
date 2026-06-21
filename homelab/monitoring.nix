@@ -39,6 +39,7 @@ in
     enable = true;
     port = nodeExporterPort;
     enabledCollectors = [ "textfile" ];
+    disabledCollectors = [ "xfs" ];
     extraFlags = [ "--collector.textfile.directory=${textfileDir}" ];
   };
 
@@ -67,7 +68,7 @@ in
       User = "root"; # Ideally we would use DynamicUser but it's a PITA to set up the dynamic user to read the sops secret.
     };
   };
-  systemd.timers.export-impi = {
+  systemd.timers.export-ipmi = {
     description = "Export IPMI information every minute";
     wantedBy = [ "timers.target" ];
     timerConfig = {
