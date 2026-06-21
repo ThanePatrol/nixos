@@ -202,73 +202,6 @@ in
       User = "root";
     };
   };
-  systemd.services.get-connected-clients = {
-    description = "Get clients connected to WAP";
-    serviceConfig = {
-      StateDirectory = "wap-presence";
-      StateDirectoryMode = "0755"; # world-readable
-      UMask = "0022"; # files written are 0644
-    };
-    script = ''
-      source ${config.sops.templates."wap-env".path}
-      cookie_path="/tmp/wap_cookie.txt"
-
-      function login() {
-          ${pkgs.curl}/bin/curl -sS 'http://10.0.0.242/' \
-            -X POST \
-            -H "$USER_AGENT" \
-            -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-            -H 'Accept-Language: en-US,en;q=0.9' \
-            -H 'Accept-Encoding: gzip, deflate' \
-            -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
-            -H 'X-Requested-With: XMLHttpRequest' \
-            -H 'Origin: http://10.0.0.242' \
-            -H 'DNT: 1' \
-            -H 'Connection: keep-alive' \
-            -H 'Referer: http://10.0.0.242/logout.html' \
-            -H 'Priority: u=0' \
-            --data-raw "$WAP_PASSWORD_PAYLOAD" -c "$cookie_path"
-      }
-
-      function fetch_clients_raw() {
-          ${pkgs.curl}/bin/curl -sS 'http://10.0.0.242/data/status.client.user.json?operation=load&_=1779879188339' \
-            -H "$USER_AGENT" \
-            -H 'Accept: application/json, text/javascript, */*; q=0.01' \
-            -H 'Accept-Language: en-US,en;q=0.9' \
-            -H 'Accept-Encoding: gzip, deflate' \
-            -H 'X-Requested-With: XMLHttpRequest' \
-            -H 'DNT: 1' \
-            -H 'Connection: keep-alive' \
-            -H 'Referer: http://10.0.0.242/' \
-            -b "$cookie_path"
-      }
-
-      function get_connected_devices() {
-          local response
-          response=$(fetch_clients_raw)
-
-          local status
-          status=$(echo "$response" | ${pkgs.jq}/bin/jq -r '.status // -1')
-
-          if [ "$status" = "-1" ]; then
-              login >/dev/null
-              response=$(fetch_clients_raw)
-          fi
-
-          local match
-          match=$(echo "$response" | ${pkgs.jq}/bin/jq --arg a "$WESTO_MAC" --arg b "$THANE_MAC" \
-              '[.data[]? | select(.MAC | IN($a, $b))] | length')
-
-          if [ "$match" -gt 0 ]; then
-            ${pkgs.mosquitto}/bin/mosquitto_pub -h localhost -t "wap/presence" -m "true" -u iot -P "$MQTT_PASSWORD" -r 
-          else
-            ${pkgs.mosquitto}/bin/mosquitto_pub -h localhost -t "wap/presence" -m "false" -u iot -P "$MQTT_PASSWORD" -r 
-          fi
-      }
-
-      get_connected_devices
-    '';
-  };
   systemd.services."${remoteBackupServiceName}" = {
     script = ''
       ${pkgs.rclone}/bin/rclone sync /home/hugh/SSDs b2backup:thane-patrol-ironwolfs/
@@ -301,14 +234,6 @@ in
       OnBootSec = "5m";
       OnUnitActiveSec = "5m";
       Unit = "copy-torrent-jellyfin.service";
-    };
-  };
-  systemd.timers.get-connected-clients = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5s";
-      OnUnitActiveSec = "5s";
-      Unit = "get-connected-clients.service";
     };
   };
   systemd.timers."${ssdBackupSystemdServiceName}" = {
