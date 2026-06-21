@@ -20,6 +20,8 @@ let
   ssdFolder = "/home/hugh/SSDs";
   hddBackupFolder = "/home/hugh/Backups";
   ssdBackupSystemdServiceName = "backup-local";
+  immichBackupServiceName = "backup-immich";
+  remoteBackupServiceName = "run-remote-backup";
 
   tenGbEthernetPort1 = "enp36s0f0"; # physically the bottom port
   tenGbEthernetPort2 = "enp36s0f1";
@@ -179,7 +181,7 @@ in
       ${pkgs.util-linux}/bin/umount ${hddBackupFolder}
     '';
   };
-  systemd.services.backup-immich = {
+  systemd.services."${immichBackupServiceName}" = {
     description = "Backup immich database and media.";
     script = ''
       ${pkgs.rclone}/bin/rclone sync /var/lib/immich ${ssdFolder}/immich-backup/media
@@ -267,7 +269,7 @@ in
       get_connected_devices
     '';
   };
-  systemd.services.run-remote-backup = {
+  systemd.services."${remoteBackupServiceName}" = {
     script = ''
       ${pkgs.rclone}/bin/rclone sync /home/hugh/SSDs b2backup:thane-patrol-ironwolfs/
     '';
@@ -285,7 +287,7 @@ in
       User = "root";
     };
   };
-  systemd.timers.backup-immich = {
+  systemd.timers."${immichBackupServiceName}" = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "5m";
@@ -309,7 +311,7 @@ in
       Unit = "get-connected-clients.service";
     };
   };
-  systemd.timers.init-backup = {
+  systemd.timers."${ssdBackupSystemdServiceName}" = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "10m";
@@ -317,12 +319,12 @@ in
       Unit = "${ssdBackupSystemdServiceName}.service";
     };
   };
-  systemd.timers.run-remote-backup = {
+  systemd.timers."${remoteBackupServiceName}" = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "1h";
       OnUnitActiveSec = "1w";
-      Unit = "run-remote-backup.service";
+      Unit = "${remoteBackupServiceName}.service";
     };
   };
   systemd.timers.run-xml-scrape = {
