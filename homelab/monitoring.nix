@@ -62,6 +62,7 @@ in
 
       ${pkgs.coreutils}/bin/chmod 0644 "$tmp"
       ${pkgs.coreutils}/bin/mv "$tmp" ${textfileDir}/redfish_thermal.prom
+      ${pkgs.coreutils}/bin/rm "$tmp" 
     '';
     serviceConfig = {
       Type = "oneshot";
