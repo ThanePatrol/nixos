@@ -46,18 +46,6 @@ let
       theme
       ;
   };
-  homeAssistantConfig = import ../../homelab/home-assistant.nix {
-    inherit
-      pkgs
-      config
-      ;
-  };
-  monitoringConfig = import ../../homelab/monitoring.nix {
-    inherit
-      pkgs
-      config
-      ;
-  };
 
   # TODO: Use this once PR is merged: https://nixpk.gs/pr-tracker.html?pr=506919
   renamePrompt = ''
@@ -93,7 +81,8 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../homelab/proxmox.nix
-
+    ../../homelab/home-assistant.nix
+    ../../homelab/monitoring.nix
   ];
   nix.settings.experimental-features = [
     "nix-command"
@@ -509,13 +498,6 @@ in
   };
 
   environment.systemPackages = syspackages.environment.systemPackages;
-
-  # TODO: Surely there's a better way?
-  services.home-assistant = homeAssistantConfig.services.home-assistant;
-  services.mosquitto = homeAssistantConfig.services.mosquitto;
-  services.zigbee2mqtt = homeAssistantConfig.services.zigbee2mqtt;
-
-  services.prometheus = monitoringConfig.services.prometheus;
 
   environment.pathsToLink = [
     "/share/zsh"
