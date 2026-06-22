@@ -23,10 +23,16 @@ let
   immichBackupServiceName = "backup-immich";
   remoteBackupServiceName = "run-remote-backup";
 
-  tenGbEthernetPort1 = "enp36s0f0"; # physically the bottom port
-  tenGbEthernetPort2 = "enp36s0f1";
+  serviceNamesToMonitor = [
+    ssdBackupSystemdServiceName
+    immichBackupServiceName
+    remoteBackupServiceName
+  ];
+
+  _tenGbEthernetPort1 = "enp36s0f0"; # physically the bottom port
+  _tenGbEthernetPort2 = "enp36s0f1";
   _onboardGigabitEthernetPort1 = "enp38s0";
-  onboardGigabitEthernetPort2 = "enp39s0"; # physically the bottom port
+  _onboardGigabitEthernetPort2 = "enp39s0"; # physically the bottom port
   _managementPort = "enp42s0f3u5u3c2";
 
   theme = "Catppuccin-mocha";
@@ -86,6 +92,7 @@ in
     ../../homelab/home-assistant.nix
     ../../homelab/monitoring.nix
   ];
+  _module.args.toMonitor = serviceNamesToMonitor;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"

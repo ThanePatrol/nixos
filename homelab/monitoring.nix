@@ -1,4 +1,10 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  toMonitor,
+  ...
+}:
 
 let
   prometheusPort = 9090;
@@ -34,14 +40,29 @@ in
         ];
       }
     ];
+    ruleFiles = [
+      ./rules/systemd-backups.yaml
+    ];
   };
+
+  # TODO setup alerting on `node_systemd_unit_state{name=~".*service", state="failed"} == 1`
+  # to be aware of failed backups.
   services.prometheus.exporters.node = {
     enable = true;
     port = nodeExporterPort;
     enabledCollectors = [ "textfile" ];
     disabledCollectors = [ "xfs" ];
-    extraFlags = [ "--collector.textfile.directory=${textfileDir}" ];
+    extraFlags = [
+      "--collector.textfile.directory=${textfileDir}"
+      "--collector.systemd"
+      ''--collector.systemd.unit-include="(${lib.concatStringsSep "|" toMonitor}).(service|timer)"''
+      "--collector.systemd.enable-start-time-metrics"
+      "--collector.systemd.enable-task-metrics"
+      "--collector.systemd.enable-restarts-metrics"
+    ];
   };
+  # Override to allow node exporter to use dbus.
+  systemd.services.prometheus-node-exporter.serviceConfig.RestrictAddressFamilies = [ "AF_UNIX" ];
 
   systemd.services.export-ipmi = {
     script = ''
@@ -62,7 +83,7 @@ in
 
       ${pkgs.coreutils}/bin/chmod 0644 "$tmp"
       ${pkgs.coreutils}/bin/mv "$tmp" ${textfileDir}/redfish_thermal.prom
-      ${pkgs.coreutils}/bin/rm "$tmp" 
+      ${pkgs.coreutils}/bin/rm "$tmp" || true;
     '';
     serviceConfig = {
       Type = "oneshot";
