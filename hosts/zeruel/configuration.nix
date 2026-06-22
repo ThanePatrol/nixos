@@ -299,6 +299,7 @@ in
         owner = "${username}";
       };
       ipmi_password = { };
+      gmail_app_password = { };
     };
     templates."ha-secrets.yaml" = {
       content = ''

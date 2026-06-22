@@ -12,6 +12,8 @@ let
   textfileDir = "/var/lib/node_exporter/textfile_collector";
 in
 {
+
+  environment.systemPackages = [ pkgs.prometheus-alertmanager ];
   services.prometheus = {
     enable = true;
     globalConfig = {
@@ -20,6 +22,8 @@ in
         monitor = "codelab-monitor";
       };
     };
+    retentionTime = "365d";
+    extraFlags = [ "--storage.tsdb.retention.size=100GB" ];
     scrapeConfigs = [
       {
         job_name = "prometheus";
@@ -99,4 +103,51 @@ in
       Unit = "export-ipmi.service";
     };
   };
+
+  sops.templates."alertmanager".content = ''
+    GMAIL_APP_PASSWORD=${config.sops.placeholder.gmail_app_password}
+  '';
+  services.prometheus.alertmanager = {
+    enable = true;
+    environmentFile = config.sops.templates.alertmanager.path;
+
+    configuration = {
+      global = {
+        resolve_timeout = "5m";
+        smtp_smarthost = "smtp.gmail.com:587";
+        smtp_from = "mandalidis.hugh@gmail.com";
+        smtp_auth_username = "mandalidis.hugh@gmail.com";
+        smtp_auth_password = "$GMAIL_APP_PASSWORD";
+      };
+      route = {
+        receiver = "email";
+        group_by = [ "..." ];
+        group_wait = "30s";
+        group_interval = "5m";
+        repeat_interval = "4h";
+      };
+      receivers = [
+        {
+          name = "email";
+          email_configs = [
+            {
+              to = "mandalidis.hugh@gmail.com";
+              send_resolved = true;
+            }
+            {
+              to = "iweston1702@gmail.com";
+              send_resolved = true;
+            }
+          ];
+        }
+      ];
+    };
+  };
+  services.prometheus.alertmanagers = [
+    {
+      static_configs = [
+        { targets = [ "localhost:${toString config.services.prometheus.alertmanager.port}" ]; }
+      ];
+    }
+  ];
 }
