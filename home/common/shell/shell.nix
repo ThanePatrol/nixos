@@ -24,6 +24,7 @@ let
     source /etc/bash_completion.d/jjd
     export REPLACE_BLAZE_WITH_DBIP=""
     export CORP_WORK_ENV=true
+    export BUGGED_COMMENT_FORMAT=markdown
   '';
   # Need the google git first in path instead of oss git
   workExports = ''
