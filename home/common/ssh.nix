@@ -5,13 +5,13 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "thane" = {
-        hostname = "thane.c.googlers.com";
-        setEnv = {
+        HostName = "thane.c.googlers.com";
+        SetEnv = {
           TERM = "xterm-256color";
         };
-        forwardAgent = true;
+        ForwardAgent = true;
       };
       "azure" = {
         host = "azure";
@@ -20,30 +20,26 @@
         identityFile = "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
       };
       "zeruel" = {
-        hostname = "10.0.0.3";
-        user = "hugh";
-        extraOptions = {
-          "AddKeysToAgent" = "yes";
-        };
+        Hostname = "10.0.0.3";
+        User = "hugh";
+        AddKeysToAgent = "yes";
       };
       "*" = {
-        forwardAgent = false;
-        addKeysToAgent = "no";
-        compression = false;
-        serverAliveInterval = 0;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
-        controlMaster = "no";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "no";
-        extraOptions = {
-          "GSSAPIAuthentication" = "yes";
-          "GSSAPIDelegateCredentials" = "no";
-          "StrictHostKeyChecking" = "no";
-          "HostKeyAlgorithms" = "+ssh-rsa";
-          "PubkeyAcceptedKeyTypes" = "+ssh-rsa";
-        };
+        ForwardAgent = false;
+        AddKeysToAgent = "no";
+        Compression = false;
+        ServerAliveInterval = 0;
+        ServerAliveCountMax = 3;
+        HashKnownHosts = false;
+        UserKnownHostsFile = "~/.ssh/known_hosts";
+        ControlMaster = "no";
+        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPersist = "no";
+        GSSAPIAuthentication = "yes";
+        GSSAPIDelegateCredentials = "no";
+        StrictHostKeyChecking = "no";
+        HostKeyAlgorithms = "+ssh-rsa";
+        PubkeyAcceptedKeyTypes = "+ssh-rsa";
       };
     };
   };

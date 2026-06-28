@@ -60,6 +60,7 @@ in
       enable = true;
       variables = [ "-all" ];
     };
+    configType = "hyprlang";
     xwayland.enable = true;
 
     settings = {
