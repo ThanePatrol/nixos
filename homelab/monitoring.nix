@@ -64,10 +64,14 @@ in
       "--collector.systemd.enable-start-time-metrics"
       "--collector.systemd.enable-task-metrics"
       "--collector.systemd.enable-restarts-metrics"
+      "--collector.filesystem.mount-points-include=^(/|/home/hugh/SSDs|/nix/store)$"
+      "--collector.filesystem.fs-types-include=^(xfs|btrfs|ext4)$"
     ];
   };
-  # Override to allow node exporter to use dbus.
-  systemd.services.prometheus-node-exporter.serviceConfig.RestrictAddressFamilies = [ "AF_UNIX" ];
+  systemd.services.prometheus-node-exporter.serviceConfig = {
+    # Override to allow node exporter to use dbus.
+    RestrictAddressFamilies = [ "AF_UNIX" ];
+  };
 
   systemd.services.export-ipmi = {
     script = ''
@@ -155,6 +159,14 @@ in
   services.grafana = {
     enable = true;
     openFirewall = true;
+    settings = {
+      security.secret_key = "${config.sops.placeholder.grafana_secret_key}";
+      server = {
+        http_port = 3001;
+        http_addr = "0.0.0.0";
+      };
+
+    };
 
   };
 

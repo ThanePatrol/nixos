@@ -293,6 +293,8 @@ in
       wap_password = { };
       westo_iphone_mac = { };
       thane_fold_mac = { };
+      grafana_secret_key = { };
+
       backblaze_key_id = {
         owner = "${username}";
       };
