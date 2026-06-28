@@ -9,6 +9,7 @@
 let
   prometheusPort = 9090;
   nodeExporterPort = 9091;
+  grafanaPort = 3001;
   textfileDir = "/var/lib/node_exporter/textfile_collector";
 in
 {
@@ -162,28 +163,54 @@ in
     settings = {
       security.secret_key = "${config.sops.placeholder.grafana_secret_key}";
       server = {
-        http_port = 3001;
+        http_port = grafanaPort;
         http_addr = "0.0.0.0";
       };
-
+    };
+    provision = {
+      datasources.settings.datasources = [
+        {
+          name = "Prometheus";
+          type = "prometheus";
+          uid = "prometheus";
+          access = "proxy";
+          url = "http://localhost:${toString prometheusPort}";
+          isDefault = true;
+        }
+      ];
+      dashboards.settings.providers = [
+        {
+          name = "homelab";
+          type = "file";
+          options.path = ./dashboards;
+          # Disable so deletes in Grafana UI don't get auto-restored mid-session;
+          # set to true if you want strict file-as-source-of-truth.
+          disableDeletion = true;
+          allowUiUpdates = false;
+        }
+      ];
     };
 
   };
+  # TODO - Setup process monitor.
+  services.prometheus.exporters.process = {
+    enable = true;
+    port = 9256;
+  };
 
   # TODO - Add grafana dashboards for:
-  # 1. WAN traffic
-  # 2. WAN throughput per host
-  # 3. Disk usage per partition
-  # 4. Disk health per partition
-  # 5. CPU usage
-  # 6. CPU temp
-  # 7. Power usage
-  # 8. CPU usage per process
-  # 9. RAM usage
-  # 10. RAM usage per host
-  # 11. Network/LAN throughput
-  # 12. Network/LAN throughput per process
-  # 13. Current client count
-  # 14. Ads blocked
+  # 1. [ ] WAN traffic - need something on router
+  # 2. [ ] WAN throughput per host - need something on router
+  # 3. [x] Disk usage per partition
+  # 4. [ ] Disk health per partition - need smartctl_exporter
+  # 5. [x] CPU usage
+  # 6. [x] CPU temp
+  # 7. [ ] Power usage - need to scrape redfish /Power
+  # 8. [ ] CPU usage per process - need process-exporter instrumentation
+  # 9. [x] RAM usage
+  # 11 [x]. Network/LAN throughput
+  # 12 [ ]. Network/LAN throughput per process - need process-exporter instrumentation
+  # 13 [ ]. Current client count - need something on router
+  # 14 [ ]. Ads blocked - need something on router
 
 }
