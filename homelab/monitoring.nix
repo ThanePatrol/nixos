@@ -46,6 +46,7 @@ in
     ];
     ruleFiles = [
       ./rules/systemd-backups.yaml
+      ./rules/alerting.yaml
     ];
   };
 
@@ -150,4 +151,27 @@ in
       ];
     }
   ];
+
+  services.grafana = {
+    enable = true;
+    openFirewall = true;
+
+  };
+
+  # TODO - Add grafana dashboards for:
+  # 1. WAN traffic
+  # 2. WAN throughput per host
+  # 3. Disk usage per partition
+  # 4. Disk health per partition
+  # 5. CPU usage
+  # 6. CPU temp
+  # 7. Power usage
+  # 8. CPU usage per process
+  # 9. RAM usage
+  # 10. RAM usage per host
+  # 11. Network/LAN throughput
+  # 12. Network/LAN throughput per process
+  # 13. Current client count
+  # 14. Ads blocked
+
 }

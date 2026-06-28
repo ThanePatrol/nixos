@@ -1,0 +1,44 @@
+# Precomputations!
+groups:
+  - name: backup-jobs-alert
+    labels:
+      team: westo-n-thane
+    rules:
+      - alert: FailedBackupJob
+        expr: node_systemd_unit_state{name=~".*service", state="failed"} == 1
+        for: 1m # Hit threshold at least once in the keep firing for range.
+        keep_firing_for: 90s # To ensure the signal does keep firing for at least `for`.
+        labels:
+          severity: page
+        annotations:
+          summary: Failed backup
+      - alert: LocalBackupTakingNotRecentEnough
+        expr: node_systemd_unit_state{name="backup-local.service", state="inactive"} == 1
+        for: 3d
+        labels:
+          severity: page
+        annotations:
+          summary: Failed immich backups for at least 2 days!
+      - alert: ImmichBackupTakingNotRecentEnough
+        expr: node_systemd_unit_state{name="backup-local.service", state="inactive"} == 1
+        for: 3d
+        labels:
+          severity: page
+        annotations:
+          summary: Failed backups for at least 2 days!
+      - alert: RemoteBackupTakingNotRecentEnough
+        expr: node_systemd_unit_state{name="run-remote-backup.service", state="inactive"} == 1
+        # TODO: keep these in sync with the systemd definition.
+        for: 14d
+        labels:
+          severity: page
+        annotations:
+          summary: Failed backup for at least 1 week!
+      - alert: FailedReadWAPClients
+        expr: node_systemd_unit_state{name="get-connected-clients.service", state="failed"} == 1
+        for: 30m
+        keep_firing_for: 5m
+        labels:
+          severity: page
+        annotations:
+          summary: At least 6 consecutive WAP login failures!

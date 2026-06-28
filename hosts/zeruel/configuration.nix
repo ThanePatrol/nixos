@@ -27,6 +27,7 @@ let
     ssdBackupSystemdServiceName
     immichBackupServiceName
     remoteBackupServiceName
+    "get-connected-clients"
   ];
 
   _tenGbEthernetPort1 = "enp36s0f0"; # physically the bottom port
