@@ -60,6 +60,7 @@ in
       ".env"
       ".envrc"
       ".direnv"
+      ".venv"
     ];
 
   };
