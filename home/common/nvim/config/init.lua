@@ -22,18 +22,17 @@ vim.opt.scrolloff = 10
 -- Open vsplits to the right
 vim.opt.splitright = true
 
-vim.opt.smartindent = true
-vim.o.breakindent = true
-
 -- automatically reload file from disk if buffer hasn't changed
 vim.opt.autoread = true
 
 -- save undo history
 vim.o.undofile = true
 
--- set tab spaces
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+vim.o.expandtab = true -- Tab -> space
+vim.o.smartindent = true -- Syntax aware indent
+vim.o.breakindent = true
+vim.o.tabstop = 2 -- n space chars per tab
+vim.o.shiftwidth = 2 -- Space per indent level
 
 -- sign column
 vim.wo.signcolumn = 'yes'
