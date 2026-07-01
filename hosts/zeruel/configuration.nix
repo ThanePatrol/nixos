@@ -74,13 +74,14 @@ let
   # dir="/var/lib/qBittorrent/qBittorrent/downloads"; find "$dir" -path "$dir/temp" -prune -o -type f -printf '%p %Cs\n'
   # and check modification time to see if it should be fed to a llm to categorize and rename into shows/movies based upon the last time the script has run
   copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
-      for file in $(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" | ${pkgs.ripgrep}/bin/rg '\.(mp4|mkv)'); do
-        if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" "$file"; then
-          ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows
-        else
-          ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies
-        fi
-      done
+    while IFS= read -r -d "" file; do
+      if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" "$file"; then
+        ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows
+      else
+        ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies
+      fi
+    done < <(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" \( -name "*.mp4" -o -name "*.mkv" \) -print0)
+
     ${pkgs.coreutils}/bin/chown -R jellyfin /var/lib/jellyfin
   '';
 
