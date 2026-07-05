@@ -378,6 +378,7 @@ in
       9090 # prometheus # TODO Not actually required. Just for debugging.
       20048
       25565 # MC
+      8870 # Paperless
     ];
     allowedUDPPorts = [
       111
@@ -385,7 +386,6 @@ in
       4000
       4001
       4002
-      5055 # Jellyseer
       8080 # Zigbee2Mqtt
       20048
       25565 # MC
@@ -462,9 +462,18 @@ in
     };
   };
 
-  # services.paperless = {
-  #   enable = true;
-  # };
+  services.paperless = {
+    enable = true;
+    port = 8870;
+    address = "0.0.0.0";
+    consumptionDirIsPublic = true;
+    settings = {
+      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS = true;
+      PAPERLESS_OCR_LANGUAGE = "eng";
+      PAPERLESS_CONSUMER_RECURSIVE = true;
+
+    };
+  };
 
   services.immich = {
     enable = true;
