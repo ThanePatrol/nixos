@@ -1,20 +1,12 @@
 {
   pkgs,
-  lib,
-  config,
   ...
 }:
-
-let
-  dummy = pkgs.writeShellScriptbin "dummyScript" ''
-    #!/usr/bin/env bash
-    # todo make a proper script
-  '';
-in
 {
   programs.waybar = {
     enable = true;
     package = pkgs.waybar;
+    systemd.enable = true;
     settings = {
       mainBar = {
         layer = "top";

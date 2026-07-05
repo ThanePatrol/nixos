@@ -1,19 +1,12 @@
 {
   isWork,
-  #config,
-  lib,
   pkgs,
+  config,
+  lib,
   ...
 }:
 
 let
-  #pointer = config.home.pointerCursor;
-  mkService = lib.recursiveUpdate {
-    Unit.PartOf = [ "graphical-session.target" ];
-    Unit.After = [ "graphical-session.target" ];
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-
   lockScreen = pkgs.writeShellScriptBin "lock-screen" ''
     rm /tmp/lockscreen.png || true
     screenshot-background
@@ -41,8 +34,50 @@ let
       fi
   '';
 
+  mod = config.wayland.windowManager.sway.config.modifier;
+
 in
 {
+
+  wayland.windowManager.sway = {
+
+    enable = false;
+    config = {
+      bars = [ ]; # Disable bars in preference of waybar.
+      assigns = { }; # TODO: For assignig windows to certain workspaces. See https://nix-community.github.io/home-manager/options/home-manager/wayland.html#opt-wayland.windowManager.sway.config.assigns
+      bindswitches = {
+        "lid:on" = {
+          reload = true;
+          locked = true;
+          action = "output eDP-1 disable"; # TODO: equivalent clamshell, not just plain laptop display.
+        };
+        "lid:off" = {
+          reload = true;
+          locked = true;
+          action = "output eDP-1 enable";
+        };
+      };
+      startup = [
+        {
+          command = "systemctl --user restart waybar";
+          always = true;
+        }
+        { command = "dunst"; }
+        { command = "kitty"; }
+      ];
+
+      keybindings = {
+
+        "$mod+q" = "kill";
+
+      }
+      // builtins.listToAttrs (
+        lib.forEach (lib.range 1 9)
+
+      );
+      terminal = "kitty";
+    };
+  };
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -57,10 +92,7 @@ in
       "$mod" = "alt";
 
       exec-once = [
-
-        # set cursor
         "dunst" # notifications
-        "waybar"
         "rm $HOME/.cache/cliphist/db"
         "wl-paste --type text --watch cliphist store"
         "[workspace 1 silent] kitty"
@@ -77,51 +109,8 @@ in
         "${keepInClamshell}/bin/stay-clamshell"
       ];
 
-      animations = {
-        enabled = true;
-
-        bezier = [
-          "smoothOut, 0.36, 0, 0.66, -0.56"
-          "smoothIn, 0.25, 1, 0.5, 1"
-          "overshot, 0.4,0.8,0.2,1.2"
-        ];
-
-        animation = [
-          "windows, 1, 4, overshot, slide"
-          "windowsOut, 1, 4, smoothOut, slide"
-          "border,1,10,default"
-
-          "fade, 1, 10, smoothIn"
-          "fadeDim, 1, 10, smoothIn"
-          "workspaces,1,4,overshot,slidevert"
-        ];
-      };
-
-      input = {
-        follow_mouse = 1;
-        kb_options = "caps:escape";
-      };
-
-      general = {
-        gaps_in = 7;
-        gaps_out = 11;
-      };
-
-      decoration = {
-        rounding = 7;
-
-        blur = {
-          enabled = true;
-          size = 4;
-          passes = 1;
-        };
-
-        # drop_shadow = "yes";
-      };
-
       bind = [
         "$mod, Q, killactive"
-        "$mod, M, exit"
         "$SUPER, SPACE, exec, XDG_DATA_DIRS=/home/hmandalidis/.nix-profile/share:/usr/share:/home/hmandalidis/.local/share wofi --show drun"
         "$mod,H,movefocus,l"
         "$mod,L,movefocus,r"
@@ -129,9 +118,6 @@ in
         "$mod,J,movefocus,d"
         # Copy color and send to clipboard
         "$mod, p, exec, hyprpicker -a"
-
-        "$mod + SHIFT, w, exec,ps aux | rg waybar | awk '{print $2}' | head -n 1 | xargs -I {} kill {}"
-        "$mod, w, exec, waybar &"
 
         #workspace memes
         "SHIFT + ALT, K, movetoworkspace,+1"
