@@ -44,16 +44,6 @@ let
 in
 {
 
-  # services.swayidle = {
-  #   enable = true;
-  #
-  # };
-
-  # Read https://nix-community.github.io/home-manager/options.xhtml#opt-programs.swaylock.enable before enabling
-  # services.swaylock = {
-  #
-  # };
-
   wayland.windowManager.hyprland = {
     enable = true;
     systemd = {
@@ -69,12 +59,10 @@ in
       exec-once = [
 
         # set cursor
-        #"hyprctl setcursor ${pointer.name} ${toString pointer.size}"
         "dunst" # notifications
         "waybar"
         "rm $HOME/.cache/cliphist/db"
         "wl-paste --type text --watch cliphist store"
-        "nm-applet" # networking
         "[workspace 1 silent] kitty"
         "[workspace 2 silent] google-chrome"
         "[workspace 3 silent] /opt/google/chrome/google-chrome --profile-directory=Default --app-id=fmgjjmmmlfnkbppncabfkddbjimcfncm" # Gmail
@@ -135,7 +123,6 @@ in
         "$mod, Q, killactive"
         "$mod, M, exit"
         "$SUPER, SPACE, exec, XDG_DATA_DIRS=/home/hmandalidis/.nix-profile/share:/usr/share:/home/hmandalidis/.local/share wofi --show drun"
-        "$mod, S, togglesplit, " # split workspace
         "$mod,H,movefocus,l"
         "$mod,L,movefocus,r"
         "$mod,K,movefocus,u"
@@ -175,18 +162,6 @@ in
         ''SUPER + SHIFT,4,exec,grim -g "$(slurp)" - | tee "$(xdg-user-dir PICTURES)/screenshot_$(date '+%Y-%m-%d-%H%M%S.png')" | wl-copy ''
 
         "$mod + CONTROL, Q, exec, screenshot-background; ${lockScreen}/bin/lock-screen"
-
-        # clipboard
-        # want SUPER + C and SUPER + V for copy and paste globally
-        #"$SUPER, C, exec, wtype -M ctrl c -m ctrl" # to make this like mac os with CMD + C
-        #"$SUPER, H, exec, clipman pick -t wofi | wl-copy" # show clipboard history
-        #"$SUPER, V, exec, clipman pick -t wofi --err-on-no-selection && wtype -M ctrl -M shift v"
-
-        #Move cursor to start or end of line like Mac os
-        # "SUPER, left, exec, wtype -P Home"
-        # "SUPER, right, exec, wtype -P End"
-        # "SUPER + SHIFT, left, exec, wtype -M shift -P Home"
-        # "SUPER + SHIFT, right, exec, wtype -M shift -P End"
       ];
       bindl = [
         # Lid open
@@ -211,11 +186,6 @@ in
         ",XF86AudioPrev,exec,playerctl previous"
         ",XF86AudioNext,exec,playerctl next"
       ];
-      bindm = [
-        #move and resize windows
-        #"$mod, up, movewindow"
-        #"$mod, down, resizewindow"
-      ];
 
       env = (
         if isWork then
@@ -226,13 +196,7 @@ in
           [ ]
       );
 
-      windowrule = [
-        #        "tile, title:CodeBrowser"
-        #        "tile, title:Ghidra:*"
-        #        "workspace 9, class:org.kde.kdeconnect.app" # want it available but not somewhere i use all the time
-      ];
-
-      # TODO(hmandalidis): Update this properly
+      # TODO: Set workspace rules for gmail and calendar
       # windowrule = [
       #   "tile, title:CodeBrowser"
       #   "tile, title:Ghidra:*"
@@ -251,13 +215,4 @@ in
     '';
 
   };
-  # systemd.user.services = {
-  #   cliphist = mkService {
-  #     Unit.Description = "Clipboard history";
-  #     Service = {
-  #       ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${lib.getBin pkgs.cliphist}/cliphist store";
-  #       Restart = "always";
-  #     };
-  #   };
-  # };
 }
