@@ -76,9 +76,9 @@ let
   copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
     while IFS= read -r -d "" file; do
       if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" "$file"; then
-        ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows
+        ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows &> /dev/null 
       else
-        ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies
+        ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies &> /dev/null
       fi
     done < <(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" \( -name "*.mp4" -o -name "*.mkv" \) -print0)
 
