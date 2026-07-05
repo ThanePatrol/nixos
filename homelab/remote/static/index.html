@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>TV Remote</title>
+  <style>
+    :root {
+      --bg: #16181d;
+      --panel: #23262e;
+      --btn: #2e323c;
+      --btn-active: #4c8bf5;
+      --accent: #4c8bf5;
+      --power: #e05260;
+      --text: #e6e8ec;
+      --muted: #7d828c;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      user-select: none;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .remote {
+      width: 100%;
+      max-width: 300px;
+      background: var(--panel);
+      border-radius: 24px;
+      padding: 22px 20px 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    button {
+      font: inherit;
+      color: var(--text);
+      background: var(--btn);
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform 0.05s ease, background 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button:active { transform: scale(0.92); }
+    button.flash { background: var(--btn-active); }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn {
+      flex: 1;
+      height: 54px;
+      font-size: 15px;
+    }
+    .icon-btn {
+      width: 54px;
+      height: 54px;
+      font-size: 20px;
+    }
+    .power { background: var(--power); }
+    .power.flash { background: #ff7784; }
+
+    /* D-pad */
+    .dpad {
+      align-self: center;
+      display: grid;
+      grid-template-columns: repeat(3, 66px);
+      grid-template-rows: repeat(3, 66px);
+      gap: 8px;
+    }
+    .dpad button {
+      background: var(--btn);
+      font-size: 22px;
+    }
+    .dpad .ok {
+      background: var(--accent);
+      border-radius: 50%;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .dpad .ok.flash { background: #7aa9f7; }
+    .dpad .up    { grid-area: 1 / 2; border-radius: 16px 16px 8px 8px; }
+    .dpad .left  { grid-area: 2 / 1; border-radius: 16px 8px 8px 16px; }
+    .dpad .ok    { grid-area: 2 / 2; }
+    .dpad .right { grid-area: 2 / 3; border-radius: 8px 16px 16px 8px; }
+    .dpad .down  { grid-area: 3 / 2; border-radius: 8px 8px 16px 16px; }
+
+    .section-label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin: -6px 0 -8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="remote">
+    <div class="row">
+      <button class="icon-btn power" data-action="power" title="Power">⏻</button>
+      <button class="btn" data-action="source" title="Change source">Source</button>
+      <button class="icon-btn" data-action="mute" title="Mute">🔇</button>
+    </div>
+
+    <div class="dpad">
+      <button class="up"    data-action="up"    title="Up">▲</button>
+      <button class="left"  data-action="left"  title="Left">◀</button>
+      <button class="ok"    data-action="enter" title="Enter">OK</button>
+      <button class="right" data-action="right" title="Right">▶</button>
+      <button class="down"  data-action="down"  title="Down">▼</button>
+    </div>
+
+    <div class="row">
+      <button class="btn" data-action="back" title="Back">← Back</button>
+    </div>
+
+    <div class="section-label">Playback</div>
+    <div class="row">
+      <button class="icon-btn" data-action="rewind" title="Rewind">⏪</button>
+      <button class="icon-btn" data-action="play" title="Play">▶</button>
+      <button class="icon-btn" data-action="pause" title="Pause">⏸</button>
+      <button class="icon-btn" data-action="fast_forward" title="Fast forward">⏩</button>
+    </div>
+
+    <div class="section-label">Volume</div>
+    <div class="row">
+      <button class="btn" data-action="volume_down" title="Volume down">Vol −</button>
+      <button class="btn" data-action="volume_up" title="Volume up">Vol +</button>
+    </div>
+  </div>
+
+  <script>
+    async function press(button) {
+      const action = button.dataset.action;
+      button.classList.add("flash");
+      setTimeout(() => button.classList.remove("flash"), 150);
+      try {
+        const res = await fetch(`api/press/${action}`, { method: "POST" });
+        if (!res.ok) console.error("press failed", action, res.status);
+      } catch (err) {
+        console.error("press error", action, err);
+      }
+    }
+
+    for (const button of document.querySelectorAll("button[data-action]")) {
+      button.addEventListener("click", () => press(button));
+    }
+  </script>
+</body>
+</html>

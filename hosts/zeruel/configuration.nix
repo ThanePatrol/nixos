@@ -93,6 +93,7 @@ in
     ../../homelab/proxmox.nix
     ../../homelab/home-assistant.nix
     ../../homelab/monitoring.nix
+    ../../homelab/remote.nix
   ];
   _module.args.toMonitor = serviceNamesToMonitor;
   nix.settings.experimental-features = [
