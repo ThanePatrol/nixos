@@ -1,7 +1,6 @@
 {
   isWork,
   pkgs,
-  config,
   lib,
   ...
 }:
@@ -34,7 +33,7 @@ let
       fi
   '';
 
-  mod = config.wayland.windowManager.sway.config.modifier;
+  mod = "Mod1";
 
 in
 {
@@ -70,11 +69,10 @@ in
 
         "$mod+q" = "kill";
 
-      }
-      // builtins.listToAttrs (
-        lib.forEach (lib.range 1 9)
-
-      );
+      };
+      # // builtins.listToAttrs (
+      #   lib.forEach (lib.range 1 9)
+      # );
       terminal = "kitty";
     };
   };

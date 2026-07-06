@@ -45,7 +45,7 @@ const COMMANDS: &[IrCommand] = &[
         bits: 12,
         data: "0xA90",
         data_lsb: "0x5009",
-    }, // tv_turn_off
+    },
     IrCommand {
         action: "up",
         bits: 12,
@@ -111,6 +111,12 @@ const COMMANDS: &[IrCommand] = &[
         bits: 15,
         data: "0x6CE9",
         data_lsb: "0x3697",
+    },
+    IrCommand {
+        action: "source",
+        bits: 12,
+        data: "0xA50",
+        data_lsb: "0x500A",
     },
 ];
 

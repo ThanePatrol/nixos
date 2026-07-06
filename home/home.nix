@@ -77,7 +77,13 @@ in
         else
           [
             ./linux/gtk_themes.nix
-            (import ./linux/hyprland/hyprland.nix { inherit isWork pkgs lib; })
+            (import ./linux/hyprland/hyprland.nix {
+              inherit
+                isWork
+                pkgs
+                lib
+                ;
+            })
             ./linux/dunst/dunst.nix
             ./linux/waybar/waybar.nix
             ./linux/wofi/wofi.nix
