@@ -75,7 +75,7 @@ let
   # and check modification time to see if it should be fed to a llm to categorize and rename into shows/movies based upon the last time the script has run
   copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
     while IFS= read -r -d "" file; do
-      if ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.*(e|E)\d+" "$file"; then
+      if printf '%s' "$file" | ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.(e|E)\d+" ; then
         ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows &> /dev/null 
       else
         ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies &> /dev/null
