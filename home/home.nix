@@ -77,7 +77,7 @@ in
         else
           [
             ./linux/gtk_themes.nix
-            (import ./linux/sway/sway.nix {
+            (import ./linux/hyprland/hyprland.nix {
               inherit
                 isWork
                 pkgs
