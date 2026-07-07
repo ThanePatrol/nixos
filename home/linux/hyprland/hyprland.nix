@@ -89,9 +89,19 @@ in
     settings = {
       "$mod" = "alt";
 
+      animations = {
+        enabled = false;
+      };
+            general = {
+        gaps_in = 0;
+        gaps_out = 0;
+        border_size = 1;
+      };
+
       exec-once = [
         "dunst" # notifications
         "rm $HOME/.cache/cliphist/db"
+        "waybar &"
         "wl-paste --type text --watch cliphist store"
         "[workspace 1 silent] kitty"
         "[workspace 2 silent] google-chrome"
@@ -190,6 +200,10 @@ in
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
         always_follow_on_dnd = true;
+      };
+      input = {
+        follow_mouse = 1;
+        kb_options = "caps:escape";
       };
 
     };
