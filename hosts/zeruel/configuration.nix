@@ -363,32 +363,32 @@ in
     enable = true;
     # for NFSv3; view with `rpcinfo -p`
     allowedTCPPorts = [
-      111
+      # keep-sorted start numeric=yes
+      111 # NFS portmapper
       1883 # Mosquitto
-      2049
+      2049 # NFS acl
       2283 # immich
       3000 # general dev
-      4000
-      4001
-      4002
-      5055 # Jellyseer
-      8123 # Home assistant
+      4000 # NFS status
+      4001 # NFS nlockmgr
+      4002 # NFS mountd
       8080 # Zigbee2Mqtt
-      8888 # ledfx
-      9090 # prometheus # TODO Not actually required. Just for debugging.
-      20048
-      25565 # MC
+      8123 # Home assistant
       8870 # Paperless
+      20048 # NFS port
+      25565 # Minecraft
+      # keep-sorted end
     ];
     allowedUDPPorts = [
-      111
-      2049
-      4000
-      4001
-      4002
-      8080 # Zigbee2Mqtt
-      20048
-      25565 # MC
+      # keep-sorted start numeric=yes
+      111 # NFS portmapper
+      2049 # NFS acl
+      4000 # NFS status
+      4001 # NFS nlockmgr
+      4002 # NFS mountd
+      20048 # NFS port
+      25565 # Minecraft
+      # keep-sorted end
     ];
   };
 
