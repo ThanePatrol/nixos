@@ -38,6 +38,19 @@ let
 
   theme = "Catppuccin-mocha";
 
+  ports = {
+    openFirewall = {
+      grafanaPort = 3001;
+      zigbee2MQTT = 8080;
+      homeAssistant = 8123;
+      minecraft = 25565;
+    };
+    noFirewall = {
+      prometheusPort = 9090;
+      nodeExporterPort = 9091;
+    };
+  };
+
   homeConfig = import ../../home/home.nix {
     inherit
       inputs
@@ -95,7 +108,11 @@ in
     ../../homelab/monitoring.nix
     ../../homelab/remote.nix
   ];
-  _module.args.toMonitor = serviceNamesToMonitor;
+  _module.args = {
+    toMonitor = serviceNamesToMonitor;
+    ports = ports;
+  };
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -372,11 +389,11 @@ in
       4000 # NFS status
       4001 # NFS nlockmgr
       4002 # NFS mountd
-      8080 # Zigbee2Mqtt
-      8123 # Home assistant
       8870 # Paperless
       20048 # NFS port
-      25565 # Minecraft
+      ports.openFirewall.homeAssistant # Home assistant
+      ports.openFirewall.minecraft # Minecraft
+      ports.openFirewall.zigbee2MQTT # Zigbee2Mqtt
       # keep-sorted end
     ];
     allowedUDPPorts = [

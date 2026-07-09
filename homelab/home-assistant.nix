@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  ports,
+  ...
+}:
 
 let
 
@@ -384,7 +389,7 @@ in
       permit_join = true;
       frontend = {
         enabled = true;
-        port = 8080; # TODO - change this to something else
+        port = ports.openFirewall.zigbee2MQTT;
       };
       advanced = {
         transmit_power = 20;

@@ -3,13 +3,11 @@
   lib,
   config,
   toMonitor,
+  ports,
   ...
 }:
 
 let
-  prometheusPort = 9090;
-  nodeExporterPort = 9091;
-  grafanaPort = 3001;
   textfileDir = "/var/lib/node_exporter/textfile_collector";
 in
 {
@@ -31,7 +29,7 @@ in
         scrape_interval = "5s";
         static_configs = [
           {
-            targets = [ "localhost:${toString prometheusPort}" ];
+            targets = [ "localhost:${toString ports.noFirewall.prometheusPort}" ];
           }
         ];
       }
@@ -40,7 +38,7 @@ in
         scrape_interval = "5s";
         static_configs = [
           {
-            targets = [ "localhost:${toString nodeExporterPort}" ];
+            targets = [ "localhost:${toString ports.noFirewall.nodeExporterPort}" ];
           }
         ];
       }
@@ -55,7 +53,7 @@ in
   # to be aware of failed backups.
   services.prometheus.exporters.node = {
     enable = true;
-    port = nodeExporterPort;
+    port = ports.noFirewall.nodeExporterPort;
     enabledCollectors = [ "textfile" ];
     disabledCollectors = [ "xfs" ];
     extraFlags = [
@@ -163,7 +161,7 @@ in
     settings = {
       security.secret_key = "${config.sops.placeholder.grafana_secret_key}";
       server = {
-        http_port = grafanaPort;
+        http_port = ports.openFirewall.grafanaPort;
         http_addr = "0.0.0.0";
       };
     };
@@ -174,7 +172,7 @@ in
           type = "prometheus";
           uid = "prometheus";
           access = "proxy";
-          url = "http://localhost:${toString prometheusPort}";
+          url = "http://localhost:${toString ports.noFirewall.nodeExporterPort}";
           isDefault = true;
         }
       ];
