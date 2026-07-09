@@ -88,7 +88,6 @@ in
     ];
 
     siteFunctions = {
-      # Helper for pushing direct to main with jj.
       jj-push = ''
         jj describe -m "$1" && \
           jj bookmark set main -r @ && \
@@ -116,6 +115,20 @@ in
       autoload -z edit-command-line
       zle -N edit-command-line
       bindkey "^X^E" edit-command-line
+
+      # Helper for pushing direct to main with jj.
+      jj-push() {
+        if [ -z "$1" ]; then
+          echo "Provide a commit message."
+          return 1
+        fi
+
+        jj describe -m "$1" && \
+        jj bookmark set main -r @ && \
+        jj git push && \
+        jj new
+      }
+
     ''
     + (if isDarwin then macInit else "")
     + (if isWork then workExports else "")
