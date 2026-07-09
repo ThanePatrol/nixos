@@ -313,6 +313,7 @@ in
   services.home-assistant = {
     enable = true;
     configDir = "/var/lib/hass"; # Is default but override because we use it elsewhere.
+    port = ports.openFirewall.homeAssistant;
     extraComponents = [
       "analytics"
       "google_translate"
@@ -360,6 +361,7 @@ in
   '';
   services.mosquitto = {
     enable = true;
+    #port = ports.openFirewall.mosquitto;
     listeners = [
       {
         acl = [ "pattern readwrite #" ];
@@ -378,7 +380,7 @@ in
         user = "iot";
         password = "!secret.yaml password";
         base_topic = "zigbee2mqtt";
-        server = "mqtt://10.0.0.3:1883";
+        server = "mqtt://10.0.0.3:${toString ports.openFirewall.mosquitto}";
       };
       serial = {
         port = "tcp://10.0.0.5:6638";

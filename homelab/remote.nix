@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  ports,
+  ...
+}:
 
 let
   remote = pkgs.rustPlatform.buildRustPackage {
@@ -8,7 +13,6 @@ let
     cargoLock.lockFile = ./remote/Cargo.lock;
   };
 
-  port = 8099;
 in
 {
   users.users.tv-remote = {
@@ -36,8 +40,8 @@ in
     wants = [ "mosquitto.service" ];
     wantedBy = [ "multi-user.target" ];
     environment = {
-      MQTT_BROKER = "mqtt://127.0.0.1:1883";
-      REMOTE_LISTEN_ADDR = "0.0.0.0:${toString port}";
+      MQTT_BROKER = "mqtt://127.0.0.1:${toString ports.openFirewall.mosquitto}";
+      REMOTE_LISTEN_ADDR = "0.0.0.0:${toString ports.noFirewall.tvRemote}";
       RUST_LOG = "remote=info,warn";
     };
     serviceConfig = {
@@ -63,5 +67,5 @@ in
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ port ];
+  networking.firewall.allowedTCPPorts = [ ports.noFirewall.tvRemote ];
 }

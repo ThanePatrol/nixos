@@ -40,14 +40,31 @@ let
 
   ports = {
     openFirewall = {
+      # keep-sorted start numeric=yes
+      dev = 3000;
       grafanaPort = 3001;
-      zigbee2MQTT = 8080;
       homeAssistant = 8123;
+      immich = 2283;
       minecraft = 25565;
+      mosquitto = 1883;
+      nfsAcl = 2049;
+      nfsLockd = 4001;
+      nfsMountd = 4002;
+      nfsMountdRpc = 20048;
+      nfsPortmapper = 111;
+      nfsStatd = 4000;
+      paperless = 8870;
+      qbittorrent = 8010;
+      zigbee2MQTT = 8080;
+      # keep-sorted end
     };
     noFirewall = {
-      prometheusPort = 9090;
+      # keep-sorted start numeric=yes
       nodeExporterPort = 9091;
+      processExporter = 9256;
+      prometheusPort = 9090;
+      tvRemote = 8099;
+      # keep-sorted end
     };
   };
 
@@ -176,7 +193,7 @@ in
 
   services.qbittorrent = {
     enable = true;
-    webuiPort = 8010;
+    webuiPort = ports.openFirewall.qbittorrent;
     openFirewall = true;
   };
 
@@ -372,39 +389,39 @@ in
       /home/hugh/SSDs    10.0.0.3/24(insecure,rw,sync,no_subtree_check)
     '';
     # fixed rpc.statd port; for firewall
-    lockdPort = 4001;
-    mountdPort = 4002;
-    statdPort = 4000;
+    lockdPort = ports.openFirewall.nfsLockd;
+    mountdPort = ports.openFirewall.nfsMountd;
+    statdPort = ports.openFirewall.nfsStatd;
   };
   networking.firewall = {
     enable = true;
     # for NFSv3; view with `rpcinfo -p`
     allowedTCPPorts = [
-      # keep-sorted start numeric=yes
-      111 # NFS portmapper
-      1883 # Mosquitto
-      2049 # NFS acl
-      2283 # immich
-      3000 # general dev
-      4000 # NFS status
-      4001 # NFS nlockmgr
-      4002 # NFS mountd
-      8870 # Paperless
-      20048 # NFS port
+      # keep-sorted start
+      ports.openFirewall.dev # general dev
       ports.openFirewall.homeAssistant # Home assistant
+      ports.openFirewall.immich # immich
       ports.openFirewall.minecraft # Minecraft
+      ports.openFirewall.mosquitto # Mosquitto
+      ports.openFirewall.nfsAcl # NFS acl
+      ports.openFirewall.nfsLockd # NFS nlockmgr
+      ports.openFirewall.nfsMountd # NFS mountd
+      ports.openFirewall.nfsMountdRpc # NFS port
+      ports.openFirewall.nfsPortmapper # NFS portmapper
+      ports.openFirewall.nfsStatd # NFS status
+      ports.openFirewall.paperless # Paperless
       ports.openFirewall.zigbee2MQTT # Zigbee2Mqtt
       # keep-sorted end
     ];
     allowedUDPPorts = [
-      # keep-sorted start numeric=yes
-      111 # NFS portmapper
-      2049 # NFS acl
-      4000 # NFS status
-      4001 # NFS nlockmgr
-      4002 # NFS mountd
-      20048 # NFS port
-      25565 # Minecraft
+      # keep-sorted start
+      ports.openFirewall.minecraft # Minecraft
+      ports.openFirewall.nfsAcl # NFS acl
+      ports.openFirewall.nfsLockd # NFS nlockmgr
+      ports.openFirewall.nfsMountd # NFS mountd
+      ports.openFirewall.nfsMountdRpc # NFS port
+      ports.openFirewall.nfsPortmapper # NFS portmapper
+      ports.openFirewall.nfsStatd # NFS status
       # keep-sorted end
     ];
   };
@@ -481,7 +498,7 @@ in
 
   services.paperless = {
     enable = true;
-    port = 8870;
+    port = ports.openFirewall.paperless;
     address = "0.0.0.0";
     consumptionDirIsPublic = true;
     settings = {
@@ -494,7 +511,7 @@ in
 
   services.immich = {
     enable = true;
-    port = 2283;
+    port = ports.openFirewall.immich;
     host = "0.0.0.0";
   };
 

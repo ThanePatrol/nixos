@@ -172,7 +172,7 @@ in
           type = "prometheus";
           uid = "prometheus";
           access = "proxy";
-          url = "http://localhost:${toString ports.noFirewall.nodeExporterPort}";
+          url = "http://localhost:${toString ports.noFirewall.prometheusPort}";
           isDefault = true;
         }
       ];
@@ -193,7 +193,7 @@ in
   # TODO - Setup process monitor.
   services.prometheus.exporters.process = {
     enable = true;
-    port = 9256;
+    port = ports.noFirewall.processExporter;
   };
 
   # TODO - Add grafana dashboards for:

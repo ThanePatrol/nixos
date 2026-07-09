@@ -1,4 +1,4 @@
-{ isWork, ... }:
+{ isWork, email, ... }:
 
 let
   workAliases = {
@@ -160,6 +160,11 @@ in
       };
 
       aliases = allAliases;
+
+      user = {
+        name = "Hugh Mandalidis";
+        email = email;
+      };
     };
   };
 

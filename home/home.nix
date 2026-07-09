@@ -39,7 +39,7 @@ in
 
   imports = [
     (import ./common/direnv.nix)
-    (import ./common/jj.nix { inherit isWork; })
+    (import ./common/jj.nix { inherit isWork email; })
     (import ./common/bat/bat.nix { inherit theme; })
     (import ./common/btop/btop.nix { inherit theme pkgs; })
     (import ./common/ssh.nix { inherit gitUserName; })
