@@ -87,15 +87,6 @@ in
       }
     ];
 
-    siteFunctions = {
-      jj-push = ''
-        jj describe -m "$1" && \
-          jj bookmark set main -r @ && \
-          jj git push && \
-          jj new
-      '';
-
-    };
     initContent = ''
       # Remove logging of direnv. Revisit when https://github.com/direnv/direnv/pull/1231 is approved
       export DIRENV_LOG_FORMAT=
