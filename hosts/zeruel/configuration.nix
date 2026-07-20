@@ -55,6 +55,7 @@ let
       nfsStatd = 4000;
       paperless = 8870;
       qbittorrent = 8010;
+      ssl = 443;
       zigbee2MQTT = 8080;
       # keep-sorted end
     };
@@ -410,6 +411,7 @@ in
       ports.openFirewall.nfsPortmapper # NFS portmapper
       ports.openFirewall.nfsStatd # NFS status
       ports.openFirewall.paperless # Paperless
+      ports.openFirewall.ssl
       ports.openFirewall.zigbee2MQTT # Zigbee2Mqtt
       # keep-sorted end
     ];
