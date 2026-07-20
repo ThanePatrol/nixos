@@ -61,6 +61,7 @@ in
       ".envrc"
       ".direnv"
       ".venv"
+      ".claude"
     ];
 
   };

@@ -411,7 +411,7 @@ in
       ports.openFirewall.nfsPortmapper # NFS portmapper
       ports.openFirewall.nfsStatd # NFS status
       ports.openFirewall.paperless # Paperless
-      ports.openFirewall.ssl
+      ports.openFirewall.ssl # SSL for Pingora
       ports.openFirewall.zigbee2MQTT # Zigbee2Mqtt
       # keep-sorted end
     ];
