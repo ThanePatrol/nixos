@@ -247,6 +247,15 @@ in
       User = "root";
     };
   };
+  systemd.services.download-hsbc = {
+    script = ''
+      ${pkgs.nix}/bin/nix develop /home/hugh/dev/finance -c ${pkgs.bash}/bin/bash -c 'make fresh-vnc-debug && sleep 10 && make hsbc-download'
+    '';
+    serviceConfig = {
+      WorkingDirectory = "/home/hugh/dev/finance";
+      User = "hugh";
+    };
+  };
   systemd.services."${remoteBackupServiceName}" = {
     script = ''
       ${pkgs.rclone}/bin/rclone sync /home/hugh/SSDs b2backup:thane-patrol-ironwolfs/
@@ -273,6 +282,14 @@ in
       Unit = "backup-immich.service";
     };
   };
+  # systemd.timers.download-hsbc = {
+  #   wantedBy = [ "timers.target" ];
+  #   timerConfig = {
+  #     OnBootSec = "5m";
+  #     OnUnitActiveSec = "1d";
+  #     Unit = "download-hsbc.service";
+  #   };
+  # };
   systemd.timers.copy-torrent-jellyfin = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
@@ -387,7 +404,7 @@ in
   services.nfs.server = {
     enable = true;
     exports = ''
-      /home/hugh/SSDs    10.0.0.3/24(insecure,rw,sync,no_subtree_check)
+      /home/hugh/SSDs    10.0.0.3/24(insecure,rw,sync,no_subtree_check,all_squash,anonuid=1000,anongid=1000)
     '';
     # fixed rpc.statd port; for firewall
     lockdPort = ports.openFirewall.nfsLockd;
