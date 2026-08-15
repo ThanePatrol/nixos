@@ -1,9 +1,5 @@
 { pkgs, ... }:
 
-# for mac os specific packages
-let
-
-in
 {
   packages = with pkgs; [
     # keep-sorted start
