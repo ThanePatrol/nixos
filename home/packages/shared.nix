@@ -12,8 +12,8 @@ let
     gofumpt # formatter
     golines # formatter
     luaformatter # format lua
-    prettierd # prettier daemon for web
     nixfmt # autoformat nix files
+    prettierd # prettier daemon for web
     shfmt # shell formatter
     yamlfmt
     # keep-sorted end
@@ -24,10 +24,10 @@ let
     ast-grep
     gemini-cli
     keep-sorted
-    patchelf
     mermaid-cli
-    uv
+    patchelf
     sqlite
+    uv
     watchexec
     # keep-sorted end
   ];
@@ -63,8 +63,8 @@ let
 
   fatTools = with pkgs; [
     # keep-sorted start
-    cargo-flamegraph # flamegraph tool for many languages
     #ffmpeg-full
+    cargo-flamegraph # flamegraph tool for many languages
     flex # lexical analysis
     geckodriver # webdriver automation
     gettext # translations
@@ -74,7 +74,6 @@ let
     libvirt
     llama-cpp
     localsend
-    ollama
     pandoc # document conversion
     pkg-config # build tools
     qbittorrent

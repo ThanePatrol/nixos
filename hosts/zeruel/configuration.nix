@@ -21,12 +21,10 @@ let
   hddBackupFolder = "/home/hugh/Backups";
   ssdBackupSystemdServiceName = "backup-local";
   immichBackupServiceName = "backup-immich";
-  remoteBackupServiceName = "run-remote-backup";
 
   serviceNamesToMonitor = [
     ssdBackupSystemdServiceName
     immichBackupServiceName
-    remoteBackupServiceName
     "get-connected-clients"
   ];
 
@@ -61,6 +59,7 @@ let
     };
     noFirewall = {
       # keep-sorted start numeric=yes
+      llamaServer = 9000;
       nodeExporterPort = 9091;
       processExporter = 9256;
       prometheusPort = 9090;
@@ -87,25 +86,32 @@ let
       ;
   };
 
-  # TODO: Use this once PR is merged: https://nixpk.gs/pr-tracker.html?pr=506919
-  renamePrompt = ''
-    llama-cli -hf unsloth/gemma-4-E4B-it-GGUF --prompt "
-    You are a specialized media management assistant. Your task is to clean up movie and TV show filenames.
-
-    Rules:
-
-        TV Shows: Use the format Show_Name_S##_E##.ext. Replace spaces with underscores for TV shows. Remove all release tags, resolutions, and absolute episode numbers in brackets.
-
-        Movies: Use the format Movie_Name_(Year).ext. Replace spaces with underscores for Movies. Ensure the year is in parentheses. Remove all codec, resolution, and group tags.
-
-        Output: Provide ONLY the corrected filename. No explanations or conversational filler.
-    Rename this according to the rules : 
-  '';
-  # TODO: Add this snippet
-  # dir="/var/lib/qBittorrent/qBittorrent/downloads"; find "$dir" -path "$dir/temp" -prune -o -type f -printf '%p %Cs\n'
-  # and check modification time to see if it should be fed to a llm to categorize and rename into shows/movies based upon the last time the script has run
   copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
+    set -euox
+
     while IFS= read -r -d "" file; do
+      # Check if file exists in jellyfin dir already
+
+      prompt='{
+        "messages": [
+          {"role": "system", "content": "You are a specialized media management assistant. Identify whether the provided file is a Movie or a TV show. Output ONLY movie or show No explanations or chatter."},
+          {"role": "user", "content": "@@PROMPT"}
+        ],
+        "temperature": 0,
+        "max_tokens": 64
+      }'
+
+
+      prompt="$(echo "$prompt" | sed 's/@@PROMPT/movie')"
+      echo "$prompt"
+
+
+      curl -s localhost:9000/v1/chat/completions \
+        -H 'Content-Type: application/json' \
+        -d "$prompt" | jq -r '.choices[0].message.content'
+
+
+
       if printf '%s' "$file" | ${pkgs.ripgrep}/bin/rg -q "(s|S)\d+.(e|E)\d+" ; then
         ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows &> /dev/null 
       else
@@ -198,14 +204,25 @@ in
     openFirewall = true;
   };
 
+  services.llama-cpp = {
+    enable = true;
+    settings = {
+      port = ports.noFirewall.llamaServer;
+      sleep-idle-seconds = 500;
+      n-predict = 256;
+      hf-repo = "unsloth/gemma-4-E4B-it-GGUF";
+    };
+  };
+
   systemd.services."${ssdBackupSystemdServiceName}" = {
     description = "Mount HDD and backup files";
     script = ''
+      set -euxo pipefail
       if [ ! -d ${hddBackupFolder} ]; then
         ${pkgs.coreutils}/bin/mkdir ${hddBackupFolder}
       fi
 
-      if ${pkgs.coreutils}/bin/grep -qs " ${hddBackupFolder} " /proc/mounts; then
+      if ${pkgs.gnugrep}/bin/grep -qs " ${hddBackupFolder} " /proc/mounts; then
         echo "file system already mounted"
       else
         ${pkgs.util-linux}/bin/mount -o noatime,nodev,nosuid,noexec -t ext4 /dev/disk/by-uuid/70f28b15-ef28-40ba-be2d-3cccd40fd85c ${hddBackupFolder}
@@ -222,6 +239,8 @@ in
 
       # prevent shutdown until backup finishes
       ${pkgs.systemd}/bin/systemd-inhibit --why="backing up ssds! 😋" ${pkgs.rclone}/bin/rclone --config=${rcloneConfPath} sync ${ssdFolder} "$new_folder_name"
+
+      ${pkgs.systemd}/bin/systemd-inhibit --why="backing up remote! 😋" ${pkgs.rclone}/bin/rclone --config=${rcloneConfPath} sync "$new_folder_name/" b2backup:thane-patrol-ironwolfs/
 
       ${pkgs.util-linux}/bin/umount ${hddBackupFolder}
     '';
@@ -256,15 +275,6 @@ in
       User = "hugh";
     };
   };
-  systemd.services."${remoteBackupServiceName}" = {
-    script = ''
-      ${pkgs.rclone}/bin/rclone sync /home/hugh/SSDs b2backup:thane-patrol-ironwolfs/
-    '';
-    serviceConfig = {
-      Type = "oneshot";
-      User = "${username}";
-    };
-  };
   systemd.services.run-xml-scrape = {
     script = ''
       /home/hugh/dev/trader/target/release/rss
@@ -282,36 +292,20 @@ in
       Unit = "backup-immich.service";
     };
   };
-  # systemd.timers.download-hsbc = {
+  # systemd.timers.copy-torrent-jellyfin = {
   #   wantedBy = [ "timers.target" ];
   #   timerConfig = {
   #     OnBootSec = "5m";
-  #     OnUnitActiveSec = "1d";
-  #     Unit = "download-hsbc.service";
+  #     OnUnitActiveSec = "5m";
+  #     Unit = "copy-torrent-jellyfin.service";
   #   };
   # };
-  systemd.timers.copy-torrent-jellyfin = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5m";
-      OnUnitActiveSec = "5m";
-      Unit = "copy-torrent-jellyfin.service";
-    };
-  };
   systemd.timers."${ssdBackupSystemdServiceName}" = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "10m";
       OnUnitActiveSec = "1d";
       Unit = "${ssdBackupSystemdServiceName}.service";
-    };
-  };
-  systemd.timers."${remoteBackupServiceName}" = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "1h";
-      OnUnitActiveSec = "1w";
-      Unit = "${remoteBackupServiceName}.service";
     };
   };
   systemd.timers.run-xml-scrape = {

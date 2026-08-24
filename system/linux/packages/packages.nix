@@ -29,7 +29,6 @@ let
     home-manager
     hyprpicker # color picker
     imagemagick
-    llama-cpp
     lsof
     nettools # cmd line utils like ethtool
     parted # disk partition tool

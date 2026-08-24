@@ -134,7 +134,6 @@ let
       data = "0xFFC837";
       dataLSB = "0xFF13EC";
     }
-    # TODO: more than the bottom three colors.
   ];
 
   ballScripts = builtins.listToAttrs (
