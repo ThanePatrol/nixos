@@ -44,6 +44,8 @@ in
       set -gs set-clipboard on
       set -as terminal-features ',xterm-256color:clipboard'
 
+      # To improve `<cmd> | osc copy` experience
+      set -g input-buffer-size 104857600 # 10MiB, default is 1MiB
 
       # fixes colors inside neovim
       set -ga terminal-overrides ",*256col*:Tc"
