@@ -1,9 +1,9 @@
 vim.filetype.add({pattern = {['.*pi'] = 'python', ['*.gcl'] = 'python'}})
 
 require("critique.comments").setup({
-    -- Don't automatically fetch comments after setup and on BufEnter events.
-    auto_fetch = false,
-    auto_render = false,
+    -- Automatically fetch comments after setup and on BufEnter events.
+    auto_fetch = true,
+    auto_render = true,
     debounce = 10000,
     display = {
         -- Max width in character to render a comment's text before wrapping to a newline.

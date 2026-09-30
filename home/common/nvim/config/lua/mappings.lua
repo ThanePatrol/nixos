@@ -27,11 +27,6 @@ vim.api.nvim_set_keymap('n', '<leader>dvs',
                         '<cmd>lua local widgets = require("dap.ui.widgets"); local sidebar = widgets.sidebar(widgets.scopes); sidebar.open(); <CR>',
                         {noremap = true, silent = true})
 
--- toggle case sensitive search
-vim.api.nvim_set_keymap('n', '<leader>cs',
-                        '<cmd>set ignorecase! ignorecase?<cr>',
-                        {desc = 'toggle case sensitive search'})
-
 -- in visual mode surround selection
 vim.keymap.set("x", "'", [[:s/\%V\(.*\)\%V/'\1'/ <CR>]],
                {desc = "Surround selection with '"})
@@ -96,14 +91,22 @@ if require('utils').is_cloudtop() then
     vim.keymap.set('n', '<leader>cw', "<cmd>Telescope citc workspaces<cr>",
                    {desc = "[C]itc [W]orkspaces"})
 
-    -- TODO add keymappings
-    --       { "]c", "<cmd>CritiqueGotoNextComment<CR>" },
-    -- { "[c", "<cmd>CritiqueGotoPrevComment<CR>" },
-    -- { "<Leader>lc", "<cmd>CritiqueToggleLineComment<CR>" },
-    -- { "<Leader>uc", "<cmd>CritiqueToggleUnresolvedComments<CR>" },
-    -- { "<Leader>ac", "<cmd>CritiqueToggleAllComments<CR>" },
-    -- { "<Leader>fc", "<cmd>CritiqueFetchComments<CR>" },
-    -- { "<Leader>tc", "<cmd>CritiqueCommentsTelescope<CR>" },
+    vim.keymap.set('n', '<leader>cn', "<cmd>CritiqueFocusNext<CR>",
+                   {desc = "[C]ritique [N]ext"})
+    vim.keymap.set('n', "<leader>cp", "<cmd>CritiqueFocusPrev<CR>",
+                   {desc = "[C]ritique [P]revious"})
+    vim.keymap.set('n', "<leader>cu", "<cmd>CritiquePublish<CR>",
+                   {desc = "[C]ritique [U]pload"})
+    vim.keymap.set('n', "<Leader>cs", "<cmd>CritiqueToggleAllComments<CR>",
+                   {desc = "[C]ritique [S]how"})
+    vim.keymap.set('n', "<Leader>cf", "<cmd>CritiqueFetchComments<CR>",
+                   {desc = "[C]ritique [F]etch"})
+    vim.keymap.set('n', "<Leader>ct", "<cmd>CritiqueCommentsTelescope<CR>",
+                   {desc = "[C]ritique [T]elescope"})
+    vim.keymap.set('n', "<Leader>cd", "<cmd>CritiqueDone<CR>",
+                   {desc = "[C]ritique [D]one"})
+    vim.keymap.set('n', "<Leader>cr", "<cmd>CritiqueReply<CR>",
+                   {desc = "[C]ritique [R]eply"})
 end
 
 -- Work stuff end
