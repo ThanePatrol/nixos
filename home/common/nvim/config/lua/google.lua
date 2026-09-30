@@ -88,16 +88,25 @@ local function run_f1_sql()
                 table.insert(result, "# F1-SQL Query Results")
                 table.insert(result, "")
                 table.insert(result, "## Query:")
+                -- Subtract 5 because of markdown formatting that is output.
+                -- This should be something cleaner but it works...
+                table.insert(result, "Returned " .. #stdout_data - 5 .. " rows")
                 table.insert(result, "```sql")
                 for _, l in ipairs(lines) do
                     table.insert(result, l)
                 end
                 table.insert(result, "```")
                 table.insert(result, "")
+                -- Reduce max bytes to 5MiB by default as over that it can cause the UI to stall.
+                local max_bytes = 5 * 2 ^ 20
+
+                local n_bytes = 0
 
                 if exit_code == 0 then
                     table.insert(result, "## Output:")
                     for _, line in ipairs(stdout_data) do
+                        n_bytes = n_bytes + #line
+                        if n_bytes > max_bytes then break end
                         table.insert(result, line)
                     end
                 else
@@ -117,6 +126,11 @@ local function run_f1_sql()
                     end
                     table.insert(result, "```")
                 end
+                if n_bytes > max_bytes then
+                    vim.notify(string.format("Only displaying %e of total",
+                                             n_bytes), vim.log.levels.INFO)
+                end
+
                 vim.api.nvim_buf_set_lines(buf, 0, -1, false, result)
             end)
         end
@@ -130,6 +144,7 @@ local function run_f1_sql()
 
     vim.fn.chansend(job_id, query)
     vim.fn.chanclose(job_id, 'stdin')
+    vim.notify("Query finished in buf" .. tostring(buf), vim.log.levels.INFO)
 end
 
 vim.keymap.set('v', '<Leader>f1', run_f1_sql,
