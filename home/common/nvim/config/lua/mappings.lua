@@ -91,6 +91,7 @@ if require('utils').is_cloudtop() then
     vim.keymap.set('n', '<leader>cw', "<cmd>Telescope citc workspaces<cr>",
                    {desc = "[C]itc [W]orkspaces"})
 
+    -- CL comments
     vim.keymap.set('n', '<leader>cn', "<cmd>CritiqueFocusNext<CR>",
                    {desc = "[C]ritique [N]ext"})
     vim.keymap.set('n', "<leader>cp", "<cmd>CritiqueFocusPrev<CR>",
