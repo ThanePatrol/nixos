@@ -127,7 +127,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../homelab/proxmox.nix
+    # ../../homelab/proxmox.nix
     ../../homelab/home-assistant.nix
     ../../homelab/monitoring.nix
     ../../homelab/remote.nix
@@ -275,6 +275,43 @@ in
       User = "hugh";
     };
   };
+
+  systemd.services.cloudflare-ddns = {
+    script = ''
+      source ${config.sops.templates."cloudflare-env".path}
+      external_ip="$(${pkgs.curl}/bin/curl ifconfig.me)"
+
+      function send_for_domain() {
+        domain="$1"
+        id="$2"
+        content="$3"
+        payload_param='{
+          "name": "@@DOMAIN",
+          "ttl": 1,
+          "type": "A",
+          "comment": "Domain verification record",
+          "content": "@@CONTENT",
+          "proxied": true
+        }'
+        payload="$(echo $payload_param | ${pkgs.gnused}/bin/sed "s/@@DOMAIN/$domain/")"
+        payload="$(echo $payload | ${pkgs.gnused}/bin/sed "s/@@CONTENT/$external_ip/")"
+        ${pkgs.curl}/bin/curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$id" \
+          -X PUT \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+          -d "$(echo $payload)"
+
+      }
+      main_domain="login.mandalidis.com"
+      main_domain_id="$(echo $LOGIN_DNS_RECORD_ID)"
+
+      send_for_domain "$main_domain" "$main_domain_id" 
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
   systemd.services.run-xml-scrape = {
     script = ''
       /home/hugh/dev/trader/target/release/rss
@@ -290,6 +327,14 @@ in
       OnBootSec = "5m";
       OnUnitActiveSec = "1d";
       Unit = "backup-immich.service";
+    };
+  };
+  systemd.timers.cloudflare-ddns = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "20s";
+      OnUnitActiveSec = "5m";
+      Unit = "cloudflare-ddns.service";
     };
   };
   # systemd.timers.copy-torrent-jellyfin = {
@@ -341,6 +386,7 @@ in
       wap_password = { };
       westo_iphone_mac = { };
       thane_fold_mac = { };
+      thane_pixel_mac = { };
       grafana_secret_key = { };
 
       backblaze_key_id = {
@@ -351,6 +397,10 @@ in
       };
       ipmi_password = { };
       gmail_app_password = { };
+      cloudflare_api_key = { };
+      cloudflare_account_id = { };
+      cloudflare_zone_id = { };
+      cloudflare_login_dns_record_id = { };
     };
     templates."ha-secrets.yaml" = {
       content = ''
@@ -370,11 +420,18 @@ in
       content = ''
         WAP_PASSWORD_PAYLOAD="${config.sops.placeholder.wap_password}"
         USER_AGENT="${config.sops.placeholder.user_agent}"
-        THANE_MAC=${config.sops.placeholder.thane_fold_mac}
+        THANE_MAC=${config.sops.placeholder.thane_pixel_mac}
         WESTO_MAC=${config.sops.placeholder.westo_iphone_mac}
         MQTT_PASSWORD=${config.sops.placeholder.mosquitto_password}
       '';
       owner = "${username}";
+    };
+    templates."cloudflare-env" = {
+      content = ''
+        ZONE_ID=${config.sops.placeholder.cloudflare_zone_id}
+        LOGIN_DNS_RECORD_ID=${config.sops.placeholder.cloudflare_login_dns_record_id}
+        CLOUDFLARE_API_TOKEN=${config.sops.placeholder.cloudflare_api_key}
+      '';
     };
   };
 
@@ -510,7 +567,7 @@ in
   };
 
   services.paperless = {
-    enable = true;
+    enable = false;
     port = ports.openFirewall.paperless;
     address = "0.0.0.0";
     consumptionDirIsPublic = true;
