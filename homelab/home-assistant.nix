@@ -312,7 +312,6 @@ in
   services.home-assistant = {
     enable = true;
     configDir = "/var/lib/hass"; # Is default but override because we use it elsewhere.
-    port = ports.openFirewall.homeAssistant;
     extraComponents = [
       "analytics"
       "google_translate"
@@ -339,6 +338,9 @@ in
         radius = 20;
         unit_system = "metric";
         time_zone = "!secret timeZone";
+      };
+      http = {
+        server_port = ports.openFirewall.homeAssistant;
       };
       script = scripts;
       automation = "!include automations.yaml";

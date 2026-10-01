@@ -22,7 +22,6 @@ let
   devTools = with pkgs; [
     # keep-sorted start
     ast-grep
-    gemini-cli
     keep-sorted
     mermaid-cli
     patchelf
