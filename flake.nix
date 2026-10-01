@@ -120,13 +120,14 @@
             ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
-            proxmox-nixos.nixosModules.proxmox-ve
+            # Don't really have a need for proxmox so maybe get rid of it?
+            # proxmox-nixos.nixosModules.proxmox-ve
             (
               { pkgs, lib, ... }:
               {
 
                 nixpkgs.overlays = [
-                  proxmox-nixos.overlays.${system}
+                  # proxmox-nixos.overlays.${system}
                 ];
 
               }
