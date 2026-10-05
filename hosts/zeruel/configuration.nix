@@ -567,7 +567,7 @@ in
   };
 
   services.paperless = {
-    enable = false;
+    enable = true;
     port = ports.openFirewall.paperless;
     address = "0.0.0.0";
     consumptionDirIsPublic = true;
