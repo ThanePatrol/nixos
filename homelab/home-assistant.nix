@@ -339,9 +339,6 @@ in
         unit_system = "metric";
         time_zone = "!secret timeZone";
       };
-      http = {
-        server_port = ports.openFirewall.homeAssistant;
-      };
       script = scripts;
       automation = "!include automations.yaml";
       mqtt = [
