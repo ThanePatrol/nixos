@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign in</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #f5f5f7;
+      }
+      form {
+        background: #fff;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      h1 {
+        font-size: 1.25rem;
+        margin: 0 0 1.5rem;
+      }
+      button {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #f8f9fa;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- The whole page is just a login form. Submitting it hits /login,
+         which kicks off the Google OpenID Connect flow. -->
+    <form action="/login" method="get">
+      <h1>Sign in</h1>
+      <button type="submit">Continue with Google</button>
+    </form>
+  </body>
+</html>

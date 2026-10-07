@@ -134,6 +134,7 @@ in
     ../../homelab/home-assistant.nix
     ../../homelab/monitoring.nix
     ../../homelab/remote.nix
+    ../../homelab/proxy.nix
   ];
   _module.args = {
     toMonitor = serviceNamesToMonitor;
@@ -411,6 +412,12 @@ in
       cloudflare_account_id = { };
       cloudflare_zone_id = { };
       cloudflare_login_dns_record_id = { };
+      proxy_ssl_key_pem = { };
+      proxy_cert_pem = { };
+      google_client_id = { };
+      google_client_secret = { };
+      google_redirect_uri = { };
+      allowed_emails = { };
     };
     templates."ha-secrets.yaml" = {
       content = ''
@@ -534,22 +541,24 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.users.${username} = homeConfig;
 
-  users.users.${username} = {
-    isNormalUser = true;
-    description = username;
-    extraGroups = [
-      "docker"
-      "networkmanager"
-      "wheel"
-      "plugdev"
-      "libvirtd"
-      "audio"
-      "input"
-      "lp" # for bluetooth
-      "bluetooth"
-      "jellyfin"
-    ];
-    shell = pkgs.zsh;
+  users.users = {
+    ${username} = {
+      isNormalUser = true;
+      description = username;
+      extraGroups = [
+        "docker"
+        "networkmanager"
+        "wheel"
+        "plugdev"
+        "libvirtd"
+        "audio"
+        "input"
+        "lp" # for bluetooth
+        "bluetooth"
+        "jellyfin"
+      ];
+      shell = pkgs.zsh;
+    };
   };
 
   environment.systemPackages = syspackages.environment.systemPackages;
@@ -585,6 +594,9 @@ in
       PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS = true;
       PAPERLESS_OCR_LANGUAGE = "eng";
       PAPERLESS_CONSUMER_RECURSIVE = true;
+      # TODO: Pass these URLS around in a better manner....
+      PAPERLESS_URL = "https://paperless.mandalidis.com";
+      PAPERLESS_CSRF_TRUSTED_ORIGINS = "https://paperless.mandalidis.com";
 
     };
   };
