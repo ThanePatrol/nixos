@@ -18,6 +18,9 @@ let
   rcloneConfPath = "/home/hugh/.config/rclone/rclone.conf";
   homeDirectory = "/home/hugh";
   ssdFolder = "/home/hugh/SSDs";
+  foldersToBackup = [
+    "/home/hugh/.config/sops"
+  ];
   hddBackupFolder = "/home/hugh/Backups";
   ssdBackupSystemdServiceName = "backup-local";
   immichBackupServiceName = "backup-immich";
@@ -229,6 +232,13 @@ in
         ${pkgs.coreutils}/bin/chown -R ${username} ${hddBackupFolder}
         echo "mounted hdds"
       fi
+
+      # Move other files not stored on SSDs into the SSD folder that is backed up.
+      for f in ${builtins.concatStringsSep " " foldersToBackup}; do
+        folder_name="${ssdFolder}$f"
+        ${pkgs.coreutils}/bin/mkdir -p $folder_name
+        ${pkgs.coreutils}/bin/cp -r $f $folder_name
+      done
 
       new_folder_name=${hddBackupFolder}/"backup-$(${pkgs.coreutils}/bin/date -u +%Y-%m-%d_%H.%M.%S%Z)"
       ${pkgs.coreutils}/bin/mkdir "$new_folder_name"
