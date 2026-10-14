@@ -55,6 +55,7 @@ let
       nfsPortmapper = 111;
       nfsStatd = 4000;
       paperless = 8870;
+      pihole = 3002;
       qbittorrent = 8010;
       ssl = 443;
       zigbee2MQTT = 8080;
@@ -135,6 +136,7 @@ in
     ../../homelab/monitoring.nix
     ../../homelab/remote.nix
     ../../homelab/proxy.nix
+    # ../../homelab/pihole.nix
   ];
   _module.args = {
     toMonitor = serviceNamesToMonitor;
@@ -496,6 +498,7 @@ in
       ports.openFirewall.nfsPortmapper # NFS portmapper
       ports.openFirewall.nfsStatd # NFS status
       ports.openFirewall.paperless # Paperless
+      ports.openFirewall.pihole # web ui for pihole.
       ports.openFirewall.ssl # SSL for Pingora
       ports.openFirewall.zigbee2MQTT # Zigbee2Mqtt
       # keep-sorted end

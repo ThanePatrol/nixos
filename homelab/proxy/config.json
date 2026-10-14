@@ -62,5 +62,13 @@
       "is_tls": false,
       "sni": ""
     }
+  },
+  {
+    "hostname": "pihole.mandalidis.com",
+    "target": {
+      "endpoint": "127.0.0.1:3002",
+      "is_tls": false,
+      "sni": ""
+    }
   }
 ]
