@@ -48,6 +48,7 @@ let
     nodejs_22
     osc
     pciutils # useful pci utils
+    pv # Pipeviewer to see progress of pipes.
     rainfrog
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
