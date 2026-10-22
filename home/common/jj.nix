@@ -122,6 +122,11 @@ let
       "-r"
       "firefighter_commits"
     ];
+    l = [
+      "log"
+      "-r"
+      "trunk()::"
+    ];
   };
 
   commonAliases = { };
