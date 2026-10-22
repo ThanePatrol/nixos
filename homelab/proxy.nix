@@ -46,6 +46,10 @@ in
   users.users.pingora = {
     isSystemUser = true;
     group = "pingora";
+    # Do not have any shell for this user.
+    # This is already the default when isSystemUser = true
+    # but we set it explicitly so the ground around us changing is fine.
+    shell = "${pkgs.shadow}/bin/nologin";
   };
   users.groups.pingora = { };
 
