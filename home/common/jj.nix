@@ -129,7 +129,16 @@ let
     ];
   };
 
-  commonAliases = { };
+  commonAliases = {
+    more = [
+      "log"
+      "-r"
+      "trunk()::"
+      "--no-graph"
+      "--template"
+    ];
+
+  };
 
   allAliases = commonAliases // (if isWork then workAliases else ossAliases);
 
@@ -157,11 +166,17 @@ in
       template-aliases = {
         # Gets a list of files with more than n_lines added that match pattern.
         # Accept a pattern like **/*.py
-        # Invoke with jj log. Eg:
-        # jj log -r @- --no-graph --template 'more_than_n("**/BUILD", 2)'
-        # Returns all BUILD files in the previous commit that more than 2 lines added.
-        "more_than_n(pattern, n_lines)" =
-          ''self.diff(pattern).stat().files().filter(|e| e.lines_added() > n_lines).map(|e| e.path()).join("\n")'';
+        "than_n(pattern, n_lines)" = ''
+          self.change_id().shortest()  ++
+
+          self.diff(pattern)
+            .stat()
+            .files()
+            .filter(|e| e.lines_added() > n_lines || e.lines_removed() > n_lines)
+            .map(|e| " " ++ e.path() ++ " " ++ if(e.lines_added() > n_lines, e.lines_added(), e.lines_removed()) ++ " ")
+
+          ++ "\n"
+        '';
       };
 
       aliases = allAliases;
