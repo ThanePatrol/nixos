@@ -1,4 +1,9 @@
-{ isWork, email, ... }:
+{
+  pkgs,
+  isWork,
+  email,
+  ...
+}:
 
 let
   workAliases = {
@@ -178,6 +183,20 @@ in
           ++ "\n"
         '';
       };
+
+      "--scope" = [
+        {
+          "--when.commands" = [
+            "diff"
+            "show"
+          ];
+          ui = {
+            pager = "${pkgs.delta}/bin/delta";
+            diff-formatter = ":git";
+
+          };
+        }
+      ];
 
       aliases = allAliases;
 
