@@ -143,6 +143,13 @@ let
       "--template"
     ];
 
+    json = [
+      "log"
+      "--no-graph"
+      "--template"
+      "json(self) ++ '\n'"
+    ];
+
   };
 
   allAliases = commonAliases // (if isWork then workAliases else ossAliases);
