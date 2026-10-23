@@ -193,10 +193,15 @@ in
           ui = {
             pager = "${pkgs.delta}/bin/delta";
             diff-formatter = ":git";
-
           };
         }
       ];
+
+      ui = {
+        diff-editor = "vimdiff";
+        merge-editor = "${pkgs.mergiraf}/bin/mergiraf";
+        default-command = "status";
+      };
 
       aliases = allAliases;
 
