@@ -326,6 +326,7 @@ in
       "unifi"
       "syslog"
       "command_line"
+      "local_todo"
     ];
     config = {
       # Includes dependencies for a basic setup
