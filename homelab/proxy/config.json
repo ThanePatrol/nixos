@@ -70,5 +70,13 @@
       "is_tls": false,
       "sni": ""
     }
+  },
+  {
+    "hostname": "terminal.mandalidis.com",
+    "target": {
+      "endpoint": "127.0.0.1:3004",
+      "is_tls": false,
+      "sni": ""
+    }
   }
 ]

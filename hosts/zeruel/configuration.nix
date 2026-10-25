@@ -67,6 +67,7 @@ let
       nodeExporterPort = 9091;
       processExporter = 9256;
       prometheusPort = 9090;
+      ttyd = 3004;
       tvRemote = 8099;
       # keep-sorted end
     };
@@ -150,6 +151,7 @@ in
   nix.settings.trusted-users = [
     "root"
     "hugh"
+    "isabel"
   ];
 
   # Bootloader.
@@ -562,6 +564,23 @@ in
       ];
       shell = pkgs.zsh;
     };
+    "isabel" = {
+      isNormalUser = true;
+      description = "isabel";
+      extraGroups = [
+        "docker"
+        "networkmanager"
+        "wheel"
+        "plugdev"
+        "libvirtd"
+        "audio"
+        "input"
+        "lp" # for bluetooth
+        "bluetooth"
+        "jellyfin"
+      ];
+      shell = pkgs.zsh;
+    };
   };
 
   environment.systemPackages = syspackages.environment.systemPackages;
@@ -586,6 +605,17 @@ in
       enable = true;
       qemu.package = pkgs.qemu;
     };
+  };
+
+  services.ttyd = {
+    enable = true;
+    port = ports.noFirewall.ttyd;
+    writeable = true;
+    maxClients = 1;
+    # clientOptions = {
+    #   fontSize = "14";
+    #   fontFamily = "0xProto";
+    # };
   };
 
   services.paperless = {
