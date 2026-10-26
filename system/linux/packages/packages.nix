@@ -25,6 +25,7 @@ let
     clipman # clipboard manager
     dig
     ethtool
+    git
     grim # screenshot
     home-manager
     hyprpicker # color picker

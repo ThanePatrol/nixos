@@ -151,7 +151,7 @@ in
   nix.settings.trusted-users = [
     "root"
     "hugh"
-    "isabel"
+    "iw"
   ];
 
   # Bootloader.
@@ -564,9 +564,9 @@ in
       ];
       shell = pkgs.zsh;
     };
-    "isabel" = {
+    "iw" = {
       isNormalUser = true;
-      description = "isabel";
+      description = "iw";
       extraGroups = [
         "docker"
         "networkmanager"
