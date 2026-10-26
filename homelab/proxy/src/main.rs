@@ -29,10 +29,11 @@ use tracing_subscriber::FmtSubscriber;
 use crate::login::SessionStore;
 use crate::login::UserKey;
 
-static REQ_COUNTER: Lazy<IntCounter> =
-    Lazy::new(|| register_int_counter!("reg_counter", "Number of requests").unwrap());
+static SERVER_HITS: Lazy<IntCounter> = Lazy::new(|| {
+    register_int_counter!("request_counter", "Number of requests hitting the site.").unwrap()
+});
 
-pub struct HttpEchoApp;
+pub struct LoginApp;
 
 static ROUTE_CONFIG: &'static str = include_str!("../config.json");
 
@@ -50,9 +51,8 @@ pub struct RouteTarget {
 }
 
 #[async_trait]
-impl ServeHttp for HttpEchoApp {
+impl ServeHttp for LoginApp {
     async fn response(&self, http_stream: &mut ServerSession) -> Response<Vec<u8>> {
-        REQ_COUNTER.inc();
         // read timeout of 2s
         let read_timeout = 2000;
         let body = match timeout(
@@ -79,8 +79,8 @@ impl ServeHttp for HttpEchoApp {
     }
 }
 
-pub fn echo_service_http() -> Service<HttpServer<HttpEchoApp>> {
-    let server = HttpServer::new_app(HttpEchoApp);
+pub fn echo_service_http() -> Service<HttpServer<LoginApp>> {
+    let server = HttpServer::new_app(LoginApp);
     Service::new("Echo Service HTTP".to_string(), server)
 }
 
@@ -101,6 +101,7 @@ impl ProxyHttp for Proxy {
 
     /// Returns Ok(false) if a user should continue, Ok(true) if we already processing the request.
     async fn request_filter(&self, session: &mut Session, _ctx: &mut Self::CTX) -> Result<bool> {
+        SERVER_HITS.inc();
         let host = session
             .get_header(header::HOST)
             .and_then(|h| h.to_str().ok())
@@ -236,18 +237,25 @@ fn main() {
         },
     );
 
+    let mut prometheus_service_http = pingora_prometheus::prometheus_http_service();
+    // TODO: Set these ports to be read from env or similar.
+    prometheus_service_http.add_tcp("0.0.0.0:8442");
+
     let mut login_service = login::login_service_http(store.clone());
     login_service.add_tls_with_settings(
+        // TODO: Set these ports to be read from env or similar.
         "127.0.0.1:8443",
         Some(options.clone()),
         login_tls_settings,
     );
     login_service.add_uds("/tmp/echo.sock", None);
 
+    // TODO: Set these ports to be read from env or similar.
     proxy.add_tls_with_settings("0.0.0.0:443", Some(options.clone()), proxy_tls_settings);
 
     my_server.add_service(proxy);
     my_server.add_service(login_service);
+    my_server.add_service(prometheus_service_http);
     let mut args = RunArgs::default();
     args.shutdown_signal = Box::new(UnixShutdownSignalWatch {});
 

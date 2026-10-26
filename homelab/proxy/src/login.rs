@@ -13,6 +13,7 @@ use std::sync::Arc;
 
 use async_trait::async_trait;
 use http::{header, HeaderMap, HeaderValue, Response, StatusCode};
+use once_cell::sync::Lazy;
 use openidconnect::{EndpointMaybeSet, EndpointNotSet, EndpointSet};
 use pingora::apps::http_app::{HttpServer, ServeHttp};
 use pingora::protocols::http::ServerSession;
@@ -26,6 +27,10 @@ use openidconnect::{
     AuthorizationCode, ClientId, ClientSecret, CsrfToken, IssuerUrl, Nonce, PkceCodeVerifier,
     RedirectUrl, Scope, TokenResponse,
 };
+
+static SUCCESS_LOGIN: Lazy<prometheus::IntCounter> = Lazy::new(|| {
+    prometheus::register_int_counter!("login_count", "Number of times a login occurs.").unwrap()
+});
 
 /// Google's OpenID Connect issuer. Discovery hangs off this.
 const ISSUER_URL: &str = "https://accounts.google.com";
@@ -286,6 +291,8 @@ impl LoginApp {
             .lock()
             .await
             .retain(|_, v| v.1.expires_at > now);
+
+        SUCCESS_LOGIN.inc();
 
         Response::builder()
             .status(StatusCode::FOUND)
