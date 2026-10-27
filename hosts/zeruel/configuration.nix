@@ -40,6 +40,8 @@ let
   theme = "Catppuccin-mocha";
 
   ports = {
+    # Note firewall in this context is just for other devices on LAN.
+    # Only 443 is exposed to internet.
     openFirewall = {
       # keep-sorted start numeric=yes
       dev = 3000;
@@ -65,6 +67,8 @@ let
       # keep-sorted start numeric=yes
       llamaServer = 9000;
       nodeExporterPort = 9091;
+      pingoraLogin = 8443;
+      pingoraPrometheus = 8442;
       processExporter = 9256;
       prometheusPort = 9090;
       ttyd = 3004;
@@ -181,23 +185,11 @@ in
   };
 
   hardware = {
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings = {
-        General = {
-          #ControllerMode = "bredr";
-        };
-      };
-    };
     cpu.amd = {
       updateMicrocode = true;
     };
     keyboard = {
       qmk.enable = true;
-    };
-    graphics = {
-      enable32Bit = true;
     };
   };
 
@@ -381,8 +373,8 @@ in
   networking = {
     networkmanager.enable = false;
     nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
+      "9.9.9.9"
+      "149.112.112.112"
     ];
     hostName = "zeruel";
   };
@@ -457,13 +449,7 @@ in
   };
 
   programs = {
-    hyprland.enable = true;
     zsh.enable = true;
-    steam.enable = true;
-
-    # to get virt-manager working: https://github.com/NixOS/nixpkgs/issues/42433
-    dconf.enable = true;
-    virt-manager.enable = true;
   };
 
   services.openssh = {
@@ -478,14 +464,12 @@ in
     exports = ''
       /home/hugh/SSDs    10.0.0.3/24(insecure,rw,sync,no_subtree_check,all_squash,anonuid=1000,anongid=1000)
     '';
-    # fixed rpc.statd port; for firewall
     lockdPort = ports.openFirewall.nfsLockd;
     mountdPort = ports.openFirewall.nfsMountd;
     statdPort = ports.openFirewall.nfsStatd;
   };
   networking.firewall = {
     enable = true;
-    # for NFSv3; view with `rpcinfo -p`
     allowedTCPPorts = [
       # keep-sorted start
       ports.openFirewall.dev # general dev
@@ -528,23 +512,15 @@ in
       alsa.support32Bit = true;
       audio.enable = true;
       pulse.enable = true;
-      # extraConfig.pipewire."92-bluetooth-config" = {
-      #   "context.modules" = [
-      #     {
-      #       name = "libpipewire-module-bluetooth5";
-      #       args = { };
-      #     }
-      #   ];
-      # };
       wireplumber.enable = true;
     };
   };
 
-  # to allow swaylock to accept a password
-  security.pam.services.swaylock = { };
-
   home-manager.useGlobalPkgs = true;
-  home-manager.users.${username} = homeConfig;
+  home-manager.users = {
+    ${username} = homeConfig;
+    "iw" = ../../home/iw/home.nix;
+  };
 
   users.users = {
     ${username} = {
@@ -592,15 +568,6 @@ in
   ];
 
   virtualisation = {
-
-    docker = {
-      enable = true;
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
-    };
-
     libvirtd = {
       enable = true;
       qemu.package = pkgs.qemu;
@@ -612,10 +579,6 @@ in
     port = ports.noFirewall.ttyd;
     writeable = true;
     maxClients = 1;
-    # clientOptions = {
-    #   fontSize = "14";
-    #   fontFamily = "0xProto";
-    # };
   };
 
   services.paperless = {
