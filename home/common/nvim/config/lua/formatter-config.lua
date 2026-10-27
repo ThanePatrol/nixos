@@ -56,7 +56,8 @@ local file_types_for_work = function()
             sql = {google3_formatter},
             textproto = {google3_formatter},
             bzl = {google3_formatter},
-            python = {google3_formatter}
+            python = {google3_formatter},
+            rust = {google3_formatter}
         }
 
     else

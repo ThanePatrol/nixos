@@ -87,7 +87,7 @@ if require('utils').is_cloudtop() then
         },
         filetypes = {
             "borg", "c", "cpp", "java", "kotlin", "objc", "proto", "textproto",
-            "go", "python", "bzl", "typescript", "pi", "sdl", "sql"
+            "go", "python", "bzl", "typescript", "pi", "sdl", "sql", "rust"
         },
         offset_encoding = 'utf-8',
         root_markers = {'.citc'},
@@ -99,4 +99,5 @@ if require('utils').is_cloudtop() then
     vim.lsp.enable('clangd', false)
     vim.lsp.enable('ts_ls', false)
     vim.lsp.enable('postgres_lsp', false)
+    vim.lsp.enable('rust_analyzer', false)
 end
