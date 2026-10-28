@@ -104,17 +104,8 @@ let
     # keep-sorted end
   ];
 
-  iw = with pkgs; [
-    zsh-powerlevel10k
-    stow
-    neovim
-    tmux
-    fzf
-    jujutsu
-  ];
-
 in
 {
   environment.systemPackages =
-    guiTools ++ cliTools ++ devDependencies ++ systemLibsAndPackages ++ daemons ++ misc ++ homelab ++ iw;
+    guiTools ++ cliTools ++ devDependencies ++ systemLibsAndPackages ++ daemons ++ misc ++ homelab;
 }

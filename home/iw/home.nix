@@ -3,6 +3,8 @@
 let
   packages = with pkgs; [
     zsh-powerlevel10k
+    stow
+    gnumake
     ripgrep
     fzf
     gzip
@@ -66,9 +68,9 @@ in
 
       # TODO Add as needed other zsh config and shell variables like SSH_AUTH_SOCK
 
-      source "$HOME/dotfiles/shell/.p10k.zsh"
       source "$HOME/dotfiles/shell/.aliases"
-
+      source "$HOME/dotfiles/shell/.p10k.zsh"
+      source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
       eval "$(${pkgs.fzf}/bin/fzf --zsh)"
 
       if ! tmux list-sessions >/dev/null 2>&1; then
