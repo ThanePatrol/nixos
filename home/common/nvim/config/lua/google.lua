@@ -147,5 +147,95 @@ local function run_f1_sql()
     vim.notify("Query finished in buf" .. tostring(buf), vim.log.levels.INFO)
 end
 
+local function open_bugged_edit(bug_id)
+    local function start_edit(id)
+        if not id or id == "" then return end
+        -- Strip leading b/ if present
+        id = id:gsub("^b/", "")
+
+        vim.cmd("tabnew")
+        local buf = vim.api.nvim_get_current_buf()
+        vim.bo[buf].buftype = "acwrite"
+        vim.bo[buf].bufhidden = "wipe"
+        vim.bo[buf].swapfile = false
+        -- 'mail' highlights '> ' quotes and headers nicely; or use 'markdown'
+        vim.bo[buf].filetype = "mail"
+        vim.api.nvim_buf_set_name(buf, "bugged://" .. id)
+
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false,
+                                   {"*** Loading bug " .. id .. " ..."})
+
+        vim.system({"bugged", "show", id}, {text = true}, function(res)
+            vim.schedule(function()
+                if not vim.api.nvim_buf_is_valid(buf) then return end
+                if res.code ~= 0 then
+                    vim.notify("bugged show failed: " .. (res.stderr or ""),
+                               vim.log.levels.ERROR)
+                    return
+                end
+
+                local lines = {
+                    "*** Please enter your comments below. Save (:w) to post to b/" ..
+                        id .. ".",
+                    "*** Entering text below a quote ('> ') includes that quote in the comment.",
+                    "", ""
+                }
+                for _, line in ipairs(vim.split(res.stdout or "", "\n",
+                                                {plain = true})) do
+                    table.insert(lines, line)
+                end
+
+                vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+                vim.bo[buf].modified = false
+                vim.api.nvim_win_set_cursor(0, {4, 0})
+            end)
+        end)
+
+        vim.api.nvim_create_autocmd("BufWriteCmd", {
+            buffer = buf,
+            callback = function()
+                local content = table.concat(
+                                    vim.api.nvim_buf_get_lines(buf, 0, -1, false),
+                                    "\n") .. "\n"
+                vim.notify("Updating b/" .. id .. "...", vim.log.levels.INFO)
+
+                vim.system({"bugged", "edit", id},
+                           {stdin = content, text = true}, function(res)
+                    vim.schedule(function()
+                        if res.code == 0 then
+                            if vim.api.nvim_buf_is_valid(buf) then
+                                vim.bo[buf].modified = false
+                            end
+                            vim.notify(vim.trim(
+                                           res.stdout ~= "" and res.stdout or
+                                               ("Updated b/" .. id)),
+                                       vim.log.levels.INFO)
+                        else
+                            vim.notify("bugged edit failed:\n" ..
+                                           (res.stderr or ""),
+                                       vim.log.levels.ERROR)
+                        end
+                    end)
+                end)
+            end
+        })
+    end
+
+    if bug_id and bug_id ~= "" then
+        start_edit(bug_id)
+        return
+    end
+
+    -- Pre-fill prompt if cursor is on b/<number> or a number
+    local cfile = vim.fn.expand("<cfile>")
+    local default_id = cfile:match("^b/(%d+)$") or cfile:match("^(%d+)$") or ""
+    vim.ui.input({
+        prompt = "Bug ID (e.g. 123456, 123456.1, 123456.status): ",
+        default = default_id
+    }, start_edit)
+end
+vim.keymap.set("n", "<Leader>be", open_bugged_edit,
+               {desc = "[B]ugged [E]dit in new tab"})
+
 vim.keymap.set('v', '<Leader>f1', run_f1_sql,
                {desc = "Run selected query in f1-sql"})
