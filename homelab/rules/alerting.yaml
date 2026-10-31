@@ -42,3 +42,10 @@ groups:
           severity: page
         annotations:
           summary: At least 6 consecutive WAP login failures!
+      - alert: NewPingoraLogin
+        expr: increase(pingora_login_count[1m]) > 1 # Immediately alert if there's ever a new login.
+        for: 0m
+        labels:
+          severity: page
+        annotations:
+          summary: New login for pingora.

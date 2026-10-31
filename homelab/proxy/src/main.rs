@@ -30,7 +30,11 @@ use crate::login::SessionStore;
 use crate::login::UserKey;
 
 static SERVER_HITS: Lazy<IntCounter> = Lazy::new(|| {
-    register_int_counter!("request_counter", "Number of requests hitting the site.").unwrap()
+    register_int_counter!(
+        "pingora_request_counter",
+        "Number of requests hitting the site."
+    )
+    .unwrap()
 });
 
 pub struct LoginApp;

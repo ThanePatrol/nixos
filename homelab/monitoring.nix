@@ -42,6 +42,15 @@ in
           }
         ];
       }
+      {
+        job_name = "pingora";
+        scrape_interval = "5s";
+        static_configs = [
+          {
+            targets = [ "localhost:${toString ports.noFirewall.pingoraPrometheus}" ];
+          }
+        ];
+      }
     ];
     ruleFiles = [
       ./rules/systemd-backups.yaml

@@ -29,7 +29,8 @@ use openidconnect::{
 };
 
 static SUCCESS_LOGIN: Lazy<prometheus::IntCounter> = Lazy::new(|| {
-    prometheus::register_int_counter!("login_count", "Number of times a login occurs.").unwrap()
+    prometheus::register_int_counter!("pingora_login_count", "Number of times a login occurs.")
+        .unwrap()
 });
 
 /// Google's OpenID Connect issuer. Discovery hangs off this.
