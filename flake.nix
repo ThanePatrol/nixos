@@ -19,10 +19,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    proxmox-nixos = {
-      url = "github:SaumonNet/proxmox-nixos";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +35,6 @@
       flake-utils,
       neovim-nightly-overlay,
       sops-nix,
-      proxmox-nixos,
       ...
     }@inputs:
     let
@@ -120,14 +115,11 @@
             ./hosts/zeruel/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
-            # Don't really have a need for proxmox so maybe get rid of it?
-            # proxmox-nixos.nixosModules.proxmox-ve
             (
               { pkgs, lib, ... }:
               {
 
                 nixpkgs.overlays = [
-                  # proxmox-nixos.overlays.${system}
                 ];
 
               }

@@ -156,7 +156,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    # ../../homelab/proxmox.nix
     ../../homelab/home-assistant.nix
     ../../homelab/monitoring.nix
     ../../homelab/remote.nix
