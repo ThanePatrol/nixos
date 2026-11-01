@@ -38,6 +38,91 @@ let
   _managementPort = "enp42s0f3u5u3c2";
 
   theme = "Catppuccin-mocha";
+  # TODO: build the ports based upon the ports definition.
+  # builtins.filter (s: lib.attrsets.matchAttrs {something = "true";} s) [{something = "false"; t = true;} {something = "false"; t = false;}]
+  # TODO: Then write out the json: writeText "config.json" (builtins.toJSON routes)
+  routes = [
+    {
+      hostname = "login.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:8443";
+        "is_tls" = true;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "grafana.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:3001";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "home.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:8123";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "jellyfin.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:8096";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "immich.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:2283";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "torrent.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:8010";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "paperless.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:8870";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "zigbee.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:8080";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "pihole.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:3002";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "terminal.mandalidis.com";
+      target = {
+        "endpoint" = "127.0.0.1:3004";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+  ];
 
   ports = {
     # Note firewall in this context is just for other devices on LAN.
