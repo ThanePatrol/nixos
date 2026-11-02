@@ -44,6 +44,7 @@ let
   ports = {
     exposeProxy = {
       # keep-sorted start numeric=yes
+      blog = 1313;
       grafanaPort = 3001;
       homeAssistant = 8123;
       immich = 2283;
@@ -160,6 +161,14 @@ let
       hostname = "terminal.mandalidis.com";
       target = {
         "endpoint" = "127.0.0.1:3004";
+        "is_tls" = false;
+        "sni" = "";
+      };
+    }
+    {
+      hostname = "blog.mandalidis.com";
+      "target" = {
+        "endpoint" = "127.0.0.1:1313";
         "is_tls" = false;
         "sni" = "";
       };
@@ -633,7 +642,7 @@ in
   };
 
   # Add group for /var/www/html/blog/ ownership
-  users.groups.bloggers = {};
+  users.groups.bloggers = { };
 
   users.users = {
     ${username} = {
