@@ -41,6 +41,48 @@ let
   # TODO: build the ports based upon the ports definition.
   # builtins.filter (s: lib.attrsets.matchAttrs {something = "true";} s) [{something = "false"; t = true;} {something = "false"; t = false;}]
   # TODO: Then write out the json: writeText "config.json" (builtins.toJSON routes)
+  ports = {
+    exposeProxy = {
+      # keep-sorted start numeric=yes
+      grafanaPort = 3001;
+      homeAssistant = 8123;
+      immich = 2283;
+      paperless = 8870;
+      pihole = 3002;
+      pingoraLogin = 8443;
+      qbittorrent = 8010;
+      ttyd = 3004;
+      zigbee2MQTT = 8080;
+      # keep-sorted end
+    };
+    # Note firewall in this context is just for other devices on LAN.
+    # Only 443 is exposed to internet.
+    openFirewall = {
+      # keep-sorted start numeric=yes
+      dev = 3000;
+      minecraft = 25565;
+      mosquitto = 1883;
+      nfsAcl = 2049;
+      nfsLockd = 4001;
+      nfsMountd = 4002;
+      nfsMountdRpc = 20048;
+      nfsPortmapper = 111;
+      nfsStatd = 4000;
+      ssl = 443;
+      # keep-sorted end
+    };
+    noFirewall = {
+      # keep-sorted start numeric=yes
+      llamaServer = 9000;
+      nodeExporterPort = 9091;
+      pingoraPrometheus = 8442;
+      processExporter = 9256;
+      prometheusPort = 9090;
+      tvRemote = 8099;
+      # keep-sorted end
+    };
+  };
+
   routes = [
     {
       hostname = "login.mandalidis.com";
@@ -123,44 +165,6 @@ let
       };
     }
   ];
-
-  ports = {
-    # Note firewall in this context is just for other devices on LAN.
-    # Only 443 is exposed to internet.
-    openFirewall = {
-      # keep-sorted start numeric=yes
-      dev = 3000;
-      grafanaPort = 3001;
-      homeAssistant = 8123;
-      immich = 2283;
-      minecraft = 25565;
-      mosquitto = 1883;
-      nfsAcl = 2049;
-      nfsLockd = 4001;
-      nfsMountd = 4002;
-      nfsMountdRpc = 20048;
-      nfsPortmapper = 111;
-      nfsStatd = 4000;
-      paperless = 8870;
-      pihole = 3002;
-      qbittorrent = 8010;
-      ssl = 443;
-      zigbee2MQTT = 8080;
-      # keep-sorted end
-    };
-    noFirewall = {
-      # keep-sorted start numeric=yes
-      llamaServer = 9000;
-      nodeExporterPort = 9091;
-      pingoraLogin = 8443;
-      pingoraPrometheus = 8442;
-      processExporter = 9256;
-      prometheusPort = 9090;
-      ttyd = 3004;
-      tvRemote = 8099;
-      # keep-sorted end
-    };
-  };
 
   homeConfig = import ../../home/home.nix {
     inherit
@@ -304,7 +308,7 @@ in
 
   services.qbittorrent = {
     enable = true;
-    webuiPort = ports.openFirewall.qbittorrent;
+    webuiPort = ports.exposeProxy.qbittorrent;
     openFirewall = true;
   };
 
@@ -577,9 +581,12 @@ in
     enable = true;
     allowedTCPPorts = [
       # keep-sorted start
+      ports.exposeProxy.homeAssistant # Home assistant
+      ports.exposeProxy.immich # immich
+      ports.exposeProxy.paperless # Paperless
+      ports.exposeProxy.pihole # web ui for pihole.
+      ports.exposeProxy.zigbee2MQTT # Zigbee2Mqtt
       ports.openFirewall.dev # general dev
-      ports.openFirewall.homeAssistant # Home assistant
-      ports.openFirewall.immich # immich
       ports.openFirewall.minecraft # Minecraft
       ports.openFirewall.mosquitto # Mosquitto
       ports.openFirewall.nfsAcl # NFS acl
@@ -588,10 +595,7 @@ in
       ports.openFirewall.nfsMountdRpc # NFS port
       ports.openFirewall.nfsPortmapper # NFS portmapper
       ports.openFirewall.nfsStatd # NFS status
-      ports.openFirewall.paperless # Paperless
-      ports.openFirewall.pihole # web ui for pihole.
-      ports.openFirewall.ssl # SSL for Pingora
-      ports.openFirewall.zigbee2MQTT # Zigbee2Mqtt
+      ports.openFirewall.ssl # SSL for Pingora.
       # keep-sorted end
     ];
     allowedUDPPorts = [
@@ -681,14 +685,14 @@ in
 
   services.ttyd = {
     enable = true;
-    port = ports.noFirewall.ttyd;
+    port = ports.exposeProxy.ttyd;
     writeable = true;
     maxClients = 1;
   };
 
   services.paperless = {
     enable = true;
-    port = ports.openFirewall.paperless;
+    port = ports.exposeProxy.paperless;
     address = "0.0.0.0";
     consumptionDirIsPublic = true;
     settings = {
@@ -704,7 +708,7 @@ in
 
   services.immich = {
     enable = true;
-    port = ports.openFirewall.immich;
+    port = ports.exposeProxy.immich;
     host = "0.0.0.0";
   };
 

@@ -170,7 +170,7 @@ in
     settings = {
       security.secret_key = "${config.sops.placeholder.grafana_secret_key}";
       server = {
-        http_port = ports.openFirewall.grafanaPort;
+        http_port = ports.exposeProxy.grafanaPort;
         http_addr = "0.0.0.0";
       };
     };
