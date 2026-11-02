@@ -161,6 +161,7 @@ in
     ../../homelab/remote.nix
     ../../homelab/proxy.nix
     # ../../homelab/pihole.nix
+    ../../homelab/blog.nix
   ];
   _module.args = {
     toMonitor = serviceNamesToMonitor;
@@ -542,6 +543,9 @@ in
     "iw" = ../../home/iw/home.nix;
   };
 
+  # Add group for /var/www/html/blog/ ownership
+  users.groups.bloggers = {};
+
   users.users = {
     ${username} = {
       isNormalUser = true;
@@ -557,6 +561,7 @@ in
         "lp" # for bluetooth
         "bluetooth"
         "jellyfin"
+        "bloggers"
       ];
       shell = pkgs.zsh;
     };
@@ -574,6 +579,7 @@ in
         "lp" # for bluetooth
         "bluetooth"
         "jellyfin"
+        "bloggers"
       ];
       shell = pkgs.zsh;
     };

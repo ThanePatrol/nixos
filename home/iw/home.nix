@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  packages = with pkgs; [
+  basic = with pkgs; [
     zsh-powerlevel10k
     stow
     gnumake
@@ -16,12 +16,16 @@ let
     fzf
     jujutsu
   ];
+  
+  project = with pkgs; [
+    hugo
+  ];
 
 in
 {
   home.username = "iw";
   home.homeDirectory = "/home/iw";
-  home.packages = packages;
+  home.packages = basic ++ project;
 
   home.stateVersion = "23.05";
   news.display = "silent";
