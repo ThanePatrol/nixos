@@ -78,5 +78,13 @@
       "is_tls": false,
       "sni": ""
     }
+  },
+  {
+    "hostname": "blog.mandalidis.com",
+    "target": {
+      "endpoint": "127.0.0.1:1313",
+      "is_tls": false,
+      "sni": ""
+    }
   }
 ]
