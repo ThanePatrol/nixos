@@ -1,8 +1,5 @@
 //! Minimal "Login with Google" flow built on top of `openidconnect`.
 //!
-//! This is a single Pingora `ServeHttp` app that serves a login form and
-//! handles the OpenID Connect authorization-code (PKCE) flow:
-//!
 //!   GET /          -> the login form (index.html)
 //!   GET /login     -> start the flow, redirect the browser to Google
 //!   GET /callback  -> Google redirects back here with ?code=...&state=...
@@ -38,7 +35,6 @@ const ISSUER_URL: &str = "https://accounts.google.com";
 
 const SESSION_TTL: std::time::Duration = std::time::Duration::from_hours(24);
 
-/// The login form. Embedded at compile time so there are no runtime path woes.
 const INDEX_HTML: &str = include_str!("../index.html");
 
 /// State we need to remember between starting a login and handling the

@@ -102,6 +102,7 @@ in
       RestartSec = 5;
 
       NoNewPrivileges = true;
+      KillSignal = "SIGKILL";
       AmbientCapabilities = "CAP_NET_BIND_SERVICE";
       CapabilityBoundingSet = "CAP_NET_BIND_SERVICE";
       ProtectSystem = "strict";

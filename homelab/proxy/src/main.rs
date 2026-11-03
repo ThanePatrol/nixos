@@ -59,7 +59,6 @@ pub struct RouteTarget {
 #[async_trait]
 impl ServeHttp for LoginApp {
     async fn response(&self, http_stream: &mut ServerSession) -> Response<Vec<u8>> {
-        // read timeout of 2s
         let read_timeout = 2000;
         let body = match timeout(
             Duration::from_millis(read_timeout),
@@ -99,7 +98,6 @@ static CF_CONNECTING_IP: header::HeaderName = header::HeaderName::from_static("c
 
 #[async_trait]
 impl ProxyHttp for Proxy {
-    /// For this small example, we don't need context storage
     type CTX = ();
     fn new_ctx(&self) -> () {
         ()
@@ -216,7 +214,6 @@ fn main() {
         .deref_mut()
         .set_max_proto_version(Some(pingora::tls::ssl::SslVersion::TLS1_3))
         .unwrap();
-    // tls_setting.enable_h2();
 
     let store = Arc::new(login::SessionStore {
         sessions: Mutex::new(HashMap::new()),
