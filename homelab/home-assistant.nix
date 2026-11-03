@@ -390,7 +390,7 @@ in
       permit_join = true;
       frontend = {
         enabled = true;
-        port = ports.exposeProxy.zigbee2MQTT;
+        port = ports.exposeProxy.zigbee2MQTT.port;
       };
       advanced = {
         transmit_power = 20;

@@ -223,10 +223,13 @@ fn main() {
 
     let routes = routes
         .into_iter()
+        .inspect(|r| info!("registering route: {:?}", r))
         .fold(HashMap::new(), |mut accumulator, route| {
+            // TODO: Pass this in properly.
+            let is_tls = route.hostname.contains("login");
             accumulator.insert(
                 route.hostname,
-                (route.target.endpoint, route.target.is_tls, route.target.sni),
+                (route.target.endpoint, is_tls, route.target.sni),
             );
 
             accumulator
