@@ -50,7 +50,9 @@ pub struct ProxyRoute {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct RouteTarget {
     pub endpoint: String,
+    #[serde(default)]
     pub is_tls: bool,
+    #[serde(default)]
     pub sni: String,
 }
 

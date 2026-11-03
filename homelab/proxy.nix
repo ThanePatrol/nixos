@@ -2,10 +2,21 @@
   pkgs,
   lib,
   config,
+  ports,
   ...
 }:
 
 let
+  portsAsRouteConfig = builtins.mapAttrs (
+    name: service:
+    (builtins.removeAttrs service [ "port" ])
+    // {
+      target = {
+        endpoint = "127.0.0.1:${toString service.port}";
+      };
+    }
+  ) ports.exposeProxy;
+
   pingora = pkgs.rustPlatform.buildRustPackage {
     pname = "rev-proxy";
     version = "0.1.0";
@@ -33,6 +44,9 @@ let
     preBuild = ''
       echo "Running pre-build script..."
       ${pkgs.coreutils}/bin/env
+      cat << 'EOF' > config.json
+      ${builtins.toJSON (lib.attrValues portsAsRouteConfig)}
+      EOF
       echo "______"
     '';
     LD_FOR_BUILD = "ld";

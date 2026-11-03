@@ -38,22 +38,53 @@ let
   _managementPort = "enp42s0f3u5u3c2";
 
   theme = "Catppuccin-mocha";
-  # TODO: build the ports based upon the ports definition.
-  # builtins.filter (s: lib.attrsets.matchAttrs {something = "true";} s) [{something = "false"; t = true;} {something = "false"; t = false;}]
-  # TODO: Then write out the json: writeText "config.json" (builtins.toJSON routes)
   ports = {
     exposeProxy = {
       # keep-sorted start numeric=yes
-      blog = 1313;
-      grafanaPort = 3001;
-      homeAssistant = 8123;
-      immich = 2283;
-      paperless = 8870;
-      pihole = 3002;
-      pingoraLogin = 8443;
-      qbittorrent = 8010;
-      ttyd = 3004;
-      zigbee2MQTT = 8080;
+      blog = {
+        port = 1313;
+        hostname = "blog.mandalidis.com";
+      };
+      grafanaPort = {
+        port = 3001;
+        hostname = "grafana.mandalidis.com";
+      };
+      homeAssistant = {
+        port = 8123;
+        hostname = "home.mandalidis.com";
+      };
+      immich = {
+        port = 2283;
+        hostname = "immich.mandalidis.com";
+      };
+      jellyfin = {
+        port = 8096;
+        hostname = "jellyfin.mandalidis.com";
+      };
+      paperless = {
+        port = 8870;
+        hostname = "paperless.mandalidis.com";
+      };
+      pihole = {
+        port = 3002;
+        hostname = "pihole.mandalidis.com";
+      };
+      pingoraLogin = {
+        port = 8443;
+        hostname = "login.mandalidis.com";
+      };
+      qbittorrent = {
+        port = 8010;
+        hostname = "torrent.mandalidis.com";
+      };
+      ttyd = {
+        port = 3004;
+        hostname = "terminal.mandalidis.com";
+      };
+      zigbee2MQTT = {
+        port = 8080;
+        hostname = "zigbee.mandalidis.com";
+      };
       # keep-sorted end
     };
     # Note firewall in this context is just for other devices on LAN.
@@ -83,97 +114,6 @@ let
       # keep-sorted end
     };
   };
-
-  routes = [
-    {
-      hostname = "login.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:8443";
-        "is_tls" = true;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "grafana.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:3001";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "home.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:8123";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "jellyfin.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:8096";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "immich.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:2283";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "torrent.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:8010";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "paperless.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:8870";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "zigbee.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:8080";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "pihole.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:3002";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "terminal.mandalidis.com";
-      target = {
-        "endpoint" = "127.0.0.1:3004";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-    {
-      hostname = "blog.mandalidis.com";
-      "target" = {
-        "endpoint" = "127.0.0.1:1313";
-        "is_tls" = false;
-        "sni" = "";
-      };
-    }
-  ];
 
   homeConfig = import ../../home/home.nix {
     inherit
@@ -318,7 +258,7 @@ in
 
   services.qbittorrent = {
     enable = true;
-    webuiPort = ports.exposeProxy.qbittorrent;
+    webuiPort = ports.exposeProxy.qbittorrent.port;
     openFirewall = true;
   };
 
@@ -591,11 +531,11 @@ in
     enable = true;
     allowedTCPPorts = [
       # keep-sorted start
-      ports.exposeProxy.homeAssistant # Home assistant
-      ports.exposeProxy.immich # immich
-      ports.exposeProxy.paperless # Paperless
-      ports.exposeProxy.pihole # web ui for pihole.
-      ports.exposeProxy.zigbee2MQTT # Zigbee2Mqtt
+      ports.exposeProxy.homeAssistant.port # Home assistant
+      ports.exposeProxy.immich.port # immich
+      ports.exposeProxy.paperless.port # Paperless
+      ports.exposeProxy.pihole.port # web ui for pihole.
+      ports.exposeProxy.zigbee2MQTT.port # Zigbee2Mqtt
       ports.openFirewall.dev # general dev
       ports.openFirewall.minecraft # Minecraft
       ports.openFirewall.mosquitto # Mosquitto
@@ -700,14 +640,14 @@ in
 
   services.ttyd = {
     enable = true;
-    port = ports.exposeProxy.ttyd;
+    port = ports.exposeProxy.ttyd.port;
     writeable = true;
     maxClients = 1;
   };
 
   services.paperless = {
     enable = true;
-    port = ports.exposeProxy.paperless;
+    port = ports.exposeProxy.paperless.port;
     address = "0.0.0.0";
     consumptionDirIsPublic = true;
     settings = {
@@ -723,7 +663,7 @@ in
 
   services.immich = {
     enable = true;
-    port = ports.exposeProxy.immich;
+    port = ports.exposeProxy.immich.port;
     host = "0.0.0.0";
   };
 
