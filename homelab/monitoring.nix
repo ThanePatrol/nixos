@@ -58,8 +58,6 @@ in
     ];
   };
 
-  # TODO setup alerting on `node_systemd_unit_state{name=~".*service", state="failed"} == 1`
-  # to be aware of failed backups.
   services.prometheus.exporters.node = {
     enable = true;
     port = ports.noFirewall.nodeExporterPort;

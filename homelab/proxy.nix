@@ -53,6 +53,8 @@ let
     LD_FOR_TARGET = "ld";
     LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
     BINDGEN_EXTRA_CLANG_ARGS = "-isystem ${pkgs.llvmPackages.libclang.lib}/lib/clang/${lib.getVersion pkgs.clang}/include";
+    PROMETHEUS_PINGORA_PORT = "127.0.0.1:${builtins.toString ports.noFirewall.pingoraPrometheus}";
+    LOGIN_PINGORA_PORT = "127.0.0.1:${builtins.toString ports.exposeProxy.pingoraLogin.port}";
   };
 
 in

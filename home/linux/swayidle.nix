@@ -1,15 +1,6 @@
 { pkgs, ... }:
 
 let
-  # return error code if music is playing
-  ifMusicNotPlayingSuspend = pkgs.writeShellScriptBin "if-music-not-playing-suspend" ''
-    is_playing=$(${pkgs.playerctl}/bin/playerctl status)
-    if [ "$is_playing" == "Playing" ]; then
-      exit 1
-    else
-    ${pkgs.systemd}/bin/systemctl suspend
-    fi
-  '';
   # TODO - consider implementing faster blur  https://github.com/johnae/blur
   takeBlurredScreenshot = pkgs.writeShellScriptBin "screenshot-background" ''
     ${pkgs.grim}/bin/grim /tmp/lockscreen.png

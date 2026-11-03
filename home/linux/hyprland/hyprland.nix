@@ -43,12 +43,12 @@ in
     enable = false;
     config = {
       bars = [ ]; # Disable bars in preference of waybar.
-      assigns = { }; # TODO: For assignig windows to certain workspaces. See https://nix-community.github.io/home-manager/options/home-manager/wayland.html#opt-wayland.windowManager.sway.config.assigns
+      assigns = { };
       bindswitches = {
         "lid:on" = {
           reload = true;
           locked = true;
-          action = "output eDP-1 disable"; # TODO: equivalent clamshell, not just plain laptop display.
+          action = "output eDP-1 disable";
         };
         "lid:off" = {
           reload = true;
@@ -92,7 +92,7 @@ in
       animations = {
         enabled = false;
       };
-            general = {
+      general = {
         gaps_in = 0;
         gaps_out = 0;
         border_size = 1;
@@ -190,12 +190,6 @@ in
           [ ]
       );
 
-      # TODO: Set workspace rules for gmail and calendar
-      # windowrule = [
-      #   "tile, title:CodeBrowser"
-      #   "tile, title:Ghidra:*"
-      #   "workspace 9, class:org.kde.kdeconnect.app" # want it available but not somewhere i use all the time
-      # ];
       misc = {
         disable_hyprland_logo = true;
         disable_splash_rendering = true;

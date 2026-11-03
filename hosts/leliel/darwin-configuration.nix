@@ -83,7 +83,7 @@ in
     # mainly used for gui things not packaged by nix
     casks = [
       "firefox"
-      "MonitorControl" # TODO replace with nix version: monitorcontrol
+      "MonitorControl"
     ];
   };
 

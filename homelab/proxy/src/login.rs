@@ -119,7 +119,6 @@ impl InitErr {
     }
 }
 
-// TODO: Change to lets encrypt to avoid self signed certs
 impl LoginApp {
     pub fn from_env(store: Arc<SessionStore>) -> Result<Self, InitErr> {
         let client_id = ClientId::new(std::env::var("GOOGLE_CLIENT_ID").unwrap_or_default());

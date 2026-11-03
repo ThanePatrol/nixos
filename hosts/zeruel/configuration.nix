@@ -111,6 +111,7 @@ let
       processExporter = 9256;
       prometheusPort = 9090;
       tvRemote = 8099;
+
       # keep-sorted end
     };
   };
@@ -654,10 +655,8 @@ in
       PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS = true;
       PAPERLESS_OCR_LANGUAGE = "eng";
       PAPERLESS_CONSUMER_RECURSIVE = true;
-      # TODO: Pass these URLS around in a better manner....
-      PAPERLESS_URL = "https://paperless.mandalidis.com";
-      PAPERLESS_CSRF_TRUSTED_ORIGINS = "https://paperless.mandalidis.com";
-
+      PAPERLESS_URL = "https://${ports.exposeProxy.paperless.hostname}";
+      PAPERLESS_CSRF_TRUSTED_ORIGINS = "https://${ports.exposeProxy.paperless.hostname}";
     };
   };
 

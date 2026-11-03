@@ -63,9 +63,7 @@ local function settings()
         }
 
     else
-        -- TODO add acp for home.
         return {}
-
     end
 end
 

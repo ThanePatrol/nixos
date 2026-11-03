@@ -105,7 +105,6 @@ in
   ++
     # hack to avoid loading in sops.nix files as we don't need them anywhere else.
     (
-      # TODO - should probably define this elsewhere.
       if !isDarwin && !isWork then
         [
           ./common/rclone.nix

@@ -244,19 +244,16 @@ fn main() {
     );
 
     let mut prometheus_service_http = pingora_prometheus::prometheus_http_service();
-    // TODO: Set these ports to be read from env or similar.
-    prometheus_service_http.add_tcp("0.0.0.0:8442");
+    prometheus_service_http.add_tcp(env!("PROMETHEUS_PINGORA_PORT"));
 
     let mut login_service = login::login_service_http(store.clone());
     login_service.add_tls_with_settings(
-        // TODO: Set these ports to be read from env or similar.
-        "127.0.0.1:8443",
+        env!("LOGIN_PINGORA_PORT"),
         Some(options.clone()),
         login_tls_settings,
     );
     login_service.add_uds("/tmp/echo.sock", None);
 
-    // TODO: Set these ports to be read from env or similar.
     proxy.add_tls_with_settings("0.0.0.0:443", Some(options.clone()), proxy_tls_settings);
 
     my_server.add_service(proxy);

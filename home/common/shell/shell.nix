@@ -61,9 +61,6 @@ in
       gs = "git status -s";
       # hack for resetting clipboard when it starts playing up on macos
       rclip = "sudo launchctl stop com.apple.pboard && sudo launchctl start com.apple.pboard && pbcopy < /dev/null";
-      # TODO make portable for linux
-      unix-to-date = ''date -u -d @"$(($(pbpaste) / 1000))" +%Y%m%d | tee >(pbcopy)'';
-      genpw = "tr -dc A-Za-z0-9 </dev/urandom | head -c 30 | tee >(pbcopy)";
       tmux = (if isWork then "tmx2" else "tmux");
     };
     plugins = [
