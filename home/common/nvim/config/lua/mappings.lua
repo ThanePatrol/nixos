@@ -156,3 +156,14 @@ vim.api.nvim_create_user_command("CodeCompanionChat", function(args)
     vim.cmd("CodeCompanionChat " .. args.args)
 end, {nargs = "*"})
 -- CodeCompanion end
+
+-- Mermaid start
+local stop_fun = nil
+vim.keymap.set('n', '<leader>sp', function()
+    stop_fun = require('utils').start_server_on_port(3000, "")
+end, {desc = "[S]erve on [P]ort to start serving a svg"})
+
+vim.keymap.set('n', '<leader>st',
+               function() if stop_fun ~= nil then stop_fun() end end,
+               {desc = "[S]erver s[T]op"})
+-- Mermaid end

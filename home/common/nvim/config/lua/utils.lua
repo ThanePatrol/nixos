@@ -9,8 +9,8 @@ function M.is_cloudtop() return vim.env.CORP_WORK_ENV == "true" end
 -- Also have another binding to save it as a png.
 -- Also include mmdc in nvvim required packages + python3 so guaranteed to work.
 --
---
--- TODO: Make generic function for this as it's used in a few places
+--- Gets the text in visual mode in a table.
+--- table[i] is the i`th row of the visual selection.
 --- @return string[]
 function M.get_text_in_visual_mode()
     -- Exit visual mode to save selection marks
@@ -47,6 +47,50 @@ function M.get_text_in_visual_mode()
 end
 
 function M.preview_svg() end
-function M.preview_svg() end
+
+---@param port integer The port to listen on.
+---@param svg_path string The absolute path to the svg to serve.
+---@return function stop The function to stop the server.
+function M.start_server_on_port(port, svg_path)
+    local uv = vim.uv
+    -- local response_body = string.format("<img src=%s>", svg_path)
+    local response_body = "<h1>Hello from Neovim vim.uv!</h1>"
+    local http_rsp = string.format("HTTP/1.1 200 OK\r\n" ..
+                                       "Content-Type: text/html; charset=utf-8\r\n" ..
+                                       "Content-Length: %d\r\n" ..
+                                       "Connection: close\r\n\r\n%s",
+                                   #response_body, response_body)
+
+    local server = uv.new_tcp()
+
+    assert(server:bind("127.0.0.1", port))
+
+    server:listen(128, function(err)
+        assert(not err, err)
+        local client = uv.new_tcp()
+        server:accept(client)
+        client:read_start(function(err, chunk)
+            assert(not err, err)
+            vim.schedule(function()
+                vim.notify(string.format("Client read of chunk: %s", chunk),
+                           vim.log.levels.WARN)
+
+            end)
+            if chunk then
+                client:write(http_rsp)
+            else
+                client:shutdown()
+                client:close()
+            end
+        end)
+    end)
+
+    -- Don't bother cleaning up client connections.
+    local function stop_server()
+        if not server:is_closing() then server:close() end
+    end
+
+    return stop_server
+end
 
 return M
