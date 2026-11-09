@@ -70,7 +70,6 @@ require('render-markdown-config')
 require('formatter-config')
 require('harpoon-config')
 require('quickfix')
-require('codecompanion-config')
 require('fyler-config')
 
 if utils.is_cloudtop() then require("google") end

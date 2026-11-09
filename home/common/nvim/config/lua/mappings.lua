@@ -149,3 +149,10 @@ vim.keymap.set('n', '<leader>w', '<cmd>tabclose<cr>', {desc = 'Close tab'})
 local fyler_conf = require('fyler-config')
 vim.keymap.set('n', 'tt', fyler_conf.open_at_cwd)
 -- Fyler end
+
+-- CodeCompanion start
+vim.api.nvim_create_user_command("CodeCompanionChat", function(args)
+    require("codecompanion-config")
+    vim.cmd("CodeCompanionChat " .. args.args)
+end, {nargs = "*"})
+-- CodeCompanion end

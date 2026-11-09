@@ -1,20 +1,22 @@
 vim.filetype.add({pattern = {['.*pi'] = 'python', ['*.gcl'] = 'python'}})
 
-require("critique.comments").setup({
-    -- Automatically fetch comments after setup and on BufEnter events.
-    auto_fetch = true,
-    auto_render = true,
-    debounce = 10000,
-    display = {
-        -- Max width in character to render a comment's text before wrapping to a newline.
-        max_comment_width = 110,
-        -- Render comment threads marked as resolved?
-        render_resolved_threads = true
-    },
-    -- Debug message level
-    debug = 0,
-    verbose_notifications = true
-})
+vim.schedule(function()
+    require("critique.comments").setup({
+        -- Automatically fetch comments after setup and on BufEnter events.
+        auto_fetch = true,
+        auto_render = true,
+        debounce = 10000,
+        display = {
+            -- Max width in character to render a comment's text before wrapping to a newline.
+            max_comment_width = 110,
+            -- Render comment threads marked as resolved?
+            render_resolved_threads = true
+        },
+        -- Debug message level
+        debug = 0,
+        verbose_notifications = true
+    })
+end)
 
 -- Run visual selection in f1-sql and show in a new tab
 local function run_f1_sql()

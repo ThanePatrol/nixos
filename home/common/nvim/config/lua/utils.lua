@@ -1,6 +1,6 @@
 local M = {}
 
-function M.is_cloudtop() return os.getenv("CORP_WORK_ENV") == "true" end
+function M.is_cloudtop() return vim.env.CORP_WORK_ENV == "true" end
 
 -- TODO: In markdown files have a util function to preview currently selected mermaid blocks in visual mode
 -- by:
