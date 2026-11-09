@@ -132,6 +132,8 @@ local function run_f1_sql()
                 end
 
                 vim.api.nvim_buf_set_lines(buf, 0, -1, false, result)
+                vim.notify("Query finished in buf" .. tostring(buf),
+                           vim.log.levels.INFO)
             end)
         end
     })
@@ -144,7 +146,6 @@ local function run_f1_sql()
 
     vim.fn.chansend(job_id, query)
     vim.fn.chanclose(job_id, 'stdin')
-    vim.notify("Query finished in buf" .. tostring(buf), vim.log.levels.INFO)
 end
 
 local function open_bugged_edit(bug_id)
