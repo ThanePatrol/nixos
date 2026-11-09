@@ -20,36 +20,7 @@ end)
 
 -- Run visual selection in f1-sql and show in a new tab
 local function run_f1_sql()
-    -- Exit visual mode to save selection marks
-    vim.cmd('normal! \x1b')
-    local start_pos = vim.fn.getpos("'<")
-    local end_pos = vim.fn.getpos("'>")
-    local start_line = start_pos[2]
-    local end_line = end_pos[2]
-    local start_col = start_pos[3]
-    local end_col = end_pos[3]
-
-    local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-    if #lines == 0 then
-        vim.notify("No text selected", vim.log.levels.WARN)
-        return
-    end
-
-    local mode = vim.fn.visualmode()
-    if mode == 'v' then
-        if start_line == end_line then
-            lines[1] = string.sub(lines[1], start_col, end_col)
-        else
-            lines[1] = string.sub(lines[1], start_col)
-            lines[#lines] = string.sub(lines[#lines], 1, end_col)
-        end
-    elseif mode == '\22' then -- Block visual mode
-        for i, line in ipairs(lines) do
-            local s = math.min(start_col, end_col)
-            local e = math.max(start_col, end_col)
-            lines[i] = string.sub(line, s, e)
-        end
-    end
+    local lines = require('utils').get_text_in_visual_mode()
 
     local query = table.concat(lines, "\n")
     if query == "" then
