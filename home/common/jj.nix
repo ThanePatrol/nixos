@@ -206,9 +206,31 @@ in
 
       ui = {
         diff-editor = "vimdiff";
-        merge-editor = "${pkgs.mergiraf}/bin/mergiraf";
+        # TODO: Fix mergiraf or get rid of it.
+        # merge-editor = "${pkgs.mergiraf}/bin/mergiraf";
         default-command = "status";
       };
+
+      # merge-tools.mergiraf = {
+      #   program = "${pkgs.mergiraf}/bin/mergiraf";
+      #   merge-args = [
+      #     "merge"
+      #     "$base"
+      #     "$left"
+      #     "$right"
+      #     "-o"
+      #     "$output"
+      #     "-l"
+      #     "$marker_length"
+      #     "-p"
+      #     "$path"
+      #     "--fast"
+      #   ];
+      #   merge-conflict-exit-codes = [ 1 ];
+      #   edit-args = [ ];
+      #   diff-args = [ ];
+      #
+      # };
 
       aliases = allAliases;
 
