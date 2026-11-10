@@ -27,6 +27,8 @@ local function run_f1_sql()
         vim.notify("Selected query is empty", vim.log.levels.WARN)
         return
     end
+    local last_char = query:sub(-1)
+    if last_char ~= ";" then query = query .. ";" end
 
     local buf_name = "F1-SQL Query Output" .. os.date("%Y-%m-%d %H:%M:%S")
 
