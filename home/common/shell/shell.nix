@@ -20,7 +20,6 @@ let
   workLinuxExports = ''
     export PATH="$PATH:$HOME/.nix-profile/bin"
     export PATH="$PATH:/usr/local/google/home/hmandalidis/go/bin"
-    export PATH="$PATH:/google/src/head/depot/eng/tools"
     source /etc/bash_completion.d/jjd
     export REPLACE_BLAZE_WITH_DBIP=""
     export CORP_WORK_ENV=true
