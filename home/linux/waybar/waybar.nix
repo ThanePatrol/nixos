@@ -13,7 +13,7 @@
         position = "top";
         height = 24;
         spacing = 12;
-        modules-left = [ "hyprland/workspaces" ];
+        modules-left = [ "sway/workspaces" ];
         modules-center = [
           "clock#sydney"
           "clock#mtv"

@@ -45,7 +45,7 @@ window#waybar.hidden {
     text-shadow: inherit;
 }
 
-#workspaces button.active {
+#workspaces button.focused {
     color: #f9e2af;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }

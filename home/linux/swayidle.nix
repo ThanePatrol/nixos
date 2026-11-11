@@ -7,6 +7,18 @@ let
     ${pkgs.imagemagick}/bin/magick convert -filter Gaussian -resize 25% -blur 0x2.5 -resize 400% /tmp/lockscreen.png /tmp/lockscreen.png
   '';
 
+  # The distro's swaylock where there is one: the Nix build can't authenticate
+  # against a non-NixOS PAM stack, so it would lock and never unlock (see
+  # swaylock.nix).
+  swaylock = pkgs.writeShellScript "swaylock" ''
+    for dir in /usr/local/bin /usr/bin; do
+      if [ -x "$dir/swaylock" ]; then
+        exec "$dir/swaylock" "$@"
+      fi
+    done
+    exec ${pkgs.swaylock}/bin/swaylock "$@"
+  '';
+
 in
 {
   home.packages = [ takeBlurredScreenshot ];
@@ -27,7 +39,7 @@ in
       }
       {
         timeout = 300;
-        command = "${pkgs.swaylock}/bin/swaylock -f -i /tmp/lockscreen.png";
+        command = "${swaylock} -f -i /tmp/lockscreen.png";
       }
       {
         timeout = 600;

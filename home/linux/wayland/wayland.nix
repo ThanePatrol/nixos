@@ -13,8 +13,6 @@
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOW_DECORATION = "1";
     MOZ_ENABLE_WAYLAND = "1";
-    WLR_BACKEND = "vulkan";
-    WLR_RENDERER = "vulkan";
     XDG_SESSION_TYPE = "wayland";
 
   };
