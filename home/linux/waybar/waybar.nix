@@ -77,7 +77,7 @@
             ];
           };
         };
-        "puluseaudio/slider" = {
+        "pulseaudio/slider" = {
           min = 0;
           max = 100;
           orientation = "horizontal";
