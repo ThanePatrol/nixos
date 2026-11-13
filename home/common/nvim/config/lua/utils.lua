@@ -48,6 +48,8 @@ end
 
 function M.preview_svg() end
 
+-- TODO: Don't couple this with the svg itself. 
+-- Also add anchor tags for download of png and svg.
 ---@param port integer The port to listen on.
 ---@param svg_path string The absolute path to the svg to serve.
 ---@return function stop The function to stop the server.

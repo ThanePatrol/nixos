@@ -8,8 +8,8 @@
 let
   themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ] theme;
 
-  getLastThreeDirs = pkgs.writeShellScriptBin "get-last-three-dirs" ''
-    last_three="$(awk '{split($0,arr,"/"); print arr[length(arr)-2],arr[length(arr)-1],arr[length(arr)]}' | tr ' ' '/')"
+  getLastTwoDirs = pkgs.writeShellScriptBin "get-last-three-dirs" ''
+    last_three="$(awk '{split($0,arr,"/"); print arr[length(arr)-1],arr[length(arr)]}' | tr ' ' '/')"
     echo $last_three
   '';
 
@@ -74,8 +74,8 @@ in
 
       # Set window names
       set -g status-left ""
-      set -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}] #I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #(echo #{pane_current_path} | ${getLastThreeDirs}/bin/get-last-three-dirs) "
-      set -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}] #I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #(echo #{pane_current_path} | ${getLastThreeDirs}/bin/get-last-three-dirs) "
+      set -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}] #I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #(echo #{pane_current_path} | ${getLastTwoDirs}/bin/get-last-two-dirs) #{@llm_status}"
+      set -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}] #I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #(echo #{pane_current_path} | ${getLastTwoDirs}/bin/get-last-two-dirs) #{@llm_status}"
 
       # launch new pane in current dir
       bind '"' split-window -v -c "#{pane_current_path}"
