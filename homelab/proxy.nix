@@ -3,6 +3,7 @@
   lib,
   config,
   ports,
+  crane,
   ...
 }:
 
@@ -17,11 +18,28 @@ let
     }
   ) ports.exposeProxy;
 
-  pingora = pkgs.rustPlatform.buildRustPackage {
+  certbotConf = lib.attrsets.attrsToList (
+    builtins.mapAttrs (
+      name: service:
+      (builtins.removeAttrs service [
+        "port"
+      ])
+    ) ports.exposeProxy
+  );
+
+  craneLib = crane.mkLib pkgs;
+
+  htmlFilter = path: _type: builtins.match ".*html$" path != null;
+  inputFiles = path: type: (htmlFilter path type) || (craneLib.filterCargoSources path type);
+
+  pingora = craneLib.buildPackage {
     pname = "rev-proxy";
     version = "0.1.0";
-    src = ./proxy;
-    cargoLock.lockFile = ./proxy/Cargo.lock;
+    src = lib.cleanSourceWith {
+      src = ./proxy;
+      filter = inputFiles;
+      name = "source";
+    };
     nativeBuildInputs = [
       pkgs.cmake
       pkgs.pkg-config
@@ -59,6 +77,9 @@ let
 
 in
 {
+  # Certbot write out to ini
+  environment.etc."certbot/cloudflare.json".text = lib.generators.toJSON { } certbotConf;
+
   users.users.pingora = {
     isSystemUser = true;
     group = "pingora";
@@ -79,6 +100,15 @@ in
       ALLOWED_EMAILS="${config.sops.placeholder.allowed_emails}"
     '';
     owner = "pingora";
+  };
+
+  systemd.services.certbot-copy = {
+    description = "Copy certbot certs to temporarily readable place.";
+
+    script = ''
+
+    '';
+
   };
 
   systemd.services.rev-proxy = {

@@ -463,6 +463,7 @@ in
       };
       ipmi_password = { };
       gmail_app_password = { };
+      cloudflare_certbot_api_key = { };
       cloudflare_api_key = { };
       cloudflare_account_id = { };
       cloudflare_zone_id = { };

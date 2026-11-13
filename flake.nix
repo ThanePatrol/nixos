@@ -23,6 +23,7 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    crane.url = "github:ipetkov/crane";
   };
 
   outputs =
@@ -35,6 +36,7 @@
       flake-utils,
       neovim-nightly-overlay,
       sops-nix,
+      crane,
       ...
     }@inputs:
     let
@@ -98,6 +100,7 @@
           inherit system pkgs;
 
           specialArgs = {
+            inherit crane;
             customArgs = {
               inherit
                 inputs
