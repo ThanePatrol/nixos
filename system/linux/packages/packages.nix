@@ -24,6 +24,7 @@ let
     slurp
     smartmontools
     socat # to establish socket connections
+    uv
     wireplumber # sound memes
     # keep-sorted end
   ];
