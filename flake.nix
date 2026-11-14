@@ -91,8 +91,8 @@
             })
           ];
         };
-      nixosRemoteDestopSystem =
-        system: username: isWork: email: gitUserName: homeDirectory:
+      nixosSystem =
+        system: username: isWork: email: gitUserName: homeDirectory: name:
         let
           pkgs = genPkgs system;
         in
@@ -115,16 +115,13 @@
           };
 
           modules = [
-            ./hosts/zeruel/configuration.nix
+            ./hosts/${name}/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
             (
               { pkgs, lib, ... }:
               {
-
-                nixpkgs.overlays = [
-                ];
-
+                nixpkgs.overlays = [ ];
               }
             )
           ];
@@ -212,8 +209,12 @@
       nixosConfigurations = {
         # x570 server
         zeruel =
-          nixosRemoteDestopSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis"
-            "/home/hugh";
+          nixosSystem "x86_64-linux" "hugh" false "mandalidis.hugh@gmail.com" "Hugh Mandalidis" "/home/hugh"
+            "zeruel";
+
+        israfel =
+          nixosSystem "aarch64-linux" "hugh" false "hugh@mandalidis.com" "Hugh Mandalidis" "/home/hugh"
+            "israfel";
       };
 
       homeConfigurations = {
