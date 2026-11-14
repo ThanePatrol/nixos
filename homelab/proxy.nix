@@ -18,17 +18,9 @@ let
     }
   ) ports.exposeProxy;
 
-  certbotConf = lib.attrsets.attrsToList (
-    builtins.mapAttrs (
-      name: service:
-      (builtins.removeAttrs service [
-        "port"
-      ])
-    ) ports.exposeProxy
-  );
-
   craneLib = crane.mkLib pkgs;
 
+  # Need to include index.html in build process. This prevents crane from excluding it.
   htmlFilter = path: _type: builtins.match ".*html$" path != null;
   inputFiles = path: type: (htmlFilter path type) || (craneLib.filterCargoSources path type);
 
@@ -77,8 +69,28 @@ let
 
 in
 {
-  # Certbot write out to ini
-  environment.etc."certbot/cloudflare.json".text = lib.generators.toJSON { } certbotConf;
+
+  sops.templates."acme-env" = {
+    content = ''
+      CLOUDFLARE_DNS_API_TOKEN=${config.sops.placeholder.cloudflare_certbot_api_key}
+      LEGO_DISABLE_CNAME_SUPPORT=true'';
+    owner = "acme";
+    mode = "0400";
+  };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "admin@mandalidis.com";
+    certs = {
+      "mandalidis.com" = {
+        domain = "*.mandalidis.com";
+        group = "pingora";
+        dnsProvider = "cloudflare";
+        environmentFile = config.sops.templates."acme-env".path;
+        reloadServices = [ "rev-proxy" ];
+        dnsResolver = "1.1.1.1:53";
+      };
+    };
+  };
 
   users.users.pingora = {
     isSystemUser = true;
@@ -92,33 +104,18 @@ in
 
   sops.templates."pingora-env" = {
     content = ''
-      PROXY_SSL_KEY_PEM="${config.sops.placeholder.proxy_ssl_key_pem}"
-      PROXY_CERT_PEM="${config.sops.placeholder.proxy_cert_pem}"
       GOOGLE_CLIENT_ID="${config.sops.placeholder.google_client_id}"
       GOOGLE_CLIENT_SECRET="${config.sops.placeholder.google_client_secret}"
       GOOGLE_REDIRECT_URI="${config.sops.placeholder.google_redirect_uri}"
       ALLOWED_EMAILS="${config.sops.placeholder.allowed_emails}"
     '';
     owner = "pingora";
-  };
-
-  systemd.services.certbot-copy = {
-    description = "Copy certbot certs to temporarily readable place.";
-
-    script = ''
-
-    '';
-
+    mode = "0400";
   };
 
   systemd.services.rev-proxy = {
     description = "Reverse proxy for exposing homelab applications.";
     script = ''
-      source ${config.sops.templates."pingora-env".path};
-      newline_ssl="$(echo $PROXY_SSL_KEY_PEM | tr ' ' '\n')"
-      printf -- "-----BEGIN PRIVATE KEY-----\n%s\n-----END PRIVATE KEY-----\n" "$newline_ssl" > /tmp/key.pem
-      newline_cert="$(echo $PROXY_CERT_PEM | tr ' ' '\n')"
-      printf -- "-----BEGIN CERTIFICATE-----\n%s\n-----END CERTIFICATE-----\n" "$newline_cert" > /tmp/cert.pem
       ${pingora}/bin/rev-proxy
     '';
     after = [
@@ -147,6 +144,13 @@ in
         "AF_INET6"
         "AF_UNIX"
       ];
+      StateDirectory = "pingora";
+      ExecStartPre = "${pkgs.writeShellScript "copy-cert" ''
+        dir="/var/lib/pingora";
+
+        ${pkgs.coreutils}/bin/cp /var/lib/acme/mandalidis.com/fullchain.pem $dir/cert.pem
+        ${pkgs.coreutils}/bin/cp /var/lib/acme/mandalidis.com/key.pem $dir/key.pem
+      ''}";
     };
   };
 }

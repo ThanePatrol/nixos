@@ -468,8 +468,6 @@ in
       cloudflare_account_id = { };
       cloudflare_zone_id = { };
       cloudflare_login_dns_record_id = { };
-      proxy_ssl_key_pem = { };
-      proxy_cert_pem = { };
       google_client_id = { };
       google_client_secret = { };
       google_redirect_uri = { };

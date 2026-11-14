@@ -199,7 +199,7 @@ fn main() {
         user_timeout: Duration::from_secs(85),
     });
 
-    let (cert_path, key_path) = ("/tmp/cert.pem", "/tmp/key.pem");
+    let (cert_path, key_path) = ("/var/lib/pingora/cert.pem", "/var/lib/pingora/key.pem");
     let mut login_tls_settings =
         TlsSettings::intermediate(cert_path, key_path).expect("could not create tls settings");
     login_tls_settings
