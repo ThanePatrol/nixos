@@ -45,6 +45,10 @@ let
         port = 1313;
         hostname = "blog.mandalidis.com";
       };
+      forgejo = {
+        port = 3005;
+        hostname = "git.mandalidis.com";
+      };
       grafanaPort = {
         port = 3001;
         hostname = "grafana.mandalidis.com";
@@ -643,6 +647,22 @@ in
     port = ports.exposeProxy.ttyd.port;
     writeable = true;
     maxClients = 1;
+  };
+
+  services.forgejo = {
+    enable = true;
+    lfs.enable = true;
+    settings = {
+      server = {
+        ROOT_URL = "https://${ports.exposeProxy.forgejo.hostname}/";
+        HTTP_PORT = ports.exposeProxy.forgejo.port;
+      };
+    };
+    # TODO: Setup runners with services.forgejo-runner
+    # actions = {
+    #   ENABLED = true;
+    #   DEFAULT_ACTIONS_URL = "github";
+    # };
   };
 
   services.paperless = {
