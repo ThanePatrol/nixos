@@ -37,6 +37,8 @@ const SESSION_TTL: std::time::Duration = std::time::Duration::from_hours(24);
 
 const INDEX_HTML: &str = include_str!("../index.html");
 
+pub const SESSION_COOKIE_NAME: &str = "pingora-session";
+
 /// State we need to remember between starting a login and handling the
 /// callback. Keyed in the map by the CSRF `state` token.
 struct PendingLogin {
@@ -296,7 +298,8 @@ impl LoginApp {
             .header(
                 header::SET_COOKIE,
                 format!(
-                    "session={}; HttpOnly; Secure; SameSite=Lax; Path=/; Domain=mandalidis.com",
+                    "{}={}; HttpOnly; Secure; SameSite=Lax; Path=/; Domain=mandalidis.com",
+                    SESSION_COOKIE_NAME,
                     session_store_key.to_string()
                 ),
             )
@@ -309,7 +312,7 @@ impl LoginApp {
         if let Some(Ok(session_token)) = headers
             .get(header::COOKIE)
             .and_then(|v| v.to_str().ok())
-            .and_then(|c| get_cookie(c, "session"))
+            .and_then(|c| get_cookie(c, SESSION_COOKIE_NAME))
             .map(|s| UserKey::from_string(s))
         {
             if let Some((_token, user, _visits)) =

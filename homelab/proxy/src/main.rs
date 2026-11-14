@@ -124,7 +124,7 @@ impl ProxyHttp for Proxy {
         let token = session
             .get_header(header::COOKIE)
             .and_then(|v| v.to_str().ok())
-            .and_then(|c| login::get_cookie(c, "session"))
+            .and_then(|c| login::get_cookie(c, login::SESSION_COOKIE_NAME))
             .map(|s| UserKey::from_string(s));
 
         // User does have token, that is not expired, allow.
