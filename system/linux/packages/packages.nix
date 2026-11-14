@@ -30,6 +30,7 @@ let
     smartmontools
     socat # to establish socket connections
     sshfs
+    uv
     wireplumber # sound memes
     # keep-sorted end
   ];
