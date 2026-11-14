@@ -11,10 +11,9 @@ let
     zip
     unzip
     jq
-    neovim
-    tmux
-    fzf
     jujutsu
+    diff-so-fancy
+    tree
   ];
   
   project = with pkgs; [
@@ -76,10 +75,106 @@ in
       source "$HOME/dotfiles/shell/.p10k.zsh"
       source "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
       eval "$(${pkgs.fzf}/bin/fzf --zsh)"
+      # if [ ! -d "$HOME/.config/nvim" ]; then
+      #   stow -d "$HOME/dotfiles" -t "$HOME" nvim
+      # fi
 
+      # export TERM=xterm-kitty
       if ! tmux list-sessions >/dev/null 2>&1; then
         tmux new -s dev
       fi
     '';
+  };
+
+  programs.tmux = {
+    enable = true;
+    mouse = true;
+    terminal = "tmux-256color";
+    shortcut = "space"; # set -g prefix C-space
+    baseIndex = 1;
+    keyMode = "vi";
+    plugins = with pkgs.tmuxPlugins; [
+      catppuccin
+    ];
+    extraConfig = ''
+      # Open new pane to current dir
+      bind  c  new-window      -c "#{pane_current_path}"
+      bind  %  split-window -h -c "#{pane_current_path}"
+      bind '"' split-window -v -c "#{pane_current_path}"
+      
+      # Use n and N for window navigation
+      unbind p
+      bind-key N previous-window
+      
+      # Copy highlighted content once drag finishes
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel
+      
+      set -g @catppuccin_flavor "mocha" # light="latte" dark="mocha"
+      
+      # Pretty status bar
+      set -g status-left ""
+      set -g status-right "#[fg=#{@thm_crust},bg=#{@thm_teal}] #S #[fg=#{@thm_crust},bg=#{@thm_mauve}] %k:%M %d-%m-%y "
+      set -g status-right-length 100
+      
+      set -g window-status-format "#[fg=#{@thm_crust},bg=#{@thm_text}] #I #[default] #[fg=#{@thm_text},bold]#{b:pane_current_path}"
+      set -g window-status-current-format "#[fg=#{@thm_crust},bg=#{@thm_flamingo}] #I #[default] #[fg=#{@thm_rosewater},bold]#{b:pane_current_path}"
+      set -g window-status-current-style "nounderscore"
+    '';
+  };
+
+  programs.neovim = {
+    enable = true;
+    withPython3 = false;
+    withRuby = false;
+    plugins = with pkgs.vimPlugins; [
+
+      plenary-nvim
+      telescope-nvim
+      nvim-treesitter.withAllGrammars
+
+      gitsigns-nvim
+      nightfox-nvim
+
+      mini-icons
+
+      nvim-web-devicons
+      mini-nvim
+      which-key-nvim
+
+      # Full list:
+      # LuaSnip
+      # PDFview
+      # cmp-buffer
+      # cmp-nvim-lsp
+      # cmp-path
+      # cmp_luasnip
+      # conform.nvim
+      # fyler.nvim
+      # gitsigns.nvim
+      # mini-icons
+      # mini.nvim
+      # nightfox.nvim
+      # nvim-cmp
+      # nvim-jdtls
+      # nvim-lspconfig
+      # plenary.nvim
+      # render-markdown.nvim
+      # telescope.nvim
+      # vim-dadbod
+      # vim-dadbod-completion
+      # vim-dadbod-ui
+      # which-key.nvim
+    ];
+    extraPackages = with pkgs; [
+      lua-language-server
+      shellcheck
+      gcc
+      tree-sitter
+    ];
+  };
+
+  xdg.configFile.nvim = {
+    source = ./nvim;
+    recursive = true;
   };
 }
