@@ -13,12 +13,6 @@
         };
         ForwardAgent = true;
       };
-      "azure" = {
-        host = "azure";
-        hostname = "74.249.58.10";
-        user = "azureuser";
-        identityFile = "/nfs/samsung4tb/Development/auth/mqcp_leetcode_server.pem";
-      };
       "zeruel" = {
         Hostname = "10.0.0.3";
         User = "hugh";
