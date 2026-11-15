@@ -14,6 +14,7 @@ let
     cliphist
     clipman # clipboard manager
     dig
+    discordo
     ethtool
     git
     grim # screenshot
@@ -52,6 +53,7 @@ let
 
   guiTools = with pkgs; [
     firefox
+    fastmail-desktop
   ];
 
 in

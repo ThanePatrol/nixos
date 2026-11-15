@@ -52,11 +52,9 @@ in
 
       window = {
         titlebar = false;
-        border = 1;
       };
       floating = {
         titlebar = false;
-        border = 1;
       };
       focus.followMouse = "yes";
 
@@ -67,10 +65,21 @@ in
         "eDP-1".scale = "1.5";
       };
 
-      assigns = {
-        "3" = chromeAppCriteria gmail;
-        "4" = chromeAppCriteria calendar;
-      };
+      assigns = (
+        if isWork then
+          {
+            # TODO: double check if wayland of xwayland.
+            "2" = [ { class = "google-chrome"; } ];
+            "3" = chromeAppCriteria gmail;
+            "4" = chromeAppCriteria calendar;
+
+          }
+        else
+          {
+            "2" = [ { app_id = "firefox"; } ];
+            "3" = [ { app_id = "fastmail"; } ];
+          }
+      );
       bindswitches = {
         "lid:on" = {
           reload = true;
@@ -96,7 +105,6 @@ in
           # in the Nix profile, and as a child of sway it gets nixGL's drivers.
           command = "${pkgs.xdg-desktop-portal-wlr}/libexec/xdg-desktop-portal-wlr --replace";
         }
-
       ]
       ++ (
         if isWork then
@@ -116,7 +124,9 @@ in
             {
               command = "firefox";
             }
-
+            {
+              command = "fastmail";
+            }
           ]
       );
 
