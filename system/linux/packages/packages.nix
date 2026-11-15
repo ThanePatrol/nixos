@@ -1,10 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, isWork, ... }:
 
 let
-  wrappedZoom = pkgs.writeShellScriptBin "zoom-us" ''
-    exec ${pkgs.zoom-us}/bin/zoom-us --enable-features=UseOzonePlatform --ozone-platform=wayland
-  '';
-
   devDependencies = with pkgs; [
     # keep-sorted start
     binutils
@@ -54,7 +50,16 @@ let
     # keep-sorted end
   ];
 
+  guiTools = with pkgs; [
+    firefox
+  ];
+
 in
 {
-  environment.systemPackages = cliTools ++ devDependencies ++ systemLibsAndPackages ++ daemons;
+  environment.systemPackages =
+    cliTools
+    ++ devDependencies
+    ++ systemLibsAndPackages
+    ++ daemons
+    ++ (if isWork then [ ] else guiTools);
 }

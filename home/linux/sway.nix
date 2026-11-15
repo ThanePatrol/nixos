@@ -63,8 +63,8 @@ in
       input."type:keyboard".xkb_options = "caps:escape";
 
       output = {
-        "*".scale = "2";
-        "eDP-1".scale = "1";
+        "*".scale = "1.5";
+        "eDP-1".scale = "1.5";
       };
 
       assigns = {
@@ -91,28 +91,49 @@ in
         { command = "dunst"; }
         { command = "rm -f $HOME/.cache/cliphist/db && wl-paste --type text --watch cliphist store"; }
         {
-          # `[workspace N silent]`: sway opens a window on the workspace its
-          # command was launched from, so launch from there and come back.
-          command = "swaymsg 'workspace number 2; exec google-chrome; workspace number 1; exec kitty'";
-        }
-        { command = "${chromeApp gmail}"; }
-        { command = "${chromeApp calendar}"; }
-        {
           # The screen-sharing backend. Started here rather than on demand over
           # D-Bus: on a non-NixOS host neither the session bus nor systemd look
           # in the Nix profile, and as a child of sway it gets nixGL's drivers.
           command = "${pkgs.xdg-desktop-portal-wlr}/libexec/xdg-desktop-portal-wlr --replace";
         }
-      ];
+
+      ]
+      ++ (
+        if isWork then
+          [
+
+            {
+              # `[workspace N silent]`: sway opens a window on the workspace its
+              # command was launched from, so launch from there and come back.
+              command = "swaymsg 'workspace number 2; exec google-chrome; workspace number 1; exec kitty'";
+            }
+            { command = "${chromeApp gmail}"; }
+            { command = "${chromeApp calendar}"; }
+
+          ]
+        else
+          [
+            {
+              command = "firefox";
+            }
+
+          ]
+      );
 
       keybindings = {
         "${mod}+q" = "kill";
-        "Mod4+space" =
-          "exec XDG_DATA_DIRS=/home/hmandalidis/.nix-profile/share:/usr/share:/home/hmandalidis/.local/share wofi --show drun";
+        # TODO: A better way to manage this.
+        "Mod4+space" = (
+          if isWork then
+            "exec XDG_DATA_DIRS=/home/hmandalidis/.nix-profile/share:/usr/share:/home/hmandalidis/.local/share wofi --show drun"
+          else
+            "exec wofi --show drun"
+        );
         "${mod}+h" = "focus left";
         "${mod}+l" = "focus right";
         "${mod}+k" = "focus up";
         "${mod}+j" = "focus down";
+        "${mod}+t" = "exec kitty";
         # Copy color and send to clipboard
         "${mod}+p" = "exec hyprpicker -a";
 
