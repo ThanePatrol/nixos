@@ -24,12 +24,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     crane.url = "github:ipetkov/crane";
-   apple-silicon = {
-    url = "github:nix-community/nixos-apple-silicon";
-    inputs.nixpkgs.follows = "nixpkgs";
+    apple-silicon = {
+      url = "github:nix-community/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
 
+    };
   };
- };
 
   outputs =
     {
@@ -124,7 +124,7 @@
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
 
-inputs.apple-silicon.nixosModules.apple-silicon-support
+            inputs.apple-silicon.nixosModules.apple-silicon-support
             (
               { pkgs, lib, ... }:
               {

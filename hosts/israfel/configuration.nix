@@ -39,17 +39,19 @@ let
   syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs isWork; };
 in
 {
-  # TODO: This should probably be prefilled but double check
   imports = [
     ./hardware-configuration.nix
-    # TODO: Add a new field here IE for getting sway/gui things working.
+    ./kernel.nix
     #    ./apple-silicon-support
   ];
   #++ (with inputs; [
   #apple-silicon.nixosModules.apple-silicon-support
   #
   #]);
-  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
+  hardware.asahi = {
+    enable = true;
+    peripheralFirmwareDirectory = ./firmware;
+  };
 
   services.dbus.enable = true;
   security.polkit.enable = true;
@@ -72,17 +74,12 @@ in
   boot = {
     loader = {
       systemd-boot.enable = true;
+      # Needs to be false for asahi.
       efi.canTouchEfiVariables = false;
     };
     tmp.useTmpfs = true;
     supportedFilesystems = [ "ext4" ];
-
     # TODO: Something for fairydust?
-    # kernelPackages = pkgs.linuxPackages_latest;
-
-    #kernelParams = [
-    #  "transparent_hugepage=madvise"
-    #];
   };
 
   networking = {
@@ -97,17 +94,22 @@ in
       settings.General.EnableNetworkConfiguration = true;
     };
   };
-  hardware.asahi = {
-
-    #enable = true;
-    #peripheralFirmwareDirectory = /boot/asahi;
-
-  };
 
   programs = {
     zsh.enable = true;
     dconf.enable = true;
-    sway.enable = true;
+    sway = {
+      enable = true;
+      # Do this to prevent foot being pulled in...
+      extraPackages = with pkgs; [
+        brightnessctl
+        grim
+        pulseaudio
+        swayidle
+        swaylock
+        wmenu
+      ];
+    };
   };
 
   security.rtkit.enable = true;
@@ -115,7 +117,7 @@ in
     pipewire = {
       enable = true;
       alsa.enable = true;
-      alsa.support32Bit = true;
+      alsa.support32Bit = false;
       audio.enable = true;
       pulse.enable = true;
       wireplumber.enable = true;
