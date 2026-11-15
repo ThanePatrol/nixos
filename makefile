@@ -25,7 +25,7 @@ update-zeruel: install-nix ## Updates nixos server
 
 update-israfel: install-nix ## Updates personal laptop>
 	sudo -v # Build can take a while and we need root to apply the flake
-	nix build --extra-experimental-features "nix-command flakes" .#nixosConfigurations.israfel.config.system.build.toplevel
+	nix build --impure --extra-experimental-features "nix-command flakes" .#nixosConfigurations.israfel.config.system.build.toplevel
 	sudo nixos-rebuild switch --flake .#israfel
 
 build-leliel: ## Updates personal macbook

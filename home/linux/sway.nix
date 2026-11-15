@@ -63,7 +63,7 @@ in
       input."type:keyboard".xkb_options = "caps:escape";
 
       output = {
-        "*".scale = "1.5";
+        "*".scale = "2";
         "eDP-1".scale = "1";
       };
 

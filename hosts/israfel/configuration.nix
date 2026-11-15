@@ -36,15 +36,29 @@ let
       ;
   };
 
-  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
+  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs isWork; };
 in
 {
   # TODO: This should probably be prefilled but double check
   imports = [
     ./hardware-configuration.nix
     # TODO: Add a new field here IE for getting sway/gui things working.
+    #    ./apple-silicon-support
   ];
+  #++ (with inputs; [
+  #apple-silicon.nixosModules.apple-silicon-support
+  #
+  #]);
+  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
 
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+
+  #  nixpkgs.overlays = [
+  #    inputs.apple-silicon.overlays.apple-silicon-overlay
+  #
+  #  ];
+  #
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -58,17 +72,17 @@ in
   boot = {
     loader = {
       systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+      efi.canTouchEfiVariables = false;
     };
     tmp.useTmpfs = true;
     supportedFilesystems = [ "ext4" ];
 
     # TODO: Something for fairydust?
-    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_latest;
 
-    kernelParams = [
-      "transparent_hugepage=madvise"
-    ];
+    #kernelParams = [
+    #  "transparent_hugepage=madvise"
+    #];
   };
 
   networking = {
@@ -78,11 +92,22 @@ in
       "149.112.112.112"
     ];
     hostName = "israfel";
+    wireless.iwd = {
+      enable = true;
+      settings.General.EnableNetworkConfiguration = true;
+    };
+  };
+  hardware.asahi = {
+
+    #enable = true;
+    #peripheralFirmwareDirectory = /boot/asahi;
+
   };
 
   programs = {
     zsh.enable = true;
     dconf.enable = true;
+    sway.enable = true;
   };
 
   security.rtkit.enable = true;
@@ -167,5 +192,5 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   # TODO: Change for new install.
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "26.11"; # Did you read the comment?
 }
