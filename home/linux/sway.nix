@@ -65,7 +65,10 @@ in
         "eDP-1".scale = "1.5";
       };
 
-      assigns = (
+      assigns = {
+        "1" = [ { class = "kitty"; } ];
+      }
+      // (
         if isWork then
           {
             # TODO: double check if wayland of xwayland.

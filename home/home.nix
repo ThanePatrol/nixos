@@ -107,8 +107,8 @@ in
     (
       if !isDarwin && !isWork then
         [
-# TODO: Fix this, we should still have it setup on asahi
-          # ./common/rclone.nix
+          # TODO: Fix this, we should still have it setup on asahi
+          ./common/rclone.nix
         ]
       else
         [ ]

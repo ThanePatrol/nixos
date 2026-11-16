@@ -18,7 +18,6 @@ let
     done
     exec ${pkgs.swaylock}/bin/swaylock "$@"
   '';
-
 in
 {
   home.packages = [ takeBlurredScreenshot ];

@@ -52,6 +52,28 @@ in
     enable = true;
     peripheralFirmwareDirectory = ./firmware;
   };
+  hardware.apple.touchBar = {
+    enable = true;
+    settings = {
+      EnablePixelShift = true;
+      AdaptiveBrightness = false;
+    };
+  };
+
+  sops = {
+    defaultSopsFile = ../../secrets/secrets.yaml;
+    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
+    age.generateKey = false;
+    secrets = {
+
+      backblaze_key_id = {
+        owner = "${username}";
+      };
+      backblaze_application_key = {
+        owner = "${username}";
+      };
+    };
+  };
 
   services.dbus.enable = true;
   security.polkit.enable = true;
