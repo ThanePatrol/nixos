@@ -15,6 +15,8 @@ let
   email = customArgs.email;
   inputs = customArgs.inputs;
   gitUserName = customArgs.gitUserName;
+  system = customArgs.system;
+
   rcloneConfPath = "/home/hugh/.config/rclone/rclone.conf";
   homeDirectory = "/home/hugh";
   ssdFolder = "/home/hugh/SSDs";
@@ -138,61 +140,15 @@ let
       ;
   };
 
-  copyMoviesAndShows = pkgs.writeShellScriptBin "copy-movies-shows" ''
-      set -euox
-
-      while IFS= read -r -d "" file; do
-        # Check if file exists in jellyfin dir already
-
-        prompt='{
-          "messages": [
-            {"role": "system", "content": "You are a specialized media management assistant. Identify whether the provided file is a Movie or a TV show. Output ONLY movie or show No explanations or chatter."},
-            {"role": "user", "content": "@@PROMPT"}
-          ],
-          "temperature": 0,
-          "max_tokens": 64
-        }'
-
-
-        prompt="$(echo "$prompt" | sed 's/@@PROMPT/movie')"
-        echo "$prompt"
-
-        out="$(curl -s localhost:9000/v1/chat/completions \
-          -H 'Content-Type: application/json' \
-          -d "$prompt" | jq -r '.choices[0].message.content')"
-        # TODO: Extract this out into a function
-        # TODO: Rewrite as python script:
-    #     pkgs.writers.writePython3Bin "my-nix-script" 
-    # {
-    #   # Pass external Python library dependencies here
-    #   libraries = with pkgs.python3Packages; [ 
-    #     requests 
-    #     beautifulsoup4 
-    #   ];
-    # } 
-    #   import requests
-    #   from bs4 import BeautifulSoup
-    #
-    #   print("Fetching data from NixOS Wiki...")
-    #   response = requests.get("https://nixos.wiki/")
-    #
-    #   if response.status_code == 200:
-    #       soup = BeautifulSoup(response.text, 'html.parser')
-    #       print(f"Page Title: {soup.title.string}")
-    #   else:
-    #       print("Failed to fetch the webpage.")
-
-
-
-        if rg -q 'show' <<< $out ; then
-          ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Shows &> /dev/null 
-        else
-          ${pkgs.rsync}/bin/rsync -azvP "$file" /var/lib/jellyfin/Movies &> /dev/null
-        fi
-      done < <(${pkgs.findutils}/bin/find /var/lib/qBittorrent/qBittorrent/downloads/ -type f -not -path "/var/lib/qBittorrent/qBittorrent/downloads/temp/*" \( -name "*.mp4" -o -name "*.mkv" \) -print0)
-
-      ${pkgs.coreutils}/bin/chown -R jellyfin /var/lib/jellyfin
-  '';
+  copyMoviesAndShows = pkgs.writers.writePython3Bin "copy-movies-shows" {
+    libraries = with pkgs.python3Packages; [
+      requests
+    ];
+    flakeIgnore = [
+      "E501"
+      "W503"
+    ];
+  } (builtins.readFile ../../homelab/scripts/copy-movies-shows.py);
 
   syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
 in
@@ -334,6 +290,7 @@ in
     serviceConfig = {
       Type = "oneshot";
       User = "root";
+      StateDirectory = "copy-torrent";
     };
   };
   systemd.services.download-hsbc = {
