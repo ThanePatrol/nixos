@@ -196,6 +196,35 @@
           shellHook = "";
         };
 
+      makePythonDevShell =
+        system:
+        let
+
+          pkgs = import nixpkgs { inherit system; };
+          nativeBuildInputs = with pkgs; [
+            pkg-config
+          ];
+          pythonPkgs = with pkgs.python314Packages; [ requests ];
+          buildInputs =
+            with pkgs;
+            [
+              python314
+            ]
+            ++ pythonPkgs;
+        in
+        pkgs.mkShell {
+          inherit buildInputs nativeBuildInputs;
+
+          shellHook = ''
+            if [[ -f '.venv' ]]; then
+              source ./.venv/bin/activate
+            else 
+              python3 -m venv .venv
+              source ./.venv/bin/activate
+            fi
+          '';
+        };
+
     in
     {
       darwinConfigurations = {
@@ -239,8 +268,11 @@
       };
 
       rustStableDarwinDevShell = makeRustDevShell "aarch64-darwin";
+      pythonDevShell = makePythonDevShell "x86_64-linux";
 
       devShells.aarch64-darwin = {
+      };
+      devShells.x86_64-linux = {
       };
     };
 }
