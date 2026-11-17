@@ -185,8 +185,7 @@ in
             .stat()
             .files()
             .filter(|e| e.lines_added() > n_lines || e.lines_removed() > n_lines)
-            .map(|e| " " ++ e.path() ++ " " ++ if(e.lines_added() > n_lines, e.lines_added(), e.lines_removed()) ++ " ")
-
+            .map(|e| "\n" ++ e.path() ++ " " ++ if(e.lines_added() > n_lines, e.lines_added(), e.lines_removed()) ++ " ")
           ++ "\n"
         '';
       };
@@ -205,7 +204,7 @@ in
       ];
 
       ui = {
-        diff-editor = "vimdiff";
+        # diff-editor = "vimdiff";
         # TODO: Fix mergiraf or get rid of it.
         # merge-editor = "${pkgs.mergiraf}/bin/mergiraf";
         default-command = "status";

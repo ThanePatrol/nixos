@@ -8,7 +8,7 @@
 let
   themeString = builtins.replaceStrings [ "Catppuccin-" ] [ "" ] theme;
 
-  getLastTwoDirs = pkgs.writeShellScriptBin "get-last-three-dirs" ''
+  getLastTwoDirs = pkgs.writeShellScriptBin "get-last-two-dirs" ''
     last_three="$(awk '{split($0,arr,"/"); print arr[length(arr)-1],arr[length(arr)]}' | tr ' ' '/')"
     echo $last_three
   '';
