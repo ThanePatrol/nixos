@@ -13,9 +13,30 @@ let
     echo $last_three
   '';
 
+  # We could add this to a agy.nix or similar but it would be messy with work vs home differences.
+  # Manually manage the config file that actually calls this for now.
+  agyStatusLine = pkgs.writeShellScriptBin "get-agent-status" ''
+    input=$(</dev/stdin)
+
+    state="$(echo "$input" | jq '.agent_state' | tr -d '"')"
+    if [ -n "$TMUX" ]; then
+    	if [ "$state" == 'idle' ]; then
+    		tmux set-option -w -t "$TMUX_PANE" @llm_status "✅ "
+    	elif [ "$state" == 'reviewing' ]; then
+    		tmux set-option -w -t "$TMUX_PANE" @llm_status " "
+    	elif [ "$state" == 'working' ] || [ "$state" == "tool_use" ]; then
+    		tmux set-option -w -t "$TMUX_PANE" @llm_status " "
+    	fi
+      # The only status we miss here is authenticating, which I don't care about.
+    fi
+  '';
+
 in
 {
-  home.packages = [ pkgs.tmux ];
+  home.packages = [
+    pkgs.tmux
+    agyStatusLine
+  ];
 
   programs.tmux = {
     terminal = "tmux-256color";
