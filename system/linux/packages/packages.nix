@@ -35,10 +35,8 @@ let
     # keep-sorted start
     bluez
     libinput
-    libsecret # for storing passwords
     nfs-utils # for nfs drives
     OVMFFull # UEFI firmware for QEMU
-    pass-secret-service # dbus api for libsecret
     qt5.qtwayland
     qt6.qtwayland
     spice-vdagent

@@ -43,7 +43,6 @@ let
     gzip
     jq
     jujutsu
-    libsecret # for storing passwords
     ncurses # for terminfo stuff
     nodejs_22
     osc
@@ -64,6 +63,7 @@ let
   fatTools = with pkgs; [
     # keep-sorted start
     #ffmpeg-full
+    antigravity-cli
     cargo-flamegraph # flamegraph tool for many languages
     flex # lexical analysis
     geckodriver # webdriver automation

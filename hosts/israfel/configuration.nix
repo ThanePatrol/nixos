@@ -78,11 +78,10 @@ in
   services.dbus.enable = true;
   security.polkit.enable = true;
 
-  #  nixpkgs.overlays = [
-  #    inputs.apple-silicon.overlays.apple-silicon-overlay
-  #
-  #  ];
-  #
+  # Use instead of gnome keyring for secrets.
+  services.oo7.enable = true;
+  security.pam.services.login.oo7.enable = true;
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -188,8 +187,6 @@ in
     libvirtd.enable = true;
     virtlogd.enable = true;
   };
-
-  services.passSecretService.enable = true;
 
   # Set your time zone.
   time.timeZone = "Australia/Sydney";
