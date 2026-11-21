@@ -33,16 +33,17 @@ let
         kernelPatches = [
           {
             name = "Asahi config";
-            patch = pkgs.writeText "fix-tools-u128.patch" ''
-              diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
-              --- a/tools/build/Makefile.build
-              +++ b/tools/build/Makefile.build
-              @@ -25,2 +25,4 @@
-               
-              +CFLAGS += -D__u128=__uint128_t
-              +
-               __build: $(if $(KBUILD_BUILTIN),$(builtin-target) $(lib-target)) \
-            '';
+            patch = # ./check-state.patch;
+              pkgs.writeText "fix-tools-u128.patch" ''
+                diff --git a/tools/build/Makefile.build b/tools/build/Makefile.build
+                --- a/tools/build/Makefile.build
+                +++ b/tools/build/Makefile.build
+                @@ -25,2 +25,4 @@
+
+                +CFLAGS += -D__u128=__uint128_t
+                +
+                 __build: $(if $(KBUILD_BUILTIN),$(builtin-target) $(lib-target)) \
+              '';
             structuredExtraConfig = with lib.kernel; {
               # Needed for GPU
               ARM64_16K_PAGES = yes;

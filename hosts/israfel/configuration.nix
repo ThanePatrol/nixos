@@ -123,6 +123,7 @@ in
   programs = {
     zsh.enable = true;
     dconf.enable = true;
+    ydotool.enable = true;
     sway = {
       enable = true;
       # Do this to prevent foot being pulled in...
@@ -168,6 +169,7 @@ in
         "input"
         "lp" # for bluetooth
         "bluetooth"
+        "ydotool"
       ];
       shell = pkgs.zsh;
     };
