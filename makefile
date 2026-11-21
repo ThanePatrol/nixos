@@ -1,4 +1,4 @@
-.PHONY: update-ramiel update-zeruel update-armisael update-leliel update-work update-fold flake-update fmt clean install-nix
+.PHONY: update-zeruel update-armisael update-leliel update-work update-fold flake-update fmt clean install-nix
 
 help: ## Display this screen
 	@echo "Usage: make [target]"

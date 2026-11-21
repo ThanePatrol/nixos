@@ -125,12 +125,6 @@
             sops-nix.nixosModules.sops
 
             inputs.apple-silicon.nixosModules.apple-silicon-support
-            (
-              { pkgs, lib, ... }:
-              {
-                nixpkgs.overlays = [ ];
-              }
-            )
           ];
 
         };

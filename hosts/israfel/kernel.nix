@@ -98,9 +98,6 @@ in
 {
   boot = {
     kernelPackages = lib.mkForce linux-fairydust;
-    extraModulePackages = [
-      # config.boot.kernelPackages.evdi # DisplayLink USB display adapter support
-    ];
     initrd.kernelModules = [
       "appledrm"
       "mux_apple_display_crossbar"

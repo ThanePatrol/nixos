@@ -42,15 +42,12 @@ in
   imports = [
     ./hardware-configuration.nix
     ./kernel.nix
-    #    ./apple-silicon-support
   ];
-  #++ (with inputs; [
-  #apple-silicon.nixosModules.apple-silicon-support
-  #
-  #]);
   hardware.asahi = {
     enable = true;
-    peripheralFirmwareDirectory = ./firmware;
+    # Read from boot instead of aiming for absolute purity.
+    # I don't really want binary blobs in the repo.
+    peripheralFirmwareDirectory = null;
   };
   hardware.apple.touchBar = {
     enable = true;
@@ -91,7 +88,6 @@ in
     "hugh"
   ];
 
-  # Bootloader.
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -99,9 +95,17 @@ in
       efi.canTouchEfiVariables = false;
     };
     tmp.useTmpfs = true;
+    zswap.enable = true;
     supportedFilesystems = [ "ext4" ];
-    # TODO: Something for fairydust?
   };
+
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024; # 16GiB
+    }
+
+  ];
 
   networking = {
     # Quad9
@@ -212,6 +216,5 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  # TODO: Change for new install.
   system.stateVersion = "26.11"; # Did you read the comment?
 }
