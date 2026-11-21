@@ -66,7 +66,7 @@ in
       };
 
       assigns = {
-        "1" = [ { class = "kitty"; } ];
+        "1" = [ { app_id = "kitty"; } ];
       }
       // (
         if isWork then
@@ -198,6 +198,7 @@ in
       default = [ "gtk" ];
       "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
       "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
+      "org.freedesktop.impl.portal.Secret" = [ "oo7-portal" ];
     };
   };
 
