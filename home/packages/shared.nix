@@ -10,7 +10,6 @@ let
     # keep-sorted start
     black # python formatter
     gofumpt # formatter
-    golines # formatter
     luaformatter # format lua
     nixfmt # autoformat nix files
     prettierd # prettier daemon for web
@@ -51,10 +50,8 @@ let
     rainfrog
     rclone # nice simple backup cli for cloud backups
     ripgrep # nice and fast grep alternative for large codebases
-    rmlint
     sops
     unzip
-    vim
     zip # CLI compression
     zlib
     # keep-sorted end
@@ -66,22 +63,17 @@ let
     antigravity-cli
     cargo-flamegraph # flamegraph tool for many languages
     flex # lexical analysis
-    geckodriver # webdriver automation
     gettext # translations
     imagemagick
-    lazygit # git tui
     libsixel
     libvirt
     llama-cpp
     localsend
     pandoc # document conversion
     pkg-config # build tools
-    qbittorrent
     sphinx # python docs generator
-    sshfs # mount remote file systems locally with ssh
     texliveFull
     tldr
-    typescript
     # keep-sorted end
   ];
 

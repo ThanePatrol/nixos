@@ -21,12 +21,9 @@ let
     home-manager
     imagemagick
     lsof
-    nettools # cmd line utils like ethtool
-    parted # disk partition tool
     slurp
     smartmontools
     socat # to establish socket connections
-    sshfs
     wireplumber # sound memes
     # keep-sorted end
   ];
@@ -37,9 +34,6 @@ let
     libinput
     nfs-utils # for nfs drives
     OVMFFull # UEFI firmware for QEMU
-    qt5.qtwayland
-    qt6.qtwayland
-    spice-vdagent
     # keep-sorted end
   ];
 
