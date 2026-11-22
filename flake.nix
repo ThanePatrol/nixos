@@ -1,5 +1,7 @@
 {
   inputs = {
+    # TODO: Setup Vulnix: https://github.com/nix-community/vulnix
+    # to scan for CVEs in pkgs.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin/master";
 
