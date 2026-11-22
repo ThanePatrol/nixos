@@ -59,7 +59,6 @@ let
 
   fatTools = with pkgs; [
     # keep-sorted start
-    #ffmpeg-full
     antigravity-cli
     cargo-flamegraph # flamegraph tool for many languages
     flex # lexical analysis
@@ -71,6 +70,7 @@ let
     localsend
     pandoc # document conversion
     pkg-config # build tools
+    probe-rs-tools
     sphinx # python docs generator
     texliveFull
     tldr

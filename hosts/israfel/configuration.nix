@@ -42,6 +42,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./kernel.nix
+    ./udev.nix
   ];
   hardware.asahi = {
     enable = true;
@@ -160,6 +161,7 @@ in
       isNormalUser = true;
       description = username;
       extraGroups = [
+        "plugdev"
         "docker"
         "networkmanager"
         "wheel"
