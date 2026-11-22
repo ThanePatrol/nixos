@@ -125,10 +125,7 @@
             ./hosts/${name}/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
-
-            inputs.apple-silicon.nixosModules.apple-silicon-support
-          ];
-
+          ] ++ (if system == "aarch64-linux" then [ inputs.apple-silicon.nixosModules.apple-silicon-support ] else []);
         };
 
       darwinSystem =

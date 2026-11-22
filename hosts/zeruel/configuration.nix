@@ -151,7 +151,7 @@ let
     ];
   } (builtins.readFile ../../homelab/scripts/copy-movies-shows.py);
 
-  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs; };
+  syspackages = import ../../system/linux/packages/packages.nix { inherit pkgs isWork; };
 in
 {
   imports = [
