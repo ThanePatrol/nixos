@@ -188,6 +188,11 @@ in
     };
   };
 
+  # Don't use power button to turn off.
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+  };
+
   systemd.services = {
     docker.wantedBy = [ "multi-user.target" ];
     libvirtd.enable = true;
