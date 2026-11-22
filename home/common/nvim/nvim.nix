@@ -8,19 +8,14 @@
   ...
 }:
 let
-  rainbow-delimiter = pkgs.vimUtils.buildVimPlugin {
-    name = "rainbow-delimiters.nvim";
+  unnest = pkgs.vimUtils.buildVimPlugin {
+    name = "unnest.nvim";
     src = pkgs.fetchFromGitHub {
-      owner = "HiPhish";
-      repo = "rainbow-delimiters.nvim";
-      rev = "607a438d8c647a355749973fd295e33505afafde";
-      hash = "sha256-nqZKbqUeVkwzZlUR+xAKe4cb65DahWgStreRtGUchXE=";
+      owner = "brianhuster";
+      repo = "unnest.nvim";
+      rev = "e9e269134ad85eb45c4e1fa3654801be0d3641b7";
+      hash = "sha256-KpwImU3sK8aHuOz88VE8mwZXc+PezlTpb6JnimQ9ZLM=";
     };
-    nvimSkipModules = [
-      # vim plugin with optional toggleterm integration
-      "rainbow-delimiters.types"
-      "rainbow-delimiters._test.highlight"
-    ];
   };
 
   # use absolute paths - hack 😭
@@ -103,11 +98,12 @@ in
         nvim-lspconfig
         nvim-treesitter.withAllGrammars
         nvim-web-devicons
-        rainbow-delimiter
+        rainbow-delimiters-nvim
         render-markdown-nvim
         telescope-nvim
         telescope-symbols-nvim
         trouble-nvim
+        unnest
         vim-sensible
         vim-test
         vim-tmux-navigator
