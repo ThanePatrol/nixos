@@ -33,7 +33,7 @@ static SUCCESS_LOGIN: Lazy<prometheus::IntCounter> = Lazy::new(|| {
 /// Google's OpenID Connect issuer. Discovery hangs off this.
 const ISSUER_URL: &str = "https://accounts.google.com";
 
-const SESSION_TTL: std::time::Duration = std::time::Duration::from_hours(24);
+const SESSION_TTL: std::time::Duration = std::time::Duration::from_hours(24 * 7);
 
 const INDEX_HTML: &str = include_str!("../index.html");
 

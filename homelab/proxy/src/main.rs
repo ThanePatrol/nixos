@@ -6,7 +6,6 @@ use http::header;
 use pingora::listeners::tls::TlsSettings;
 use pingora::prelude::*;
 use pingora::server::RunArgs;
-use pingora::server::ShutdownSignal;
 use pingora::server::UnixShutdownSignalWatch;
 use std::collections::HashMap;
 use std::ops::DerefMut;
@@ -20,10 +19,10 @@ use pingora::apps::http_app::HttpServer;
 use pingora::apps::http_app::ServeHttp;
 use pingora::protocols::http::ServerSession;
 use pingora::services::listening::Service;
-use prometheus::{register_int_counter, IntCounter};
+use prometheus::{IntCounter, register_int_counter};
 
 use serde::{Deserialize, Serialize};
-use tracing::{debug, info, Level};
+use tracing::{Level, debug, info};
 use tracing_subscriber::FmtSubscriber;
 
 use crate::login::SessionStore;
@@ -116,6 +115,11 @@ impl ProxyHttp for Proxy {
             .and_then(|h| h.to_str().ok())
             .unwrap_or("could not determine ip");
 
+        let user_agent = session
+            .get_header(header::USER_AGENT)
+            .and_then(|h| h.to_str().ok())
+            .unwrap_or("could not determine user agent");
+
         if host == "login.mandalidis.com" {
             return Ok(false);
         }
@@ -130,7 +134,15 @@ impl ProxyHttp for Proxy {
         // User does have token, that is not expired, allow.
         if let Some(Ok(t)) = token {
             debug!("user with ip: {} presented token: {:?}", cf_ip, t);
-            debug!("current sessions are: {:?} ", self.sessions.sessions);
+            debug!(
+                "current sessions are: {:?}",
+                self.sessions.sessions.lock().await.iter().fold(
+                    String::new(),
+                    |accumulator, (_, data)| {
+                        format!("{accumulator} {:?} (visits={})", data.1.email, data.2)
+                    }
+                )
+            );
 
             if let Some(store) = self.sessions.sessions.lock().await.get_mut(&t) {
                 debug!("current logins: {:?}", store);
@@ -153,7 +165,9 @@ impl ProxyHttp for Proxy {
             urlencoding::encode(&original_target)
         );
 
-        info!("User or bot with ip: {cf_ip} did not present a valid token.",);
+        info!(
+            "User or bot with ip: {cf_ip} did not present a valid token. User agent: {user_agent}",
+        );
 
         let mut resp = ResponseHeader::build(StatusCode::FOUND, None)?;
         resp.insert_header(header::LOCATION, login_redirect)?;
