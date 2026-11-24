@@ -98,12 +98,24 @@ impl UserKey {
     }
 }
 type Token = String;
-
 type Visits = usize;
-type Data = (Token, User, Visits);
+
+#[derive(Debug)]
+pub enum Role {
+    ThanePatroller,
+    Visitor,
+}
+
+#[derive(Debug)]
+pub struct SessionData {
+    pub token: Token,
+    pub user: User,
+    pub visits: Visits,
+    pub role: Role,
+}
 
 pub struct SessionStore {
-    pub sessions: Mutex<HashMap<UserKey, Data>>,
+    pub sessions: Mutex<HashMap<UserKey, SessionData>>,
 }
 
 #[derive(Debug, Clone)]
@@ -274,21 +286,22 @@ impl LoginApp {
         let session_store_key = UserKey::new(rand::random());
         self.sessions.sessions.lock().await.insert(
             session_store_key.clone(),
-            (
-                id_token.to_string(),
-                User {
+            SessionData {
+                token: id_token.to_string(),
+                user: User {
                     email: email.clone(),
                     expires_at: now + SESSION_TTL,
                 },
-                0,
-            ),
+                visits: 0,
+                role: Role::ThanePatroller,
+            },
         );
 
         self.sessions
             .sessions
             .lock()
             .await
-            .retain(|_, v| v.1.expires_at > now);
+            .retain(|_, v| v.user.expires_at > now);
 
         SUCCESS_LOGIN.inc();
 
@@ -315,8 +328,12 @@ impl LoginApp {
             .and_then(|c| get_cookie(c, SESSION_COOKIE_NAME))
             .map(|s| UserKey::from_string(s))
         {
-            if let Some((_token, user, _visits)) =
-                self.sessions.sessions.lock().await.get(&session_token)
+            if let Some(SessionData {
+                token: _,
+                user,
+                visits: _,
+                role: _,
+            }) = self.sessions.sessions.lock().await.get(&session_token)
             {
                 if user.expires_at < std::time::Instant::now() {
                     html_page(StatusCode::OK, INDEX_HTML)

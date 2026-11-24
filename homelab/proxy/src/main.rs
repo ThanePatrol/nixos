@@ -138,20 +138,25 @@ impl ProxyHttp for Proxy {
                 "current sessions are: {:?}",
                 self.sessions.sessions.lock().await.iter().fold(
                     String::new(),
-                    |accumulator, (_, data)| {
-                        format!("{accumulator} {:?} (visits={})", data.1.email, data.2)
+                    |accumulator, (i, data)| {
+                        format!(
+                            "{accumulator}, user={} role={:?} visits={}",
+                            data.user.email.to_lowercase(),
+                            data.role,
+                            data.visits
+                        )
                     }
                 )
             );
 
             if let Some(store) = self.sessions.sessions.lock().await.get_mut(&t) {
                 debug!("current logins: {:?}", store);
-                if store.1.expires_at > std::time::Instant::now() {
-                    if store.2 < 1 {
-                        store.2 += 1;
+                if store.user.expires_at > std::time::Instant::now() {
+                    if store.visits < 1 {
+                        store.visits += 1;
                         info!(
                             "Parsed valid token successfully from ip: {cf_ip} for {}",
-                            store.1.email.to_ascii_lowercase()
+                            store.user.email.to_lowercase()
                         );
                     }
                     return Ok(false);
