@@ -53,6 +53,7 @@ in
       cat = "bat";
       gsed = (if isDarwin then "${pkgs.gnused}/bin/sed" else "");
       nv = "nvim";
+      jq = "jaq";
       gbn = "git branch --show-current";
       gc = "git commit -m";
       gp = "git push";

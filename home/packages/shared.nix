@@ -40,7 +40,7 @@ let
     gnumake
     go
     gzip
-    jq
+    jaq
     jujutsu
     ncurses # for terminfo stuff
     nodejs_26
