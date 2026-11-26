@@ -2,6 +2,18 @@ local M = {}
 
 function M.is_cloudtop() return vim.env.CORP_WORK_ENV == "true" end
 
+--- Open a terminal in a new tab and run a command.
+---@param cmd string|string[] Command string (run via shell) or argv list (exec directly)
+---@param opts? table Optional jobstart/termopen options (e.g. cwd, env, on_exit)
+function M.run_command_in_term(cmd, opts)
+    vim.cmd.tabnew()
+    local job_opts = vim.tbl_extend("force", {}, opts or {})
+    job_opts.term = true
+    vim.fn.jobstart(cmd, job_opts)
+
+    vim.cmd.startinsert()
+end
+
 -- TODO: In markdown files have a util function to preview currently selected mermaid blocks in visual mode
 -- by:
 -- 1. Generate a svg somewhere in /tmp

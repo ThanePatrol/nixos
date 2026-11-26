@@ -2,6 +2,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+local is_work = require('utils').is_cloudtop()
+
 -- vim.api.nvim_set_keymap('n', 'tt', ':NvimTreeToggle<CR>',
 --                        {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap('n', 'tf', ':NvimTreeFocus<CR>',
@@ -167,3 +169,7 @@ vim.keymap.set('n', '<leader>st',
                function() if stop_fun ~= nil then stop_fun() end end,
                {desc = "[S]erver s[T]op"})
 -- Mermaid end
+
+-- Agy start
+vim.keymap.set('n', '<leader>j', function ()require('utils').run_command_in_term(
+                   is_work and "jetski" or "agy", {}) end, {desc = "[J]etski"})
