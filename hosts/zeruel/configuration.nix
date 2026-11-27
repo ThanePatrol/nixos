@@ -98,6 +98,7 @@ let
     openFirewall = {
       # keep-sorted start numeric=yes
       dev = 3000;
+      forgejo = 3005;
       minecraft = 25565;
       mosquitto = 1883;
       nfsAcl = 2049;
