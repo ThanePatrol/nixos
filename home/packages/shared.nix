@@ -43,7 +43,7 @@ let
     jq
     jujutsu
     ncurses # for terminfo stuff
-    nodejs_22
+    nodejs_26
     osc
     pciutils # useful pci utils
     pv # Pipeviewer to see progress of pipes.
